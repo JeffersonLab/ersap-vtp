@@ -11,6 +11,11 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * A custom spliterator that can ‘split’ the stream of objects of type T,  and returns a stream on this
+ * split section of a stream.
+ * @param <T>
+ */
 public class SlidingWindowStream<T> implements Spliterator<Stream<T>> {
 
     public static <T> Stream<Stream<T>> slidingStream(Collection<T> stream, int windowSize) {

@@ -2,9 +2,6 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -20,21 +17,28 @@ public class Consumer extends Thread {
     private long nextSequence;
     private long availableSequence;
 
-    private int runNumber;
+    /**
+     * Consumer constructor
+     *
+     * @param ringBuffer
+     * @param sequence
+     * @param barrier
+     * @param runNumber
+     */
+    public Consumer(RingBuffer<RingEvent> ringBuffer,
+                    Sequence sequence,
+                    SequenceBarrier barrier,
+                    int runNumber) {
 
-    public Consumer(RingBuffer<RingEvent> ringBuffer, Sequence sequence, SequenceBarrier barrier, int runNumber) {
         this.ringBuffer = ringBuffer;
         this.sequence = sequence;
         this.barrier = barrier;
-
-        this.runNumber = runNumber;
 
         ringBuffer.addGatingSequences(sequence);
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
     }
-
 
     /**
      * Get the next available item from outupt ring buffer.
@@ -122,33 +126,26 @@ public class Consumer extends Thread {
     }
 
     public void run() {
-        int increment = 1;
-        long maxFileSize = 2_000_000_000;
-        long fileSize = 0;
-
         HitFinder hitFinder = new HitFinder();
 
         try {
-
-//            String fileName = "tf_beam_" + runNumber + "_" + increment + ".ers";
-//            FileOutputStream out = new FileOutputStream(fileName, true);
-//            BufferedOutputStream bout = new BufferedOutputStream(out);
 
             while (true) {
                 // Get an empty item from ring
                 RingEvent buf = get();
 
-                BigInteger frameTime = buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
-//                List<AdcHit> evt = decodePayload(frameTime, buf.getPayload());
-//
-//                Map<Integer, List<ChargeTime>> hits = hitFinder
-//                        .reset()
-//                        .stream(evt)
-//                        .frameStartTime(frameTime)
-//                        .frameLength(64000)
-//                        .sliceSize(32)
-//                        .windowSize(4)
-//                        .slide();
+                BigInteger frameTime =
+                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
+                List<AdcHit> evt = decodePayload(frameTime, buf.getPayload());
+
+                Map<Integer, List<ChargeTime>> hits = hitFinder
+                        .reset()
+                        .stream(evt)
+                        .frameStartTime(frameTime)
+                        .frameLength(64000)
+                        .sliceSize(32)
+                        .windowSize(4)
+                        .slide();
 
                 put();
             }

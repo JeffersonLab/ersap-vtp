@@ -57,11 +57,26 @@ public class HitFinder {
     }
 
     Map<Integer, List<ChargeTime>> slide() {
-        slide(getSlices(vtpStream), slidingWindowSize);
+        _slide(getSlices(vtpStream), slidingWindowSize);
         findHits();
         return hits;
     }
 
+    /**
+     * Slicing vtp stream frame with a time window defined by the VTP time stamps.
+     * This will use a stream of {@link AdcHit} elements supporting sequential
+     * and parallel aggregate operations. First it will filter those hits
+     * that have a time consistent with the window. After we group elements,
+     * classifying them by crate, slot, channel and then performing a reduction
+     * operation on the values associated with the crate-slot-channel using the
+     * specified downstream collector.
+     *
+     * @param leading window start time
+     * @param trailing window end time
+     * @param vtpStream aggregated VTP stream
+     * @return VTP stream single frame. Map, where key: encoded int = crate.slot,channel,
+     * value: sum of charge reported for the key
+     */
     private Map<Integer, Integer> streamSlice(BigInteger leading, BigInteger trailing,
                                               List<AdcHit> vtpStream) {
         return vtpStream
@@ -72,6 +87,14 @@ public class HitFinder {
                         Collectors.summingInt(AdcHit::getQ)));
     }
 
+    /**
+     * Get all slices of the aggregated VTP stream frame.
+     *
+     *
+     * @param frame A single frame of the VTP stream
+     * @return list of slices that itself is a map of
+     * crate-slot-channels and their integral charge.
+     */
     private List<Map<Integer, Integer>> getSlices(List<AdcHit> frame) {
         List<Map<Integer, Integer>> streamSlices = new ArrayList<>();
         for (long i = 0; i < frameLength_ns; i += slice_ns) {
@@ -85,13 +108,23 @@ public class HitFinder {
         return streamSlices;
     }
 
-    private void slide(List<Map<Integer, Integer>> slices, int windowSize) {
+    /**
+     * Sliding a fixed time window over the slices of the vtP stream frame.
+     *
+     * @param slices Slices of the aggregated VTP stream frame
+     * @param windowSize size of the window which is a multiple of the sliced window size
+     */
+    private void _slide(List<Map<Integer, Integer>> slices, int windowSize) {
         SlidingWindowStream
                 .slidingStream(slices, windowSize)
                 .map(s -> s.collect(Collectors.toList()))
                 .forEach(HitFinder::slideWindowSum);
     }
 
+    /**
+     * This marches over the stream frame slices and sums the charges for each crate-slot-channel
+     * @param slideWindow list of slices, which is map of crate-slot-channel and th charge
+     */
     private static void slideWindowSum(List<Map<Integer, Integer>> slideWindow) {
         Map<Integer, Integer> sws = new HashMap<>();
         for (Map<Integer, Integer> m : slideWindow) {
@@ -116,6 +149,11 @@ public class HitFinder {
         }
     }
 
+    /**
+     * Finds hits per crate-slot-channel by finding a pick in a
+     * list of charges as a result of window sliding.
+     *
+     */
     private void findHits() {
         for (Integer csc : slideCharges.keySet()) {
             List<Integer> l = slideCharges.get(csc);
