@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group 'org.jlab.epsci.ersap.vtp'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'com.lmax:disruptor:3.4.0'
+}
+
+
