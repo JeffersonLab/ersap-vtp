@@ -132,10 +132,10 @@ public class Receiver extends Thread {
             System.out.println(String.format("magic = %x", magic));
             System.out.println(String.format("format_version = %x", format_version));
             System.out.println(String.format("flags = %x", flags));
-            System.out.println(String.format("record_number%x", record_number));
+            System.out.println(String.format("record_number = %x", record_number));
             System.out.println(String.format("ts_sec = %x", ts_sec));
             System.out.println(String.format("ts_nsec = %x", ts_nsec));
-            System.out.printf("");
+            System.out.println("");
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
