@@ -54,7 +54,7 @@ public class Receiver extends Thread {
     private int rate;
     private long missed_record;
     private long prev_rec_number;
-
+ int a,b;
 
     public Receiver(int vtpPort, int streamId, RingBuffer<RingEvent> ringBuffer, int statPeriod) {
         this.ringBuffer = ringBuffer;
@@ -76,11 +76,8 @@ public class Receiver extends Thread {
             dataInputStream = new DataInputStream(new BufferedInputStream(input));
 //            dataInputStream.readInt();
 //            dataInputStream.readInt();
-            int a = Integer.reverseBytes(dataInputStream.readInt());
-            int b = Integer.reverseBytes(dataInputStream.readInt());
-            System.out.println("================");
-            System.out.println(String.format("%x", a));
-            System.out.println(String.format("%x", b));
+            a = Integer.reverseBytes(dataInputStream.readInt());
+            b = Integer.reverseBytes(dataInputStream.readInt());
         } catch (
                 IOException e) {
             e.printStackTrace();
@@ -123,9 +120,11 @@ public class Receiver extends Thread {
             BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-                System.out.println("DDD => "+streamId+":   "+ rcn +" "+payload_length);
+//                System.out.println("DDD => "+streamId+":   "+ rcn +" "+payload_length);
 
-
+            System.out.println("================");
+            System.out.println(String.format("%x", a));
+            System.out.println(String.format("%x", b));
             System.out.println(String.format("source ID = %x", source_id));
             System.out.println(String.format("total_length = %x", total_length));
             System.out.println(String.format("payload_length = %x", payload_length));
@@ -136,6 +135,7 @@ public class Receiver extends Thread {
             System.out.println(String.format("record_number%x", record_number));
             System.out.println(String.format("ts_sec = %x", ts_sec));
             System.out.println(String.format("ts_nsec = %x", ts_nsec));
+            System.out.printf("");
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
