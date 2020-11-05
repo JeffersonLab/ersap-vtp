@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
- * A custom spliterator that can ‘split’ the stream of objects of type T,  and returns a stream on this
+ * A custom spliterator that can ‘split’ the stream of objects of type T,  and return a stream on this
  * split section of a stream.
  * @param <T>
  */

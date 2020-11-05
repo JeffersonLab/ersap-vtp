@@ -74,8 +74,13 @@ public class Receiver extends Thread {
             System.out.println("VTP client connected");
             InputStream input = socket.getInputStream();
             dataInputStream = new DataInputStream(new BufferedInputStream(input));
-            dataInputStream.readInt();
-            dataInputStream.readInt();
+//            dataInputStream.readInt();
+//            dataInputStream.readInt();
+            int a = Integer.reverseBytes(dataInputStream.readInt());
+            int b = Integer.reverseBytes(dataInputStream.readInt());
+            System.out.println("================");
+            System.out.println(String.format("%x", a));
+            System.out.println(String.format("%x", b));
         } catch (
                 IOException e) {
             e.printStackTrace();
@@ -119,6 +124,18 @@ public class Receiver extends Thread {
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
                 System.out.println("DDD => "+streamId+":   "+ rcn +" "+payload_length);
+
+
+            System.out.println(String.format("source ID = %x", source_id));
+            System.out.println(String.format("total_length = %x", total_length));
+            System.out.println(String.format("payload_length = %x", payload_length));
+            System.out.println(String.format("compressed_length = %x", compressed_length));
+            System.out.println(String.format("magic = %x", magic));
+            System.out.println(String.format("format_version = %x", format_version));
+            System.out.println(String.format("flags = %x", flags));
+            System.out.println(String.format("record_number%x", record_number));
+            System.out.println(String.format("ts_sec = %x", ts_sec));
+            System.out.println(String.format("ts_nsec = %x", ts_nsec));
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
