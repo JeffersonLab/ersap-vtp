@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.jlab.epsci.ersap.vtp.EUtil.printHits;
+
 public class Consumer extends Thread {
     private RingBuffer<RingEvent> ringBuffer;
     private Sequence sequence;
@@ -148,6 +150,8 @@ public class Consumer extends Thread {
                             .sliceSize(32)
                             .windowSize(4)
                             .slide();
+
+                    printHits(hits);
                 }
 
                 put();

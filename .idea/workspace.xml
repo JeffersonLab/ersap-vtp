@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -81,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="146" column="47" lean-forward="true" selection-start-line="146" selection-start-column="47" selection-end-line="146" selection-end-column="47" />
+            <state relative-caret-position="271">
+              <caret line="133" lean-forward="true" selection-start-line="133" selection-end-line="133" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -142,8 +143,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="137" selection-start-line="137" selection-end-line="137" />
+            <state relative-caret-position="239">
+              <caret line="118" column="34" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="811">
+              <caret line="296" selection-start-line="296" selection-end-line="296" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -181,8 +194,8 @@
       <find>vtpStream</find>
       <find>_slide</find>
       <find>ddd</find>
-      <find>decodeVtpHeader</find>
       <find>decodePayload</find>
+      <find>decodeVtpHeader</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$</dir>
@@ -201,13 +214,13 @@
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/FourStreamAggregator.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Aggregator.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/RingEventFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/HitFinder.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/SlidingWindowStream.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" />
       </list>
     </option>
@@ -370,7 +383,14 @@
       <option name="project" value="LOCAL" />
       <updated>1604590109353</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- debugging">
+      <created>1604604943569</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1604604943569</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -393,7 +413,7 @@
       <window_info id="Image Layers" order="4" />
       <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.2567742" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" visible="true" weight="0.32893288" />
+      <window_info anchor="bottom" id="Terminal" order="0" weight="0.32893288" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="2" weight="0.3295325" />
       <window_info anchor="bottom" id="Version Control" order="3" />
@@ -434,16 +454,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="25" selection-start-column="25" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -581,16 +591,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="137" selection-start-line="137" selection-end-line="137" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/RingEvent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -602,10 +602,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/EUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="811">
+          <caret line="296" selection-start-line="296" selection-end-line="296" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="118" column="34" selection-start-line="118" selection-start-column="34" selection-end-line="118" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="146" column="47" lean-forward="true" selection-start-line="146" selection-start-column="47" selection-end-line="146" selection-end-column="47" />
+        <state relative-caret-position="271">
+          <caret line="133" lean-forward="true" selection-start-line="133" selection-end-line="133" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

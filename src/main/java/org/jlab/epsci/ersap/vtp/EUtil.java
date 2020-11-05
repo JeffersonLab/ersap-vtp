@@ -269,4 +269,33 @@ public class EUtil {
         ma.put("peaks", pea);
         return ma;
     }
+
+    public static void printFrame(int source_id, int total_length, int payload_length,
+                                  int compressed_length, int magic, int format_version,
+                                  int flags, long record_number, long ts_sec, long ts_nsec) {
+        System.out.println("\n================");
+        System.out.println(String.format("source ID = %d", source_id));
+        System.out.println(String.format("total_length = %d", total_length));
+        System.out.println(String.format("payload_length = %d", payload_length));
+        System.out.println(String.format("compressed_length = %d", compressed_length));
+        System.out.println(String.format("magic = %x", magic));
+        System.out.println(String.format("format_version = %d", format_version));
+        System.out.println(String.format("flags = %d", flags));
+        System.out.println(String.format("record_number = %d", record_number));
+        System.out.println(String.format("ts_sec = %d", ts_sec));
+        System.out.println(String.format("ts_nsec = %d", ts_nsec));
+    }
+
+    public static void printHits(Map<Integer, List<ChargeTime>> hits){
+        hits.forEach((k,v) ->  {
+            System.out.println("crate = " + decodeCrateNumber(k)
+                    + " slot = "+decodeSlotNumber(k)
+                    + " channel = "+decodeChannelNumber(k));
+            v.forEach(h -> System.out.println("t = " + h.getTime()
+                    + " charge = "+ h.getCharge()));
+            System.out.println();
+        });
+
+    }
+
 }
