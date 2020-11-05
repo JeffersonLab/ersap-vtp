@@ -152,6 +152,7 @@ public class Consumer extends Thread {
                             .slide();
 
                     printHits(hits);
+                    System.out.println("DDD "+ payload.length);
                 }
 
                 put();
