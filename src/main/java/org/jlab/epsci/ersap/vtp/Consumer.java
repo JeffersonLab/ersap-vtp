@@ -136,16 +136,19 @@ public class Consumer extends Thread {
 
                 BigInteger frameTime =
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
-                List<AdcHit> evt = decodePayload(frameTime, buf.getPayload());
+                byte[] payload = buf.getPayload();
+                if (payload.length > 0) {
+                    List<AdcHit> evt = decodePayload(frameTime, payload);
 
-                Map<Integer, List<ChargeTime>> hits = hitFinder
-                        .reset()
-                        .stream(evt)
-                        .frameStartTime(frameTime)
-                        .frameLength(64000)
-                        .sliceSize(32)
-                        .windowSize(4)
-                        .slide();
+                    Map<Integer, List<ChargeTime>> hits = hitFinder
+                            .reset()
+                            .stream(evt)
+                            .frameStartTime(frameTime)
+                            .frameLength(64000)
+                            .sliceSize(32)
+                            .windowSize(4)
+                            .slide();
+                }
 
                 put();
             }
