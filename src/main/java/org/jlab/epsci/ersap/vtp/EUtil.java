@@ -172,8 +172,8 @@ public class EUtil {
     }
 
 
-    public static void decodeVtpPayload(byte[] payload) {
-        if (payload == null) return;
+    public static List<AdcHit> decodePayload(BigInteger frame_time_ns, byte[] payload) {
+        List<AdcHit> res = new ArrayList<>();
         ByteBuffer bb = ByteBuffer.wrap(payload);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         int[] slot_ind = new int[8];
@@ -185,27 +185,36 @@ public class EUtil {
                 slot_ind[jj] = EUtil.getUnsignedShort(bb);
                 slot_len[jj] = EUtil.getUnsignedShort(bb);
             }
+
             for (int i = 0; i < 8; i++) {
                 if (slot_len[i] > 0) {
                     bb.position(slot_ind[i] * 4);
                     int type = 0;
                     for (int j = 0; j < slot_len[i]; j++) {
                         int val = bb.getInt();
+                        AdcHit hit = new AdcHit();
+
                         if ((val & 0x80000000) == 0x80000000) {
                             type = (val >> 15) & 0xFFFF;
-                            int rocid = (val >> 8) & 0x007F;
-                            int slot = (val) & 0x001F;
+                            hit.setCrate((val >> 8) & 0x007F);
+                            hit.setSlot((val) & 0x001F);
                         } else if (type == 0x0001) /* FADC hit type */ {
-                            int q = (val) & 0x1FFF;
-                            int ch = (val >> 13) & 0x000F;
-                            int t = ((val >> 17) & 0x3FFF) * 4;
+                            hit.setQ((val) & 0x1FFF);
+                            hit.setChannel((val >> 13) & 0x000F);
+                            long v = ((val >> 17) & 0x3FFF) * 4;
+                            BigInteger ht = BigInteger.valueOf(v);
+                            hit.setTime(frame_time_ns.add(ht));
+                            hit.setTime(ht);
+                            res.add(hit);
                         }
                     }
                 }
             }
         } else {
+            System.out.println("parser error: wrong tag");
             System.exit(0);
         }
+        return res;
     }
 
     public static byte[] addByteArrays(byte[] a, byte[] b) {

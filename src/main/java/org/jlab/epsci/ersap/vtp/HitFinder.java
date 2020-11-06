@@ -123,7 +123,7 @@ public class HitFinder {
 
     /**
      * This marches over the stream frame slices and sums the charges for each crate-slot-channel
-     * @param slideWindow list of slices, which is map of crate-slot-channel and th charge
+     * @param slideWindow list of slices, which is map of crate-slot-channel and the charge
      */
     private static void slideWindowSum(List<Map<Integer, Integer>> slideWindow) {
         Map<Integer, Integer> sws = new HashMap<>();
