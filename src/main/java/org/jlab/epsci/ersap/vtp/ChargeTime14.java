@@ -1,3 +1,5 @@
 package org.jlab.epsci.ersap.vtp;
 
-public class ChargeTime14 (BigInteger time, int chage) {}
+import java.math.BigInteger;
+
+public record ChargeTime14 (BigInteger time, int chage) {}
