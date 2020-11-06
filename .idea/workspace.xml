@@ -144,6 +144,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -263,95 +264,21 @@
     <MESSAGE value="- AdcHit and ChargeTime records" />
     <option name="LAST_COMMIT_MESSAGE" value="- AdcHit and ChargeTime records" />
   </component>
+  <component name="WindowStateProjectService">
+    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1604677670359">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1604677670359" />
+    <state x="301" y="119" key="SettingsEditor" timestamp="1604677553816">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="301" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1604677553816" />
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1604677672802">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1604677672802" />
+  </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>test|ersap-vtp</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-                <option value="0.6" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Gradle: com.lmax:disruptor:3.4.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
