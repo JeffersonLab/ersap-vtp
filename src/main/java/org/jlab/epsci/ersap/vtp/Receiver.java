@@ -118,9 +118,9 @@ public class Receiver extends Thread {
             BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-//            printFrame(source_id, total_length, payload_length,
-//                    compressed_length, magic, format_version, flags,
-//                    record_number, ts_sec, ts_nsec);
+            printFrame(source_id, total_length, payload_length,
+                    compressed_length, magic, format_version, flags,
+                    record_number, ts_sec, ts_nsec);
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
             evt.setPayload(dataBuffer);
