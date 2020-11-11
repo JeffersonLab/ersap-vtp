@@ -94,7 +94,7 @@ public class Consumer extends Thread {
                 byte[] payload = buf.getPayload();
                 System.out.println("DDD:payload length = "+ payload.length);
                 if (payload.length > 0) {
-                    List<AdcHit> evt = decodePayload(frameTime, payload);
+//                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
 //                            .reset()
 //                            .stream(evt)
