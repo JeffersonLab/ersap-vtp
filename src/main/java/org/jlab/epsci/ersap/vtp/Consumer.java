@@ -92,7 +92,6 @@ public class Consumer extends Thread {
                 BigInteger frameTime =
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 byte[] payload = buf.getPayload();
-                System.out.println("DDD:payload length = "+ payload.length);
                 if (payload.length > 0) {
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
