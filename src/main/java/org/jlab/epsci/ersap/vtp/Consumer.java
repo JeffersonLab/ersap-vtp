@@ -101,7 +101,7 @@ public class Consumer extends Thread {
                             .sliceSize(32)
                             .windowSize(4)
                             .slide();
-                    printHits(hits);
+//                    printHits(hits);
                 }
 
                 put();
