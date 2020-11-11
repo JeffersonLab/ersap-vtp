@@ -235,20 +235,66 @@ public class EUtil {
         return ma;
     }
 
-    public static void printFrame(int source_id, int total_length, int payload_length,
+    public static  List<AdcHit> decodePayload(BigInteger frame_time_ns, byte[] payload) {
+        List<AdcHit> res = new ArrayList<>();
+        ByteBuffer bb = ByteBuffer.wrap(payload);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        int[] slot_ind = new int[8];
+        int[] slot_len = new int[8];
+        long tag = EUtil.getUnsignedInt(bb);
+        System.out.println(String.format("DDD:tag = %x", tag));
+        if ((tag & 0x8FFF8000L) == 0x80000000L) {
+
+            for (int jj = 0; jj < 8; jj++) {
+                slot_ind[jj] = EUtil.getUnsignedShort(bb);
+                slot_len[jj] = EUtil.getUnsignedShort(bb);
+            }
+            for (int i = 0; i < 8; i++) {
+                if (slot_len[i] > 0) {
+                    bb.position(slot_ind[i] * 4);
+                    int type = 0;
+                    for (int j = 0; j < slot_len[i]; j++) {
+                        int val = bb.getInt();
+                        AdcHit hit = new AdcHit();
+
+                        if ((val & 0x80000000) == 0x80000000) {
+                            type = (val >> 15) & 0xFFFF;
+                            hit.setCrate((val >> 8) & 0x007F);
+                            hit.setSlot((val) & 0x001F);
+                        } else if (type == 0x0001) /* FADC hit type */ {
+                            hit.setQ((val) & 0x1FFF);
+                            hit.setChannel((val >> 13) & 0x000F);
+                            long v = ((val >> 17) & 0x3FFF) * 4;
+                            BigInteger ht = BigInteger.valueOf(v);
+                            hit.setTime(frame_time_ns.add(ht));
+                            hit.setTime(ht);
+                            res.add(hit);
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("parser error: wrong tag");
+            System.exit(0);
+        }
+        return res;
+    }
+
+
+    public static void printFrame(int streamId, int source_id, int total_length, int payload_length,
                                   int compressed_length, int magic, int format_version,
                                   int flags, long record_number, long ts_sec, long ts_nsec) {
         System.out.println("\n================");
-        System.out.println(String.format("source ID = %d", source_id));
-        System.out.println(String.format("total_length = %d", total_length));
-        System.out.println(String.format("payload_length = %d", payload_length));
-        System.out.println(String.format("compressed_length = %d", compressed_length));
-        System.out.println(String.format("magic = %x", magic));
-        System.out.println(String.format("format_version = %d", format_version));
-        System.out.println(String.format("flags = %d", flags));
-        System.out.println(String.format("record_number = %d", record_number));
-        System.out.println(String.format("ts_sec = %d", ts_sec));
-        System.out.println(String.format("ts_nsec = %d", ts_nsec));
+        System.out.println(streamId+":source ID = " + source_id);
+        System.out.println(streamId+":total_length = " + total_length);
+        System.out.println(streamId+":payload_length = " + payload_length);
+        System.out.println(streamId+":compressed_length = " + compressed_length);
+        System.out.println(String.format(streamId+":magic = %x", magic));
+        System.out.println(streamId+":format_version = " + format_version);
+        System.out.println(streamId+":flags = " + flags);
+        System.out.println(streamId+":record_number = " + record_number);
+        System.out.println(streamId+":ts_sec = " + ts_sec);
+        System.out.println(streamId+":ts_nsec = " + ts_nsec);
     }
 
     public static void printHits(Map<Integer, List<ChargeTime>> hits){

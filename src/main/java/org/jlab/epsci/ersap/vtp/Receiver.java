@@ -13,6 +13,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
+
 /**
  * Receives stream frames from a VTP and writes them to a RingBuffer
  * <p>
@@ -116,17 +118,9 @@ public class Receiver extends Thread {
             BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-            System.out.println(streamId + " ===================================================> calling printframe ");
-            System.out.println(String.format("source ID = %d", source_id));
-            System.out.println(String.format("total_length = %d", total_length));
-            System.out.println(String.format("payload_length = %d", payload_length));
-            System.out.println(String.format("compressed_length = %d", compressed_length));
-            System.out.println(String.format("magic = %x", magic));
-            System.out.println(String.format("format_version = %d", format_version));
-            System.out.println(String.format("flags = %d", flags));
-            System.out.println(String.format("record_number = %d", record_number));
-            System.out.println(String.format("ts_sec = %d", ts_sec));
-            System.out.println(String.format("ts_nsec = %d", ts_nsec));
+            printFrame(streamId, source_id, total_length, payload_length,
+                    compressed_length, magic, format_version, flags,
+                    record_number, ts_sec, ts_nsec);
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);

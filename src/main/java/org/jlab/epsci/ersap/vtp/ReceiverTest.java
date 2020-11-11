@@ -10,6 +10,9 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static org.jlab.epsci.ersap.vtp.EUtil.decodePayload;
+import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
+
 public class ReceiverTest {
     /**
      * VTP data stream
@@ -72,20 +75,13 @@ public class ReceiverTest {
             long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
 
             BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
-            System.out.println(streamId + " ===================================================");
-            System.out.println(String.format("source ID = %d", source_id));
-            System.out.println(String.format("total_length = %d", total_length));
-            System.out.println(String.format("payload_length = %d", payload_length));
-            System.out.println(String.format("compressed_length = %d", compressed_length));
-            System.out.println(String.format("magic = %x", magic));
-            System.out.println(String.format("format_version = %d", format_version));
-            System.out.println(String.format("flags = %d", flags));
-            System.out.println(String.format("record_number = %d", record_number));
-            System.out.println(String.format("ts_sec = %d", ts_sec));
-            System.out.println(String.format("ts_nsec = %d", ts_nsec));
+            printFrame(1,source_id,total_length,payload_length,compressed_length,magic,
+                    format_version, flags, record_number,ts_sec,ts_nsec);
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
+            BigInteger frameTime = rcn.multiply(EUtil.toUnsignedBigInteger(65536L));
+            decodePayload(frameTime,dataBuffer);
 
             // Collect statistics
             missed_record = missed_record + (record_number - (prev_rec_number + 1));
