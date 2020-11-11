@@ -58,7 +58,7 @@ public class HitFinder {
 
     Map<Integer, List<ChargeTime>> slide() {
         _slide(getSlices(vtpStream), slidingWindowSize);
-        findHits();
+//        findHits();
         return hits;
     }
 
