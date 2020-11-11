@@ -3,10 +3,8 @@ package org.jlab.epsci.ersap.vtp;
 import com.lmax.disruptor.*;
 
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.jlab.epsci.ersap.vtp.EUtil.decodePayload;
 import static org.jlab.epsci.ersap.vtp.EUtil.printHits;
@@ -94,16 +92,16 @@ public class Consumer extends Thread {
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 byte[] payload = buf.getPayload();
                 if (payload.length > 0) {
-//                    List<AdcHit> evt = decodePayload(frameTime, payload);
-//                    Map<Integer, List<ChargeTime>> hits = hitFinder
-//                            .reset()
-//                            .stream(evt)
-//                            .frameStartTime(frameTime)
-//                            .frameLength(64000)
-//                            .sliceSize(32)
-//                            .windowSize(4)
-//                            .slide();
-//                    printHits(hits);
+                    List<AdcHit> evt = decodePayload(frameTime, payload);
+                    Map<Integer, List<ChargeTime>> hits = hitFinder
+                            .reset()
+                            .stream(evt)
+                            .frameStartTime(frameTime)
+                            .frameLength(64000)
+                            .sliceSize(32)
+                            .windowSize(4)
+                            .slide();
+                    printHits(hits);
                 }
 
                 put();
