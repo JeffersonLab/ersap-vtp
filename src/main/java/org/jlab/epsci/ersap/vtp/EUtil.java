@@ -179,6 +179,7 @@ public class EUtil {
         int[] slot_ind = new int[8];
         int[] slot_len = new int[8];
         long tag = EUtil.getUnsignedInt(bb);
+        System.out.println(String.format("DDD:tag = %x", tag));
         if ((tag & 0x8FFF8000L) == 0x80000000L) {
 
             for (int jj = 0; jj < 8; jj++) {
