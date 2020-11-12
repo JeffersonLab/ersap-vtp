@@ -5,6 +5,8 @@ import com.lmax.disruptor.*;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.jlab.epsci.ersap.vtp.EUtil.decodePayload;
 import static org.jlab.epsci.ersap.vtp.EUtil.printHits;
@@ -81,7 +83,7 @@ public class Consumer extends Thread {
 
     public void run() {
         HitFinder hitFinder = new HitFinder();
-
+        ExecutorService pool = Executors.newFixedThreadPool(2);
         try {
 
             while (true) {
@@ -92,15 +94,17 @@ public class Consumer extends Thread {
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 byte[] payload = buf.getPayload();
                 if (payload.length > 0) {
-                    List<AdcHit> evt = decodePayload(frameTime, payload);
-                    Map<Integer, List<ChargeTime>> hits = hitFinder
-                            .reset()
-                            .stream(evt)
-                            .frameStartTime(frameTime)
-                            .frameLength(64000)
-                            .sliceSize(32)
-                            .windowSize(4)
-                            .slide();
+                    Runnable r = () -> decodePayload(frameTime, payload);
+                    pool.execute(r);
+//                    List<AdcHit> evt = decodePayload(frameTime, payload);
+//                    Map<Integer, List<ChargeTime>> hits = hitFinder
+//                            .reset()
+//                            .stream(evt)
+//                            .frameStartTime(frameTime)
+//                            .frameLength(64000)
+//                            .sliceSize(32)
+//                            .windowSize(4)
+//                            .slide();
 //                    printHits(hits);
                 }
 

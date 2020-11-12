@@ -57,8 +57,8 @@ public class HitFinder {
     }
 
     Map<Integer, List<ChargeTime>> slide() {
-//        _slide(getSlices(vtpStream), slidingWindowSize);
-//        findHits();
+        _slide(getSlices(vtpStream), slidingWindowSize);
+        findHits();
         return hits;
     }
 
@@ -80,7 +80,7 @@ public class HitFinder {
     private Map<Integer, Integer> streamSlice(BigInteger leading, BigInteger trailing,
                                               List<AdcHit> vtpStream) {
         return vtpStream
-                .stream()
+                .parallelStream()
                 .filter(t -> (t.getTime().compareTo(leading) > 0) && (t.getTime().compareTo(trailing) < 0))
                 .collect(Collectors.groupingBy(
                         v -> EUtil.encodeCSC(v.getCrate(), v.getSlot(), v.getChannel()),
