@@ -3,8 +3,6 @@ package org.jlab.epsci.ersap.vtp;
 import com.lmax.disruptor.*;
 
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -82,7 +80,7 @@ public class Consumer extends Thread {
 
     public void run() {
         HitFinder hitFinder = new HitFinder();
-        ExecutorService pool = Executors.newFixedThreadPool(12);
+        ExecutorService pool = Executors.newFixedThreadPool(7);
         try {
 
             while (true) {
@@ -93,8 +91,8 @@ public class Consumer extends Thread {
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 byte[] payload = buf.getPayload();
                 if (payload.length > 0) {
-                    Runnable r = () -> decodePayloadMap(frameTime, payload);
-                    pool.execute(r);
+//                    Runnable r = () -> decodePayloadMap(frameTime, payload);
+//                    pool.execute(r);
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
 //                            .reset()
