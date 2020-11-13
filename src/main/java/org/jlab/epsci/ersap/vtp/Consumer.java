@@ -93,7 +93,7 @@ public class Consumer extends Thread {
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 byte[] payload = buf.getPayload();
                 if (payload.length > 0) {
-//                    Runnable r = () -> decodePayloadMap(frameTime, payload);
+                    Runnable r = () -> decodePayloadMap(frameTime, payload);
 //                    pool.execute(r);
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
