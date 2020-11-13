@@ -89,12 +89,12 @@ public class Consumer extends Thread {
                 // Get an empty item from ring
                 RingEvent buf = get();
 
-//                BigInteger frameTime =
-//                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
-//                byte[] payload = buf.getPayload();
-//                if (payload.length > 0) {
-//                    Runnable r = () -> decodePayloadMap(frameTime, payload);
-//                    pool.execute(r);
+                BigInteger frameTime =
+                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
+                byte[] payload = buf.getPayload();
+                if (payload.length > 0) {
+                    Runnable r = () -> decodePayloadMap(frameTime, payload);
+                    pool.execute(r);
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
 //                            .reset()
@@ -105,7 +105,7 @@ public class Consumer extends Thread {
 //                            .windowSize(4)
 //                            .slide();
 //                    printHits(hits);
-//                }
+                }
 
                 put();
             }
