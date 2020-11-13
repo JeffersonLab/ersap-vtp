@@ -1,6 +1,7 @@
 package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
+
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
 public class TwoStreamAggregator {
@@ -14,7 +15,7 @@ public class TwoStreamAggregator {
     /**
      * Max ring items
      */
-    private final static int maxRingItems = 512;
+    private final static int maxRingItems = 1024;
 
     /**
      * Ring buffers
@@ -42,20 +43,23 @@ public class TwoStreamAggregator {
         this.vtpPort2 = vtpPort2;
 
         ringBuffer1 = createSingleProducer(new RingEventFactory(), maxRingItems,
-                new LiteBlockingWaitStrategy());
+//                new LiteBlockingWaitStrategy());
+                new YieldingWaitStrategy());
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
         ringBuffer2 = createSingleProducer(new RingEventFactory(), maxRingItems,
-                new LiteBlockingWaitStrategy());
+//                new LiteBlockingWaitStrategy());
+                new YieldingWaitStrategy());
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
 
         ringBuffer12 = createSingleProducer(new RingEventFactory(), maxRingItems,
-                new LiteBlockingWaitStrategy());
+//                new LiteBlockingWaitStrategy());
+                new YieldingWaitStrategy());
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
         ringBuffer12.addGatingSequences(sequence12);
