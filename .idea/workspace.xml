@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,20 +127,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00015" summary="-cleanup not needed imports">
-      <created>1604677800129</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1604677800129</updated>
-    </task>
-    <task id="LOCAL-00016" summary="- fixed typo in chargeTime14">
-      <created>1604678106550</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1604678106550</updated>
     </task>
     <task id="LOCAL-00017" summary="- debugging">
       <created>1605057871819</created>
@@ -471,7 +457,21 @@
       <option name="project" value="LOCAL" />
       <updated>1605277059655</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="- debugging">
+      <created>1605372196765</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1605372196765</updated>
+    </task>
+    <task id="LOCAL-00065" summary="- debugging">
+      <created>1605372213158</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1605372213158</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TodoView">
@@ -500,10 +500,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="626" y="246" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1604949265430" />
-    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1605277059479">
+    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1605372212970">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1605277059479" />
+    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1605372212970" />
     <state x="414" y="282" key="IDE.errors.dialog" timestamp="1605058828637">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -512,10 +512,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="301" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1605057815606" />
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1605277062478">
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1605372214742">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1605277062478" />
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1605372214742" />
     <state x="527" y="295" width="598" height="490" key="find.popup" timestamp="1605058448139">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
