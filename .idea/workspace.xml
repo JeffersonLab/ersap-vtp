@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ersap_vtp" beforeDir="false" afterPath="$PROJECT_DIR$/bin/ersap_vtp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,13 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00021" summary="- debugging">
-      <created>1605059014709</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1605059014709</updated>
     </task>
     <task id="LOCAL-00022" summary="- debugging">
       <created>1605059755051</created>
@@ -453,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1606920921127</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="- debugging">
+      <created>1606922653720</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1606922653720</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="TodoView">
@@ -486,10 +486,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="626" y="246" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1604949265430" />
-    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1606920920967">
+    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1606922653596">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1606920920967" />
+    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1606922653596" />
     <state x="414" y="282" key="IDE.errors.dialog" timestamp="1605058828637">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -498,14 +498,14 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="301" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1606919785080" />
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1606920923632">
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1606922655219">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1606920923632" />
-    <state x="527" y="295" width="598" height="490" key="find.popup" timestamp="1605058448139">
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1606922655219" />
+    <state x="527" y="295" width="598" height="490" key="find.popup" timestamp="1606923493793">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="527" y="295" width="598" height="490" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1605058448139" />
+    <state x="527" y="295" width="598" height="490" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1606923493793" />
     <state x="491" y="263" width="670" height="676" key="search.everywhere.popup" timestamp="1605196177370">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
