@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/AdcHit.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/AdcHit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Aggregator.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Aggregator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/ChargeTime.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/ChargeTime.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Consumer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Consumer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/EUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/EUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/HitFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/HitFinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEventFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEventFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/SlidingWindowStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/SlidingWindowStream.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,24 +55,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="ersap-vtp" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="ersap-vtp" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="ersap-vtp" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="ersap-vtp" type="f1a62948:ProjectNode" />
-                <item name="Source Sets" type="e897c970:GradleViewContributor$SourceSetsNode" />
-                <item name="main" type="396b929e:GradleViewContributor$SourceSetNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -127,13 +130,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00018" summary="- debugging">
-      <created>1605058105848</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1605058105848</updated>
     </task>
     <task id="LOCAL-00019" summary="- debugging">
       <created>1605058332133</created>
@@ -471,7 +467,14 @@
       <option name="project" value="LOCAL" />
       <updated>1605372399604</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="- debugging">
+      <created>1605372661356</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1605372661356</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TodoView">
@@ -500,22 +503,22 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="626" y="246" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1604949265430" />
-    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1605372399429">
+    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1605372661164">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1605372399429" />
+    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1605372661164" />
     <state x="414" y="282" key="IDE.errors.dialog" timestamp="1605058828637">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="414" y="282" key="IDE.errors.dialog/0.23.1680.1027@0.23.1680.1027" timestamp="1605058828637" />
-    <state x="301" y="119" key="SettingsEditor" timestamp="1605057815606">
+    <state x="301" y="119" key="SettingsEditor" timestamp="1606919785080">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="301" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1605057815606" />
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1605372401310">
+    <state x="301" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1606919785080" />
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1605372663157">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1605372401310" />
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1605372663157" />
     <state x="527" y="295" width="598" height="490" key="find.popup" timestamp="1605058448139">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
