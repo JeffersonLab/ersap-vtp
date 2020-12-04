@@ -75,7 +75,7 @@ public class Receiver extends Thread {
             InputStream input = socket.getInputStream();
             dataInputStream = new DataInputStream(new BufferedInputStream(input));
             dataInputStream.readInt();
-            dataInputStream.readInt();
+//            dataInputStream.readInt();
         } catch (
                 IOException e) {
             e.printStackTrace();
@@ -103,6 +103,8 @@ public class Receiver extends Thread {
 
     private void decodeVtpHeader(RingEvent evt) {
         try {
+            dataInputStream.readInt();
+
             int source_id = Integer.reverseBytes(dataInputStream.readInt());
             int total_length = Integer.reverseBytes(dataInputStream.readInt());
             int payload_length = Integer.reverseBytes(dataInputStream.readInt());
