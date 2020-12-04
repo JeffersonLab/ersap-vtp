@@ -17,7 +17,7 @@ public class FourStreamAggregator {
     /**
      * Max ring items
      */
-    private final static int maxRingItems = 32;
+    private final static int maxRingItems = 64;
 
     /**
      * Ring buffers
