@@ -110,13 +110,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00029" summary="- debugging">
-      <created>1605134141088</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1605134141088</updated>
-    </task>
     <task id="LOCAL-00030" summary="- debugging">
       <created>1605138265027</created>
       <option name="number" value="00030" />
@@ -453,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607096957422</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="- debugging">
+      <created>1607097147337</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1607097147337</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TodoView">
@@ -486,10 +486,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="626" y="246" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1604949265430" />
-    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1607096957261">
+    <state x="375" y="85" key="CommitChangelistDialog2" timestamp="1607097147190">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1607096957261" />
+    <state x="375" y="85" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1607097147190" />
     <state x="414" y="282" key="IDE.errors.dialog" timestamp="1607008468015">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -498,10 +498,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="301" y="119" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1606919785080" />
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1607096959305">
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2" timestamp="1607097149375">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1607096959305" />
+    <state x="413" y="278" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1607097149375" />
     <state x="527" y="295" width="598" height="490" key="find.popup" timestamp="1606923493793">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
