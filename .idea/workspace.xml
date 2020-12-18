@@ -112,13 +112,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00041" summary="- debugging">
-      <created>1605196478626</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1605196478626</updated>
-    </task>
     <task id="LOCAL-00042" summary="- debugging">
       <created>1605196648484</created>
       <option name="number" value="00042" />
@@ -455,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608308445737</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="- debug">
+      <created>1608308745113</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1608308745113</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TodoView">
@@ -476,7 +476,8 @@
     <MESSAGE value="- disruptor wait strategy change" />
     <MESSAGE value="- new jar" />
     <MESSAGE value="- handling discrepancies between soft and hard sources (not one additional int)" />
-    <option name="LAST_COMMIT_MESSAGE" value="- handling discrepancies between soft and hard sources (not one additional int)" />
+    <MESSAGE value="- debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- debug" />
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />

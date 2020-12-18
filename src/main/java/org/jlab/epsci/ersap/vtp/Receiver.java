@@ -74,8 +74,10 @@ public class Receiver extends Thread {
             System.out.println("VTP client connected");
             InputStream input = socket.getInputStream();
             dataInputStream = new DataInputStream(new BufferedInputStream(input));
-            dataInputStream.readInt();
-            dataInputStream.readInt();
+            int a = dataInputStream.readInt();
+            int b = dataInputStream.readInt();
+            System.out.println(String.format(streamId+":magic = %x", a));
+            System.out.println(String.format(streamId+":magic = %x", b));
         } catch (
                 IOException e) {
             e.printStackTrace();
