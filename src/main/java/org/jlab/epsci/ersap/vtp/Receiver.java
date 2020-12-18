@@ -76,8 +76,6 @@ public class Receiver extends Thread {
             dataInputStream = new DataInputStream(new BufferedInputStream(input));
             int a = dataInputStream.readInt();
             int b = dataInputStream.readInt();
-            System.out.println(String.format(streamId+":magic = %x", a));
-            System.out.println(String.format(streamId+":magic = %x", b));
         } catch (
                 IOException e) {
             e.printStackTrace();
@@ -105,8 +103,6 @@ public class Receiver extends Thread {
 
     private void decodeVtpHeader(RingEvent evt) {
         try {
-            dataInputStream.readInt();
-
             int source_id = Integer.reverseBytes(dataInputStream.readInt());
             int total_length = Integer.reverseBytes(dataInputStream.readInt());
             int payload_length = Integer.reverseBytes(dataInputStream.readInt());
@@ -122,9 +118,9 @@ public class Receiver extends Thread {
             BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-            printFrame(streamId, source_id, total_length, payload_length,
-                    compressed_length, magic, format_version, flags,
-                    record_number, ts_sec, ts_nsec);
+//            printFrame(streamId, source_id, total_length, payload_length,
+//                    compressed_length, magic, format_version, flags,
+//                    record_number, ts_sec, ts_nsec);
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
