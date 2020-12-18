@@ -94,7 +94,7 @@ public class Consumer extends Thread {
                 if (payload.length > 0) {
                     Runnable r = () -> decodePayloadMap(frameTime, payload);
                     pool.execute(r);
-                    List<AdcHit> evt = decodePayload(frameTime, payload);
+//                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
 //                            .reset()
 //                            .stream(evt)
