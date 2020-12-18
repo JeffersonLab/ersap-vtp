@@ -74,8 +74,8 @@ public class Receiver extends Thread {
             System.out.println("VTP client connected");
             InputStream input = socket.getInputStream();
             dataInputStream = new DataInputStream(new BufferedInputStream(input));
-            int a = dataInputStream.readInt();
-            int b = dataInputStream.readInt();
+            dataInputStream.readInt();
+            dataInputStream.readInt();
         } catch (
                 IOException e) {
             e.printStackTrace();
