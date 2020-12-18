@@ -81,7 +81,7 @@ public class Consumer extends Thread {
 
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
-        ExecutorService pool = Executors.newFixedThreadPool(8);
+        ExecutorService pool = Executors.newFixedThreadPool(16);
         try {
 
             while (true) {
@@ -92,8 +92,8 @@ public class Consumer extends Thread {
                         buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 byte[] payload = buf.getPayload();
                 if (payload.length > 0) {
-//                    Runnable r = () -> decodePayloadMap(frameTime, payload);
-//                    pool.execute(r);
+                    Runnable r = () -> decodePayloadMap(frameTime, payload);
+                    pool.execute(r);
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
 //                    Map<Integer, List<ChargeTime>> hits = hitFinder
 //                            .reset()
