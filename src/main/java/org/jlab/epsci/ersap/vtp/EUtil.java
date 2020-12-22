@@ -292,8 +292,8 @@ public class EUtil {
             for (int jj = 0; jj < 8; jj++) {
                 slot_ind[jj] = EUtil.getUnsignedShort(bb);
                 slot_len[jj] = EUtil.getUnsignedShort(bb);
-                System.out.println(" slot-index  = " + slot_ind[jj]);
-                System.out.println(" slot-length = " + slot_len[jj]);
+//                System.out.println(" slot-index  = " + slot_ind[jj]);
+//                System.out.println(" slot-length = " + slot_len[jj]);
             }
             for (int i = 0; i < 8; i++) {
                 if (slot_len[i] > 0) {
@@ -313,6 +313,9 @@ public class EUtil {
                             long v = ((val >> 17) & 0x3FFF) * 4;
                             BigInteger ht = BigInteger.valueOf(v);
                             hit.setTime(frame_time_ns.add(ht));
+                            System.out.println();
+                            System.out.println(hit);
+                            System.out.println();
                             if(res.containsKey(ht)){
                                 res.get(ht).add(hit);
                             } else {
