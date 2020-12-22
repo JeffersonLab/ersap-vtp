@@ -281,7 +281,7 @@ public class EUtil {
 
     public static  Map<BigInteger,List<AdcHit>> decodePayloadMap(BigInteger frame_time_ns, byte[] payload) {
         Map<BigInteger,List<AdcHit>> res = new HashMap<>();
-        System.out.println("\n =========================================");
+        System.out.println("\n DDD ========================================= ");
         ByteBuffer bb = ByteBuffer.wrap(payload);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         int[] slot_ind = new int[8];
@@ -292,8 +292,8 @@ public class EUtil {
             for (int jj = 0; jj < 8; jj++) {
                 slot_ind[jj] = EUtil.getUnsignedShort(bb);
                 slot_len[jj] = EUtil.getUnsignedShort(bb);
-//                System.out.println(" slot-index  = " + slot_ind[jj]);
-//                System.out.println(" slot-length = " + slot_len[jj]);
+//                System.out.println(" DDD:slot-index  = " + slot_ind[jj]);
+//                System.out.println(" DDD:slot-length = " + slot_len[jj]);
             }
             for (int i = 0; i < 8; i++) {
                 if (slot_len[i] > 0) {
@@ -303,8 +303,13 @@ public class EUtil {
                         int val = bb.getInt();
                         AdcHit hit = new AdcHit();
 
+                        System.out.println(String.format("DDD:val = %x", val));
+
                         if ((val & 0x80000000) == 0x80000000) {
                             type = (val >> 15) & 0xFFFF;
+
+                            System.out.println(String.format("DDD:type = %x", type));
+
                             hit.setCrate((val >> 8) & 0x007F);
                             hit.setSlot((val) & 0x001F);
                         } else if (type == 0x0001) /* FADC hit type */ {
@@ -313,9 +318,9 @@ public class EUtil {
                             long v = ((val >> 17) & 0x3FFF) * 4;
                             BigInteger ht = BigInteger.valueOf(v);
                             hit.setTime(frame_time_ns.add(ht));
-                            System.out.println();
-                            System.out.println(hit);
-                            System.out.println();
+//                            System.out.println();
+//                            System.out.println(hit);
+//                            System.out.println();
                             if(res.containsKey(ht)){
                                 res.get(ht).add(hit);
                             } else {
@@ -331,7 +336,7 @@ public class EUtil {
             System.out.println("parser error: wrong tag");
             System.exit(0);
         }
-        System.out.println("=========================================");
+        System.out.println(" DDD =========================================");
         return res;
     }
 
