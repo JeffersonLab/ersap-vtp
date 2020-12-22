@@ -343,19 +343,24 @@ public class EUtil {
                 int slot_ind = (vl>>0)  & 0xFFFF;
                 int slot_len = (vl>>16) & 0xFFFF;
                 if(slot_len > 0) {
+                    int type = 0x0;
+                    int crate  = -1;
+                    int slot = -1;
                     for(int jj=0; jj<slot_len; jj++) {
                          int val = pData.get(slot_ind + jj);
 
-                        int type = 0x0;
                         if ((val & 0x80000000) == 0x80000000) {
                             type  = (val>>15) & 0xFFFF;
+                            crate = (val >> 8) & 0x007F;
+                            slot = (val >> 0) & 0x001F;
+
 //                            System.out.printf("DDD:type = %x%n", type);
                         }
-                        if(type == 0x0001) { // FADC hit type
+                        else if(type == 0x0001) { // FADC hit type
                             AdcHit hit = new AdcHit();
-                            hit.setCrate((val >> 8) & 0x007F);
-                            hit.setSlot((val) & 0x001F);
-                            hit.setQ((val) & 0x1FFF);
+                            hit.setCrate(crate);
+                            hit.setSlot(slot);
+                            hit.setQ((val >> 0) & 0x1FFF);
                             hit.setChannel((val >> 13) & 0x000F);
                             long v = ((val >> 17) & 0x3FFF) * 4;
                             BigInteger ht = BigInteger.valueOf(v);
