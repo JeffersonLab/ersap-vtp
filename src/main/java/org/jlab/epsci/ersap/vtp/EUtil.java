@@ -365,7 +365,7 @@ public class EUtil {
                             long v = ((val >> 17) & 0x3FFF) * 4;
                             BigInteger ht = BigInteger.valueOf(v);
                             hit.setTime(frame_time_ns.add(ht));
-//                            System.out.println("\n DDD "+ hit + "\n");
+                            System.out.println("\n DDD "+ hit + "\n");
                             if(res.containsKey(ht)){
                                 res.get(ht).add(hit);
                             } else {
