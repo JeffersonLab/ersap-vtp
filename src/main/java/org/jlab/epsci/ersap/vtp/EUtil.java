@@ -281,7 +281,6 @@ public class EUtil {
 
     public static  Map<BigInteger,List<AdcHit>> decodePayloadMap(BigInteger frame_time_ns, byte[] payload) {
         Map<BigInteger,List<AdcHit>> res = new HashMap<>();
-        System.out.println("\n DDD ========================================= ");
         ByteBuffer bb = ByteBuffer.wrap(payload);
         bb.order(ByteOrder.LITTLE_ENDIAN);
         int[] slot_ind = new int[8];
@@ -292,8 +291,6 @@ public class EUtil {
             for (int jj = 0; jj < 8; jj++) {
                 slot_ind[jj] = EUtil.getUnsignedShort(bb);
                 slot_len[jj] = EUtil.getUnsignedShort(bb);
-//                System.out.println(" DDD:slot-index  = " + slot_ind[jj]);
-//                System.out.println(" DDD:slot-length = " + slot_len[jj]);
             }
             for (int i = 0; i < 8; i++) {
                 if (slot_len[i] > 0) {
@@ -302,14 +299,8 @@ public class EUtil {
                     for (int j = 0; j < slot_len[i]; j++) {
                         int val = bb.getInt();
                         AdcHit hit = new AdcHit();
-
-                        System.out.println(String.format("DDD:val = %x", val));
-
                         if ((val & 0x80000000) == 0x80000000) {
                             type = (val >> 15) & 0xFFFF;
-
-                            System.out.println(String.format("DDD:type = %x", type));
-
                             hit.setCrate((val >> 8) & 0x007F);
                             hit.setSlot((val) & 0x001F);
                         } else if (type == 0x0001) /* FADC hit type */ {
@@ -318,9 +309,58 @@ public class EUtil {
                             long v = ((val >> 17) & 0x3FFF) * 4;
                             BigInteger ht = BigInteger.valueOf(v);
                             hit.setTime(frame_time_ns.add(ht));
-//                            System.out.println();
-//                            System.out.println(hit);
-//                            System.out.println();
+                            if(res.containsKey(ht)){
+                                res.get(ht).add(hit);
+                            } else {
+                                List<AdcHit> adcHits = new ArrayList<>();
+                                adcHits.add(hit);
+                                res.put(ht, adcHits);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            System.out.println("parser error: wrong tag");
+            System.exit(0);
+        }
+        return res;
+    }
+    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(BigInteger frame_time_ns, byte[] payload) {
+        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
+        System.out.println("\n DDD ========================================= ");
+        ByteBuffer bb = ByteBuffer.wrap(payload);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+
+        // read entire buffer into an array
+        List<Integer> pData = new ArrayList<>();
+        while (bb.hasRemaining()) {
+            pData.add(bb.getInt());
+        }
+        if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
+            for(int j=1; j<9; j++) {
+                int vl = pData.get(j);
+                int slot_ind = (vl>>0)  & 0xFFFF;
+                int slot_len = (vl>>16) & 0xFFFF;
+                if(slot_len > 0) {
+                    for(int jj=0; jj<slot_len; jj++) {
+                         int val = pData.get(slot_ind + jj);
+
+                        int type = 0x0;
+                        if ((val & 0x80000000) == 0x80000000) {
+                            type  = (val>>15) & 0xFFFF;
+                            System.out.printf("DDD:type = %x%n", type);
+                        }
+                        if(type == 0x0001) { // FADC hit type
+                            AdcHit hit = new AdcHit();
+                            hit.setCrate((val >> 8) & 0x007F);
+                            hit.setSlot((val) & 0x001F);
+                            hit.setQ((val) & 0x1FFF);
+                            hit.setChannel((val >> 13) & 0x000F);
+                            long v = ((val >> 17) & 0x3FFF) * 4;
+                            BigInteger ht = BigInteger.valueOf(v);
+                            hit.setTime(frame_time_ns.add(ht));
+                            System.out.println("\n "+ hit + "\n");
                             if(res.containsKey(ht)){
                                 res.get(ht).add(hit);
                             } else {
