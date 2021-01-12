@@ -148,8 +148,8 @@ public class Receiver extends Thread {
     }
     private void decodeVtpHeaderCT(RingEvent evt) {
         try {
-            dataInputStream.readFully(header);
             headerBuffer.clear();
+            dataInputStream.readFully(header);
             headerBuffer.flip();
 
             int source_id = headerBuffer.getInt();
