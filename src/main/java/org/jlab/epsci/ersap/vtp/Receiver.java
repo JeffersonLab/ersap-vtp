@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
@@ -73,7 +75,8 @@ public class Receiver extends Thread {
             Socket socket = serverSocket.accept();
             System.out.println("VTP client connected");
             InputStream input = socket.getInputStream();
-            dataInputStream = new DataInputStream(new BufferedInputStream(input));
+//            dataInputStream = new DataInputStream(new BufferedInputStream(input));
+            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536)); //CT suggestion
             dataInputStream.readInt();
             dataInputStream.readInt();
         } catch (
@@ -138,6 +141,47 @@ public class Receiver extends Thread {
             e.printStackTrace();
         }
     }
+    private void decodeVtpHeaderCT(RingEvent evt) {
+        try {
+            byte[] header = new byte[52];
+            ByteBuffer bb = ByteBuffer.wrap(header);
+            bb.order(ByteOrder.LITTLE_ENDIAN);
+
+            int source_id = bb.getInt();
+            int total_length = bb.getInt();
+            int payload_length = bb.getInt();
+            int compressed_length = bb.getInt();
+            int magic = bb.getInt();
+
+            int format_version = bb.getInt();
+            int flags = bb.getInt();
+            long record_number = EUtil.llSwap(bb.getLong());
+            long ts_sec = EUtil.llSwap(bb.getLong());
+            long ts_nsec = EUtil.llSwap(bb.getLong());
+
+            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
+//                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
+//                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
+//            printFrame(streamId, source_id, total_length, payload_length,
+//                    compressed_length, magic, format_version, flags,
+//                    record_number, ts_sec, ts_nsec);
+
+            byte[] dataBuffer = new byte[payload_length];
+            dataInputStream.readFully(dataBuffer);
+            evt.setPayload(dataBuffer);
+            evt.setRecordNumber(rcn);
+            evt.setStreamId(streamId);
+
+            // Collect statistics
+            missed_record = missed_record + (record_number - (prev_rec_number + 1));
+            prev_rec_number = record_number;
+            totalData = totalData + (double) total_length / 1000.0;
+            rate++;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void run() {
         try {
@@ -145,7 +189,8 @@ public class Receiver extends Thread {
                 // Get an empty item from ring
                 RingEvent buf = get();
 
-                decodeVtpHeader(buf);
+//                decodeVtpHeader(buf);
+                decodeVtpHeaderCT(buf); //CT suggestion
 
                 // Make the buffer available for consumers
                 publish();
