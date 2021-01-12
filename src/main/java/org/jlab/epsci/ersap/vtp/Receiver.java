@@ -150,7 +150,9 @@ public class Receiver extends Thread {
         try {
             headerBuffer.clear();
             dataInputStream.readFully(header);
+            headerBuffer.put(header);
             headerBuffer.flip();
+
 
             int source_id = headerBuffer.getInt();
             int total_length = headerBuffer.getInt();
