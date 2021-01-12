@@ -308,15 +308,21 @@ public class EUtil {
                             slot = (val >> 0) & 0x001F;
                         }
                         else if(type == 0x0001) { // FADC hit type
-                            AdcHit hit = new AdcHit();
-                            hit.setCrate(crate);
-                            hit.setSlot(slot);
-                            hit.setQ((val >> 0) & 0x1FFF);
-                            hit.setChannel((val >> 13) & 0x000F);
-                            long v = ((val >> 17) & 0x3FFF) * 4;
-                            BigInteger ht = BigInteger.valueOf(v);
-                            hit.setTime(frame_time_ns.add(ht));
-//                            System.out.println("\n DDD "+ hit + "\n");
+                            ///ddddd
+                            int q = (val >> 0) & 0x1FFF;
+                            int channel = (val >> 13) & 0x000F;
+                              long v = ((val >> 17) & 0x3FFF) * 4;
+                            BigInteger ht = frame_time_ns.add(BigInteger.valueOf(v));
+                            // ddddd
+
+//                            AdcHit hit = new AdcHit();
+//                            hit.setCrate(crate);
+//                            hit.setSlot(slot);
+//                            hit.setQ((val >> 0) & 0x1FFF);
+//                            hit.setChannel((val >> 13) & 0x000F);
+//                            long v = ((val >> 17) & 0x3FFF) * 4;
+//                            BigInteger ht = BigInteger.valueOf(v);
+//                            hit.setTime(frame_time_ns.add(ht));
 //                            if(res.containsKey(ht)){
 //                                res.get(ht).add(hit);
 //                            } else {
