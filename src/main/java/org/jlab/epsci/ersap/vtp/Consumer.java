@@ -81,7 +81,7 @@ public class Consumer extends Thread {
 
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
-        ExecutorService pool = Executors.newFixedThreadPool(20);
+        ExecutorService pool = Executors.newFixedThreadPool(24);
         try {
 
             while (true) {
