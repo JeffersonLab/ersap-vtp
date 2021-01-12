@@ -280,7 +280,7 @@ public class EUtil {
     }
 
     public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(BigInteger frame_time_ns, byte[] payload) {
-        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
+//        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
         ByteBuffer bb = ByteBuffer.wrap(payload);
         bb.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -316,13 +316,13 @@ public class EUtil {
                             BigInteger ht = BigInteger.valueOf(v);
                             hit.setTime(frame_time_ns.add(ht));
 //                            System.out.println("\n DDD "+ hit + "\n");
-                            if(res.containsKey(ht)){
-                                res.get(ht).add(hit);
-                            } else {
-                                List<AdcHit> adcHits = new ArrayList<>();
-                                adcHits.add(hit);
-                                res.put(ht, adcHits);
-                            }
+//                            if(res.containsKey(ht)){
+//                                res.get(ht).add(hit);
+//                            } else {
+//                                List<AdcHit> adcHits = new ArrayList<>();
+//                                adcHits.add(hit);
+//                                res.put(ht, adcHits);
+//                            }
                         }
                     }
                 }
@@ -331,7 +331,8 @@ public class EUtil {
             System.out.println("parser error: wrong tag");
             System.exit(0);
         }
-        return res;
+        return null;
+//        return res;
     }
 
 
