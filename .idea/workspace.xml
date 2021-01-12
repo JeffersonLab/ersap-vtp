@@ -112,13 +112,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00067" summary="- debugging">
-      <created>1605372661356</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1605372661356</updated>
-    </task>
     <task id="LOCAL-00068" summary="- debugging">
       <created>1606920104846</created>
       <option name="number" value="00068" />
@@ -455,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610484311317</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="- implementing Carl's suggestions with debugging">
+      <created>1610485296322</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1610485296322</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TodoView">

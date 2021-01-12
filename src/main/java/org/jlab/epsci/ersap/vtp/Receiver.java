@@ -57,11 +57,16 @@ public class Receiver extends Thread {
     private int rate;
     private long missed_record;
     private long prev_rec_number;
+    private ByteBuffer headerBuffer;
+    private byte[] header = new byte[52];
 
     public Receiver(int vtpPort, int streamId, RingBuffer<RingEvent> ringBuffer, int statPeriod) {
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.statPeriod = statPeriod;
+
+        headerBuffer = ByteBuffer.wrap(header);;
+        headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
@@ -143,22 +148,22 @@ public class Receiver extends Thread {
     }
     private void decodeVtpHeaderCT(RingEvent evt) {
         try {
-            byte[] header = new byte[52];
             dataInputStream.readFully(header);
-            ByteBuffer bb = ByteBuffer.wrap(header);
-            bb.order(ByteOrder.LITTLE_ENDIAN);
+            headerBuffer.clear();
+            headerBuffer.put(header);
+            headerBuffer.flip();
 
-            int source_id = bb.getInt();
-            int total_length = bb.getInt();
-            int payload_length = bb.getInt();
-            int compressed_length = bb.getInt();
-            int magic = bb.getInt();
+            int source_id = headerBuffer.getInt();
+            int total_length = headerBuffer.getInt();
+            int payload_length = headerBuffer.getInt();
+            int compressed_length = headerBuffer.getInt();
+            int magic = headerBuffer.getInt();
 
-            int format_version = bb.getInt();
-            int flags = bb.getInt();
-            long record_number = EUtil.llSwap(bb.getLong());
-            long ts_sec = EUtil.llSwap(bb.getLong());
-            long ts_nsec = EUtil.llSwap(bb.getLong());
+            int format_version = headerBuffer.getInt();
+            int flags = headerBuffer.getInt();
+            long record_number = EUtil.llSwap(headerBuffer.getLong());
+            long ts_sec = EUtil.llSwap(headerBuffer.getLong());
+            long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
 
             BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
