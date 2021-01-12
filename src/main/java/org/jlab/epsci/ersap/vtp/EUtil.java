@@ -281,6 +281,7 @@ public class EUtil {
 
     public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(BigInteger frame_time_ns, byte[] payload) {
 //        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
+
         ByteBuffer bb = ByteBuffer.wrap(payload);
         bb.order(ByteOrder.LITTLE_ENDIAN);
 
