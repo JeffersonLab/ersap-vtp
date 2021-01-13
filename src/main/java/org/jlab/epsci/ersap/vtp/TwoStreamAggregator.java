@@ -44,22 +44,21 @@ public class TwoStreamAggregator {
 
         ringBuffer1 = createSingleProducer(new RingEventFactory(), maxRingItems,
 //                new LiteBlockingWaitStrategy());
-                new YieldingWaitStrategy());
+//                new YieldingWaitStrategy());
+                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
         ringBuffer2 = createSingleProducer(new RingEventFactory(), maxRingItems,
-//                new LiteBlockingWaitStrategy());
-                new YieldingWaitStrategy());
+                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
 
         ringBuffer12 = createSingleProducer(new RingEventFactory(), maxRingItems,
-//                new LiteBlockingWaitStrategy());
-                new YieldingWaitStrategy());
+                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
         ringBuffer12.addGatingSequences(sequence12);
