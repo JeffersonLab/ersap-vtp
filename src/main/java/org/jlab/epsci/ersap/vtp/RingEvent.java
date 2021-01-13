@@ -4,7 +4,8 @@ import java.math.BigInteger;
 
 public class RingEvent {
     private int streamId;
-    private BigInteger recordNumber;
+//    private BigInteger recordNumber;
+    private Long recordNumber;
     private byte[] payload;
 
     public int getStreamId() {
@@ -15,11 +16,19 @@ public class RingEvent {
         this.streamId = streamId;
     }
 
-    public BigInteger getRecordNumber() {
+//    public BigInteger getRecordNumber() {
+//        return recordNumber;
+//    }
+//
+//    public void setRecordNumber(BigInteger recordNumber) {
+//        this.recordNumber = recordNumber;
+//    }
+
+    public Long getRecordNumber() {
         return recordNumber;
     }
 
-    public void setRecordNumber(BigInteger recordNumber) {
+    public void setRecordNumber(Long recordNumber) {
         this.recordNumber = recordNumber;
     }
 

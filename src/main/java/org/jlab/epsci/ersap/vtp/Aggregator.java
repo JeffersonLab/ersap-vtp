@@ -21,8 +21,10 @@ public class Aggregator extends Thread {
     /**
      * Maps for aggregation
      */
-    private HashMap<BigInteger, byte[]> m1 = new HashMap<>();
-    private HashMap<BigInteger, byte[]> m2 = new HashMap<>();
+//    private HashMap<BigInteger, byte[]> m1 = new HashMap<>();
+//    private HashMap<BigInteger, byte[]> m2 = new HashMap<>();
+    private HashMap<Long, byte[]> m1 = new HashMap<>();
+    private HashMap<Long, byte[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
@@ -104,14 +106,17 @@ public class Aggregator extends Thread {
             }
             RingEvent inputItem2 = ringBuffer2.get(nextSequence2);
 
-            BigInteger b1 = inputItem1.getRecordNumber();
-            BigInteger b2 = inputItem2.getRecordNumber();
+//            BigInteger b1 = inputItem1.getRecordNumber();
+//            BigInteger b2 = inputItem2.getRecordNumber();
+            Long b1 = inputItem1.getRecordNumber();
+            Long b2 = inputItem2.getRecordNumber();
 
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
             byte[] aggregate = null;
-            BigInteger aggRecNum = null;
+//            BigInteger aggRecNum = null;
+            Long aggRecNum = null;
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 aggregate = EUtil.addByteArrays(m1.get(b1), m2.get(b1));
                 aggRecNum = b1;

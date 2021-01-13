@@ -123,17 +123,18 @@ public class Receiver extends Thread {
             long ts_sec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
             long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
 
-            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
+//            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-//            printFrame(streamId, source_id, total_length, payload_length,
-//                    compressed_length, magic, format_version, flags,
-//                    record_number, ts_sec, ts_nsec);
+            printFrame(streamId, source_id, total_length, payload_length,
+                    compressed_length, magic, format_version, flags,
+                    record_number, ts_sec, ts_nsec);
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
             evt.setPayload(dataBuffer);
-            evt.setRecordNumber(rcn);
+//            evt.setRecordNumber(rcn);
+            evt.setRecordNumber(record_number);
             evt.setStreamId(streamId);
 
             // Collect statistics
@@ -163,7 +164,7 @@ public class Receiver extends Thread {
             long ts_sec = EUtil.llSwap(headerBuffer.getLong());
             long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
 
-            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
+//            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
 //            printFrame(streamId, source_id, total_length, payload_length,
@@ -173,7 +174,8 @@ public class Receiver extends Thread {
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
             evt.setPayload(dataBuffer);
-            evt.setRecordNumber(rcn);
+//            evt.setRecordNumber(rcn);
+            evt.setRecordNumber(record_number);
             evt.setStreamId(streamId);
 
             // Collect statistics
