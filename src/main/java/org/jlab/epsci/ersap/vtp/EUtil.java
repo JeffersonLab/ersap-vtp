@@ -282,6 +282,7 @@ public class EUtil {
 
         // read entire buffer into an array
         while (payloadBuffer.hasRemaining()) {
+            System.out.println("DDD ");
             pData.add(payloadBuffer.getInt());
         }
         if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
