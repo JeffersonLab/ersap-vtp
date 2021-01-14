@@ -282,9 +282,10 @@ public class EUtil {
 
         // read entire buffer into an array
         while (payloadBuffer.hasRemaining()) {
-            int a = payloadBuffer.getInt();
-            if (a > 0) System.out.println("DDD "+ a);
-//            pData.add(payloadBuffer.getInt());
+            pData.add(payloadBuffer.getInt());
+        }
+        for (int i = 0; i<10; i++){
+            System.out.println("DDD "+pData.get(i));
         }
         return null;
 
