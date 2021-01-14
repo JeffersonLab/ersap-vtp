@@ -282,58 +282,59 @@ public class EUtil {
 
         // read entire buffer into an array
         while (payloadBuffer.hasRemaining()) {
-            System.out.println("DDD ");
             pData.add(payloadBuffer.getInt());
         }
-        if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
-            for(int j=1; j<9; j++) {
-                int vl = pData.get(j);
-                int slot_ind = (vl>>0)  & 0xFFFF;
-                int slot_len = (vl>>16) & 0xFFFF;
-                if(slot_len > 0) {
-                    int type = 0x0;
-                    int crate  = -1;
-                    int slot = -1;
-                    for(int jj=0; jj<slot_len; jj++) {
-                         int val = pData.get(slot_ind + jj);
-
-                        if ((val & 0x80000000) == 0x80000000) {
-                            type  = (val>>15) & 0xFFFF;
-                            crate = (val >> 8) & 0x007F;
-                            slot = (val >> 0) & 0x001F;
-                        }
-                        else if(type == 0x0001) { // FADC hit type
-                            ///ddddd
-                            int q = (val >> 0) & 0x1FFF;
-                            int channel = (val >> 13) & 0x000F;
-                              long v = ((val >> 17) & 0x3FFF) * 4;
-                            long ht = frame_time_ns + v;
-                            // ddddd
-
-//                            AdcHit hit = new AdcHit();
-//                            hit.setCrate(crate);
-//                            hit.setSlot(slot);
-//                            hit.setQ((val >> 0) & 0x1FFF);
-//                            hit.setChannel((val >> 13) & 0x000F);
-//                            long v = ((val >> 17) & 0x3FFF) * 4;
-//                            BigInteger ht = BigInteger.valueOf(v);
-//                            hit.setTime(frame_time_ns.add(ht));
-//                            if(res.containsKey(ht)){
-//                                res.get(ht).add(hit);
-//                            } else {
-//                                List<AdcHit> adcHits = new ArrayList<>();
-//                                adcHits.add(hit);
-//                                res.put(ht, adcHits);
-//                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            System.out.println("parser error: wrong tag");
-            System.exit(0);
-        }
+        System.out.println("DDDD "+ pData.size());
         return null;
+//        if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
+//            for(int j=1; j<9; j++) {
+//                int vl = pData.get(j);
+//                int slot_ind = (vl>>0)  & 0xFFFF;
+//                int slot_len = (vl>>16) & 0xFFFF;
+//                if(slot_len > 0) {
+//                    int type = 0x0;
+//                    int crate  = -1;
+//                    int slot = -1;
+//                    for(int jj=0; jj<slot_len; jj++) {
+//                         int val = pData.get(slot_ind + jj);
+//
+//                        if ((val & 0x80000000) == 0x80000000) {
+//                            type  = (val>>15) & 0xFFFF;
+//                            crate = (val >> 8) & 0x007F;
+//                            slot = (val >> 0) & 0x001F;
+//                        }
+//                        else if(type == 0x0001) { // FADC hit type
+//                            ///ddddd
+//                            int q = (val >> 0) & 0x1FFF;
+//                            int channel = (val >> 13) & 0x000F;
+//                              long v = ((val >> 17) & 0x3FFF) * 4;
+//                            long ht = frame_time_ns + v;
+//                            // ddddd
+//
+////                            AdcHit hit = new AdcHit();
+////                            hit.setCrate(crate);
+////                            hit.setSlot(slot);
+////                            hit.setQ((val >> 0) & 0x1FFF);
+////                            hit.setChannel((val >> 13) & 0x000F);
+////                            long v = ((val >> 17) & 0x3FFF) * 4;
+////                            BigInteger ht = BigInteger.valueOf(v);
+////                            hit.setTime(frame_time_ns.add(ht));
+////                            if(res.containsKey(ht)){
+////                                res.get(ht).add(hit);
+////                            } else {
+////                                List<AdcHit> adcHits = new ArrayList<>();
+////                                adcHits.add(hit);
+////                                res.put(ht, adcHits);
+////                            }
+//                        }
+//                    }
+//                }
+//            }
+//        } else {
+//            System.out.println("parser error: wrong tag");
+//            System.exit(0);
+//        }
+//        return null;
 //        return res;
     }
 
