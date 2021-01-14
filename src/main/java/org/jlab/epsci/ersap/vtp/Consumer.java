@@ -92,7 +92,6 @@ public class Consumer extends Thread {
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 long frameTime = buf.getRecordNumber() * 65536L;
                 if (buf.getPayloadDataLength() > 0) {
-                    System.out.println("DDD "+ buf.getPayload().length +" "+ buf.getPayloadBuffer().slice());
                     Runnable r = () -> decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
                     pool.execute(r);
 
