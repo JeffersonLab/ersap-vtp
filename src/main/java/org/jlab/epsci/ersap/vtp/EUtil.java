@@ -277,16 +277,12 @@ public class EUtil {
         return res;
     }
 
-    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(BigInteger frame_time_ns, byte[] payload) {
+    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer payloadBuffer, List<Integer> pData) {
 //        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
 
-        ByteBuffer bb = ByteBuffer.wrap(payload);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
-
         // read entire buffer into an array
-        List<Integer> pData = new ArrayList<>();
-        while (bb.hasRemaining()) {
-            pData.add(bb.getInt());
+        while (payloadBuffer.hasRemaining()) {
+            pData.add(payloadBuffer.getInt());
         }
         if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
             for(int j=1; j<9; j++) {
@@ -310,7 +306,7 @@ public class EUtil {
                             int q = (val >> 0) & 0x1FFF;
                             int channel = (val >> 13) & 0x000F;
                               long v = ((val >> 17) & 0x3FFF) * 4;
-                            BigInteger ht = frame_time_ns.add(BigInteger.valueOf(v));
+                            long ht = frame_time_ns + v;
                             // ddddd
 
 //                            AdcHit hit = new AdcHit();
