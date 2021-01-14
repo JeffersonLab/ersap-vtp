@@ -284,9 +284,11 @@ public class EUtil {
         while (payloadBuffer.hasRemaining()) {
             pData.add(payloadBuffer.getInt());
         }
-        System.out.println("DDDD "+ pData.size());
+       if(pData.size() > 0)
+           System.out.println("DDDD "+ pData.size()+" "+payloadBuffer.slice());
         return null;
-//        if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
+
+        //        if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {
 //            for(int j=1; j<9; j++) {
 //                int vl = pData.get(j);
 //                int slot_ind = (vl>>0)  & 0xFFFF;
