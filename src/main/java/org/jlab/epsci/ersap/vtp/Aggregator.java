@@ -82,8 +82,8 @@ public class Aggregator extends Thread {
         this.barrier2 = barrier2;
         this.outputRingBuffer = outputRingBuffer;
 
-        ringBuffer1.addGatingSequences(sequence1);
-        ringBuffer2.addGatingSequences(sequence2);
+//        ringBuffer1.addGatingSequences(sequence1);
+//        ringBuffer2.addGatingSequences(sequence2);
 
         nextSequence1 = sequence1.get() + 1L;
         nextSequence2 = sequence2.get() + 1L;
@@ -111,29 +111,39 @@ public class Aggregator extends Thread {
             Long b1 = inputItem1.getRecordNumber();
             Long b2 = inputItem2.getRecordNumber();
 
+            int l1 = inputItem1.getPayloadDataLength();
+            int l2 = inputItem2.getPayloadDataLength();
+
+            //@todo put into the map only clean data of the inputItems payloads
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
-            byte[] aggregate = null;
 //            BigInteger aggRecNum = null;
             Long aggRecNum = null;
+
+            getOutSequence = outputRingBuffer.next();
+            RingEvent outputItem = outputRingBuffer.get(getOutSequence);
+
+            if (outputItem.getPayload().length < (l1 + l2) ){
+               byte [] aggregate = new byte[l1 + l2];
+               outputItem.setPayload(aggregate);
+               outputItem.setPayloadDataLength(l1 + l2);
+            }
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
-                aggregate = EUtil.addByteArrays(m1.get(b1), m2.get(b1));
+                EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
                 aggRecNum = b1;
                 m1.remove(b1);
                 m2.remove(b1);
             }
             if (m1.containsKey(b2) && m2.containsKey(b2)) {
-                aggregate = EUtil.addByteArrays(m1.get(b2), m2.get(b2));
+                EUtil.addByteArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
                 aggRecNum = b2;
                 m1.remove(b2);
                 m2.remove(b2);
             }
-            if (aggregate != null && aggRecNum != null) {
-                getOutSequence = outputRingBuffer.next();
-                RingEvent outputItem = outputRingBuffer.get(getOutSequence);
+            if (aggRecNum != null) {
                 outputItem.setRecordNumber(aggRecNum);
-                outputItem.setPayload(aggregate);
+                outputItem.setPayloadDataLength(l1 + l2);
             }
 
         } catch (final TimeoutException | AlertException ex) {

@@ -171,10 +171,14 @@ public class Receiver extends Thread {
 //                    compressed_length, magic, format_version, flags,
 //                    record_number, ts_sec, ts_nsec);
 
-            byte[] dataBuffer = new byte[payload_length];
-            dataInputStream.readFully(dataBuffer);
-            evt.setPayload(dataBuffer);
+            if(evt.getPayload().length < payload_length){
+                byte[] dataBuffer = new byte[payload_length];
+                evt.setPayload(dataBuffer);
+            }
+            dataInputStream.readFully(evt.getPayload(), 0 , payload_length);
+
 //            evt.setRecordNumber(rcn);
+            evt.setPayloadDataLength(payload_length);
             evt.setRecordNumber(record_number);
             evt.setStreamId(streamId);
 

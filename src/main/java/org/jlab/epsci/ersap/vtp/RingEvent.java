@@ -7,6 +7,11 @@ public class RingEvent {
 //    private BigInteger recordNumber;
     private Long recordNumber;
     private byte[] payload;
+    private int payloadDataLength;
+
+    public RingEvent() {
+        payload = new byte[100000];
+    }
 
     public int getStreamId() {
         return streamId;
@@ -38,5 +43,13 @@ public class RingEvent {
 
     public void setPayload(byte[] payload) {
         this.payload = payload;
+    }
+
+    public int getPayloadDataLength() {
+        return payloadDataLength;
+    }
+
+    public void setPayloadDataLength(int payloadDataLength) {
+        this.payloadDataLength = payloadDataLength;
     }
 }

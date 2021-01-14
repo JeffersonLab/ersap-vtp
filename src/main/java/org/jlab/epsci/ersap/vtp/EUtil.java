@@ -173,11 +173,9 @@ public class EUtil {
 
 
 
-    public static byte[] addByteArrays(byte[] a, byte[] b) {
-        byte[] c = new byte[a.length + b.length];
-        System.arraycopy(a, 0, c, 0, a.length);
-        System.arraycopy(b, 0, c, a.length, b.length);
-        return c;
+    public static void addByteArrays(byte[] a, int aLength, byte[] b, int bLength, byte[] c) {
+        System.arraycopy(a, 0, c, 0, aLength);
+        System.arraycopy(b, 0, c, aLength, bLength);
     }
 
     public static byte[] object2ByteArray(Object o) throws IOException {

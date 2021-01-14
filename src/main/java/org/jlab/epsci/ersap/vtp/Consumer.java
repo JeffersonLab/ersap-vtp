@@ -34,7 +34,7 @@ public class Consumer extends Thread {
         this.sequence = sequence;
         this.barrier = barrier;
 
-        ringBuffer.addGatingSequences(sequence);
+//        ringBuffer.addGatingSequences(sequence);
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
