@@ -284,8 +284,6 @@ public class EUtil {
         while (payloadBuffer.hasRemaining()) {
             pData.add(payloadBuffer.getInt());
         }
-       if(pData.size() > 0)
-           System.out.println("DDDD "+ pData.size()+" "+payloadBuffer.slice());
         return null;
 
         //        if( (pData.get(0) & 0x8FFF8000) == 0x80000000 ) {

@@ -113,7 +113,7 @@ public class Aggregator extends Thread {
 
             int l1 = inputItem1.getPayloadDataLength();
             int l2 = inputItem2.getPayloadDataLength();
-
+            System.out.println("DDDD "+ l1 + " " + l2);
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
