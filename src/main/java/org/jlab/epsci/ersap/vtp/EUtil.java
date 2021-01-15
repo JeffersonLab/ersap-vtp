@@ -277,8 +277,13 @@ public class EUtil {
         return res;
     }
 
-    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, List<Integer> pData) {
+    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer buf) {
 //        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
+        List<Integer> pData = new ArrayList<>();
+        while (buf.hasRemaining()) {
+            pData.add(buf.getInt());
+        }
+
         if(!pData.isEmpty()) {
             if ((pData.get(0) & 0x8FFF8000) == 0x80000000) {
                 for (int j = 1; j < 9; j++) {
@@ -338,6 +343,22 @@ public class EUtil {
 //        return res;
     }
 
+    public static ByteBuffer cloneByteBuffer(final ByteBuffer original) {
+        // Create clone with same capacity as original.
+        final ByteBuffer clone = (original.isDirect()) ?
+                ByteBuffer.allocateDirect(original.capacity()) :
+                ByteBuffer.allocate(original.capacity());
+
+        // Create a read-only copy of the original.
+        // This allows reading from the original without modifying it.
+        final ByteBuffer readOnlyCopy = original.asReadOnlyBuffer();
+
+        // Flip and read from the original.
+        readOnlyCopy.flip();
+        clone.put(readOnlyCopy);
+
+        return clone;
+    }
 
     public static void printFrame(int streamId, int source_id, int total_length, int payload_length,
                                   int compressed_length, int magic, int format_version,

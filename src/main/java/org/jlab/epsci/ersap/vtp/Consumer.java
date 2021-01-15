@@ -3,6 +3,7 @@ package org.jlab.epsci.ersap.vtp;
 import com.lmax.disruptor.*;
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -93,12 +94,9 @@ public class Consumer extends Thread {
                 RingEvent buf = get();
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
-                    List<Integer> payloadData = new ArrayList<>();
-                    while (buf.getPayloadBuffer().hasRemaining()) {
-                        payloadData.add(buf.getPayloadBuffer().getInt());
-                    }
+                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
                     put();
-                    Runnable r = () -> decodePayloadMap2(frameTime, payloadData);
+                    Runnable r = () -> decodePayloadMap2(frameTime, b);
                     pool.execute(r);
                 }
             } catch (InterruptedException e) {
