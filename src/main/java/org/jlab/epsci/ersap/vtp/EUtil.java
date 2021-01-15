@@ -277,14 +277,9 @@ public class EUtil {
         return res;
     }
 
-    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer payloadBuffer, List<Integer> pData) {
+    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, List<Integer> pData) {
 //        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
-        // read entire buffer into an array
-        while (payloadBuffer.hasRemaining()) {
-            pData.add(payloadBuffer.getInt());
-        }
         if(!pData.isEmpty()) {
-
             if ((pData.get(0) & 0x8FFF8000) == 0x80000000) {
                 for (int j = 1; j < 9; j++) {
                     int vl = pData.get(j);

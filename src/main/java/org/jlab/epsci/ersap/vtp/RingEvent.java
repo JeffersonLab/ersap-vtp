@@ -13,7 +13,6 @@ public class RingEvent {
     private byte[] payload;
     private ByteBuffer payloadBuffer;
     private int payloadDataLength;
-    private List<Integer> payloadData = new ArrayList<>();
 
     public RingEvent() {
         payload = new byte[100000];
@@ -64,14 +63,4 @@ public class RingEvent {
     public ByteBuffer getPayloadBuffer(){
         return payloadBuffer;
     }
-
-    public List<Integer> getPayloadDataContainer(){
-        payloadData.clear();
-        return payloadData;
-    }
-
-    public List<Integer> getPayloadData(){
-        return payloadData;
-    }
-
 }

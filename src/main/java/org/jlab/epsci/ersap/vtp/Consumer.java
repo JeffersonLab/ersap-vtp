@@ -3,6 +3,8 @@ package org.jlab.epsci.ersap.vtp;
 import com.lmax.disruptor.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -81,17 +83,24 @@ public class Consumer extends Thread {
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
         ExecutorService pool = Executors.newFixedThreadPool(1);
-//        PayLoadParser payloadParser = new PayLoadParser();
 
         while (true) {
+
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
-//                    decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
             try {
                 // Get an empty item from ring
                 RingEvent buf = get();
-                pool.execute(new PayLoadParser(buf));
-                put();
+                if (buf.getPayload().length > 0) {
+                    long frameTime = buf.getRecordNumber() * 65536L;
+                    List<Integer> payloadData = new ArrayList<>();
+                    while (buf.getPayloadBuffer().hasRemaining()) {
+                        payloadData.add(buf.getPayloadBuffer().getInt());
+                    }
+                    Runnable r = () -> decodePayloadMap2(frameTime, payloadData);
+                    pool.execute(r);
+                    put();
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -113,19 +122,4 @@ public class Consumer extends Thread {
         }
     }
 
-    private class PayLoadParser implements Runnable {
-        private final RingEvent buf;
-
-        public PayLoadParser(RingEvent buf) {
-            this.buf = buf;
-        }
-
-        @Override
-        public void run() {
-            long frameTime = buf.getRecordNumber() * 65536L;
-            if (buf.getPayload().length > 0) {
-                decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
-            }
-        }
-    }
 }
