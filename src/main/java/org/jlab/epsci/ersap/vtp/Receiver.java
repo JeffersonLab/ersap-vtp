@@ -172,8 +172,8 @@ public class Receiver extends Thread {
 //                    record_number, ts_sec, ts_nsec);
 
             if(evt.getPayload().length < payload_length){
-                byte[] dataBuffer = new byte[payload_length];
-                evt.setPayload(dataBuffer);
+                byte[] payloadData = new byte[payload_length];
+                evt.setPayload(payloadData);
             }
             dataInputStream.readFully(evt.getPayload(), 0 , payload_length);
 
