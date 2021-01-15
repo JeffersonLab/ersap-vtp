@@ -87,7 +87,15 @@ public class Consumer extends Thread {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
 //                    decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
-            pool.execute(new PayLoadParser());
+            try {
+                // Get an empty item from ring
+                RingEvent buf = get();
+                pool.execute(new PayLoadParser(buf));
+                put();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
 
 //*********
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
@@ -106,19 +114,17 @@ public class Consumer extends Thread {
     }
 
     private class PayLoadParser implements Runnable {
+        private final RingEvent buf;
+
+        public PayLoadParser(RingEvent buf) {
+            this.buf = buf;
+        }
 
         @Override
         public void run() {
-            // Get an empty item from ring
-            try {
-                RingEvent buf = get();
-                long frameTime = buf.getRecordNumber() * 65536L;
-                if (buf.getPayload().length > 0) {
-                    decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
-                }
-                put();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            long frameTime = buf.getRecordNumber() * 65536L;
+            if (buf.getPayload().length > 0) {
+                decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
             }
         }
     }
