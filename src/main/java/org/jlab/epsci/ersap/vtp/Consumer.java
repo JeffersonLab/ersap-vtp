@@ -83,7 +83,7 @@ public class Consumer extends Thread {
 
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
-        ExecutorService pool = Executors.newFixedThreadPool(1);
+        ExecutorService pool = Executors.newFixedThreadPool(4);
 
         while (true) {
 
@@ -96,9 +96,8 @@ public class Consumer extends Thread {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
                     put();
-                    decodePayloadMap2(frameTime, b);
-//                    Runnable r = () -> decodePayloadMap2(frameTime, b);
-//                    pool.execute(r);
+                    Runnable r = () -> decodePayloadMap2(frameTime, b);
+                    pool.execute(r);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
