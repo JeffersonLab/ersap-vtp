@@ -354,7 +354,7 @@ public class EUtil {
         final ByteBuffer readOnlyCopy = original.asReadOnlyBuffer();
 
         // Flip and read from the original.
-        readOnlyCopy.flip();
+//        readOnlyCopy.flip();
         clone.put(readOnlyCopy);
 
         return clone;
