@@ -5,22 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Consumer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/HitFinder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEventFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/fatJar/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Consumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -126,13 +111,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00123" summary="- implementing Carl's suggestions with debugging">
-      <created>1610489311126</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1610489311127</updated>
     </task>
     <task id="LOCAL-00124" summary="- implementing Carl's suggestions with debugging">
       <created>1610506225950</created>
@@ -470,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610747170873</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="- debugging">
+      <created>1610747886863</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1610747886863</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TodoView">
