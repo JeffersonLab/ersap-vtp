@@ -122,6 +122,8 @@ public class Aggregator extends Thread {
             getOutSequence = outputRingBuffer.next();
             RingEvent outputItem = outputRingBuffer.get(getOutSequence);
 
+            outputItem.getPayloadBuffer().clear();
+
             if (outputItem.getPayload().length < (l1 + l2) ){
                byte [] aggregate = new byte[l1 + l2];
                outputItem.setPayload(aggregate);

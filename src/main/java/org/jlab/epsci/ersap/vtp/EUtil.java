@@ -279,7 +279,6 @@ public class EUtil {
 
     public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer payloadBuffer, List<Integer> pData) {
 //        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
-        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDD "+ payloadBuffer.hasRemaining());
         // read entire buffer into an array
         while (payloadBuffer.hasRemaining()) {
             pData.add(payloadBuffer.getInt());

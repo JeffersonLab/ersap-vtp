@@ -87,7 +87,6 @@ public class Consumer extends Thread {
             while (true) {
                 // Get an empty item from ring
                 RingEvent buf = get();
-
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 long frameTime = buf.getRecordNumber() * 65536L;
