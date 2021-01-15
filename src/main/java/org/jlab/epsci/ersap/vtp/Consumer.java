@@ -81,13 +81,13 @@ public class Consumer extends Thread {
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
         ExecutorService pool = Executors.newFixedThreadPool(8);
-        PayLoadParser payloadParser = new PayLoadParser();
+//        PayLoadParser payloadParser = new PayLoadParser();
 
         while (true) {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
 //                    decodePayloadMap2(frameTime, buf.getPayloadBuffer(), buf.getPayloadDataContainer());
-            pool.execute(payloadParser);
+            pool.execute(new PayLoadParser());
 
 //*********
 //                    List<AdcHit> evt = decodePayload(frameTime, payload);
