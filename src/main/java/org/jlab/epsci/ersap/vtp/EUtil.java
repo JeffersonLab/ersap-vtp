@@ -282,10 +282,12 @@ public class EUtil {
         System.out.println("Original: position = " + original.position() +
                 " limit = " + original.limit() +
                 " capacity = " + original.capacity() +
+                " mark = " + original.mark() +
                 " order = " + original.order());
         System.out.println("Clone: position = " + clone.position() +
                 " limit = " + clone.limit() +
                 " capacity = " +clone.capacity()+
+                " mark = " + original.mark() +
                 " order = " + clone.order());
     }
 
