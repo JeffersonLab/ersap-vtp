@@ -99,7 +99,7 @@ public class Consumer extends Thread {
 //                    testByteBufferClone(buf.getPayloadBuffer(),b);
 
                     put();
-                    Runnable r = () -> decodePayloadMap2(frameTime, buf.getPayloadBuffer());
+                    Runnable r = () -> decodePayloadMap2(frameTime, b);
                     pool.execute(r);
                 }
             } catch (InterruptedException e) {
