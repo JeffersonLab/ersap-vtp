@@ -94,17 +94,18 @@ public class Consumer extends Thread {
                 RingEvent buf = get();
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
-                    testByteBufferClone( "Original", buf.getPayloadBuffer());
+//                    testByteBufferClone( "Original", buf.getPayloadBuffer());
 
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
 
-                    testByteBufferClone( "Clone", b);
-                    System.out.println("");
+//                    testByteBufferClone( "Clone", b);
+//                    System.out.println("");
 
                     put();
 
-//                    Runnable r = () -> decodePayloadMap2(frameTime, b);
-//                    pool.execute(r);
+//                    Runnable r = () -> decodePayloadMap2(frameTime, buf.getPayloadBuffer());
+                    Runnable r = () -> decodePayloadMap2(frameTime, b);
+                    pool.execute(r);
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
