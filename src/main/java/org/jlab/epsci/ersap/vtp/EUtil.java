@@ -307,12 +307,13 @@ public class EUtil {
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
                                 long ht = frame_time_ns + v;
-//                                System.out.println("AdcHit{" +
-//                                        "crate=" + crate +
-//                                        ", slot=" + slot +
-//                                        ", channel=" + channel +
-//                                        ", q=" + q +
-//                                        '}');
+                                System.out.println("AdcHit{" +
+                                        "crate=" + crate +
+                                        ", slot=" + slot +
+                                        ", channel=" + channel +
+                                        ", q=" + q +
+                                        ", time=" + ht +
+                                        '}');
                                 // ddddd
 
 //                            AdcHit hit = new AdcHit();
