@@ -282,7 +282,6 @@ public class EUtil {
         System.out.println(name +": position = " + b.position() +
                 " limit = " + b.limit() +
                 " capacity = " + b.capacity() +
-                " mark = " + b.mark() +
                 " order = " + b.order());
     }
 
@@ -363,7 +362,6 @@ public class EUtil {
         original.rewind();
         clone.put(original);
         clone.flip();
-        clone.position(100000);
         return clone;
     }
 
