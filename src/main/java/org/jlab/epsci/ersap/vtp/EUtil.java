@@ -285,8 +285,7 @@ public class EUtil {
                 " order = " + b.order());
     }
 
-    public static Map<BigInteger, List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer buf) {
-//        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
+    public static void decodePayloadMap2(Long frame_time_ns, ByteBuffer buf) {
         buf.rewind();
         List<Integer> pData = new ArrayList<>();
         while (buf.hasRemaining()) {
@@ -310,7 +309,6 @@ public class EUtil {
                                 crate = (val >> 8) & 0x007F;
                                 slot = (val >> 0) & 0x001F;
                             } else if (type == 0x0001) { // FADC hit type
-                                ///ddddd
                                 int q = (val >> 0) & 0x1FFF;
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
@@ -322,23 +320,6 @@ public class EUtil {
 //                                        ", q=" + q +
 //                                        ", time=" + ht +
 //                                        '}');
-                                // ddddd
-
-//                            AdcHit hit = new AdcHit();
-//                            hit.setCrate(crate);
-//                            hit.setSlot(slot);
-//                            hit.setQ((val >> 0) & 0x1FFF);
-//                            hit.setChannel((val >> 13) & 0x000F);
-//                            long v = ((val >> 17) & 0x3FFF) * 4;
-//                            BigInteger ht = BigInteger.valueOf(v);
-//                            hit.setTime(frame_time_ns.add(ht));
-//                            if(res.containsKey(ht)){
-//                                res.get(ht).add(hit);
-//                            } else {
-//                                List<AdcHit> adcHits = new ArrayList<>();
-//                                adcHits.add(hit);
-//                                res.put(ht, adcHits);
-//                            }
                             }
                         }
                     }
@@ -348,8 +329,6 @@ public class EUtil {
                 System.exit(0);
             }
         }
-        return null;
-//        return res;
     }
 
     public static ByteBuffer cloneByteBuffer(final ByteBuffer original) {
