@@ -279,8 +279,14 @@ public class EUtil {
     }
 
     public static void testByteBufferClone(ByteBuffer original, ByteBuffer clone) {
-        System.out.println("Original: " + original.position() + " " + original.limit() + " " + original.order());
-        System.out.println("Clone: " + clone.position() + " " + clone.limit() + " " + clone.order());
+        System.out.println("Original: position = " + original.position() +
+                " limit = " + original.limit() +
+                " capacity = " + original.capacity() +
+                " order = " + original.order());
+        System.out.println("Clone: position = " + clone.position() +
+                " limit = " + clone.limit() +
+                " capacity = " +clone.capacity()+
+                " order = " + clone.order());
     }
 
     public static Map<BigInteger, List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer buf) {
@@ -360,7 +366,7 @@ public class EUtil {
         original.rewind();
         clone.put(original);
         clone.flip();
-
+        clone.position(0);
         return clone;
     }
 
