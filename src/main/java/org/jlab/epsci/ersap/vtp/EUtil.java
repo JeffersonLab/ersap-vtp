@@ -1,11 +1,13 @@
 package org.jlab.epsci.ersap.vtp;
 
 
+import java.awt.*;
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.*;
+import java.util.List;
 
 /**
  * ERSAP utility class
@@ -172,7 +174,6 @@ public class EUtil {
     }
 
 
-
     public static void addByteArrays(byte[] a, int aLength, byte[] b, int bLength, byte[] c) {
         System.arraycopy(a, 0, c, 0, aLength);
         System.arraycopy(b, 0, c, aLength, bLength);
@@ -233,7 +234,7 @@ public class EUtil {
         return ma;
     }
 
-    public static  List<AdcHit> decodePayload(BigInteger frame_time_ns, byte[] payload) {
+    public static List<AdcHit> decodePayload(BigInteger frame_time_ns, byte[] payload) {
         List<AdcHit> res = new ArrayList<>();
         ByteBuffer bb = ByteBuffer.wrap(payload);
         bb.order(ByteOrder.LITTLE_ENDIAN);
@@ -277,14 +278,19 @@ public class EUtil {
         return res;
     }
 
-    public static  Map<BigInteger,List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer buf) {
+    public static void testByteBufferClone(ByteBuffer original, ByteBuffer clone) {
+        System.out.println("Original: " + original.position() + " " + original.limit() + " " + original.order());
+        System.out.println("Clone: " + clone.position() + " " + clone.limit() + " " + clone.order());
+    }
+
+    public static Map<BigInteger, List<AdcHit>> decodePayloadMap2(Long frame_time_ns, ByteBuffer buf) {
 //        Map<BigInteger,List<AdcHit>> res = new HashMap<>();
+        buf.rewind();
         List<Integer> pData = new ArrayList<>();
         while (buf.hasRemaining()) {
             pData.add(buf.getInt());
         }
-        System.out.println("DDD "+buf.hasRemaining()+" "+pData.isEmpty());
-        if(!pData.isEmpty()) {
+        if (!pData.isEmpty()) {
             if ((pData.get(0) & 0x8FFF8000) == 0x80000000) {
                 for (int j = 1; j < 9; j++) {
                     int vl = pData.get(j);
@@ -345,21 +351,16 @@ public class EUtil {
     }
 
     public static ByteBuffer cloneByteBuffer(final ByteBuffer original) {
+
         // Create clone with same capacity as original.
         final ByteBuffer clone = (original.isDirect()) ?
                 ByteBuffer.allocateDirect(original.capacity()) :
                 ByteBuffer.allocate(original.capacity());
 
-        // Create a read-only copy of the original.
-        // This allows reading from the original without modifying it.
-        final ByteBuffer readOnlyCopy = original.asReadOnlyBuffer();
+        original.rewind();
+        clone.put(original);
+        clone.flip();
 
-        // Flip and read from the original.
-        readOnlyCopy.flip();
-        clone.put(readOnlyCopy);
-        clone.position(original.position());
-        clone.limit(original.limit());
-        clone.order(original.order());
         return clone;
     }
 
@@ -367,25 +368,25 @@ public class EUtil {
                                   int compressed_length, int magic, int format_version,
                                   int flags, long record_number, long ts_sec, long ts_nsec) {
         System.out.println("\n================");
-        System.out.println(streamId+":source ID = " + source_id);
-        System.out.println(streamId+":total_length = " + total_length);
-        System.out.println(streamId+":payload_length = " + payload_length);
-        System.out.println(streamId+":compressed_length = " + compressed_length);
-        System.out.println(String.format(streamId+":magic = %x", magic));
-        System.out.println(streamId+":format_version = " + format_version);
-        System.out.println(streamId+":flags = " + flags);
-        System.out.println(streamId+":record_number = " + record_number);
-        System.out.println(streamId+":ts_sec = " + ts_sec);
-        System.out.println(streamId+":ts_nsec = " + ts_nsec);
+        System.out.println(streamId + ":source ID = " + source_id);
+        System.out.println(streamId + ":total_length = " + total_length);
+        System.out.println(streamId + ":payload_length = " + payload_length);
+        System.out.println(streamId + ":compressed_length = " + compressed_length);
+        System.out.println(String.format(streamId + ":magic = %x", magic));
+        System.out.println(streamId + ":format_version = " + format_version);
+        System.out.println(streamId + ":flags = " + flags);
+        System.out.println(streamId + ":record_number = " + record_number);
+        System.out.println(streamId + ":ts_sec = " + ts_sec);
+        System.out.println(streamId + ":ts_nsec = " + ts_nsec);
     }
 
-    public static void printHits(Map<Integer, List<ChargeTime>> hits){
-        hits.forEach((k,v) ->  {
+    public static void printHits(Map<Integer, List<ChargeTime>> hits) {
+        hits.forEach((k, v) -> {
             System.out.println("crate = " + decodeCrateNumber(k)
-                    + " slot = "+decodeSlotNumber(k)
-                    + " channel = "+decodeChannelNumber(k));
+                    + " slot = " + decodeSlotNumber(k)
+                    + " channel = " + decodeChannelNumber(k));
             v.forEach(h -> System.out.println("t = " + h.getTime()
-                    + " charge = "+ h.getCharge()));
+                    + " charge = " + h.getCharge()));
             System.out.println();
         });
 
