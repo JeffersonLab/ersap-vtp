@@ -366,7 +366,7 @@ public class EUtil {
         original.rewind();
         clone.put(original);
         clone.flip();
-        clone.position(0);
+        clone.position(100000);
         return clone;
     }
 
