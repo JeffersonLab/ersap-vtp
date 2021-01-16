@@ -283,7 +283,7 @@ public class EUtil {
         while (buf.hasRemaining()) {
             pData.add(buf.getInt());
         }
-
+        System.out.println("DDD "+buf.hasRemaining()+" "+pData.isEmpty());
         if(!pData.isEmpty()) {
             if ((pData.get(0) & 0x8FFF8000) == 0x80000000) {
                 for (int j = 1; j < 9; j++) {
