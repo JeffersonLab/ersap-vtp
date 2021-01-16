@@ -113,13 +113,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00138" summary="- new waiting strategy for ring buffers">
-      <created>1610557034188</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1610557034188</updated>
-    </task>
     <task id="LOCAL-00139" summary="- new waiting strategy for ring buffers">
       <created>1610567967940</created>
       <option name="number" value="00139" />
@@ -456,7 +449,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610810684131</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <task id="LOCAL-00187" summary="- debugging">
+      <created>1610811001711</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1610811001711</updated>
+    </task>
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="TodoView">

@@ -94,9 +94,12 @@ public class Consumer extends Thread {
                 RingEvent buf = get();
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
+                    testByteBufferClone( "Original", buf.getPayloadBuffer());
+
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
 
-                    testByteBufferClone(buf.getPayloadBuffer(),b);
+                    testByteBufferClone( "Clone", b);
+                    System.out.println("");
 
                     put();
 
