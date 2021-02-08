@@ -55,7 +55,7 @@ public class Receiver extends Thread {
     private int statPeriod;
     private double totalData;
     private int rate;
-    private long missed_record;
+    private AtomicLong missed_record;
     private long prev_rec_number;
     private ByteBuffer headerBuffer;
     private byte[] header = new byte[52];
@@ -64,6 +64,8 @@ public class Receiver extends Thread {
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.statPeriod = statPeriod;
+
+        missed_record = new AtomicLong(0);
 
         headerBuffer = ByteBuffer.wrap(header);;
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -138,7 +140,9 @@ public class Receiver extends Thread {
             evt.setStreamId(streamId);
 
             // Collect statistics
-            missed_record = missed_record + (record_number - (prev_rec_number + 1));
+            long tmp = missed_record.get() + (record_number - (prev_rec_number + 1));
+            missed_record.set(tmp);
+
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
             rate++;
@@ -183,7 +187,9 @@ public class Receiver extends Thread {
             evt.setStreamId(streamId);
 
             // Collect statistics
-            missed_record = missed_record + (record_number - (prev_rec_number + 1));
+            long tmp = missed_record.get() + (record_number - (prev_rec_number + 1));
+            missed_record.set(tmp);
+
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
             rate++;
@@ -218,12 +224,12 @@ public class Receiver extends Thread {
                 System.out.println("stream:" + streamId
                         + " event rate =" + rate / statPeriod
                         + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
-                        + " missed rate = " + missed_record / statPeriod + " Hz."
+                        + " missed rate = " + missed_record.get() / statPeriod + " Hz."
                 );
                 statLoop = statPeriod;
                 rate = 0;
                 totalData = 0;
-                missed_record = 0;
+                missed_record.set(0);
             }
             statLoop--;
         }

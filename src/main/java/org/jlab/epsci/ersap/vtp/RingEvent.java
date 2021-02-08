@@ -9,7 +9,7 @@ import java.util.List;
 public class RingEvent {
     private int streamId;
 //    private BigInteger recordNumber;
-    private Long recordNumber;
+    private long recordNumber;
     private byte[] payload;
     private ByteBuffer payloadBuffer;
     private int payloadDataLength;
