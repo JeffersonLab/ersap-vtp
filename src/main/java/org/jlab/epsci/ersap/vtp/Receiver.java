@@ -2,10 +2,7 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.RingBuffer;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -222,26 +219,31 @@ public class Receiver extends Thread {
     }
 
     private class PrintRates extends TimerTask {
-        private long total_missed = 0;
-        private int counter = 0;
-        private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+  BufferedWriter bw;
 
+  public PrintRates() {
+      try {
+          bw = new BufferedWriter(new FileWriter(streamId+".txt"));
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+  }
 
         @Override
         public void run() {
-            counter++;
-            System.out.println("\n" + dateFormat.format(new Date())
-                    + " stream:" + streamId
+            long m_rate = missed_record.get() / statPeriod;
+            try {
+                bw.write(m_rate + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(" stream:" + streamId
                     + " event rate =" + rate / statPeriod
                     + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
-                    + " missed rate = " + missed_record.get() / statPeriod + " Hz."
-                    + " total missed = " + total_missed
+                    + " missed rate = " + m_rate + " Hz."
             );
             rate = 0;
             totalData = 0;
-            if (counter > 3) {
-                total_missed += missed_record.get();
-            }
             missed_record.set(0);
         }
     }
