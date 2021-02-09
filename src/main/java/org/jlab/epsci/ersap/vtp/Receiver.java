@@ -76,7 +76,7 @@ public class Receiver extends Thread {
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
-        timer.schedule(new PrintRates(), 0, 1000);
+        timer.schedule(new PrintRates(), 0, statPeriod * 1000);
 
         // Connecting to the VTP stream source
         ServerSocket serverSocket;
@@ -224,29 +224,25 @@ public class Receiver extends Thread {
     private class PrintRates extends TimerTask {
         private long total_missed = 0;
         private int counter = 0;
-        private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        private final DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 
         @Override
         public void run() {
             counter++;
-            if (statLoop <= 0) {
-                System.out.println("\n" + dateFormat.format(new Date())
-                        + " stream:" + streamId
-                        + " event rate =" + rate / statPeriod
-                        + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
-                        + " missed rate = " + missed_record.get() / statPeriod + " Hz."
-                        + " total missed = " + total_missed
-                );
-                statLoop = statPeriod;
-                rate = 0;
-                totalData = 0;
-                if(counter > 10) {
-                    total_missed += missed_record.get();
-                }
-                missed_record.set(0);
+            System.out.println("\n" + dateFormat.format(new Date())
+                    + " stream:" + streamId
+                    + " event rate =" + rate / statPeriod
+                    + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
+                    + " missed rate = " + missed_record.get() / statPeriod + " Hz."
+                    + " total missed = " + total_missed
+            );
+            rate = 0;
+            totalData = 0;
+            if (counter > 3) {
+                total_missed += missed_record.get();
             }
-            statLoop--;
+            missed_record.set(0);
         }
     }
 
