@@ -241,7 +241,7 @@ public class Receiver extends Thread {
                 statLoop = statPeriod;
                 rate = 0;
                 totalData = 0;
-                if(counter > 3) {
+                if(counter > 10) {
                     total_missed += missed_record.get();
                 }
                 missed_record.set(0);
