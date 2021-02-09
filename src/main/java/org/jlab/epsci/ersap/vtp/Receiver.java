@@ -213,13 +213,11 @@ public class Receiver extends Thread {
     }
 
     private class PrintRates extends TimerTask {
-        FileOutputStream fo;
-        DataOutputStream dos;
+        BufferedWriter bw;
 
   public PrintRates() {
       try {
-          fo = new FileOutputStream(streamId+".txt");
-          dos = new DataOutputStream(new BufferedOutputStream(fo));
+         bw = new BufferedWriter(new FileWriter("stream_"+streamId+".txt"));
       } catch (IOException e) {
           e.printStackTrace();
       }
@@ -229,8 +227,9 @@ public class Receiver extends Thread {
         public void run() {
             long m_rate = missed_record.get() / statPeriod;
             try {
-                dos.write((int) m_rate);
-                dos.flush();
+                bw.write("privet");
+                bw.write(m_rate+"\n");
+                bw.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
