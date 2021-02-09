@@ -4,8 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
+    <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="- add total missed">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,13 +119,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00146" summary="- add redesigned hit finder routine">
-      <created>1610660337263</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1610660337263</updated>
     </task>
     <task id="LOCAL-00147" summary="- debugging">
       <created>1610660805092</created>
@@ -455,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612822356607</updated>
     </task>
-    <option name="localTasksCounter" value="195" />
+    <task id="LOCAL-00195" summary="- add total missed">
+      <created>1612877996898</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1612877996898</updated>
+    </task>
+    <option name="localTasksCounter" value="196" />
     <servers />
   </component>
   <component name="TodoView">
@@ -491,7 +499,8 @@
     <MESSAGE value="- add redesigned hit finder routine" />
     <MESSAGE value="- debugging" />
     <MESSAGE value="-atomic long to measure missed frames." />
-    <option name="LAST_COMMIT_MESSAGE" value="-atomic long to measure missed frames." />
+    <MESSAGE value="- add total missed" />
+    <option name="LAST_COMMIT_MESSAGE" value="- add total missed" />
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />

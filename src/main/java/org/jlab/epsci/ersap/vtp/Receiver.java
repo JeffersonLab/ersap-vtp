@@ -229,7 +229,7 @@ public class Receiver extends Thread {
         public void run() {
             if (statLoop <= 0) {
                 System.out.println("\n" + dateFormat.format(new Date())
-                        + "stream:" + streamId
+                        + " stream:" + streamId
                         + " event rate =" + rate / statPeriod
                         + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
                         + " missed rate = " + missed_record.get() / statPeriod + " Hz."
