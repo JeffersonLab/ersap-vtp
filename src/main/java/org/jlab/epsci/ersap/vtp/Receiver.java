@@ -3,19 +3,13 @@ package org.jlab.epsci.ersap.vtp;
 import com.lmax.disruptor.RingBuffer;
 
 import java.io.*;
-import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
-
-import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
 
 /**
  * Receives stream frames from a VTP and writes them to a RingBuffer
@@ -219,11 +213,13 @@ public class Receiver extends Thread {
     }
 
     private class PrintRates extends TimerTask {
-  BufferedWriter bw;
+        FileOutputStream fo;
+        DataOutputStream dos;
 
   public PrintRates() {
       try {
-          bw = new BufferedWriter(new FileWriter(streamId+".txt"));
+          fo = new FileOutputStream(streamId+".txt");
+          dos = new DataOutputStream(new BufferedOutputStream(fo));
       } catch (IOException e) {
           e.printStackTrace();
       }
@@ -233,7 +229,8 @@ public class Receiver extends Thread {
         public void run() {
             long m_rate = missed_record.get() / statPeriod;
             try {
-                bw.write(m_rate + "\n");
+                dos.write((int) m_rate);
+                dos.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
