@@ -227,8 +227,7 @@ public class Receiver extends Thread {
         public void run() {
             long m_rate = missed_record.get() / statPeriod;
             try {
-                bw.write("privet");
-                bw.write(m_rate+"\n");
+                bw.write(m_rate+",");
                 bw.flush();
             } catch (IOException e) {
                 e.printStackTrace();
