@@ -11,6 +11,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
@@ -67,7 +70,8 @@ public class Receiver extends Thread {
 
         missed_record = new AtomicLong(0);
 
-        headerBuffer = ByteBuffer.wrap(header);;
+        headerBuffer = ByteBuffer.wrap(header);
+        ;
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         // Timer for measuring and printing statistics.
@@ -151,6 +155,7 @@ public class Receiver extends Thread {
             e.printStackTrace();
         }
     }
+
     private void decodeVtpHeaderCT(RingEvent evt) {
         try {
             headerBuffer.clear();
@@ -175,11 +180,11 @@ public class Receiver extends Thread {
 //                    compressed_length, magic, format_version, flags,
 //                    record_number, ts_sec, ts_nsec);
 
-            if(evt.getPayload().length < payload_length){
+            if (evt.getPayload().length < payload_length) {
                 byte[] payloadData = new byte[payload_length];
                 evt.setPayload(payloadData);
             }
-            dataInputStream.readFully(evt.getPayload(), 0 , payload_length);
+            dataInputStream.readFully(evt.getPayload(), 0, payload_length);
 
 //            evt.setRecordNumber(rcn);
             evt.setPayloadDataLength(payload_length);
@@ -217,18 +222,23 @@ public class Receiver extends Thread {
     }
 
     private class PrintRates extends TimerTask {
+        private long total_missed = 0;
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
         @Override
         public void run() {
             if (statLoop <= 0) {
-                System.out.println("stream:" + streamId
+                System.out.println("\n" + dateFormat.format(new Date())
+                        + "stream:" + streamId
                         + " event rate =" + rate / statPeriod
                         + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
                         + " missed rate = " + missed_record.get() / statPeriod + " Hz."
+                        + " total missed = " + total_missed
                 );
                 statLoop = statPeriod;
                 rate = 0;
                 totalData = 0;
+                total_missed += missed_record.get();
                 missed_record.set(0);
             }
             statLoop--;
