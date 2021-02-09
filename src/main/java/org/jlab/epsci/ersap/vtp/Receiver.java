@@ -223,10 +223,13 @@ public class Receiver extends Thread {
 
     private class PrintRates extends TimerTask {
         private long total_missed = 0;
-        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        private int counter = 0;
+        private DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
 
         @Override
         public void run() {
+            counter++;
             if (statLoop <= 0) {
                 System.out.println("\n" + dateFormat.format(new Date())
                         + " stream:" + streamId
@@ -238,7 +241,9 @@ public class Receiver extends Thread {
                 statLoop = statPeriod;
                 rate = 0;
                 totalData = 0;
-                total_missed += missed_record.get();
+                if(counter > 3) {
+                    total_missed += missed_record.get();
+                }
                 missed_record.set(0);
             }
             statLoop--;
