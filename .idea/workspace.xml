@@ -112,13 +112,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00156" summary="- debugging">
-      <created>1610664296317</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1610664296317</updated>
-    </task>
     <task id="LOCAL-00157" summary="- debugging">
       <created>1610682070916</created>
       <option name="number" value="00157" />
@@ -455,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612900778575</updated>
     </task>
-    <option name="localTasksCounter" value="205" />
+    <task id="LOCAL-00205" summary="- csv creation one line at a time">
+      <created>1612908149480</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1612908149480</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="TodoView">
@@ -468,7 +468,6 @@
     </todo-panel>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- AdcHit and ChargeTime records" />
     <MESSAGE value="- include BigInteger from math package" />
     <MESSAGE value="-cleanup not needed imports" />
     <MESSAGE value="- fixed typo in chargeTime14" />
@@ -493,7 +492,8 @@
     <MESSAGE value="-atomic long to measure missed frames." />
     <MESSAGE value="- add total missed" />
     <MESSAGE value="- deleted data folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="- deleted data folder" />
+    <MESSAGE value="- csv creation one line at a time" />
+    <option name="LAST_COMMIT_MESSAGE" value="- csv creation one line at a time" />
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />

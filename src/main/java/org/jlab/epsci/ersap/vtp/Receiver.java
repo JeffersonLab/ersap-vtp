@@ -217,7 +217,7 @@ public class Receiver extends Thread {
 
   public PrintRates() {
       try {
-         bw = new BufferedWriter(new FileWriter("stream_"+streamId+".txt"));
+         bw = new BufferedWriter(new FileWriter("stream_"+streamId+".csv"));
       } catch (IOException e) {
           e.printStackTrace();
       }
