@@ -90,15 +90,17 @@ public class Consumer extends Thread {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
             try {
+                get();
+                put();
                 // Get an empty item from ring
-                RingEvent buf = get();
-                if (buf.getPayload().length > 0) {
-                    long frameTime = buf.getRecordNumber() * 65536L;
-                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
-                    put();
-                    Runnable r = () -> decodePayloadMap2(frameTime, b);
-                    pool.execute(r);
-                }
+//                RingEvent buf = get();
+//                if (buf.getPayload().length > 0) {
+//                    long frameTime = buf.getRecordNumber() * 65536L;
+//                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
+//                    put();
+//                    Runnable r = () -> decodePayloadMap2(frameTime, b);
+//                    pool.execute(r);
+//                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
