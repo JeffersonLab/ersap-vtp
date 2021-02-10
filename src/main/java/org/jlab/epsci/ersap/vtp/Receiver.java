@@ -201,8 +201,8 @@ public class Receiver extends Thread {
                 // Get an empty item from ring
                 RingEvent buf = get();
 
-//                decodeVtpHeader(buf);
-                decodeVtpHeaderCT(buf); //CT suggestion
+                decodeVtpHeader(buf);
+//                decodeVtpHeaderCT(buf); //CT suggestion
 
                 // Make the buffer available for consumers
                 publish();
