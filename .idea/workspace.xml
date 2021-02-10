@@ -5,8 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/AdcHit.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/AdcHit.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Aggregator.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Aggregator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/ChargeTime.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/ChargeTime.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Consumer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Consumer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/EUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/EUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/HitFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/HitFinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEvent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEvent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEventFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEventFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/SlidingWindowStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/SlidingWindowStream.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,20 +131,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00183" summary="- debugging">
-      <created>1610810431800</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1610810431800</updated>
-    </task>
-    <task id="LOCAL-00184" summary="- debugging">
-      <created>1610810607333</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1610810607333</updated>
     </task>
     <task id="LOCAL-00185" summary="- debugging">
       <created>1610810656754</created>
@@ -455,7 +461,21 @@
       <option name="project" value="LOCAL" />
       <updated>1612993089085</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="- disruptor ring buffer depth studies">
+      <created>1612993728082</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1612993728082</updated>
+    </task>
+    <task id="LOCAL-00233" summary="- disruptor ring buffer depth studies">
+      <created>1612994009300</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1612994009300</updated>
+    </task>
+    <option name="localTasksCounter" value="234" />
     <servers />
   </component>
   <component name="TodoView">
