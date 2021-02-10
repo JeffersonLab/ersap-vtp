@@ -183,7 +183,14 @@ public class Receiver extends Thread {
             evt.setStreamId(streamId);
 
             // Collect statistics
-            long tmp = missed_record.get() + (record_number - (prev_rec_number + 1));
+
+            // DDD ======================
+            long x = record_number - (prev_rec_number + 1);
+            if (x == 1422 ) x = 0;
+            long tmp = missed_record.get() + x;
+            // DDD ======================
+
+//            long tmp = missed_record.get() + (record_number - (prev_rec_number + 1));
             missed_record.set(tmp);
 
             prev_rec_number = record_number;
