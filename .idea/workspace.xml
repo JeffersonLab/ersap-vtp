@@ -112,13 +112,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00170" summary="- debugging">
-      <created>1610744192190</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1610744192190</updated>
-    </task>
     <task id="LOCAL-00171" summary="- debugging">
       <created>1610747170873</created>
       <option name="number" value="00171" />
@@ -455,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612987954562</updated>
     </task>
-    <option name="localTasksCounter" value="219" />
+    <task id="LOCAL-00219" summary="- disruptor ring buffer depth studies">
+      <created>1612988262348</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1612988262348</updated>
+    </task>
+    <option name="localTasksCounter" value="220" />
     <servers />
   </component>
   <component name="TodoView">
@@ -468,7 +468,6 @@
     </todo-panel>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- increased data processing threads up to 24" />
     <MESSAGE value="-back to 18" />
     <MESSAGE value="- removed map of list&lt;hits&gt;" />
     <MESSAGE value="- leave only parsing" />
@@ -493,7 +492,8 @@
     <MESSAGE value="- header read one int at a time" />
     <MESSAGE value="- add payload parsing" />
     <MESSAGE value="- disruptor ring buffer depth set to 512" />
-    <option name="LAST_COMMIT_MESSAGE" value="- disruptor ring buffer depth set to 512" />
+    <MESSAGE value="- disruptor ring buffer depth studies" />
+    <option name="LAST_COMMIT_MESSAGE" value="- disruptor ring buffer depth studies" />
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />
