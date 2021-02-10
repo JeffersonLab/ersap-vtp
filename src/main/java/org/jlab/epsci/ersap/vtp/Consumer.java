@@ -92,18 +92,18 @@ public class Consumer extends Thread {
             try {
 
                 // Comment the following 2 lines to bypass the payload decoding
-                get();
-                put();
+//                get();
+//                put();
 
                 // Get an empty item from ring and parse the payload
-//                RingEvent buf = get();
-//                if (buf.getPayload().length > 0) {
-//                    long frameTime = buf.getRecordNumber() * 65536L;
-//                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
-//                    put();
-//                    Runnable r = () -> decodePayloadMap2(frameTime, b);
-//                    pool.execute(r);
-//                }
+                RingEvent buf = get();
+                if (buf.getPayload().length > 0) {
+                    long frameTime = buf.getRecordNumber() * 65536L;
+                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
+                    put();
+                    Runnable r = () -> decodePayloadMap2(frameTime, b);
+                    pool.execute(r);
+                }
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
