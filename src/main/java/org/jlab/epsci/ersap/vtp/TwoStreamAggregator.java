@@ -57,7 +57,7 @@ public class TwoStreamAggregator {
         ringBuffer2.addGatingSequences(sequence2);
 
 
-        ringBuffer12 = createSingleProducer(new RingEventFactory(), maxRingItems,
+        ringBuffer12 = createSingleProducer(new RingEventFactory(), maxRingItems*2,
                 new YieldingWaitStrategy());
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
