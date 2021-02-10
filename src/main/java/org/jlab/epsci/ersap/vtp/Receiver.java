@@ -49,7 +49,7 @@ public class Receiver extends Thread {
     private int statPeriod;
     private double totalData;
     private int rate;
-    private AtomicLong missed_record;
+    private long missed_record;
     private long prev_rec_number;
     private ByteBuffer headerBuffer;
     private byte[] header = new byte[52];
@@ -58,8 +58,6 @@ public class Receiver extends Thread {
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.statPeriod = statPeriod;
-
-        missed_record = new AtomicLong(0);
 
         headerBuffer = ByteBuffer.wrap(header);
         ;
@@ -135,8 +133,8 @@ public class Receiver extends Thread {
             evt.setStreamId(streamId);
 
             // Collect statistics
-            long tmp = missed_record.get() + (record_number - (prev_rec_number + 1));
-            missed_record.set(tmp);
+            long tmp = missed_record + (record_number - (prev_rec_number + 1));
+            missed_record = tmp;
 
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
@@ -185,13 +183,14 @@ public class Receiver extends Thread {
             // Collect statistics
 
             // DDD ======================
-            long x = record_number - (prev_rec_number + 1);
-            if (x == 1422 ) x = 0;
-            long tmp = missed_record.get() + x;
+//            long x = record_number - (prev_rec_number + 1);
+//            if (x == 1422 ) x = 0;
+//            long tmp = missed_record.get() + x;
             // DDD ======================
 
-//            long tmp = missed_record.get() + (record_number - (prev_rec_number + 1));
-            missed_record.set(tmp);
+//            long tmp = missed_record + (record_number - (prev_rec_number + 1));
+//            missed_record = tmp;
+            missed_record += record_number - (prev_rec_number + 1);
 
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
@@ -232,7 +231,7 @@ public class Receiver extends Thread {
 
         @Override
         public void run() {
-            long m_rate = missed_record.get() / statPeriod;
+            long m_rate = missed_record / statPeriod;
             try {
                 bw.write(m_rate+"\n");
                 bw.flush();
@@ -246,7 +245,7 @@ public class Receiver extends Thread {
             );
             rate = 0;
             totalData = 0;
-            missed_record.set(0);
+            missed_record = 0;
         }
     }
 
