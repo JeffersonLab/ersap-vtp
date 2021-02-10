@@ -5,9 +5,9 @@ plugins {
 group 'org.jlab.epsci.ersap.vtp'
 version '1.0-SNAPSHOT'
 
-apply plugin: 'java'
-sourceCompatibility = 15
-targetCompatibility = 15
+//apply plugin: 'java'
+//sourceCompatibility = 15
+//targetCompatibility = 15
 
 //compileJava.options.fork = true
 //compileJava.options.forkOptions.executable = '/Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home/bin/javac'
