@@ -90,9 +90,12 @@ public class Consumer extends Thread {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
             try {
+
+                // Comment the following 2 lines to bypass the payload decoding
                 get();
                 put();
-                // Get an empty item from ring
+
+                // Get an empty item from ring and parse the payload
 //                RingEvent buf = get();
 //                if (buf.getPayload().length > 0) {
 //                    long frameTime = buf.getRecordNumber() * 65536L;
@@ -101,6 +104,7 @@ public class Consumer extends Thread {
 //                    Runnable r = () -> decodePayloadMap2(frameTime, b);
 //                    pool.execute(r);
 //                }
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
