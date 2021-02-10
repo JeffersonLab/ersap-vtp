@@ -111,13 +111,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00173" summary="- debugging">
-      <created>1610748327863</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1610748327863</updated>
-    </task>
     <task id="LOCAL-00174" summary="- debugging">
       <created>1610748624456</created>
       <option name="number" value="00174" />
@@ -454,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612988772735</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="- disruptor ring buffer depth studies">
+      <created>1612989288456</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1612989288456</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="TodoView">
