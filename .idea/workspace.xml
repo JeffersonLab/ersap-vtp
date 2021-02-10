@@ -6,23 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/AdcHit.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Aggregator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/ChargeTime.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Consumer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/EUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/HitFinder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver$PrintRates.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/Receiver.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEvent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/RingEventFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/SlidingWindowStream.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/jlab/epsci/ersap/vtp/VTPSixStreamAggregator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/fatJar/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/TwoStreamAggregator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,13 +110,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00177" summary="- debugging">
-      <created>1610803318271</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1610803318271</updated>
     </task>
     <task id="LOCAL-00178" summary="- debugging">
       <created>1610803756229</created>
@@ -471,7 +447,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612990355148</updated>
     </task>
-    <option name="localTasksCounter" value="226" />
+    <task id="LOCAL-00226" summary="- disruptor ring buffer depth studies">
+      <created>1612990617066</created>
+      <option name="number" value="00226" />
+      <option name="presentableId" value="LOCAL-00226" />
+      <option name="project" value="LOCAL" />
+      <updated>1612990617066</updated>
+    </task>
+    <option name="localTasksCounter" value="227" />
     <servers />
   </component>
   <component name="TodoView">
