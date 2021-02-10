@@ -65,7 +65,7 @@ public class Receiver extends Thread {
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
-        timer.schedule(new PrintRates(), 0, statPeriod * 1000);
+        timer.schedule(new PrintRates(false), 0, statPeriod * 1000);
 
         // Connecting to the VTP stream source
         ServerSocket serverSocket;
@@ -182,15 +182,8 @@ public class Receiver extends Thread {
 
             // Collect statistics
 
-            // DDD ======================
-//            long x = record_number - (prev_rec_number + 1);
-//            if (x == 1422 ) x = 0;
-//            long tmp = missed_record.get() + x;
-            // DDD ======================
-
-//            long tmp = missed_record + (record_number - (prev_rec_number + 1));
-//            missed_record = tmp;
-            missed_record += record_number - (prev_rec_number + 1);
+            long tmp = missed_record + (record_number - (prev_rec_number + 1));
+            missed_record = tmp;
 
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
@@ -220,23 +213,29 @@ public class Receiver extends Thread {
 
     private class PrintRates extends TimerTask {
         BufferedWriter bw;
+        boolean f_out;
 
-  public PrintRates() {
-      try {
-         bw = new BufferedWriter(new FileWriter("stream_"+streamId+".csv"));
-      } catch (IOException e) {
-          e.printStackTrace();
+  public PrintRates(boolean file_out) {
+      f_out = file_out;
+      if(f_out) {
+          try {
+              bw = new BufferedWriter(new FileWriter("stream_" + streamId + ".csv"));
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
       }
   }
 
         @Override
         public void run() {
             long m_rate = missed_record / statPeriod;
-            try {
-                bw.write(m_rate+"\n");
-                bw.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (f_out) {
+                try {
+                    bw.write(m_rate + "\n");
+                    bw.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             System.out.println(" stream:" + streamId
                     + " event rate =" + rate / statPeriod
