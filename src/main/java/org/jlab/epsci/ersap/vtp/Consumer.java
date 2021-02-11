@@ -98,12 +98,12 @@ public class Consumer extends Thread {
                 // Get an empty item from ring and parse the payload
                 RingEvent buf = get();
                 if (buf.getPayload().length > 0) {
-                    long frameTime = buf.getRecordNumber() * 65536L;
-                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
-                    put();
+//                    long frameTime = buf.getRecordNumber() * 65536L;
+//                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
 //                    Runnable r = () -> decodePayloadMap2(frameTime, b);
 //                    pool.execute(r);
                 }
+                put();
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
