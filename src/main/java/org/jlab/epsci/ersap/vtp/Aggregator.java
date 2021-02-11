@@ -131,7 +131,7 @@ public class Aggregator extends Thread {
                 outputItem.setPayloadDataLength(l1 + l2);
                 // aggregate payload and set the payload [] in the output event
                 // now the output event byteBuffer will wrap the payload[]
-                EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
+                EUtil.addByteArrays(inputItem1.getPayload(), l1, inputItem2.getPayload(), l2, outputItem.getPayload());
                 // sat the matching record number. does not matter b1 or b2
                 outputItem.setRecordNumber(b1);
             }
