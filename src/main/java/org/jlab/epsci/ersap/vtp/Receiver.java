@@ -241,6 +241,7 @@ public class Receiver extends Thread {
                     + " event rate =" + rate / statPeriod
                     + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
                     + " missed rate = " + m_rate + " Hz."
+                    + " record number = " + prev_rec_number
             );
             rate = 0;
             totalData = 0;
