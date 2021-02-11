@@ -195,18 +195,18 @@ public class Receiver extends Thread {
 
     public void run() {
             while (true) {
-//                try {
+                try {
                 // Get an empty item from ring
-//                RingEvent buf = get();
+                RingEvent buf = get();
 
-                decodeVtpHeader();
-//                decodeVtpHeaderCT(buf); //CT suggestion
+//                decodeVtpHeader();
+                decodeVtpHeaderCT(buf); //CT suggestion
 
                 // Make the buffer available for consumers
-//                publish();
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
+                publish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
             }
     }
