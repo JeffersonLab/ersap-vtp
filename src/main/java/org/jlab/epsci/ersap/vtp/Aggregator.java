@@ -112,6 +112,32 @@ public class Aggregator extends Thread {
 
             int l1 = inputItem1.getPayloadDataLength();
             int l2 = inputItem2.getPayloadDataLength();
+            // ...........................................//
+            if(b1 == b2) {
+                // get the next available sequence on the output ring
+                outSequence = outputRingBuffer.next();
+
+                // get the the event at that sequence
+                RingEvent outputItem = outputRingBuffer.get(outSequence);
+                // clear the bytebuffer of that event
+                outputItem.getPayloadBuffer().clear();
+
+                // see if the byte[] is big enough to hold the aggregated payload
+                if (outputItem.getPayload().length < (l1 + l2) ){
+                    byte [] aggregate = new byte[l1 + l2];
+                    outputItem.setPayload(aggregate);
+                }
+                // set the payload length of the output event
+                outputItem.setPayloadDataLength(l1 + l2);
+                // aggregate payload and set the payload [] in the output event
+                // now the output event byteBuffer will wrap the payload[]
+                EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
+                // sat the matching record number. does not matter b1 or b2
+                outputItem.setRecordNumber(b1);
+            }
+            // ...........................................//
+
+            /*
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
@@ -119,6 +145,7 @@ public class Aggregator extends Thread {
             Long aggRecNum = null;
 
             outSequence = outputRingBuffer.next();
+
             RingEvent outputItem = outputRingBuffer.get(outSequence);
 
             outputItem.getPayloadBuffer().clear();
@@ -128,6 +155,7 @@ public class Aggregator extends Thread {
                outputItem.setPayload(aggregate);
                outputItem.setPayloadDataLength(l1 + l2);
             }
+
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
                 aggRecNum = b1;
@@ -142,9 +170,10 @@ public class Aggregator extends Thread {
             }
             if (aggRecNum != null) {
                 outputItem.setRecordNumber(aggRecNum);
-                outputItem.setPayloadDataLength(l1 + l2);
+            } else {
+                System.out.println("DDD .................................... ");
             }
-
+*/
         } catch (final TimeoutException | AlertException ex) {
             ex.printStackTrace();
         }
