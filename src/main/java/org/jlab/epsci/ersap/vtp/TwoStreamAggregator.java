@@ -78,8 +78,8 @@ public class TwoStreamAggregator {
         receiver1.start();
         receiver2.start();
 
-//        aggregator12.start();
-//        consumer.start();
+        aggregator12.start();
+        consumer.start();
 
     }
 
