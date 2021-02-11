@@ -40,7 +40,7 @@ public class Receiver extends Thread {
     /**
      * Current spot in the ring from which an item was claimed.
      */
-    private final AtomicLong getSequence = new AtomicLong();
+    private final AtomicLong sequence = new AtomicLong();
 
     /**
      * For statistics
@@ -94,17 +94,17 @@ public class Receiver extends Thread {
      */
     private RingEvent get() throws InterruptedException {
 
-        getSequence.set(ringBuffer.next());
-        RingEvent buf = ringBuffer.get(getSequence.get());
+        sequence.set(ringBuffer.next());
+        RingEvent buf = ringBuffer.get(sequence.get());
         return buf;
     }
 
     private void publish() {
-        ringBuffer.publish(getSequence.get());
+        ringBuffer.publish(sequence.get());
     }
 
 
-    private void decodeVtpHeader(RingEvent evt) {
+    private void decodeVtpHeader() {
         try {
             int source_id = Integer.reverseBytes(dataInputStream.readInt());
             int total_length = Integer.reverseBytes(dataInputStream.readInt());
@@ -127,10 +127,10 @@ public class Receiver extends Thread {
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
-            evt.setPayload(dataBuffer);
+//            evt.setPayload(dataBuffer);
 //            evt.setRecordNumber(rcn);
-            evt.setRecordNumber(record_number);
-            evt.setStreamId(streamId);
+//            evt.setRecordNumber(record_number);
+//            evt.setStreamId(streamId);
 
             // Collect statistics
             long tmp = missed_record + (record_number - (prev_rec_number + 1));
@@ -194,20 +194,21 @@ public class Receiver extends Thread {
     }
 
     public void run() {
-        try {
             while (true) {
+//                try {
                 // Get an empty item from ring
-                RingEvent buf = get();
+//                RingEvent buf = get();
 
-//                decodeVtpHeader(buf);
-                decodeVtpHeaderCT(buf); //CT suggestion
+                decodeVtpHeader();
+//                decodeVtpHeaderCT(buf); //CT suggestion
 
                 // Make the buffer available for consumers
-                publish();
+//                publish();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private class PrintRates extends TimerTask {

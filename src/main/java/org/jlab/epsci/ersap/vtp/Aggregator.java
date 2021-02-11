@@ -2,7 +2,6 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 
 
@@ -29,7 +28,7 @@ public class Aggregator extends Thread {
     /**
      * Current spot in output ring from which an item was claimed.
      */
-    private long getOutSequence;
+    private long outSequence;
 
 
     /**
@@ -119,8 +118,8 @@ public class Aggregator extends Thread {
 //            BigInteger aggRecNum = null;
             Long aggRecNum = null;
 
-            getOutSequence = outputRingBuffer.next();
-            RingEvent outputItem = outputRingBuffer.get(getOutSequence);
+            outSequence = outputRingBuffer.next();
+            RingEvent outputItem = outputRingBuffer.get(outSequence);
 
             outputItem.getPayloadBuffer().clear();
 
@@ -158,7 +157,7 @@ public class Aggregator extends Thread {
      */
     private void put() throws InterruptedException {
 
-        outputRingBuffer.publish(getOutSequence);
+        outputRingBuffer.publish(outSequence);
 
         sequence1.set(nextSequence1);
         nextSequence1++;
