@@ -91,10 +91,6 @@ public class Consumer extends Thread {
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
             try {
 
-                // Comment the following 2 lines to bypass the payload decoding
-//                get();
-//                put();
-
                 // Get an empty item from ring and parse the payload
                 RingEvent buf = get();
                 if (buf.getPayload().length > 0) {
