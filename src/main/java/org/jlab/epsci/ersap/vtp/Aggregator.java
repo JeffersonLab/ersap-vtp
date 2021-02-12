@@ -168,11 +168,7 @@ public class Aggregator extends Thread {
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
-<<<<<<< HEAD
             long aggRecNum = -1;
-=======
-//            BigInteger aggRecNum = null;
->>>>>>> master
 
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 outSequence = outputRingBuffer.next();
@@ -210,14 +206,6 @@ public class Aggregator extends Thread {
                 m1.remove(b2);
                 m2.remove(b2);
             }
-<<<<<<< HEAD
-            if (aggRecNum > -1) {
-                outputItem.setRecordNumber(aggRecNum);
-                outputItem.setPayloadDataLength(l1 + l2);
-            }
-
-=======
->>>>>>> master
         } catch (final TimeoutException | AlertException ex) {
             ex.printStackTrace();
         }
