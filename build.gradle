@@ -1,11 +1,13 @@
 plugins {
     id 'java'
+    id 'java-library'
 }
 
 group 'org.jlab.epsci.ersap.vtp'
 version '1.0-SNAPSHOT'
 
-//sourceCompatibility = 1.8
+//sourceCompatibility = JavaVersion.VERSION_15
+//targetCompatibility = JavaVersion.VERSION_15
 
 //create a single Jar with all dependencies
 task fatJar(type: Jar) {

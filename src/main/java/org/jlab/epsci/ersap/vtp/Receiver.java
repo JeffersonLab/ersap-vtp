@@ -2,19 +2,13 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.math.BigInteger;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
 
 /**
  * Receives stream frames from a VTP and writes them to a RingBuffer
@@ -45,7 +39,11 @@ public class Receiver extends Thread {
     /**
      * Current spot in the ring from which an item was claimed.
      */
+<<<<<<< HEAD
     private long getSequence; // This does NOT have to be atomic, Carl T
+=======
+    private final AtomicLong sequence = new AtomicLong();
+>>>>>>> master
 
     /**
      * For statistics
@@ -64,12 +62,13 @@ public class Receiver extends Thread {
         this.streamId = streamId;
         this.statPeriod = statPeriod;
 
-        headerBuffer = ByteBuffer.wrap(header);;
+        headerBuffer = ByteBuffer.wrap(header);
+        ;
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
-        timer.schedule(new PrintRates(), 0, 1000);
+        timer.schedule(new PrintRates(false), 0, statPeriod * 1000);
 
         // Connecting to the VTP stream source
         ServerSocket serverSocket;
@@ -98,17 +97,26 @@ public class Receiver extends Thread {
      */
     private RingEvent get() throws InterruptedException {
 
+<<<<<<< HEAD
         getSequence = ringBuffer.next();
         RingEvent buf = ringBuffer.get(getSequence);
+=======
+        sequence.set(ringBuffer.next());
+        RingEvent buf = ringBuffer.get(sequence.get());
+>>>>>>> master
         return buf;
     }
 
     private void publish() {
+<<<<<<< HEAD
         ringBuffer.publish(getSequence);
+=======
+        ringBuffer.publish(sequence.get());
+>>>>>>> master
     }
 
 
-    private void decodeVtpHeader(RingEvent evt) {
+    private void decodeVtpHeader() {
         try {
             int source_id = Integer.reverseBytes(dataInputStream.readInt());
             int total_length = Integer.reverseBytes(dataInputStream.readInt());
@@ -131,13 +139,15 @@ public class Receiver extends Thread {
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
-            evt.setPayload(dataBuffer);
+//            evt.setPayload(dataBuffer);
 //            evt.setRecordNumber(rcn);
-            evt.setRecordNumber(record_number);
-            evt.setStreamId(streamId);
+//            evt.setRecordNumber(record_number);
+//            evt.setStreamId(streamId);
 
             // Collect statistics
-            missed_record = missed_record + (record_number - (prev_rec_number + 1));
+            long tmp = missed_record + (record_number - (prev_rec_number + 1));
+            missed_record = tmp;
+
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
             rate++;
@@ -146,6 +156,7 @@ public class Receiver extends Thread {
             e.printStackTrace();
         }
     }
+
     private void decodeVtpHeaderCT(RingEvent evt) {
         try {
             headerBuffer.clear();
@@ -163,11 +174,22 @@ public class Receiver extends Thread {
             long ts_sec = EUtil.llSwap(headerBuffer.getLong());
             long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
 
+<<<<<<< HEAD
             if (evt.getPayload().length < payload_length){
+=======
+//            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
+//                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
+//                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
+//            printFrame(streamId, source_id, total_length, payload_length,
+//                    compressed_length, magic, format_version, flags,
+//                    record_number, ts_sec, ts_nsec);
+
+            if (evt.getPayload().length < payload_length) {
+>>>>>>> master
                 byte[] payloadData = new byte[payload_length];
                 evt.setPayload(payloadData);
             }
-            dataInputStream.readFully(evt.getPayload(), 0 , payload_length);
+            dataInputStream.readFully(evt.getPayload(), 0, payload_length);
 
 //            evt.setRecordNumber(rcn);
             evt.setPayloadDataLength(payload_length);
@@ -175,7 +197,9 @@ public class Receiver extends Thread {
             evt.setStreamId(streamId);
 
             // Collect statistics
-            missed_record = missed_record + (record_number - (prev_rec_number + 1));
+            long tmp = missed_record + (record_number - (prev_rec_number + 1));
+            missed_record = tmp;
+
             prev_rec_number = record_number;
             totalData = totalData + (double) total_length / 1000.0;
             rate++;
@@ -186,38 +210,58 @@ public class Receiver extends Thread {
     }
 
     public void run() {
-        try {
             while (true) {
+                try {
                 // Get an empty item from ring
                 RingEvent buf = get();
 
-//                decodeVtpHeader(buf);
+//                decodeVtpHeader();
                 decodeVtpHeaderCT(buf); //CT suggestion
 
                 // Make the buffer available for consumers
                 publish();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     private class PrintRates extends TimerTask {
+        BufferedWriter bw;
+        boolean f_out;
+
+  public PrintRates(boolean file_out) {
+      f_out = file_out;
+      if(f_out) {
+          try {
+              bw = new BufferedWriter(new FileWriter("stream_" + streamId + ".csv"));
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+      }
+  }
 
         @Override
         public void run() {
-            if (statLoop <= 0) {
-                System.out.println("stream:" + streamId
-                        + " event rate =" + rate / statPeriod
-                        + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
-                        + " missed rate = " + missed_record / statPeriod + " Hz."
-                );
-                statLoop = statPeriod;
-                rate = 0;
-                totalData = 0;
-                missed_record = 0;
+            long m_rate = missed_record / statPeriod;
+            if (f_out) {
+                try {
+                    bw.write(m_rate + "\n");
+                    bw.flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            statLoop--;
+            System.out.println(" stream:" + streamId
+                    + " event rate =" + rate / statPeriod
+                    + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
+                    + " missed rate = " + m_rate + " Hz."
+                    + " record number = " + prev_rec_number
+            );
+            rate = 0;
+            totalData = 0;
+            missed_record = 0;
         }
     }
 

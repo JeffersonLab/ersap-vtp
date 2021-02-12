@@ -4,8 +4,6 @@ import com.lmax.disruptor.*;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -90,7 +88,8 @@ public class Consumer extends Thread {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
             try {
-                // Get an empty item from ring
+
+                // Get an empty item from ring and parse the payload
                 RingEvent buf = get();
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
@@ -98,7 +97,10 @@ public class Consumer extends Thread {
                     put();
                     Runnable r = () -> decodePayloadMap2(frameTime, b);
                     pool.execute(r);
+                } else {
+                    put();
                 }
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
