@@ -22,8 +22,8 @@ public class Aggregator extends Thread {
      */
 //    private HashMap<BigInteger, byte[]> m1 = new HashMap<>();
 //    private HashMap<BigInteger, byte[]> m2 = new HashMap<>();
-    private HashMap<Long, byte[]> m1 = new HashMap<>();
-    private HashMap<Long, byte[]> m2 = new HashMap<>();
+    private final HashMap<Long, byte[]> m1 = new HashMap<>();
+    private final HashMap<Long, byte[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
@@ -68,9 +68,9 @@ public class Aggregator extends Thread {
 
 
     public Aggregator(RingBuffer<RingEvent> ringBuffer1, RingBuffer<RingEvent> ringBuffer2,
-               Sequence sequence1, Sequence sequence2,
-               SequenceBarrier barrier1, SequenceBarrier barrier2,
-               RingBuffer<RingEvent> outputRingBuffer
+                      Sequence sequence1, Sequence sequence2,
+                      SequenceBarrier barrier1, SequenceBarrier barrier2,
+                      RingBuffer<RingEvent> outputRingBuffer
     ) {
 
         this.ringBuffer1 = ringBuffer1;
@@ -112,8 +112,10 @@ public class Aggregator extends Thread {
 
             int l1 = inputItem1.getPayloadDataLength();
             int l2 = inputItem2.getPayloadDataLength();
+            /*
             // ...........................................//
-            if(b1 == b2) {
+            // we are lucky we found a match
+            if (b1 == b2) {
                 // get the next available sequence on the output ring
                 outSequence = outputRingBuffer.next();
 
@@ -134,46 +136,80 @@ public class Aggregator extends Thread {
                 EUtil.addByteArrays(inputItem1.getPayload(), l1, inputItem2.getPayload(), l2, outputItem.getPayload());
                 // sat the matching record number. does not matter b1 or b2
                 outputItem.setRecordNumber(b1);
+
+            } else if (b1 > b2) {
+                // read the next in the second ring until b2 >= b1
+                // XXX
+                if (b1 == b2) {
+                    // we found the match
+                } else if (b1 < b2) {
+                    // b2 frame was dropped at the FPGA
+                    // read the next in the first ring until b1 >= b2
+                    if( b1 == b2) {
+                        // we found the match
+                    } else if (b1 > b2) {
+                        //got to XXX
+                    }
+                }
+
+            } else if (b2 > b1){
+               // read the next in the first ring until b1 >= b2
+               /// YYY
+               if (b2 == b1) {
+                   // we found the match
+               } else if (b2 < b1) {
+                   // b1 frame was dropped at the FPGA
+                   // read the next in the second ring until b2 >= b1
+                   if(b2 ==b1) {
+                       // we found the match
+                   } else if (b2 > b1) {
+                       // go to YYY
+                   }
+               }
             }
             // ...........................................//
-
-            /*
+*/
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
 //            BigInteger aggRecNum = null;
-            Long aggRecNum = null;
-
-            outSequence = outputRingBuffer.next();
-
-            RingEvent outputItem = outputRingBuffer.get(outSequence);
-
-            outputItem.getPayloadBuffer().clear();
-
-            if (outputItem.getPayload().length < (l1 + l2) ){
-               byte [] aggregate = new byte[l1 + l2];
-               outputItem.setPayload(aggregate);
-               outputItem.setPayloadDataLength(l1 + l2);
-            }
 
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
+                outSequence = outputRingBuffer.next();
+                RingEvent outputItem = outputRingBuffer.get(outSequence);
+                outputItem.getPayloadBuffer().clear();
+
+                if (outputItem.getPayload().length < (l1 + l2)) {
+                    byte[] aggregate = new byte[l1 + l2];
+                    outputItem.setPayload(aggregate);
+                    outputItem.setPayloadDataLength(l1 + l2);
+                }
+
                 EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
-                aggRecNum = b1;
+                outputItem.setRecordNumber(b1);
+                outputRingBuffer.publish(outSequence);
                 m1.remove(b1);
                 m2.remove(b1);
             }
+
             if (m1.containsKey(b2) && m2.containsKey(b2)) {
+
+                outSequence = outputRingBuffer.next();
+                RingEvent outputItem = outputRingBuffer.get(outSequence);
+                outputItem.getPayloadBuffer().clear();
+
+                if (outputItem.getPayload().length < (l1 + l2)) {
+                    byte[] aggregate = new byte[l1 + l2];
+                    outputItem.setPayload(aggregate);
+                    outputItem.setPayloadDataLength(l1 + l2);
+                }
+
                 EUtil.addByteArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
-                aggRecNum = b2;
+                outputItem.setRecordNumber(b2);
+                outputRingBuffer.publish(outSequence);
                 m1.remove(b2);
                 m2.remove(b2);
             }
-            if (aggRecNum != null) {
-                outputItem.setRecordNumber(aggRecNum);
-            } else {
-                System.out.println("DDD .................................... ");
-            }
-*/
         } catch (final TimeoutException | AlertException ex) {
             ex.printStackTrace();
         }
@@ -186,7 +222,6 @@ public class Aggregator extends Thread {
      */
     private void put() throws InterruptedException {
 
-        outputRingBuffer.publish(outSequence);
 
         sequence1.set(nextSequence1);
         nextSequence1++;
