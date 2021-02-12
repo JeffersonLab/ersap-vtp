@@ -39,11 +39,7 @@ public class Receiver extends Thread {
     /**
      * Current spot in the ring from which an item was claimed.
      */
-<<<<<<< HEAD
     private long getSequence; // This does NOT have to be atomic, Carl T
-=======
-    private final AtomicLong sequence = new AtomicLong();
->>>>>>> master
 
     /**
      * For statistics
@@ -97,22 +93,13 @@ public class Receiver extends Thread {
      */
     private RingEvent get() throws InterruptedException {
 
-<<<<<<< HEAD
         getSequence = ringBuffer.next();
         RingEvent buf = ringBuffer.get(getSequence);
-=======
-        sequence.set(ringBuffer.next());
-        RingEvent buf = ringBuffer.get(sequence.get());
->>>>>>> master
         return buf;
     }
 
     private void publish() {
-<<<<<<< HEAD
         ringBuffer.publish(getSequence);
-=======
-        ringBuffer.publish(sequence.get());
->>>>>>> master
     }
 
 
@@ -174,18 +161,7 @@ public class Receiver extends Thread {
             long ts_sec = EUtil.llSwap(headerBuffer.getLong());
             long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
 
-<<<<<<< HEAD
             if (evt.getPayload().length < payload_length){
-=======
-//            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
-//                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
-//                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-//            printFrame(streamId, source_id, total_length, payload_length,
-//                    compressed_length, magic, format_version, flags,
-//                    record_number, ts_sec, ts_nsec);
-
-            if (evt.getPayload().length < payload_length) {
->>>>>>> master
                 byte[] payloadData = new byte[payload_length];
                 evt.setPayload(payloadData);
             }

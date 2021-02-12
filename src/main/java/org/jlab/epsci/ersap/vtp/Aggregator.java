@@ -20,15 +20,8 @@ public class Aggregator extends Thread {
     /**
      * Maps for aggregation
      */
-<<<<<<< HEAD
-    private HashMap<Long, byte[]> m1 = new HashMap<>();
-    private HashMap<Long, byte[]> m2 = new HashMap<>();
-=======
-//    private HashMap<BigInteger, byte[]> m1 = new HashMap<>();
-//    private HashMap<BigInteger, byte[]> m2 = new HashMap<>();
     private final HashMap<Long, byte[]> m1 = new HashMap<>();
     private final HashMap<Long, byte[]> m2 = new HashMap<>();
->>>>>>> master
 
     /**
      * Current spot in output ring from which an item was claimed.
