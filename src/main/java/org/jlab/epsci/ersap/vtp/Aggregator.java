@@ -2,7 +2,6 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 
 
@@ -21,8 +20,6 @@ public class Aggregator extends Thread {
     /**
      * Maps for aggregation
      */
-//    private HashMap<BigInteger, byte[]> m1 = new HashMap<>();
-//    private HashMap<BigInteger, byte[]> m2 = new HashMap<>();
     private HashMap<Long, byte[]> m1 = new HashMap<>();
     private HashMap<Long, byte[]> m2 = new HashMap<>();
 
@@ -82,8 +79,8 @@ public class Aggregator extends Thread {
         this.barrier2 = barrier2;
         this.outputRingBuffer = outputRingBuffer;
 
-//        ringBuffer1.addGatingSequences(sequence1);
-//        ringBuffer2.addGatingSequences(sequence2);
+//        ringBuffer1->addGatingSequences(sequence1);
+//        ringBuffer2->addGatingSequences(sequence2);
 
         nextSequence1 = sequence1.get() + 1L;
         nextSequence2 = sequence2.get() + 1L;
@@ -106,18 +103,15 @@ public class Aggregator extends Thread {
             }
             RingEvent inputItem2 = ringBuffer2.get(nextSequence2);
 
-//            BigInteger b1 = inputItem1.getRecordNumber();
-//            BigInteger b2 = inputItem2.getRecordNumber();
-            Long b1 = inputItem1.getRecordNumber();
-            Long b2 = inputItem2.getRecordNumber();
+            long b1 = inputItem1.getRecordNumber();
+            long b2 = inputItem2.getRecordNumber();
 
             int l1 = inputItem1.getPayloadDataLength();
             int l2 = inputItem2.getPayloadDataLength();
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
-//            BigInteger aggRecNum = null;
-            Long aggRecNum = null;
+            long aggRecNum = -1;
 
             getOutSequence = outputRingBuffer.next();
             RingEvent outputItem = outputRingBuffer.get(getOutSequence);
@@ -141,7 +135,7 @@ public class Aggregator extends Thread {
                 m1.remove(b2);
                 m2.remove(b2);
             }
-            if (aggRecNum != null) {
+            if (aggRecNum > -1) {
                 outputItem.setRecordNumber(aggRecNum);
                 outputItem.setPayloadDataLength(l1 + l2);
             }

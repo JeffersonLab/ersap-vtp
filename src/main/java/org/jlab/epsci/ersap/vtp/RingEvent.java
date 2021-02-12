@@ -9,7 +9,7 @@ import java.util.List;
 public class RingEvent {
     private int streamId;
 //    private BigInteger recordNumber;
-    private Long recordNumber;
+    private long recordNumber;
     private byte[] payload;
     private ByteBuffer payloadBuffer;
     private int payloadDataLength;
@@ -36,11 +36,11 @@ public class RingEvent {
 //        this.recordNumber = recordNumber;
 //    }
 
-    public Long getRecordNumber() {
+    public long getRecordNumber() {
         return recordNumber;
     }
 
-    public void setRecordNumber(Long recordNumber) {
+    public void setRecordNumber(long recordNumber) {
         this.recordNumber = recordNumber;
     }
 

@@ -1,6 +1,6 @@
 package org.jlab.epsci.ersap.vtp;
 
-import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.*;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -13,7 +13,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicLong;
 
 import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
 
@@ -46,7 +45,7 @@ public class Receiver extends Thread {
     /**
      * Current spot in the ring from which an item was claimed.
      */
-    private final AtomicLong getSequence = new AtomicLong();
+    private long getSequence; // This does NOT have to be atomic, Carl T
 
     /**
      * For statistics
@@ -99,13 +98,13 @@ public class Receiver extends Thread {
      */
     private RingEvent get() throws InterruptedException {
 
-        getSequence.set(ringBuffer.next());
-        RingEvent buf = ringBuffer.get(getSequence.get());
+        getSequence = ringBuffer.next();
+        RingEvent buf = ringBuffer.get(getSequence);
         return buf;
     }
 
     private void publish() {
-        ringBuffer.publish(getSequence.get());
+        ringBuffer.publish(getSequence);
     }
 
 
@@ -164,14 +163,7 @@ public class Receiver extends Thread {
             long ts_sec = EUtil.llSwap(headerBuffer.getLong());
             long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
 
-//            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
-//                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
-//                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-//            printFrame(streamId, source_id, total_length, payload_length,
-//                    compressed_length, magic, format_version, flags,
-//                    record_number, ts_sec, ts_nsec);
-
-            if(evt.getPayload().length < payload_length){
+            if (evt.getPayload().length < payload_length){
                 byte[] payloadData = new byte[payload_length];
                 evt.setPayload(payloadData);
             }

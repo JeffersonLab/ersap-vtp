@@ -16,8 +16,12 @@ import java.util.List;
  * @since 04.01.20
  */
 public class EUtil {
-    private static final byte[] i32 = new byte[4];
-    private static final byte[] i64 = new byte[8];
+
+    private static final ByteBuffer bb32 = ByteBuffer.allocate(4);
+    private static final ByteBuffer bb64 = ByteBuffer.allocate(8);
+
+    private static byte[] i32 = bb32.array();
+    private static byte[] i64 = bb64.array();
 
     /**
      * Returns unsigned byte for a ByteBuffer
@@ -74,21 +78,18 @@ public class EUtil {
         bb.putInt(position, (int) (value & 0xffffffffL));
     }
 
-    public static long readLteUnsined32(DataInputStream dataInputStream) {
-        ByteBuffer bb = null;
-//        byte[] i32 = new byte[4];
+    public static long readLteUnsigned32(DataInputStream dataInputStream) {
         try {
+            // I made the ByteBuffer object static, Carl T.
             dataInputStream.readFully(i32);
-            bb = ByteBuffer.wrap(i32);
-            bb.order(ByteOrder.LITTLE_ENDIAN);
+            bb32.order(ByteOrder.LITTLE_ENDIAN);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        assert bb != null;
-        return getUnsignedInt(bb);
+        return getUnsignedInt(bb32);
     }
 
-    public static int readUnsined32(DataInputStream dataInputStream) throws IOException {
+    public static int readUnsigned32(DataInputStream dataInputStream) throws IOException {
         int ch1 = dataInputStream.read();
         int ch2 = dataInputStream.read();
         int ch3 = dataInputStream.read();
@@ -135,24 +136,39 @@ public class EUtil {
         return toUnsignedBigInteger(llSwap(bb.getLong()));
     }
 
+    
+    /**
+     * Avoid the creation of long[] objects by providing as an arg.
+     * @param dataInputStream
+     * @param payload array to be filled
+     */
+    public static void readLtPayload(DataInputStream dataInputStream, long[] payload) {
+        int j = 0;
+        for (long i = 0; i < payload.length; i = i + 4) {
+            payload[j] = readLteUnsigned32(dataInputStream);
+            j = j + 1;
+        }
+    }
+
     public static long[] readLtPayload(DataInputStream dataInputStream, long payload_length) {
         long[] payload = new long[(int) payload_length / 4];
         int j = 0;
         for (long i = 0; i < payload_length; i = i + 4) {
-            payload[j] = readLteUnsined32(dataInputStream);
+            payload[j] = readLteUnsigned32(dataInputStream);
             j = j + 1;
         }
         return payload;
     }
 
     public static long llSwap(long l) {
-        long x = l >> 32;
+        // ERROR corrected here, Carl T.
+        long x = l >>> 32;
         x = x | l << 32;
         return x;
     }
 
     public static byte[] long2ByteArray(long lng) {
-        byte[] b = new byte[]{
+        byte[] b = new byte[] {
                 (byte) lng,
                 (byte) (lng >> 8),
                 (byte) (lng >> 16),
@@ -202,7 +218,9 @@ public class EUtil {
     }
 
     public static int decodeSlotNumber(int csc) {
-        return csc & 0x000000f0;
+        // TODO: This seemed like a bug to me so I fixed it, Carl T.
+        //return csc & 0x000000f0;
+        return (csc >> 8) & 0xf;
     }
 
     public static int decodeChannelNumber(int csc) {
