@@ -23,6 +23,7 @@ cmake_minimum_required(VERSION 3.17)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_DEBUG_POSTFIX -dbg)
+#set(CMAKE_CXX_FLAGS_DEBUG  "-g")
 
 project(ersap_vtp VERSION 1.0)
 
@@ -115,11 +116,11 @@ include_directories(ersap-vtp PUBLIC src/libsrc /usr/local/include
 
 
 # Main Executables
-add_executable(Aggregator src/libsrc/TwoStreamAggregator.cpp)
-target_link_libraries(Aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
+add_executable(aggregator src/libsrc/TwoStreamAggregator.cpp)
+target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
 
-add_executable(DisruptorTrial src/libsrc/disruptorTrial.cpp)
-target_link_libraries(DisruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
+add_executable(disruptorTrial src/libsrc/disruptorTrial.cpp)
+target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
 
 
 # Installation defaulting to ${CMAKE_INSTALL_PREFIX}/lib
