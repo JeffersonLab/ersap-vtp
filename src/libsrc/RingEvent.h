@@ -3,9 +3,11 @@
 #define ERSAP_VTP_RINGEVENT_H
 
 
+#include <memory>
+#include <functional>
+
 #include "ByteOrder.h"
 #include "ByteBuffer.h"
-#include <memory>
 
 
 namespace ersap {
