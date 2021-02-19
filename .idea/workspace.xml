@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -118,20 +116,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00217" summary="- add payload parsing">
-      <created>1612982167058</created>
-      <option name="number" value="00217" />
-      <option name="presentableId" value="LOCAL-00217" />
-      <option name="project" value="LOCAL" />
-      <updated>1612982167058</updated>
-    </task>
-    <task id="LOCAL-00218" summary="- disruptor ring buffer depth set to 512">
-      <created>1612987954561</created>
-      <option name="number" value="00218" />
-      <option name="presentableId" value="LOCAL-00218" />
-      <option name="project" value="LOCAL" />
-      <updated>1612987954562</updated>
     </task>
     <task id="LOCAL-00219" summary="- disruptor ring buffer depth studies">
       <created>1612988262348</created>
@@ -462,7 +446,21 @@
       <option name="project" value="LOCAL" />
       <updated>1613098518893</updated>
     </task>
-    <option name="localTasksCounter" value="266" />
+    <task id="LOCAL-00266" summary="- disruptor ring buffer depth studies">
+      <created>1613672321162</created>
+      <option name="number" value="00266" />
+      <option name="presentableId" value="LOCAL-00266" />
+      <option name="project" value="LOCAL" />
+      <updated>1613672321163</updated>
+    </task>
+    <task id="LOCAL-00267" summary="- disruptor ring buffer depth studies">
+      <created>1613672454535</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1613672454535</updated>
+    </task>
+    <option name="localTasksCounter" value="268" />
     <servers />
   </component>
   <component name="TodoView">
