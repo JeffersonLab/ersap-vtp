@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <thread>
 #include <vector>
+#include <functional>
 
 #include "ByteBuffer.h"
 #include "RingEvent.h"
