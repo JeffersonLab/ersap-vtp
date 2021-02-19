@@ -135,7 +135,7 @@ namespace ersap {
         void readData(std::shared_ptr<ByteBuffer> buf, size_t bytes) {
             buf->clear();
             // Turn shared pointer to ByteBuffer into usable form
-            mutable_buffer mb((void *) buf->array(), bytes);
+            mutable_buffers_1 mb((void *) buf->array(), bytes);
             // Read in full size of data
             boost::asio::read(*socket, mb, boost::asio::transfer_exactly(bytes));
             buf->limit(bytes);
