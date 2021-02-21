@@ -161,7 +161,7 @@ namespace ersap {
          * @return
          */
         static uint8_t * long2ByteArray(uint64_t lng) {
-            auto b = new uint8_t[] {
+            auto b = new uint8_t [8] {
                     (uint8_t) lng,
                     (uint8_t) (lng >> 8),
                     (uint8_t) (lng >> 16),

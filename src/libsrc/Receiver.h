@@ -60,7 +60,7 @@ namespace ersap {
         uint8_t * header;
 
         /** Mutable buffer associated with array - for boost I/O. */
-        mutable_buffer buffer;
+        std::shared_ptr<mutable_buffers_1> buffer;
 
         /** Socket to read from client. */
         std::shared_ptr<tcp::socket> socket;
@@ -88,7 +88,7 @@ namespace ersap {
             headerBuffer = std::make_shared<ByteBuffer>(bufSize);
             headerBuffer->order(ByteOrder::ENDIAN_LITTLE);
             header = headerBuffer->array();
-            buffer = mutable_buffer((void *) header, bufSize);
+            buffer = std::make_shared<mutable_buffers_1>((void *) header, bufSize);
 
             try {
                 // Connecting to the VTP stream source
@@ -118,7 +118,7 @@ namespace ersap {
         /** Skip over 2 ints initially sent on socket connection */
         void readOnConnection() {
             // Read in 8 bytes
-            boost::asio::read(*socket, buffer,boost::asio::transfer_exactly(8));
+            boost::asio::read(*socket, *buffer, boost::asio::transfer_exactly(8));
         }
 
 
@@ -126,7 +126,7 @@ namespace ersap {
         void readHeader() {
             headerBuffer->clear();
             // Read in full size of header
-            boost::asio::read(*socket, buffer,boost::asio::transfer_exactly(bufSize));
+            boost::asio::read(*socket, *buffer, boost::asio::transfer_exactly(bufSize));
             headerBuffer->limit(bufSize);
         }
 
@@ -135,7 +135,7 @@ namespace ersap {
         void readData(std::shared_ptr<ByteBuffer> buf, size_t bytes) {
             buf->clear();
             // Turn shared pointer to ByteBuffer into usable form
-            mutable_buffer mb((void *) buf->array(), bytes);
+            mutable_buffers_1 mb((void *) buf->array(), bytes);
             // Read in full size of data
             boost::asio::read(*socket, mb, boost::asio::transfer_exactly(bytes));
             buf->limit(bytes);
