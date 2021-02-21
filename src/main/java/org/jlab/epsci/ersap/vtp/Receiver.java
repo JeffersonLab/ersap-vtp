@@ -123,9 +123,9 @@ public class Receiver extends Thread {
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
 //                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
 
-            printFrame(streamId, source_id, total_length, payload_length,
-                    compressed_length, magic, format_version, flags,
-                    record_number, ts_sec, ts_nsec);
+//            printFrame(streamId, source_id, total_length, payload_length,
+//                    compressed_length, magic, format_version, flags,
+//                    record_number, ts_sec, ts_nsec);
 
             byte[] dataBuffer = new byte[payload_length];
             dataInputStream.readFully(dataBuffer);
@@ -163,6 +163,10 @@ public class Receiver extends Thread {
             long record_number = EUtil.llSwap(headerBuffer.getLong());
             long ts_sec = EUtil.llSwap(headerBuffer.getLong());
             long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
+
+            printFrame(streamId, source_id, total_length, payload_length,
+                    compressed_length, magic, format_version, flags,
+                    record_number, ts_sec, ts_nsec);
 
             if (evt.getPayload().length < payload_length){
                 byte[] payloadData = new byte[payload_length];

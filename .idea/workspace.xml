@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/Receiver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,13 +117,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00221" summary="- disruptor ring buffer depth studies">
-      <created>1612988772734</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1612988772735</updated>
     </task>
     <task id="LOCAL-00222" summary="- disruptor ring buffer depth studies">
       <created>1612989288456</created>
@@ -462,7 +454,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613876852465</updated>
     </task>
-    <option name="localTasksCounter" value="270" />
+    <task id="LOCAL-00270" summary="- debug">
+      <created>1613877206656</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1613877206656</updated>
+    </task>
+    <option name="localTasksCounter" value="271" />
     <servers />
   </component>
   <component name="TodoView">
@@ -475,7 +474,6 @@
     </todo-panel>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- removed map of list&lt;hits&gt;" />
     <MESSAGE value="- leave only parsing" />
     <MESSAGE value="- implementing Carl's suggestions" />
     <MESSAGE value="- implementing Carl's suggestions with debugging" />
@@ -500,7 +498,8 @@
     <MESSAGE value="- disruptor ring buffer depth set to 512" />
     <MESSAGE value="- disruptor ring buffer depth studies" />
     <MESSAGE value="- removed build directory from the repo" />
-    <option name="LAST_COMMIT_MESSAGE" value="- removed build directory from the repo" />
+    <MESSAGE value="- debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- debug" />
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />
