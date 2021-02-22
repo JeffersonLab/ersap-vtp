@@ -59,7 +59,8 @@ namespace ersap {
         /** Array associated with buffer. */
         uint8_t * header;
 
-        /** Mutable buffer associated with array - for boost I/O. */
+        /** For boost I/O: mutable_buffers_1 takes a buffer and makes it into a MutableBufferSequence
+         *  which is necessary for boost::asio::read. */
         std::shared_ptr<mutable_buffers_1> buffer;
 
         /** Socket to read from client. */
@@ -134,7 +135,7 @@ namespace ersap {
         /** Read data from socket */
         void readData(std::shared_ptr<ByteBuffer> buf, size_t bytes) {
             buf->clear();
-            // Turn shared pointer to ByteBuffer into usable form
+            // Turn shared pointer to ByteBuffer into usable form (MutableBufferSequence)
             mutable_buffers_1 mb((void *) buf->array(), bytes);
             // Read in full size of data
             boost::asio::read(*socket, mb, boost::asio::transfer_exactly(bytes));
