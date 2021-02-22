@@ -359,7 +359,7 @@ std::cout << "start producer thread " << streamNum << std::endl;
                     if (owner->outputAvailableSequence < owner->outputNextSequence) {
                         owner->outputAvailableSequence = owner->outputBarrier->waitFor(owner->outputNextSequence);
                     }
-
+std::cout << "OutputRingConsumer: getting item of seq = " << owner->outputNextSequence << std::endl;
                     item = (*owner->outputRingBuffer)[owner->outputNextSequence];
                 }
                 catch (Disruptor::TimeoutException & e) {
