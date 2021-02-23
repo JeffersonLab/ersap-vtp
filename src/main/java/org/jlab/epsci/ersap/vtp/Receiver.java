@@ -164,9 +164,9 @@ public class Receiver extends Thread {
             long ts_sec = EUtil.llSwap(headerBuffer.getLong());
             long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
 
-            printFrame(streamId, source_id, total_length, payload_length,
-                    compressed_length, magic, format_version, flags,
-                    record_number, ts_sec, ts_nsec);
+//            printFrame(streamId, source_id, total_length, payload_length,
+//                    compressed_length, magic, format_version, flags,
+//                    record_number, ts_sec, ts_nsec);
 
             if (evt.getPayload().length < payload_length){
                 byte[] payloadData = new byte[payload_length];
