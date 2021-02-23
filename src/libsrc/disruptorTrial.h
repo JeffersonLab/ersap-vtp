@@ -8,6 +8,8 @@
 #include <string>
 #include <stdexcept>
 #include <thread>
+#include <chrono>
+#include <iostream>
 #include <vector>
 #include <functional>
 
@@ -40,9 +42,9 @@ namespace ersap {
 
         /** Number of streams in 1 crate. */
         static constexpr int streamCount = 2;
-
         /** Size of ByteBuffers in ring. */
         static constexpr int byteBufferSize = 2048;
+
 
         /** Number of items in each ring buffer. Must be power of 2. */
         static constexpr uint32_t crateRingItemCount = 32;
@@ -51,7 +53,7 @@ namespace ersap {
         std::shared_ptr<RingBuffer<std::shared_ptr<RingEvent>>> crateRingBuffers[streamCount];
 
         /** 1 sequence per stream */
-        std::shared_ptr<ISequence> crateSequences[streamCount];
+        std::shared_ptr<Sequence> crateSequences[streamCount];
 
         /** 1 barrier per stream */
         std::shared_ptr<ISequenceBarrier> crateBarriers[streamCount];
@@ -73,7 +75,7 @@ namespace ersap {
         static constexpr int outRingSize = 2*crateRingItemCount;
 
         /** 1 sequence for the output ring's consumer */
-        std::shared_ptr<ISequence> outputSequence;
+        std::shared_ptr<Sequence> outputSequence;
 
         /** 1 barrier for output ring's consumer */
         std::shared_ptr<ISequenceBarrier> outputBarrier;
@@ -116,7 +118,6 @@ namespace ersap {
 
             /** Create and start a thread to execute the run() method of this class. */
             void startThread() {
-std::cout << "start producer thread " << streamNum << std::endl;
                 thd = boost::thread([this]() { this->run(); });
             }
 
@@ -135,7 +136,6 @@ std::cout << "start producer thread " << streamNum << std::endl;
             std::shared_ptr<RingEvent> get() {
                 // Next available item for producer
                 getSequence = owner->crateRingBuffers[streamNum]->next();
-                std::cout << "producer " << streamNum << ": get " << getSequence << std::endl;
 
                 // Get object in that position (sequence) of ring
                 std::shared_ptr<RingEvent> &item = (*(owner->crateRingBuffers[streamNum]))[getSequence];
@@ -149,7 +149,6 @@ std::cout << "start producer thread " << streamNum << std::endl;
              * To be used in after {@link #get()}.
              */
             void publish() {
-                std::cout << "producer " << streamNum << ": publish " << getSequence << std::endl;
                 owner->crateRingBuffers[streamNum]->publish(getSequence);
             }
 
@@ -158,11 +157,13 @@ std::cout << "start producer thread " << streamNum << std::endl;
                 try {
                     while (true) {
                         // Get an empty item from ring
+//std::cout << "producer " << streamNum << ": get " << getSequence << std::endl;
                         auto item = get();
 
                         // Do something with item here, like write data into it ...
 
                         // Make the buffer available for consumers
+//std::cout << "producer " << streamNum << ": publish " << getSequence << std::endl;
                         publish();
                     }
                 }
@@ -206,7 +207,6 @@ std::cout << "start producer thread " << streamNum << std::endl;
 
             /** Create and start a thread to execute the run() method of this class. */
             void startThread() {
-                std::cout << "start crate consumer thread" << std::endl;
                 thd = boost::thread([this]() { this->run(); });
             }
 
@@ -285,7 +285,7 @@ std::cout << "start producer thread " << streamNum << std::endl;
                 try {
                     while (true) {
                         // Get one item from each of a single crate's rings
-                        std::cout << "crate consumer: get one item from each ring" << std::endl;
+//std::cout << "crate consumer: get one item from each ring" << std::endl;
                         get();
 
                         // Do something with buffers here, like write data into them.
@@ -297,7 +297,7 @@ std::cout << "start producer thread " << streamNum << std::endl;
                         }
 
                         // Done with buffers so make them available for all rings again for reuse
-                        std::cout << "crate consumer: put copied items into ring" << std::endl;
+//std::cout << "crate consumer: put copied items into ring" << std::endl;
                         put();
                     }
 
@@ -320,6 +320,9 @@ std::cout << "start producer thread " << streamNum << std::endl;
             /** Thread which does the producing. */
             boost::thread thd;
 
+            /** For rate calculation. */
+            int64_t count = 0L, totalCount=0L;
+
 
         public:
 
@@ -331,7 +334,6 @@ std::cout << "start producer thread " << streamNum << std::endl;
 
             /** Create and start a thread to execute the run() method of this class. */
             void startThread() {
-                std::cout << "start output ring consumer thread" << std::endl;
                 thd = boost::thread([this]() { this->run(); });
             }
 
@@ -359,7 +361,6 @@ std::cout << "start producer thread " << streamNum << std::endl;
                     if (owner->outputAvailableSequence < owner->outputNextSequence) {
                         owner->outputAvailableSequence = owner->outputBarrier->waitFor(owner->outputNextSequence);
                     }
-std::cout << "OutputRingConsumer: getting item of seq = " << owner->outputNextSequence << std::endl;
                     item = (*owner->outputRingBuffer)[owner->outputNextSequence];
                 }
                 catch (Disruptor::TimeoutException & e) {
@@ -389,16 +390,26 @@ std::cout << "OutputRingConsumer: getting item of seq = " << owner->outputNextSe
 
             void run() {
                 try {
+                    auto t_start = std::chrono::high_resolution_clock::now();
                     while (true) {
-                        std::cout << "output ring consumer: get empty item from ring" << std::endl;
+//std::cout << "output ring consumer: get empty item from ring" << std::endl;
                         // Get an empty item from ring
                         std::shared_ptr<RingEvent> item = get();
 
                         // Do something with item here, like write data into it ...
 
                         // Make the buffer available for consumers
-                        std::cout << "output ring consumer: put item back into ring" << std::endl;
+//std::cout << "output ring consumer: put item back into ring" << std::endl;
                         put();
+
+                        count++;
+                        if (count++ > 10000000) {
+                            auto t_end = std::chrono::high_resolution_clock::now();
+                            double delta = std::chrono::duration<double, std::milli>(t_end-t_start).count();
+                            totalCount += count;
+                            std::cout << "Rate = " << (totalCount/delta) << " kHz" << std::endl;
+                            count = 0L;
+                        }
                     }
 
                 } catch (std::runtime_error &e) {

@@ -3,6 +3,7 @@
 #define ERSAP_VTP_RINGEVENT_H
 
 
+#include <cstdlib>
 #include <memory>
 #include <functional>
 
@@ -28,11 +29,31 @@ namespace ersap {
         /** Function used to create (shared pointers to) RingEvent objects by a RingBuffer. */
         static const std::function< std::shared_ptr<RingEvent> () >& eventFactory();
 
+        /** Constructor. */
         RingEvent() {
             payloadSize = 100000L;
             payloadBuffer = std::make_shared<ByteBuffer>(payloadSize);
             payloadBuffer->order(ByteOrder::ENDIAN_LOCAL);
             payload = payloadBuffer->array();
+        }
+
+        /**
+         * Copy constructor.
+         * @param other ring event to copy.
+         */
+        RingEvent(const RingEvent & other) {
+
+            // Avoid self copy ...
+            if (this != &other) {
+                streamId          = other.streamId;
+                recordNumber      = other.recordNumber;
+                payloadSize       = other.payloadSize;
+                payloadDataLength = other.payloadDataLength;
+
+                // COPY contents of payloadBuffer, DON'T just change value of shared pointer
+                payloadBuffer->copy(other.payloadBuffer);
+                payload = payloadBuffer->array();
+            }
         }
 
         /**
@@ -52,6 +73,7 @@ namespace ersap {
 
                 // COPY contents of payloadBuffer, DON'T just change value of shared pointer
                 payloadBuffer->copy(*other.payloadBuffer);
+                payload = payloadBuffer->array();
             }
             return *this;
         }

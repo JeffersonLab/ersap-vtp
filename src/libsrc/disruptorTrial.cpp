@@ -17,9 +17,6 @@ namespace ersap {
 
         uint32_t spinTries = 10000;
 
-        // Reserve room in vectors
-        //crateSequences.reserve(streamCount);
-        //crateBarriers.reserve(streamCount);
 
         // For each stream ...
         for (int i = 0; i < streamCount; i++) {
@@ -98,15 +95,15 @@ std::cout << "create 1 output consumer" << std::endl;
             OutputRingConsumer outputConsumer(this);
 
             // Now get all these threads running
-std::cout << "start consumer & producer threads" << std::endl;
             outputConsumer.startThread();
-            //crateConsumer.startThread();
+std::cout << "started output consumer thread" << std::endl;
+            crateConsumer.startThread();
+std::cout << "started crate consumer thread" << std::endl;
             producer1.startThread();
             producer2.startThread();
-std::cout << "done starting those threads" << std::endl;
+std::cout << "done starting all threads" << std::endl;
 
             std::this_thread::sleep_for(std::chrono::seconds(4000));
-std::cout << "done with sleep" << std::endl;
 
         } catch (std::runtime_error &e) {
             std::cout << e.what() << std::endl;
@@ -140,6 +137,7 @@ int main(int argc, char **argv) {
     std::cout << "IN main, start all threads" << std::endl;
 
     test.startThread();
+    std::this_thread::sleep_for(std::chrono::seconds(4000));
     return 0;
 }
 
