@@ -63,6 +63,7 @@ namespace ersap {
 
             aggregator12.startThread();
             consumer.startThread();
+            std::this_thread::sleep_for(std::chrono::seconds(4000));
         }
 
 }
@@ -75,5 +76,8 @@ int main(int argc, char **argv) {
 
     ersap::TwoStreamAggregator ag(port1, port2);
     ag.go();
+
+    std::this_thread::sleep_for(std::chrono::seconds(4000));
+
     return 0;
 }

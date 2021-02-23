@@ -8,6 +8,7 @@
 #include <string>
 #include <stdexcept>
 #include <thread>
+#include <chrono>
 
 #include "ByteBuffer.h"
 #include "RingEvent.h"
@@ -20,7 +21,6 @@
 #include "Disruptor/BlockingWaitStrategy.h"
 #include "Disruptor/YieldingWaitStrategy.h"
 #include <boost/thread.hpp>
-#include <boost/chrono.hpp>
 
 
 using namespace Disruptor;
