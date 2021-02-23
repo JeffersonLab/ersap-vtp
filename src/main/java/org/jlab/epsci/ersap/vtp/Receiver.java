@@ -115,9 +115,13 @@ public class Receiver extends Thread {
 
             int format_version = Integer.reverseBytes(dataInputStream.readInt());
             int flags = Integer.reverseBytes(dataInputStream.readInt());
-            long record_number = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-            long ts_sec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-            long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
+
+            long record_number = Long.reverseBytes(dataInputStream.readLong());
+            long ts_sec = Long.reverseBytes(dataInputStream.readLong());
+            long ts_nsec = Long.reverseBytes(dataInputStream.readLong());
+//            long record_number = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
+//            long ts_sec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
+//            long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
 
 //            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
