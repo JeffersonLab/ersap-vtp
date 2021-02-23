@@ -116,12 +116,9 @@ public class Receiver extends Thread {
             int format_version = Integer.reverseBytes(dataInputStream.readInt());
             int flags = Integer.reverseBytes(dataInputStream.readInt());
 
-            long record_number = Long.reverseBytes(dataInputStream.readLong());
-            long ts_sec = Long.reverseBytes(dataInputStream.readLong());
-            long ts_nsec = Long.reverseBytes(dataInputStream.readLong());
-//            long record_number = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-//            long ts_sec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-//            long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
+            long record_number = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
+            long ts_sec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
+            long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
 
 //            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
 //                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
@@ -164,9 +161,12 @@ public class Receiver extends Thread {
 
             int format_version = headerBuffer.getInt();
             int flags = headerBuffer.getInt();
-            long record_number = EUtil.llSwap(headerBuffer.getLong());
-            long ts_sec = EUtil.llSwap(headerBuffer.getLong());
-            long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
+//            long record_number = EUtil.llSwap(headerBuffer.getLong());
+//            long ts_sec = EUtil.llSwap(headerBuffer.getLong());
+//            long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
+            long record_number = headerBuffer.getLong();
+            long ts_sec = headerBuffer.getLong();
+            long ts_nsec = headerBuffer.getLong();
 
 //            printFrame(streamId, source_id, total_length, payload_length,
 //                    compressed_length, magic, format_version, flags,
