@@ -71,8 +71,18 @@ namespace ersap {
 int main(int argc, char **argv) {
     char* p_end;
 
-    int port1 = (int)strtol(argv[0], &p_end, 10);
-    int port2 = (int)strtol(argv[1], &p_end, 10);
+    int port1 = 45100, port2 = 45200;
+    std::cout << "argc = " << argc << std::endl;
+
+    if (argc > 1) {
+        port1 = (int) strtol(argv[1], &p_end, 10);
+    }
+
+    if (argc > 2) {
+        port2 = (int) strtol(argv[2], &p_end, 10);
+    }
+
+    std::cout << "port 1 = " << port1 << ", port 2 = " << port2 << std::endl;
 
     ersap::TwoStreamAggregator ag(port1, port2);
     ag.go();

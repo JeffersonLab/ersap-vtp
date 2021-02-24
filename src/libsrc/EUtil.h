@@ -281,7 +281,10 @@ namespace ersap {
                                " order = " << b.order().getName() << std::endl;
         }
 
-        static void decodePayloadMap2(int64_t frame_time_ns, ByteBuffer & buf) {
+        /** FOR TESTING, CARL TIMMER */
+        static void decodePayloadMap2(int64_t frame_time_ns, ByteBuffer & buf) {}
+
+        static void decodePayloadMap2Orig(int64_t frame_time_ns, ByteBuffer & buf) {
             buf.rewind();
             std::vector<int32_t> pData;
 
@@ -329,7 +332,10 @@ namespace ersap {
             }
         }
 
-        static void decodePayloadMap3(int64_t frame_time_ns, std::shared_ptr<ByteBuffer> buf) {
+        /** FOR TESTING, CARL TIMMER */
+        static void decodePayloadMap3(int64_t frame_time_ns, std::shared_ptr<ByteBuffer> buf) {}
+
+        static void decodePayloadMap3Orig(int64_t frame_time_ns, std::shared_ptr<ByteBuffer> buf) {
             buf->rewind();
             std::vector<int32_t> pData;
 

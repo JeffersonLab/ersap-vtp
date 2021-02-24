@@ -13,6 +13,7 @@
 
 
 #include "ByteBuffer.h"
+#include "ByteOrder.h"
 #include "RingEvent.h"
 #include "EUtil.h"
 #include "Disruptor/Disruptor.h"
@@ -66,6 +67,8 @@ namespace ersap {
         /** Socket to read from client. */
         std::shared_ptr<tcp::socket> socket;
 
+        int port = 0;
+
 
         /** For statistics */
         int statLoop;
@@ -85,34 +88,12 @@ namespace ersap {
             this->ringBuffer = ringBuffer;
             this->streamId   = streamId;
             this->statPeriod = statPeriod;
+            this->port = vtpPort;
 
             headerBuffer = std::make_shared<ByteBuffer>(bufSize);
             headerBuffer->order(ByteOrder::ENDIAN_LITTLE);
             header = headerBuffer->array();
             buffer = std::make_shared<mutable_buffers_1>((void *) header, bufSize);
-
-            try {
-                // Connecting to the VTP stream source
-                io_service service;
-
-                // listen for new connection
-                tcp::acceptor acceptor(service, tcp::endpoint(tcp::v4(), vtpPort));
-                std::cout << "Server is listening on port " << vtpPort << std::endl;
-
-                // Socket creation as shared pointer so it can be class member and other methods can access it
-                socket = std::make_shared<tcp::socket>(service);
-
-                // waiting for connection
-                acceptor.accept(*socket);
-                std::cout << "VTP client connected" << std::endl;
-
-                // read data from socket - skipping over first 2 ints
-                readOnConnection();
-
-            } catch (std::runtime_error &e) {
-                std::cout << e.what() << std::endl;
-            }
-
         }
 
 
@@ -120,20 +101,29 @@ namespace ersap {
         void readOnConnection() {
             // Read in 8 bytes
             boost::asio::read(*socket, *buffer, boost::asio::transfer_exactly(8));
+            headerBuffer->limit(8);
+            int i1 = headerBuffer->getInt();
+            int i2 = headerBuffer->getInt();
+std::cout << "Server/receiver got 8 bytes: first int = " << i1 << ", second int = " << i2 << std::endl;
+            headerBuffer->clear();
         }
 
 
         /** Read header from socket */
         void readHeader() {
-            headerBuffer->clear();
             // Read in full size of header
-            boost::asio::read(*socket, *buffer, boost::asio::transfer_exactly(bufSize));
-            headerBuffer->limit(bufSize);
+            try {
+                boost::asio::read(*socket, *buffer, boost::asio::transfer_exactly(bufSize));
+                headerBuffer->clear();
+            }
+            catch (std::runtime_error &e) {
+                std::cout << e.what() << std::endl;
+            }
         }
 
 
         /** Read data from socket */
-        void readData(std::shared_ptr<ByteBuffer> buf, size_t bytes) {
+        void readData(std::shared_ptr<ByteBuffer> const & buf, size_t bytes) {
             buf->clear();
             // Turn shared pointer to ByteBuffer into usable form (MutableBufferSequence)
             mutable_buffers_1 mb((void *) buf->array(), bytes);
@@ -157,7 +147,6 @@ namespace ersap {
         }
 
 
-
     private:
 
         /**
@@ -177,19 +166,45 @@ namespace ersap {
         void decodeVtpHeaderCT(std::shared_ptr<RingEvent> evt) {
             try {
                 // Read header into headerBuffer
+//std::cout << "Server/receiver read in header" << std::endl;
                 readHeader();
+//std::cout << "Server/receiver GOT PASt header, headerBuffer remaining = " << headerBuffer->remaining() << std::endl;
 
-                int source_id = headerBuffer->getInt();
-                int total_length = headerBuffer->getInt();
-                int payload_length = headerBuffer->getInt();
-                int compressed_length = headerBuffer->getInt();
-                int magic = headerBuffer->getInt();
+                int32_t source_id = headerBuffer->getInt();
+//std::cout << "    sourceId = " << source_id << ", remaining = " << headerBuffer->remaining() << std::endl;
+                int32_t total_length = headerBuffer->getInt();
+//std::cout << "    total len = " << total_length << ", remaining = " << headerBuffer->remaining() << std::endl;
+                int32_t payload_length = headerBuffer->getInt();
+//std::cout << "    payld len = " << payload_length << ", remaining = " << headerBuffer->remaining() << std::endl;
+                int32_t compressed_length = headerBuffer->getInt();
+//std::cout << "    comp len = " << compressed_length << ", remaining = " << headerBuffer->remaining() << std::endl;
+                int32_t magic = headerBuffer->getInt();
+//std::cout << "    magic # = 0x" << std::hex << magic << std::dec << ", remaining = " << headerBuffer->remaining() << std::endl;
+                int32_t format_version = headerBuffer->getInt();
+//std::cout << "    format ver = " << format_version << ", remaining = " << headerBuffer->remaining() << std::endl;
+                int32_t flags = headerBuffer->getInt();
+//std::cout << "    flags = " << flags << ", remaining = " << headerBuffer->remaining() << std::endl;
 
-                int format_version = headerBuffer->getInt();
-                int flags = headerBuffer->getInt();
-                long record_number = SWAP_64(headerBuffer->getLong());
-                long ts_sec = SWAP_64(headerBuffer->getLong());
-                long ts_nsec = SWAP_64(headerBuffer->getLong());
+                int64_t record_number, ts_sec, ts_nsec;
+
+                if (magic == 0xc0da0100) {
+                    record_number = headerBuffer->getLong();
+std::cout << "    rec # = " << record_number << std::endl;
+//std::cout << "    rec # = " << record_number << ", remaining = " << headerBuffer->remaining() << std::endl;
+                    ts_sec = headerBuffer->getLong();
+//std::cout << "    sec = " << ts_sec << ", remaining = " << headerBuffer->remaining() << std::endl;
+                    ts_nsec = headerBuffer->getLong();
+//std::cout << "    nsec = " << ts_nsec << ", remaining = " << headerBuffer->remaining() << std::endl;
+                }
+                else {
+                    record_number = SWAP_64(headerBuffer->getLong());
+std::cout << "    rec # = " << record_number << std::endl;
+//std::cout << "    rec # = " << record_number << ", remaining = " << headerBuffer->remaining() << std::endl;
+                    ts_sec = SWAP_64(headerBuffer->getLong());
+//std::cout << "    sec = " << ts_sec << ", remaining = " << headerBuffer->remaining() << std::endl;
+                    ts_nsec = SWAP_64(headerBuffer->getLong());
+//std::cout << "    nsec = " << ts_nsec << ", remaining = " << headerBuffer->remaining() << std::endl;
+                }
 
                 // Read data into RingEvent's buffer
                 if (evt->getPayloadSize() < payload_length) {
@@ -201,7 +216,6 @@ namespace ersap {
                 }
                 readData(evt->getPayloadBuffer(), payload_length);
 
-                // evt->setRecordNumber(rcn);
                 evt->setPayloadDataLength(payload_length);
                 evt->setRecordNumber(record_number);
                 evt->setStreamId(streamId);
@@ -220,6 +234,27 @@ namespace ersap {
         void run() {
 
             try {
+                // Connecting to the VTP stream source
+                io_service service;
+
+                // listen for new connection
+                tcp::acceptor acceptor(service, tcp::endpoint(tcp::v4(), port));
+                std::cout << "Server is listening on port " << port << std::endl;
+
+                // Socket creation as shared pointer so it can be class member and other methods can access it
+                socket = std::make_shared<tcp::socket>(service);
+
+                // waiting for connection
+                acceptor.accept(*socket);
+                std::cout << "VTP client connected" << std::endl;
+
+
+                // Read data from socket
+
+                // Skip over first 2 ints
+                readOnConnection();
+
+
                 auto start = std::chrono::high_resolution_clock::now();
 
                 while (true) {
