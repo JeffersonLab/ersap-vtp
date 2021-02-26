@@ -1,31 +1,31 @@
 # To use this, do the following the first time:
-#   % mkdir build
-#   % mkdir build/cmake
-#   % cd build/cmake
+#   % mkdir -p build/release
+#   % cd build/release
 #   % cmake ../..
 #   % make (install)
 #
 #
 # After doing this once can do the following to recompile
 #  % cd <top level evio dir>
-#  % cmake --build build/cmake (--target install)
+#  % cmake --build build/release (--target install)
 #
 #
 # Set the path in which to install.
 # This can be overridden on command line (in build/cmake dir) with:
 #   % cmake -DCMAKE_INSTALL_PREFIX=<my_dir> ../..
 #   % make install
-# (This call must be placed BEFORE "project" command).
-set(CMAKE_INSTALL_PREFIX ./)
 
+
+# (This call must be placed BEFORE "project" command).
 cmake_minimum_required(VERSION 3.17)
+
+project(ersap_vtp VERSION 1.0)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_DEBUG_POSTFIX -dbg)
-#set(CMAKE_CXX_FLAGS_DEBUG  "-g")
+set(CMAKE_INSTALL_PREFIX ./)
 
-project(ersap_vtp VERSION 1.0)
 
 # Place libs & binaries in build/cmake/lib and bin
 #set(CMAKE_INSTALL_PREFIX   /Users/timmer/coda/codaIn1)
@@ -47,6 +47,7 @@ set(CPP_HEADER_FILES
         src/libsrc/Receiver.h
         src/libsrc/Consumer.h
         src/libsrc/EUtil.h
+        src/libsrc/FakeVtp.h
         src/libsrc/ChargeTime.h
         src/libsrc/Aggregator.h
         src/libsrc/TwoStreamAggregator.h
@@ -55,7 +56,6 @@ set(CPP_HEADER_FILES
 set(CPP_LIB_FILES
         src/libsrc/ByteOrder.cpp
         src/libsrc/ByteBuffer.cpp
-        src/libsrc/disruptorTrial.cpp
         src/libsrc/RingEvent.cpp
         )
 
@@ -68,13 +68,9 @@ find_package(Boost REQUIRED system thread chrono)
 if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
-elseif(NOT Boost_FOUND)
-    error("Boost Not Found")
+else()
+    message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
 endif()
-
-# Remove from cache so new search done each time
-unset(DISRUPTOR_INCLUDE_DIR CACHE)
-unset(DISRUPTOR_LIBRARY CACHE)
 
 # Search for disruptor includes & lib
 find_path(DISRUPTOR_INCLUDE_DIR
@@ -122,10 +118,23 @@ target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRAR
 add_executable(disruptorTrial src/libsrc/disruptorTrial.cpp)
 target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
 
+add_executable(fakeVtp src/libsrc/FakeVtp.cpp)
+target_link_libraries(fakeVtp ersap-vtp ${Boost_LIBRARIES} dl z m )
+
 
 # Installation defaulting to ${CMAKE_INSTALL_PREFIX}/lib
 install(TARGETS ersap-vtp LIBRARY)
 
 # Installation defaulting to ${CMAKE_INSTALL_PREFIX}/include
 install(FILES ${CPP_HEADER_FILES} DESTINATION include)
+
+# Uninstall target
+if(NOT TARGET uninstall)
+    configure_file(
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" IMMEDIATE @ONLY)
+
+    add_custom_target(uninstall
+            COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+endif()
 
