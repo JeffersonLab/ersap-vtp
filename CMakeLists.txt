@@ -27,15 +27,26 @@ set(CMAKE_DEBUG_POSTFIX -dbg)
 set(CMAKE_INSTALL_PREFIX ./)
 
 
-# Place libs & binaries in build/cmake/lib and bin
-#set(CMAKE_INSTALL_PREFIX   /Users/timmer/coda/codaIn1)
+# Place libs & binaries in build/release/lib and bin
 set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR}/lib)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
-message(STATUS "CMAKE_BINARY_DIR = " ${CMAKE_BINARY_DIR})
-message(STATUS "CMAKE_INSTALL_PREFIX = " ${CMAKE_INSTALL_PREFIX})
-message(STATUS "CMAKE_INSTALL_LIBDIR = " ${CMAKE_INSTALL_LIBDIR})
-message(STATUS "CMAKE_INSTALL_INCLUDEDIR = " ${CMAKE_INSTALL_INCLUDEDIR})
+
+# Set architecture-related string for installation
+set(ARCH ${CMAKE_HOST_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR})
+message(STATUS "ARCH = " ${ARCH})
+
+
+# Install into $INSTALL_DIR directory
+if (DEFINED INSTALL_DIR)
+    message(STATUS "INSTALL DIR = " ${INSTALL_DIR})
+    set(INSTALL_DIR_DEFINED 1)
+    set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR}/${ARCH})
+    set(CMAKE_INSTALL_INCLUDEDIR ${INSTALL_DIR}/common/include)
+    message(STATUS "CMAKE_INSTALL_PREFIX set to " ${CMAKE_INSTALL_PREFIX})
+else()
+    message(STATUS "Specify -DINSTALL_DIR=... on the command line or no installation possible!")
+endif()
 
 
 set(CPP_HEADER_FILES
@@ -62,6 +73,7 @@ set(CPP_LIB_FILES
 
 include(FindPackageHandleStandardArgs)
 
+
 # search for boost libs
 find_package(Boost REQUIRED system thread chrono)
 
@@ -71,6 +83,7 @@ if (Boost_FOUND)
 else()
     message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
 endif()
+
 
 # Search for disruptor includes & lib
 find_path(DISRUPTOR_INCLUDE_DIR
@@ -84,7 +97,6 @@ find_library(DISRUPTOR_LIBRARY
         PATHS $ENV{DISRUPTOR_CPP_HOME}/build/Disruptor
         NO_DEFAULT_PATH
         )
-
 
 if( DISRUPTOR_INCLUDE_DIR )
     message(STATUS "Disruptor.h found in path = " $ENV{DISRUPTOR_CPP_HOME}/Disruptor)
