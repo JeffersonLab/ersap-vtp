@@ -34,7 +34,7 @@ namespace ersap {
 
 
                 // Send buffer of 52 bytes in a loop
-                char *data = reinterpret_cast<char *>(buffer.data());
+                char *data = buffie;
                 char *pRecNum, *pSec, *pNsec, *pData = data;
 
                 int32_t source_id = streamId;
