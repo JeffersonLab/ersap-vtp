@@ -82,7 +82,7 @@ if (Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 else()
     # ON indra-s1 there are 2 boost version, 1.53 and 1.69
-    find_package(Boost 1.69 REQUIRED system thread chrono)
+    find_package(Boost 1.69 REQUIRED thread)
     if (Boost_FOUND)
         message(STATUS "Boost version 1.69 Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
         link_directories(${Boost_LIBRARY_DIRS})
