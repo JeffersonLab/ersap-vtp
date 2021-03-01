@@ -75,14 +75,14 @@ include(FindPackageHandleStandardArgs)
 
 
 # search for boost libs
-find_package(Boost REQUIRED thread)
+find_package(Boost REQUIRED chrono)
 
 if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
 else()
     # ON indra-s1 there are 2 boost version, 1.53 and 1.69
-    find_package(Boost 1.69 REQUIRED thread)
+    find_package(Boost 1.69 REQUIRED chrono)
     if (Boost_FOUND)
         message(STATUS "Boost version 1.69 Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
         link_directories(${Boost_LIBRARY_DIRS})
