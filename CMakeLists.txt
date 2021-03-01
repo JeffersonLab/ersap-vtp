@@ -75,7 +75,7 @@ include(FindPackageHandleStandardArgs)
 
 
 # search for boost libs
-find_package(Boost REQUIRED system thread chrono)
+find_package(Boost REQUIRED thread)
 
 if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
