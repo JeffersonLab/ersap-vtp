@@ -17,7 +17,7 @@
 
 
 # (This call must be placed BEFORE "project" command).
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.14)
 
 project(ersap_vtp VERSION 1.0)
 
