@@ -383,8 +383,8 @@ public class EUtil {
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
                                 long ht = frame_time_ns + v;
-                                new RingAdcHitEvent().addHit(ht,
-                                        new AdcHit(crate, slot, channel, q, BigInteger.valueOf(ht)));
+//                                new RingAdcHitEvent().addHit(ht,
+//                                        new AdcHit(crate, slot, channel, q, BigInteger.valueOf(ht)));
 //                                System.out.println("AdcHit{" +
 //                                        "crate=" + crate +
 //                                        ", slot=" + slot +
