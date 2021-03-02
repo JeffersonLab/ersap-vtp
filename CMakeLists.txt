@@ -97,6 +97,7 @@ else()
     endif()
 endif()
 
+set(PTHREAD_LIBRARY pthread)
 find_library(PTHREAD_LIBRARY
         NAMES pthread
         PATHS /usr/lib64
@@ -149,10 +150,10 @@ include_directories(ersap-vtp PUBLIC src/libsrc /usr/local/include
 
 # Main Executables
 add_executable(aggregator src/libsrc/TwoStreamAggregator.cpp)
-target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
+target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} ${PTHREAD_LIBRARY} dl z m )
 
 add_executable(disruptorTrial src/libsrc/disruptorTrial.cpp)
-target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
+target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} ${PTHREAD_LIBRARY} dl z m )
 
 add_executable(fakeVtp src/libsrc/FakeVtp.cpp)
 target_link_libraries(fakeVtp ersap-vtp ${Boost_LIBRARIES} dl z m )
