@@ -81,10 +81,16 @@ if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
 else()
-    # ON indra-s1 there are 2 boost version, 1.53 and 1.69
-    find_package(Boost 1.53 REQUIRED system thread chrono)
-    if (Boost_FOUND)
-        message(STATUS "Boost version 1.69 Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
+    # on indra-s1
+    set(BOOST_INCLUDE_DIR /usr/include/boost)
+
+    find_library(BOOST_THD_LIB
+            NAMES boost_thread
+            PATHS /usr/lib64/libboost_thread.so.1.69.0
+            NO_DEFAULT_PATH
+            )
+    if (BOOST_THD_LIB)
+        message(STATUS "Boost version 1.69 Found: lib = " ${BOOST_THD_LIB} ", include dirs = " ${BOOST_INCLUDE_DIR})
         link_directories(${Boost_LIBRARY_DIRS})
     else()
         message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
