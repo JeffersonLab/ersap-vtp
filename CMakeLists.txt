@@ -99,7 +99,7 @@ endif()
 
 set(PTHREAD_LIBRARY pthread)
 find_library(PTHREAD_LIBRARY
-        NAMES pthread
+        NAMES libpthread.so.0
         PATHS /usr/lib64
         NO_DEFAULT_PATH
         )
