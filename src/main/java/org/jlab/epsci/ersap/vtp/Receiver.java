@@ -168,12 +168,10 @@ public class Receiver extends Thread {
 
             int format_version = headerBuffer.getInt();
             int flags = headerBuffer.getInt();
-            long record_number = headerBuffer.getLong();
-            long ts_sec = headerBuffer.getLong();
-            long ts_nsec = headerBuffer.getLong();
-//            long record_number = EUtil.llSwap(headerBuffer.getLong());
-//            long ts_sec = EUtil.llSwap(headerBuffer.getLong());
-//            long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
+            long record_number = EUtil.llSwap(headerBuffer.getLong());
+            long ts_sec = EUtil.llSwap(headerBuffer.getLong());
+            long ts_nsec = EUtil.llSwap(headerBuffer.getLong());
+
 //            long record_number = headerBuffer.getLong();
 //            long ts_sec = headerBuffer.getLong();
 //            long ts_nsec = headerBuffer.getLong();
