@@ -82,7 +82,7 @@ if (Boost_FOUND)
     link_directories(${Boost_LIBRARY_DIRS})
 else()
     # on indra-s1
-    set(BOOST_INCLUDE_DIR /usr/include/boost)
+    set(Boost_INCLUDE_DIRS /usr/include/boost)
 
     find_library(BOOST_THD_LIB NAMES libboost_thread.so.1.69.0 PATHS /usr/lib64)
     find_library(BOOST_CHR_LIB NAMES libboost_chrono.so.1.69.0 PATHS /usr/lib64)
