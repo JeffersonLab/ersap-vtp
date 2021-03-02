@@ -84,13 +84,13 @@ else()
     # on indra-s1
     set(BOOST_INCLUDE_DIR /usr/include/boost)
 
-    find_library(BOOST_THD_LIB
-            NAMES libboost_thread.so.1.69.0
-            PATHS /usr/lib64
-            NO_DEFAULT_PATH
-            )
+    find_library(BOOST_THD_LIB NAMES libboost_thread.so.1.69.0 PATHS /usr/lib64)
+    find_library(BOOST_CHR_LIB NAMES libboost_chrono.so.1.69.0 PATHS /usr/lib64)
+    find_library(BOOST_SYS_LIB NAMES libboost_filesystem.so.1.69.0 PATHS /usr/lib64)
+
+    set(Boost_LIBRARIES ${BOOST_THD_LIB} ${BOOST_CHR_LIB} ${BOOST_SYS_LIB})
     if (BOOST_THD_LIB)
-        message(STATUS "Boost version 1.69 Found: lib = " ${BOOST_THD_LIB} ", include dirs = " ${BOOST_INCLUDE_DIR})
+        message(STATUS "Boost version 1.69 Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${BOOST_INCLUDE_DIR})
         link_directories(${Boost_LIBRARY_DIRS})
     else()
         message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
