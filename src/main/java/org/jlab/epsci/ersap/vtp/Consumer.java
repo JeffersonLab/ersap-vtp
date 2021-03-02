@@ -2,7 +2,6 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 
-import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -11,7 +10,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.jlab.epsci.ersap.vtp.EUtil.*;
 
 public class Consumer extends Thread {
-    private RingBuffer<RingEvent> ringBuffer;
+    private RingBuffer<RingRawEvent> ringBuffer;
     private Sequence sequence;
     private SequenceBarrier barrier;
 
@@ -29,7 +28,7 @@ public class Consumer extends Thread {
      * @param barrier
      * @param runNumber
      */
-    public Consumer(RingBuffer<RingEvent> ringBuffer,
+    public Consumer(RingBuffer<RingRawEvent> ringBuffer,
                     Sequence sequence,
                     SequenceBarrier barrier,
                     int runNumber) {
@@ -52,9 +51,9 @@ public class Consumer extends Thread {
      * @return next available item in ring buffer.
      * @throws InterruptedException
      */
-    public RingEvent get() throws InterruptedException {
+    public RingRawEvent get() throws InterruptedException {
 
-        RingEvent item = null;
+        RingRawEvent item = null;
 
         try {
             if (availableSequence < nextSequence) {
@@ -94,7 +93,7 @@ public class Consumer extends Thread {
             try {
 
                 // Get an empty item from ring and parse the payload
-                RingEvent buf = get();
+                RingRawEvent buf = get();
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());

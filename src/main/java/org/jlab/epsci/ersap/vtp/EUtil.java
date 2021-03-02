@@ -359,7 +359,8 @@ public class EUtil {
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
 
-    private static void corePayloadDecoder(Long frame_time_ns, List<Integer> pData, int pIndex){
+    private static void corePayloadDecoder(Long frame_time_ns,
+                                           List<Integer> pData, int pIndex){
         if (!pData.isEmpty()) {
             if ((pData.get(pIndex) & 0x8FFF8000) == 0x80000000) {
                 for (int j = pIndex+1; j < pIndex+9; j++) {
@@ -382,6 +383,8 @@ public class EUtil {
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
                                 long ht = frame_time_ns + v;
+                                new RingAdcHitEvent().addHit(ht,
+                                        new AdcHit(crate, slot, channel, q, BigInteger.valueOf(ht)));
 //                                System.out.println("AdcHit{" +
 //                                        "crate=" + crate +
 //                                        ", slot=" + slot +

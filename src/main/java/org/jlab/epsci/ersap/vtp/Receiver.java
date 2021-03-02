@@ -11,8 +11,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
-
 /**
  * Receives stream frames from a VTP and writes them to a RingBuffer
  * <p>
@@ -37,12 +35,12 @@ public class Receiver extends Thread {
     /**
      * Output ring
      */
-    private RingBuffer<RingEvent> ringBuffer;
+    private RingBuffer<RingRawEvent> ringBuffer;
 
     /**
      * Current spot in the ring from which an item was claimed.
      */
-    private long getSequence; // This does NOT have to be atomic, Carl T
+    private long sequenceNumber; // This does NOT have to be atomic, Carl T
 
     // server socket
     private ServerSocket serverSocket;
@@ -63,7 +61,7 @@ public class Receiver extends Thread {
     private ByteBuffer headerBuffer;
     private byte[] header = new byte[52];
 
-    public Receiver(int vtpPort, int streamId, RingBuffer<RingEvent> ringBuffer, int statPeriod) {
+    public Receiver(int vtpPort, int streamId, RingBuffer<RingRawEvent> ringBuffer, int statPeriod) {
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.statPeriod = statPeriod;
@@ -100,15 +98,15 @@ public class Receiver extends Thread {
      * @return next available item in ring buffer.
      * @throws InterruptedException if thread interrupted.
      */
-    private RingEvent get() throws InterruptedException {
+    private RingRawEvent get() throws InterruptedException {
 
-        getSequence = ringBuffer.next();
-        RingEvent buf = ringBuffer.get(getSequence);
+        sequenceNumber = ringBuffer.next();
+        RingRawEvent buf = ringBuffer.get(sequenceNumber);
         return buf;
     }
 
     private void publish() {
-        ringBuffer.publish(getSequence);
+        ringBuffer.publish(sequenceNumber);
     }
 
 
@@ -155,7 +153,7 @@ public class Receiver extends Thread {
         }
     }
 
-    private void decodeVtpHeaderCT(RingEvent evt) {
+    private void decodeVtpHeaderCT(RingRawEvent evt) {
         try {
             headerBuffer.clear();
             dataInputStream.readFully(header);
@@ -209,7 +207,7 @@ public class Receiver extends Thread {
         while (running.get()) {
             try {
                 // Get an empty item from ring
-                RingEvent buf = get();
+                RingRawEvent buf = get();
 
 //                decodeVtpHeader();
                 decodeVtpHeaderCT(buf); //CT suggestion

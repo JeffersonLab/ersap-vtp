@@ -33,8 +33,8 @@ public class Aggregator extends Thread {
     /**
      * 1 RingBuffer per stream.
      */
-    private RingBuffer<RingEvent> ringBuffer1;
-    private RingBuffer<RingEvent> ringBuffer2;
+    private RingBuffer<RingRawEvent> ringBuffer1;
+    private RingBuffer<RingRawEvent> ringBuffer2;
 
     /**
      * 1 sequence per stream
@@ -63,16 +63,16 @@ public class Aggregator extends Thread {
     /**
      * 1 output RingBuffer.
      */
-    private RingBuffer<RingEvent> outputRingBuffer;
+    private RingBuffer<RingRawEvent> outputRingBuffer;
 
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
 
 
-    public Aggregator(RingBuffer<RingEvent> ringBuffer1, RingBuffer<RingEvent> ringBuffer2,
+    public Aggregator(RingBuffer<RingRawEvent> ringBuffer1, RingBuffer<RingRawEvent> ringBuffer2,
                       Sequence sequence1, Sequence sequence2,
                       SequenceBarrier barrier1, SequenceBarrier barrier2,
-                      RingBuffer<RingEvent> outputRingBuffer
+                      RingBuffer<RingRawEvent> outputRingBuffer
     ) {
 
         this.ringBuffer1 = ringBuffer1;
@@ -100,12 +100,12 @@ public class Aggregator extends Thread {
             if (availableSequence1 < nextSequence1) {
                 availableSequence1 = barrier1.waitFor(nextSequence1);
             }
-            RingEvent inputItem1 = ringBuffer1.get(nextSequence1);
+            RingRawEvent inputItem1 = ringBuffer1.get(nextSequence1);
 
             if (availableSequence2 < nextSequence2) {
                 availableSequence2 = barrier2.waitFor(nextSequence2);
             }
-            RingEvent inputItem2 = ringBuffer2.get(nextSequence2);
+            RingRawEvent inputItem2 = ringBuffer2.get(nextSequence2);
 
             long b1 = inputItem1.getRecordNumber();
             long b2 = inputItem2.getRecordNumber();
@@ -176,7 +176,7 @@ public class Aggregator extends Thread {
 
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 outSequence = outputRingBuffer.next();
-                RingEvent outputItem = outputRingBuffer.get(outSequence);
+                RingRawEvent outputItem = outputRingBuffer.get(outSequence);
                 outputItem.getPayloadBuffer().clear();
 
                 if (outputItem.getPayload().length < (l1 + l2)) {
@@ -195,7 +195,7 @@ public class Aggregator extends Thread {
             if (m1.containsKey(b2) && m2.containsKey(b2)) {
 
                 outSequence = outputRingBuffer.next();
-                RingEvent outputItem = outputRingBuffer.get(outSequence);
+                RingRawEvent outputItem = outputRingBuffer.get(outSequence);
 
                 // here we set the length for two aggregated streams
                 outputItem.setPartLength1(l1);

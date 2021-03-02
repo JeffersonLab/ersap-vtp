@@ -81,7 +81,7 @@ public class HitFinder {
                                               List<AdcHit> vtpStream) {
         return vtpStream
                 .parallelStream()
-                .filter(t -> (t.getTime().compareTo(leading) > 0) && (t.getTime().compareTo(trailing) < 0))
+//                .filter(t -> (t.getTime().compareTo(leading) > 0) && (t.getTime().compareTo(trailing) < 0))
                 .collect(Collectors.groupingBy(
                         v -> EUtil.encodeCSC(v.getCrate(), v.getSlot(), v.getChannel()),
                         Collectors.summingInt(AdcHit::getQ)));

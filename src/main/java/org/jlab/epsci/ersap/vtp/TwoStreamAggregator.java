@@ -20,9 +20,9 @@ public class TwoStreamAggregator {
     /**
      * Ring buffers
      */
-    private RingBuffer<RingEvent> ringBuffer1;
-    private RingBuffer<RingEvent> ringBuffer2;
-    private RingBuffer<RingEvent> ringBuffer12;
+    private RingBuffer<RingRawEvent> ringBuffer1;
+    private RingBuffer<RingRawEvent> ringBuffer2;
+    private RingBuffer<RingRawEvent> ringBuffer12;
 
     /**
      * Sequences
@@ -47,7 +47,7 @@ public class TwoStreamAggregator {
         this.vtpPort1 = vtpPort1;
         this.vtpPort2 = vtpPort2;
 
-        ringBuffer1 = createSingleProducer(new RingEventFactory(), maxRingItems,
+        ringBuffer1 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
 //                new LiteBlockingWaitStrategy());
                 new YieldingWaitStrategy());
 //                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
@@ -55,14 +55,14 @@ public class TwoStreamAggregator {
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
-        ringBuffer2 = createSingleProducer(new RingEventFactory(), maxRingItems,
+        ringBuffer2 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
                 new YieldingWaitStrategy());
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
 
-        ringBuffer12 = createSingleProducer(new RingEventFactory(), maxRingItems,
+        ringBuffer12 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
                 new YieldingWaitStrategy());
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();

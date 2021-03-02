@@ -13,6 +13,16 @@ public class AdcHit implements Serializable {
         private int q;
         private BigInteger time;
 
+    public AdcHit(int crate, int slot, int channel, int q, BigInteger time) {
+        this.crate = crate;
+        this.slot = slot;
+        this.channel = channel;
+        this.q = q;
+        this.time = time;
+    }
+
+    public AdcHit() {
+    }
 
     public int getCrate() {
         return crate;
@@ -54,6 +64,14 @@ public class AdcHit implements Serializable {
         this.time = time;
     }
 
+
+    public void reset(){
+        crate = 0;
+        slot = 0;
+        channel = 0;
+        q = 0;
+        time = BigInteger.valueOf(0);
+    }
     @Override
     public String toString() {
         return "AdcHit{" +
