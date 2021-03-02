@@ -101,7 +101,7 @@ public class Consumer extends Thread {
                     put();
 //                    Runnable r = () -> decodePayloadMap2(frameTime, b);
 
-                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1());
+                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1()/4);
                     pool.execute(r);
                 } else {
                     put();
