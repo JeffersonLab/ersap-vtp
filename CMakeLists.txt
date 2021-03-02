@@ -85,8 +85,8 @@ else()
     set(BOOST_INCLUDE_DIR /usr/include/boost)
 
     find_library(BOOST_THD_LIB
-            NAMES boost_thread
-            PATHS /usr/lib64/libboost_thread.so.1.69.0
+            NAMES libboost_thread.so.1.69.0
+            PATHS /usr/lib64
             NO_DEFAULT_PATH
             )
     if (BOOST_THD_LIB)
