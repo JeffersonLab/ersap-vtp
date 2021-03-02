@@ -91,10 +91,21 @@ else()
     set(Boost_LIBRARIES ${BOOST_THD_LIB} " " ${BOOST_CHR_LIB} " " ${BOOST_SYS_LIB})
     if (BOOST_THD_LIB)
         message(STATUS "Boost version 1.69 Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${BOOST_INCLUDE_DIR})
-        link_directories(${Boost_LIBRARY_DIRS})
+        link_directories(/lusr/lib64)
     else()
         message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
     endif()
+endif()
+
+find_library(PTHREAD_LIBRARY
+        NAMES pthread
+        PATHS /usr/lib64
+        NO_DEFAULT_PATH
+        )
+if (PTHREAD_LIBRARY)
+    message(STATUS "Pthread lib found: libs = " ${PTHREAD_LIBRARY})
+else()
+    message(FATAL_ERROR "pthread cannot be found, cmake will exit." )
 endif()
 
 
