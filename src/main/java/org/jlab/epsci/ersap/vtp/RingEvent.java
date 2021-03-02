@@ -13,6 +13,8 @@ public class RingEvent {
     private byte[] payload;
     private ByteBuffer payloadBuffer;
     private int payloadDataLength;
+    private int partLength1;
+    private int partLength2;
 
     public RingEvent() {
         payload = new byte[100000];
@@ -58,6 +60,22 @@ public class RingEvent {
 
     public void setPayloadDataLength(int payloadDataLength) {
         this.payloadDataLength = payloadDataLength;
+    }
+
+    public int getPartLength1() {
+        return partLength1;
+    }
+
+    public void setPartLength1(int partLength1) {
+        this.partLength1 = partLength1;
+    }
+
+    public int getPartLength2() {
+        return partLength2;
+    }
+
+    public void setPartLength2(int partLength2) {
+        this.partLength2 = partLength2;
     }
 
     public ByteBuffer getPayloadBuffer(){

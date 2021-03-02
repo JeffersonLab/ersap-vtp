@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.jlab.epsci.ersap.vtp.EUtil.*;
 
@@ -16,6 +17,9 @@ public class Consumer extends Thread {
 
     private long nextSequence;
     private long availableSequence;
+
+    // control for the thread termination
+    private AtomicBoolean running = new AtomicBoolean(true);
 
     /**
      * Consumer constructor
@@ -83,7 +87,7 @@ public class Consumer extends Thread {
 //        HitFinder hitFinder = new HitFinder();
         ExecutorService pool = Executors.newFixedThreadPool(24);
 
-        while (true) {
+        while (running.get()) {
 
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
@@ -95,7 +99,9 @@ public class Consumer extends Thread {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
                     put();
-                    Runnable r = () -> decodePayloadMap2(frameTime, b);
+//                    Runnable r = () -> decodePayloadMap2(frameTime, b);
+
+                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1());
                     pool.execute(r);
                 } else {
                     put();
@@ -119,6 +125,11 @@ public class Consumer extends Thread {
 //*********
 
         }
+    }
+
+    public void exit(){
+        running.set(false);
+        this.interrupt();
     }
 
 }

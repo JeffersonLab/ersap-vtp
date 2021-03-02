@@ -3,6 +3,7 @@ package org.jlab.epsci.ersap.vtp;
 import com.lmax.disruptor.*;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
@@ -63,6 +64,9 @@ public class Aggregator extends Thread {
      * 1 output RingBuffer.
      */
     private RingBuffer<RingEvent> outputRingBuffer;
+
+    // control for the thread termination
+    private AtomicBoolean running = new AtomicBoolean(true);
 
 
     public Aggregator(RingBuffer<RingEvent> ringBuffer1, RingBuffer<RingEvent> ringBuffer2,
@@ -192,6 +196,11 @@ public class Aggregator extends Thread {
 
                 outSequence = outputRingBuffer.next();
                 RingEvent outputItem = outputRingBuffer.get(outSequence);
+
+                // here we set the length for two aggregated streams
+                outputItem.setPartLength1(l1);
+                outputItem.setPartLength2(l2);
+
                 outputItem.getPayloadBuffer().clear();
 
                 if (outputItem.getPayload().length < (l1 + l2)) {
@@ -217,19 +226,16 @@ public class Aggregator extends Thread {
      * So get items from the output ring and fill them with items claimed from the input rings.
      */
     private void put() throws InterruptedException {
-
-
         sequence1.set(nextSequence1);
         nextSequence1++;
 
         sequence2.set(nextSequence2);
         nextSequence2++;
-
     }
 
     public void run() {
         try {
-            while (true) {
+            while (running.get()) {
                 get();
                 put();
             }
@@ -237,6 +243,11 @@ public class Aggregator extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void exit(){
+        running.set(false);
+        this.interrupt();
     }
 
 }

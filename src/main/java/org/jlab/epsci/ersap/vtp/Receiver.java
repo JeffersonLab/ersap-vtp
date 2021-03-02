@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
 
@@ -43,6 +44,13 @@ public class Receiver extends Thread {
      */
     private long getSequence; // This does NOT have to be atomic, Carl T
 
+    // server socket
+    private ServerSocket serverSocket;
+
+    // control for the thread termination
+    private AtomicBoolean running = new AtomicBoolean(true);
+
+
     /**
      * For statistics
      */
@@ -69,7 +77,6 @@ public class Receiver extends Thread {
         timer.schedule(new PrintRates(true), 0, statPeriod * 1000);
 
         // Connecting to the VTP stream source
-        ServerSocket serverSocket;
         try {
             serverSocket = new ServerSocket(vtpPort);
             System.out.println("Server is listening on port " + vtpPort);
@@ -175,7 +182,7 @@ public class Receiver extends Thread {
 //                    compressed_length, magic, format_version, flags,
 //                    record_number, ts_sec, ts_nsec);
 
-            if (evt.getPayload().length < payload_length){
+            if (evt.getPayload().length < payload_length) {
                 byte[] payloadData = new byte[payload_length];
                 evt.setPayload(payloadData);
             }
@@ -200,8 +207,8 @@ public class Receiver extends Thread {
     }
 
     public void run() {
-            while (true) {
-                try {
+        while (running.get()) {
+            try {
                 // Get an empty item from ring
                 RingEvent buf = get();
 
@@ -210,27 +217,38 @@ public class Receiver extends Thread {
 
                 // Make the buffer available for consumers
                 publish();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+        }
+    }
+
+    public void exit() {
+        running.set(false);
+        try {
+            dataInputStream.close();
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.interrupt();
     }
 
     private class PrintRates extends TimerTask {
         BufferedWriter bw;
         boolean f_out;
 
-  public PrintRates(boolean file_out) {
-      f_out = file_out;
-      if(f_out) {
-          try {
-              bw = new BufferedWriter(new FileWriter("stream_" + streamId + ".csv"));
-          } catch (IOException e) {
-              e.printStackTrace();
-          }
-      }
-  }
+        public PrintRates(boolean file_out) {
+            f_out = file_out;
+            if (f_out) {
+                try {
+                    bw = new BufferedWriter(new FileWriter("stream_" + streamId + ".csv"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         @Override
         public void run() {

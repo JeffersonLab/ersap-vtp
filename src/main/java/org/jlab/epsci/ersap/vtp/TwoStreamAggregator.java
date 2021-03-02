@@ -38,7 +38,12 @@ public class TwoStreamAggregator {
     private SequenceBarrier sequenceBarrier2;
     private SequenceBarrier sequenceBarrier12;
 
-    private TwoStreamAggregator(int vtpPort1, int vtpPort2) {
+    private Receiver receiver1;
+    private Receiver receiver2;
+    private Aggregator aggregator12;
+    private Consumer consumer;
+
+    public TwoStreamAggregator(int vtpPort1, int vtpPort2) {
         this.vtpPort1 = vtpPort1;
         this.vtpPort2 = vtpPort2;
 
@@ -65,15 +70,15 @@ public class TwoStreamAggregator {
 
     }
 
-    private void go() {
-        Receiver receiver1 = new Receiver(vtpPort1, 1, ringBuffer1, 10);
-        Receiver receiver2 = new Receiver(vtpPort2, 2, ringBuffer2, 10);
+    public void go() {
+        receiver1 = new Receiver(vtpPort1, 1, ringBuffer1, 10);
+        receiver2 = new Receiver(vtpPort2, 2, ringBuffer2, 10);
 
-        Aggregator aggregator12 = new Aggregator(ringBuffer1, ringBuffer2, sequence1,
+        aggregator12 = new Aggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
 
         int runNumber = 0;
-        Consumer consumer = new Consumer(ringBuffer12, sequence12, sequenceBarrier12, runNumber);
+        consumer = new Consumer(ringBuffer12, sequence12, sequenceBarrier12, runNumber);
 
         receiver1.start();
         receiver2.start();
@@ -81,6 +86,13 @@ public class TwoStreamAggregator {
         aggregator12.start();
         consumer.start();
 
+    }
+
+    public void close(){
+        receiver1.exit();
+        receiver2.exit();
+        aggregator12.exit();
+        consumer.exit();
     }
 
     public static void main(String[] args) {
