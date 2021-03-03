@@ -398,7 +398,7 @@ public class EUtil {
                 }
             } else {
                 System.out.println("parser error: wrong tag");
-                System.exit(0);
+//                System.exit(0);
             }
         }
 
