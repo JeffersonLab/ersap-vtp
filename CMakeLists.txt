@@ -157,7 +157,7 @@ add_executable(disruptorTrial src/libsrc/disruptorTrial.cpp)
 target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} ${PTHREAD_LIBRARY} dl z m )
 
 add_executable(fakeVtp src/libsrc/FakeVtp.cpp)
-target_link_libraries(fakeVtp ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} ${PTHREAD_LIBRARY} dl z m )
+target_link_libraries(fakeVtp ersap-vtp ${Boost_LIBRARIES} dl z m )
 
 
 # Installation defaulting to ${CMAKE_INSTALL_PREFIX}/lib
