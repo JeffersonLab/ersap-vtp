@@ -6,19 +6,12 @@
 
 #include <string>
 #include <stdexcept>
-#include <thread>
 #include <iostream>
 #include <chrono>
 
-
-#include "ByteBuffer.h"
-#include "RingEvent.h"
-#include "EUtil.h"
-#include "Disruptor/Disruptor.h"
 #include <boost/asio.hpp>
 
 
-using namespace Disruptor;
 using namespace boost::asio;
 using ip::tcp;
 
