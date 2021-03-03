@@ -385,13 +385,15 @@ public class EUtil {
                                 long ht = frame_time_ns + v;
 //                                new RingAdcHitEvent().addHit(ht,
 //                                        new AdcHit(crate, slot, channel, q, BigInteger.valueOf(ht)));
-//                                System.out.println("AdcHit{" +
-//                                        "crate=" + crate +
-//                                        ", slot=" + slot +
-//                                        ", channel=" + channel +
-//                                        ", q=" + q +
-//                                        ", time=" + ht +
-//                                        '}');
+
+                                System.out.println("AdcHit{" +
+                                        "crate=" + crate +
+                                        ", slot=" + slot +
+                                        ", channel=" + channel +
+                                        ", q=" + q +
+                                        ", time=" + ht +
+                                        '}');
+
                             }
                         }
                     }
