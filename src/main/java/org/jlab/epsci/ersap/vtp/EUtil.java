@@ -355,7 +355,7 @@ public class EUtil {
         while (buf.hasRemaining()) {
             pData.add(buf.getInt());
         }
-        corePayloadDecoder(frame_time_ns, pData, s1);
+//        corePayloadDecoder(frame_time_ns, pData, s1);
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
 
