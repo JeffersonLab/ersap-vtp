@@ -97,7 +97,7 @@ else()
     endif()
 endif()
 
-find_package(pthread REQUIRED pthread)
+find_package(Threads REQUIRED pthread)
 #find_library(PTHREAD_LIBRARY
 #        NAMES libpthread-2.17.so
 #        PATHS /usr/lib64
