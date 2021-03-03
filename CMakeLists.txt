@@ -97,18 +97,19 @@ else()
     endif()
 endif()
 
-find_library(PTHREAD_LIBRARY
-        NAMES libpthread-2.17.so
-        PATHS /usr/lib64
-        NO_DEFAULT_PATH
-        )
-
-if (PTHREAD_LIBRARY)
-    message(STATUS "Pthread lib found: libs = " ${PTHREAD_LIBRARY})
-else()
-    set(PTHREAD_LIBRARY pthread)
-    message(STATUS "pthread cannot be found, try to continue anyway." )
-endif()
+find_package(pthread REQUIRED pthread)
+#find_library(PTHREAD_LIBRARY
+#        NAMES libpthread-2.17.so
+#        PATHS /usr/lib64
+#        NO_DEFAULT_PATH
+#        )
+#
+#if (PTHREAD_LIBRARY)
+#    message(STATUS "Pthread lib found: libs = " ${PTHREAD_LIBRARY})
+#else()
+#    set(PTHREAD_LIBRARY pthread)
+#    message(STATUS "pthread cannot be found, try to continue anyway." )
+#endif()
 
 
 # Search for disruptor includes & lib
@@ -151,10 +152,10 @@ include_directories(ersap-vtp PUBLIC src/libsrc /usr/local/include
 
 # Main Executables
 add_executable(aggregator src/libsrc/TwoStreamAggregator.cpp)
-target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} ${PTHREAD_LIBRARY} dl z m )
+target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
 
 add_executable(disruptorTrial src/libsrc/disruptorTrial.cpp)
-target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} ${PTHREAD_LIBRARY} dl z m )
+target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl z m )
 
 add_executable(fakeVtp src/libsrc/FakeVtp.cpp)
 target_link_libraries(fakeVtp ersap-vtp ${Boost_LIBRARIES} dl z m )
