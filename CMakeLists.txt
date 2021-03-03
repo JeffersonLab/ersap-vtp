@@ -97,16 +97,17 @@ else()
     endif()
 endif()
 
-set(PTHREAD_LIBRARY pthread)
 find_library(PTHREAD_LIBRARY
-        NAMES libpthread.so.0
+        NAMES libpthread-2.17.so
         PATHS /usr/lib64
         NO_DEFAULT_PATH
         )
+
 if (PTHREAD_LIBRARY)
     message(STATUS "Pthread lib found: libs = " ${PTHREAD_LIBRARY})
 else()
-    message(FATAL_ERROR "pthread cannot be found, cmake will exit." )
+    set(PTHREAD_LIBRARY pthread)
+    message(STATUS "pthread cannot be found, try to continue anyway." )
 endif()
 
 
