@@ -355,7 +355,7 @@ public class EUtil {
         while (buf.hasRemaining()) {
             pData.add(buf.getInt());
         }
-//        corePayloadDecoder(frame_time_ns, pData, s1);
+        corePayloadDecoder(frame_time_ns, pData, s1);
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
 
@@ -386,20 +386,20 @@ public class EUtil {
 //                                new RingAdcHitEvent().addHit(ht,
 //                                        new AdcHit(crate, slot, channel, q, BigInteger.valueOf(ht)));
 
-                                System.out.println("AdcHit{" +
-                                        "crate=" + crate +
-                                        ", slot=" + slot +
-                                        ", channel=" + channel +
-                                        ", q=" + q +
-                                        ", time=" + ht +
-                                        '}');
+//                                System.out.println("AdcHit{" +
+//                                        "crate=" + crate +
+//                                        ", slot=" + slot +
+//                                        ", channel=" + channel +
+//                                        ", q=" + q +
+//                                        ", time=" + ht +
+//                                        '}');
 
                             }
                         }
                     }
                 }
             } else {
-                System.out.println("parser error: wrong tag");
+//                System.out.println("parser error: wrong tag");
 //                System.exit(0);
             }
         }
