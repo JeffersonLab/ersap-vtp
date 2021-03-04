@@ -116,6 +116,7 @@ endif()
 
 # Set the include directories
 include_directories(${DISRUPTOR_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} src/libsrc)
+target_link_libraries(${DISRUPTOR_LIBRARY} ${Boost_LIBRARIES} pthread dl m)
 
 # Shared ersap C++ library
 add_library(ersap-vtp SHARED ${CPP_LIB_FILES})
