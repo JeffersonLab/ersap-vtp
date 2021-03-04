@@ -79,7 +79,6 @@ find_package(Boost REQUIRED system thread chrono)
 
 if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
-    link_directories(${Boost_LIBRARY_DIRS})
 else()
     message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
 endif()
@@ -103,35 +102,31 @@ if( DISRUPTOR_INCLUDE_DIR )
     # Reset this to one directory upstream since these files are included as
     # include "Disruptor/xxx.h
     set (DISRUPTOR_INCLUDE_DIR  $ENV{DISRUPTOR_CPP_HOME})
-    message(STATUS "Disruptor include directory now set to " ${DISRUPTOR_INCLUDE_DIR})
+    message(STATUS "Disruptor inc dir = " ${DISRUPTOR_INCLUDE_DIR})
 else()
     message(FATAL_ERROR "Disruptor.h NOT found, cmake will exit." )
 endif()
 
 
 if( DISRUPTOR_LIBRARY )
-    message(STATUS "Disruptor library found at = " ${DISRUPTOR_LIBRARY})
+    message(STATUS "Disruptor lib = " ${DISRUPTOR_LIBRARY})
 else()
     message(FATAL_ERROR "Disruptor library NOT found, cmake will exit." )
 endif()
 
+# Set the include directories
+include_directories(${DISRUPTOR_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} src/libsrc)
 
 # Shared ersap C++ library
 add_library(ersap-vtp SHARED ${CPP_LIB_FILES})
-target_link_libraries(ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY})
-include_directories(ersap-vtp PUBLIC src/libsrc /usr/local/include
-        ${Boost_INCLUDE_DIRS} ${DISRUPTOR_INCLUDE_DIR})
 
+# Set the libs to link against
+link_libraries(ersap-vtp ${DISRUPTOR_LIBRARY} ${Boost_LIBRARIES} pthread dl m)
 
 # Main Executables
 add_executable(aggregator src/libsrc/TwoStreamAggregator.cpp)
-target_link_libraries(aggregator ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl m )
-
 add_executable(disruptorTrial src/libsrc/disruptorTrial.cpp)
-target_link_libraries(disruptorTrial ersap-vtp ${Boost_LIBRARIES} ${DISRUPTOR_LIBRARY} pthread dl m )
-
 add_executable(fakeVtp src/libsrc/FakeVtp.cpp)
-target_link_libraries(fakeVtp ersap-vtp ${Boost_LIBRARIES} dl m )
 
 
 # Installation defaulting to ${CMAKE_INSTALL_PREFIX}/lib
