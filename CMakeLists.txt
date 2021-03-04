@@ -81,35 +81,8 @@ if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
     link_directories(${Boost_LIBRARY_DIRS})
 else()
-    # on indra-s1
-    set(Boost_INCLUDE_DIRS /usr/include/boost169/boost)
-
-    find_library(BOOST_THD_LIB NAMES libboost_thread.so PATHS /usr/lib64/boost169)
-    find_library(BOOST_CHR_LIB NAMES libboost_chrono.so PATHS /usr/lib64/boost169)
-    find_library(BOOST_SYS_LIB NAMES libboost_system.so PATHS /usr/lib64/boost169)
-
-    set(Boost_LIBRARIES ${BOOST_THD_LIB} " " ${BOOST_CHR_LIB} " " ${BOOST_SYS_LIB})
-    if (BOOST_THD_LIB)
-        message(STATUS "Boost version 1.69 Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
-        link_directories(${Boost_INCLUDE_DIRS})
-    else()
-        message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
-    endif()
+    message(FATAL_ERROR "Boost cannot be found, cmake will exit." )
 endif()
-
-find_package(Threads REQUIRED pthread)
-#find_library(PTHREAD_LIBRARY
-#        NAMES libpthread-2.17.so
-#        PATHS /usr/lib64
-#        NO_DEFAULT_PATH
-#        )
-#
-#if (PTHREAD_LIBRARY)
-#    message(STATUS "Pthread lib found: libs = " ${PTHREAD_LIBRARY})
-#else()
-#    set(PTHREAD_LIBRARY pthread)
-#    message(STATUS "pthread cannot be found, try to continue anyway." )
-#endif()
 
 
 # Search for disruptor includes & lib
