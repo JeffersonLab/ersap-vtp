@@ -75,7 +75,7 @@ include(FindPackageHandleStandardArgs)
 
 
 # search for boost libs
-find_package(Boost 1.69 REQUIRED system thread chrono)
+find_package(Boost REQUIRED system thread chrono)
 
 if (Boost_FOUND)
     message(STATUS "Boost Found: libs = " ${Boost_LIBRARIES} ", include dirs = " ${Boost_INCLUDE_DIRS})
@@ -99,20 +99,19 @@ find_library(DISRUPTOR_LIBRARY
 
 if( DISRUPTOR_INCLUDE_DIR )
     message(STATUS "Disruptor.h found in path = " $ENV{DISRUPTOR_CPP_HOME}/Disruptor)
-    # Reset this to one directory upstream since these files are included as
-    # include "Disruptor/xxx.h
+    # Reset this to one directory upstream since these files are included as: #include "Disruptor/xxx.h
     set (DISRUPTOR_INCLUDE_DIR  $ENV{DISRUPTOR_CPP_HOME})
     message(STATUS "Disruptor inc dir = " ${DISRUPTOR_INCLUDE_DIR})
 else()
     message(FATAL_ERROR "Disruptor.h NOT found, cmake will exit." )
 endif()
 
-
 if( DISRUPTOR_LIBRARY )
     message(STATUS "Disruptor lib = " ${DISRUPTOR_LIBRARY})
 else()
     message(FATAL_ERROR "Disruptor library NOT found, cmake will exit." )
 endif()
+
 
 # Set the include directories
 include_directories(${DISRUPTOR_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} src/libsrc)
