@@ -49,7 +49,7 @@ public class PayloadDecoder {
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
                                 long ht = frame_time_ns + v;
-                                evt.add(ht, crate, slot, channel, q);
+//                                evt.add(ht, crate, slot, channel, q);
                             }
                         }
                     }
