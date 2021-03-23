@@ -143,13 +143,19 @@ public class Consumer extends Thread {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
                     put();
-                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1()/4);
-                    /*
+//                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
+
                     // experimental object pool
-                    PayloadDecoder decoder = getPayloadDecoderObject();
-                    Runnable r = () -> decoder.decode(frameTime, b, 0, buf.getPartLength1()/4);
-                    putPayloadDecoderObject();
-                    */
+                    Runnable r = () -> {
+                        try {
+                            PayloadDecoder decoder = getPayloadDecoderObject();
+                            decoder.decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                            putPayloadDecoderObject();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    };
+
                     tPool.execute(r);
                 } else {
                     put();
@@ -161,7 +167,7 @@ public class Consumer extends Thread {
         }
     }
 
-    public void exit(){
+    public void exit() {
         running.set(false);
         this.interrupt();
     }
