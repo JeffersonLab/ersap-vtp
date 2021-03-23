@@ -101,19 +101,20 @@ public class Consumer extends Thread {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
                     put();
-                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
+//                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
 
-                    /*
+
                     // experimental object pool
                     Runnable r = () -> {
                         try {
-                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
+oPool.get();
+//                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
                             oPool.put();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     };
-*/
+
                     tPool.execute(r);
                 } else {
                     put();
