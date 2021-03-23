@@ -128,7 +128,7 @@ public class Consumer extends Thread {
 
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
-        ExecutorService tPool = Executors.newFixedThreadPool(8);
+        ExecutorService tPool = Executors.newFixedThreadPool(16);
         ObjectPool oPool = new ObjectPool(new PayloadDecoderFactory(), 8);
 
         while (running.get()) {
