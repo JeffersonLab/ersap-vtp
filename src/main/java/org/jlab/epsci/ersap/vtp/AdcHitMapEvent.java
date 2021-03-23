@@ -12,6 +12,7 @@ public class AdcHitMapEvent {
     private List<Integer> charge = new ArrayList<>();
 
     public void reset() {
+        time.clear();
         crate.clear();
         slot.clear();
         channel.clear();
