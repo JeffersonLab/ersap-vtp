@@ -18,13 +18,6 @@ public class Consumer extends Thread {
     private long nextSequence;
     private long availableSequence;
 
-    // object pool
-    private RingBuffer<PayloadDecoder> decoderPool;
-    private Sequence decoderPoolSequence;
-    private SequenceBarrier decoderPoolBarrier;
-    private long decoderPoolNextSequence;
-    private long decoderPoolAvailableSequence;
-    private final static int decoderPoolMaxSize = 1024;
 
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
@@ -50,14 +43,6 @@ public class Consumer extends Thread {
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
-        // object pool definition
-        decoderPool = createSingleProducer(new PayloadDecoderFactory(), decoderPoolMaxSize,
-                new YieldingWaitStrategy());
-        decoderPoolSequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
-        decoderPoolBarrier = decoderPool.newBarrier();
-        decoderPool.addGatingSequences(decoderPoolSequence);
-        decoderPoolNextSequence = sequence.get() + 1L;
-        decoderPoolAvailableSequence = -1L;
     }
 
     /**
@@ -86,24 +71,6 @@ public class Consumer extends Thread {
         return item;
     }
 
-    public PayloadDecoder getPayloadDecoderObject() throws InterruptedException {
-
-        PayloadDecoder item = null;
-
-        try {
-            if (decoderPoolAvailableSequence < decoderPoolNextSequence) {
-                decoderPoolAvailableSequence = decoderPoolBarrier.waitFor(decoderPoolNextSequence);
-            }
-
-            item = decoderPool.get(decoderPoolNextSequence);
-        } catch (final TimeoutException | AlertException ex) {
-            // never happen since we don't use timeout wait strategy
-            ex.printStackTrace();
-        }
-
-        return item;
-    }
-
     /**
      * This "consumer" is also a producer for the output ring.
      * So get items from the output ring and fill them with items claimed from the input rings.
@@ -117,19 +84,10 @@ public class Consumer extends Thread {
         nextSequence++;
     }
 
-    public void putPayloadDecoderObject() throws InterruptedException {
-
-        // Tell input (crate) ring that we're done with the item we're consuming
-        decoderPoolSequence.set(decoderPoolNextSequence);
-
-        // Go to next item to consume on input ring
-        decoderPoolNextSequence++;
-    }
-
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
         ExecutorService tPool = Executors.newFixedThreadPool(16);
-        ObjectPool oPool = new ObjectPool(new PayloadDecoderFactory(), 8);
+        ObjectPool oPool = new ObjectPool(new PayloadDecoderFactory(), 16);
 
         while (running.get()) {
 
@@ -148,9 +106,9 @@ public class Consumer extends Thread {
                     // experimental object pool
                     Runnable r = () -> {
                         try {
-                            PayloadDecoder decoder = getPayloadDecoderObject();
+                            PayloadDecoder decoder = oPool.get();
                             decoder.decode(frameTime, b, 0, buf.getPartLength1() / 4);
-                            putPayloadDecoderObject();
+                            oPool.put();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

@@ -40,9 +40,9 @@ public class ObjectPool {
      * @return next available object in ring buffer.
      * @throws InterruptedException exception
      */
-    public Object get() throws InterruptedException {
+    public PayloadDecoder get() throws InterruptedException {
 
-        Object item = null;
+        PayloadDecoder item = null;
 
         try {
             if (availableSequence < nextSequence) {
