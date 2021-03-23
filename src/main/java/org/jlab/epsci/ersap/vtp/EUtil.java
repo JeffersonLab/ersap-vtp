@@ -386,13 +386,13 @@ public class EUtil {
 //                                new RingAdcHitEvent().addHit(ht,
 //                                        new AdcHit(crate, slot, channel, q, BigInteger.valueOf(ht)));
 
-//                                System.out.println("AdcHit{" +
-//                                        "crate=" + crate +
-//                                        ", slot=" + slot +
-//                                        ", channel=" + channel +
-//                                        ", q=" + q +
-//                                        ", time=" + ht +
-//                                        '}');
+                                System.out.println("AdcHit{" +
+                                        "crate=" + crate +
+                                        ", slot=" + slot +
+                                        ", channel=" + channel +
+                                        ", q=" + q +
+                                        ", time=" + ht +
+                                        '}');
 
                             }
                         }
