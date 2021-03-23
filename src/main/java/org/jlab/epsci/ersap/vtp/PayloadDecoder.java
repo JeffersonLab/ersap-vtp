@@ -6,15 +6,17 @@ import java.util.List;
 
 public class PayloadDecoder {
     private final AdcHitMapEvent evt;
+    private final List<Integer> pData;
     private static int i;
 
     public PayloadDecoder(){
         evt = new AdcHitMapEvent();
+        pData = new ArrayList<>();
     }
 
     public void decode(Long frame_time_ns, ByteBuffer buf, int s1, int s2) {
         buf.rewind();
-        List<Integer> pData = new ArrayList<>();
+        pData.clear();
         while (buf.hasRemaining()) {
             pData.add(buf.getInt());
         }

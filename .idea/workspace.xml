@@ -120,13 +120,6 @@
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
     </task>
-    <task id="LOCAL-00257" summary="- disruptor ring buffer depth studies">
-      <created>1613077925966</created>
-      <option name="number" value="00257" />
-      <option name="presentableId" value="LOCAL-00257" />
-      <option name="project" value="LOCAL" />
-      <updated>1613077925967</updated>
-    </task>
     <task id="LOCAL-00258" summary="- disruptor ring buffer depth studies">
       <created>1613079714764</created>
       <option name="number" value="00258" />
@@ -463,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616529484422</updated>
     </task>
-    <option name="localTasksCounter" value="306" />
+    <task id="LOCAL-00306" summary="- introducing an object pool based on disruptor technology">
+      <created>1616529662884</created>
+      <option name="number" value="00306" />
+      <option name="presentableId" value="LOCAL-00306" />
+      <option name="project" value="LOCAL" />
+      <updated>1616529662884</updated>
+    </task>
+    <option name="localTasksCounter" value="307" />
     <servers />
   </component>
   <component name="TodoView">
