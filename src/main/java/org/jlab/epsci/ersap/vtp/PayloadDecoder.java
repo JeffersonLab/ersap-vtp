@@ -12,7 +12,6 @@ public class PayloadDecoder {
     public PayloadDecoder(){
         evt = new AdcHitMapEvent();
         pData = new ArrayList<>();
-        System.out.println("------- "+i++);
     }
 
     public void decode(Long frame_time_ns, ByteBuffer buf, int s1, int s2) {
