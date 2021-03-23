@@ -1,21 +1,30 @@
 package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
+import org.jlab.epsci.ersap.vtp.util.ObjectPool;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 import static org.jlab.epsci.ersap.vtp.EUtil.*;
 
 public class Consumer extends Thread {
     private RingBuffer<RingRawEvent> ringBuffer;
     private Sequence sequence;
     private SequenceBarrier barrier;
-
     private long nextSequence;
     private long availableSequence;
+
+    // object pool
+    private RingBuffer<PayloadDecoder> decoderPool;
+    private Sequence decoderPoolSequence;
+    private SequenceBarrier decoderPoolBarrier;
+    private long decoderPoolNextSequence;
+    private long decoderPoolAvailableSequence;
+    private final static int decoderPoolMaxSize = 1024;
 
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
@@ -41,6 +50,14 @@ public class Consumer extends Thread {
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
+        // object pool definition
+        decoderPool = createSingleProducer(new PayloadDecoderFactory(), decoderPoolMaxSize,
+                new YieldingWaitStrategy());
+        decoderPoolSequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
+        decoderPoolBarrier = decoderPool.newBarrier();
+        decoderPool.addGatingSequences(decoderPoolSequence);
+        decoderPoolNextSequence = sequence.get() + 1L;
+        decoderPoolAvailableSequence = -1L;
     }
 
     /**
@@ -69,6 +86,24 @@ public class Consumer extends Thread {
         return item;
     }
 
+    public PayloadDecoder getPayloadDecoderObject() throws InterruptedException {
+
+        PayloadDecoder item = null;
+
+        try {
+            if (decoderPoolAvailableSequence < decoderPoolNextSequence) {
+                decoderPoolAvailableSequence = decoderPoolBarrier.waitFor(decoderPoolNextSequence);
+            }
+
+            item = decoderPool.get(decoderPoolNextSequence);
+        } catch (final TimeoutException | AlertException ex) {
+            // never happen since we don't use timeout wait strategy
+            ex.printStackTrace();
+        }
+
+        return item;
+    }
+
     /**
      * This "consumer" is also a producer for the output ring.
      * So get items from the output ring and fill them with items claimed from the input rings.
@@ -82,9 +117,19 @@ public class Consumer extends Thread {
         nextSequence++;
     }
 
+    public void putPayloadDecoderObject() throws InterruptedException {
+
+        // Tell input (crate) ring that we're done with the item we're consuming
+        decoderPoolSequence.set(decoderPoolNextSequence);
+
+        // Go to next item to consume on input ring
+        decoderPoolNextSequence++;
+    }
+
     public void run() {
 //        HitFinder hitFinder = new HitFinder();
-        ExecutorService pool = Executors.newFixedThreadPool(8);
+        ExecutorService tPool = Executors.newFixedThreadPool(8);
+        ObjectPool oPool = new ObjectPool(new PayloadDecoderFactory(), 8);
 
         while (running.get()) {
 
@@ -98,10 +143,10 @@ public class Consumer extends Thread {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
                     put();
-//                    Runnable r = () -> decodePayloadMap2(frameTime, b);
-
-                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1()/4);
-                    pool.execute(r);
+//                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1()/4);
+                    PayloadDecoder decoder = getPayloadDecoderObject();
+                    Runnable r = () -> decoder.decode(frameTime, b, 0, buf.getPartLength1()/4);
+                    tPool.execute(r);
                 } else {
                     put();
                 }
@@ -109,20 +154,6 @@ public class Consumer extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-//*********
-//                    List<AdcHit> evt = decodePayload(frameTime, payload);
-//                    Map<Integer, List<ChargeTime>> hits = hitFinder
-//                            .reset()
-//                            .stream(evt)
-//                            .frameStartTime(frameTime)
-//                            .frameLength(64000)
-//                            .sliceSize(32)
-//                            .windowSize(4)
-//                            .slide();
-//                    printHits(hits);
-//*********
-
         }
     }
 
