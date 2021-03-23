@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PayloadDecoder {
-    private AdcHitMapEvent evt = new AdcHitMapEvent();
+    private final AdcHitMapEvent evt;
+    private static int i;
+
+    public PayloadDecoder(){
+        evt = new AdcHitMapEvent();
+        System.out.println(" ================== "+i++);
+    }
 
     public void decode(Long frame_time_ns, ByteBuffer buf, int s1, int s2) {
         buf.rewind();
