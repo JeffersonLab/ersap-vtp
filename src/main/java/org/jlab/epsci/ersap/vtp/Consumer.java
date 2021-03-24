@@ -121,6 +121,7 @@ public class Consumer extends Thread {
                         try {
                             PayloadDecoder pd = pool.borrowObject();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                            pool.returnObject(pd);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
