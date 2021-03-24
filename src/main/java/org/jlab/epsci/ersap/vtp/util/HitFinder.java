@@ -1,4 +1,7 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.vtp.util;
+
+import org.jlab.epsci.ersap.vtp.AdcHit;
+import org.jlab.epsci.ersap.vtp.SlidingWindowStream;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

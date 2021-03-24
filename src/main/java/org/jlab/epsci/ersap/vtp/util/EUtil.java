@@ -1,8 +1,8 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.vtp.util;
 
 
-import javax.swing.plaf.IconUIResource;
-import java.awt.*;
+import org.jlab.epsci.ersap.vtp.AdcHit;
+
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;

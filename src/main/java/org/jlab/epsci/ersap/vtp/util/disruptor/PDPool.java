@@ -1,11 +1,11 @@
-package org.jlab.epsci.ersap.vtp.util;
+package org.jlab.epsci.ersap.vtp.util.disruptor;
 
 import com.lmax.disruptor.*;
 import org.jlab.epsci.ersap.vtp.PayloadDecoder;
 
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
-public class ObjectPool {
+public class PDPool {
     private final RingBuffer<PayloadDecoder> ringBuffer;
     private final Sequence sequence;
     private final SequenceBarrier sequenceBarrier;
@@ -21,7 +21,7 @@ public class ObjectPool {
      * @param factory instance of a processor class
      * @param depth      number of objects in the pool
      */
-    public ObjectPool(EventFactory<PayloadDecoder> factory, int depth) {
+    public PDPool(EventFactory<PayloadDecoder> factory, int depth) {
         ringBuffer = createSingleProducer(factory, depth,
                 new YieldingWaitStrategy());
         sequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);

@@ -1,6 +1,7 @@
 package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
+import org.jlab.epsci.ersap.vtp.util.EUtil;
 
 import java.io.*;
 import java.net.ServerSocket;

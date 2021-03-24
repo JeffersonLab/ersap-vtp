@@ -1,7 +1,11 @@
 package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
-import org.jlab.epsci.ersap.vtp.util.ObjectPool;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderFactory;
+import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderPool;
+import org.jlab.epsci.ersap.vtp.util.disruptor.PDPool;
+import org.jlab.epsci.ersap.vtp.util.disruptor.PDFactory;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
@@ -9,7 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
-import static org.jlab.epsci.ersap.vtp.EUtil.*;
+import static org.jlab.epsci.ersap.vtp.util.EUtil.*;
 
 public class Consumer extends Thread {
     private RingBuffer<RingRawEvent> ringBuffer;
@@ -84,10 +88,20 @@ public class Consumer extends Thread {
         nextSequence++;
     }
 
+    private PayloadDecoderPool createPdPool(int size) {
+        GenericObjectPoolConfig config = new GenericObjectPoolConfig();
+        config.setMaxIdle(1);
+        config.setMaxTotal(size);
+
+
+        config.setTestOnBorrow(true);
+        config.setTestOnReturn(true);
+        return new PayloadDecoderPool(new PayloadDecoderFactory(), config);
+    }
+
     public void run() {
-//        HitFinder hitFinder = new HitFinder();
         ExecutorService tPool = Executors.newFixedThreadPool(16);
-        ObjectPool oPool = new ObjectPool(new PayloadDecoderFactory(), 16);
+        PayloadDecoderPool pool = createPdPool(16);
 
         while (running.get()) {
 
@@ -104,21 +118,14 @@ public class Consumer extends Thread {
 //                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
 
                     Runnable r = () -> {
-                        PayloadDecoder pd = new PayloadDecoder();
-                        pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
-                    };
-
-/*
-                    // experimental object pool
-                    Runnable r = () -> {
                         try {
-                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
-                            oPool.put();
-                        } catch (InterruptedException e) {
+                            PayloadDecoder pd = pool.borrowObject();
+                            pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     };
-*/
+
                     tPool.execute(r);
                 } else {
                     put();

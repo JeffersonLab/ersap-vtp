@@ -1,4 +1,4 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.vtp.util;
 
 import java.math.BigInteger;
 import java.util.Objects;

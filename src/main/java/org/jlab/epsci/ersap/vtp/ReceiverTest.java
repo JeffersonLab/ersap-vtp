@@ -1,5 +1,7 @@
 package org.jlab.epsci.ersap.vtp;
 
+import org.jlab.epsci.ersap.vtp.util.EUtil;
+
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -10,8 +12,8 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static org.jlab.epsci.ersap.vtp.EUtil.decodePayload;
-import static org.jlab.epsci.ersap.vtp.EUtil.printFrame;
+import static org.jlab.epsci.ersap.vtp.util.EUtil.decodePayload;
+import static org.jlab.epsci.ersap.vtp.util.EUtil.printFrame;
 
 public class ReceiverTest {
     /**
