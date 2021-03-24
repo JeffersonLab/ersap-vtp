@@ -12,13 +12,11 @@ public class AdcHitMapEvent {
     private List<Integer> charge;
 
     public AdcHitMapEvent() {
-        System.out.println("============= creating adchitmapevent object");
         time = new ArrayList<>();
         crate = new ArrayList<>();
         slot = new ArrayList<>();
         channel = new ArrayList<>();
         charge = new ArrayList<>();
-
     }
 
     public void reset() {

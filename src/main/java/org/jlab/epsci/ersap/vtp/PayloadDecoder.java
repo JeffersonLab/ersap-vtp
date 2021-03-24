@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PayloadDecoder {
-    private final AdcHitMapEvent evt;
+//    private final AdcHitMapEvent evt;
     private final List<Integer> pData;
-    private static int i;
 
     public PayloadDecoder(){
-        evt = new AdcHitMapEvent();
+//        evt = new AdcHitMapEvent();
         pData = new ArrayList<>();
     }
 
     public void decode(Long frame_time_ns, ByteBuffer buf, int s1, int s2) {
         pData.clear();
-        evt.reset();
+//        evt.reset();
 
         buf.rewind();
         while (buf.hasRemaining()) {
@@ -51,7 +50,7 @@ public class PayloadDecoder {
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
                                 long ht = frame_time_ns + v;
-                                evt.add(ht, crate, slot, channel, q);
+//                                evt.add(ht, crate, slot, channel, q);
                             }
                         }
                     }
@@ -60,22 +59,22 @@ public class PayloadDecoder {
         }
     }
 
-    public void dump() {
-        System.out.println("\n========================================= ");
-        if (evt.evtSize() < 0) {
-            System.out.println("\nWarning: hit-map is inconsistent");
-        } else {
-            for (int i = 0; i < evt.evtSize(); i++) {
-                System.out.println("AdcHit{" +
-                        "crate=" + evt.getCrate(i) +
-                        ", slot=" + evt.getSlot(i) +
-                        ", channel=" + evt.getChannel(i) +
-                        ", q=" + evt.getCharge(i) +
-                        ", time=" + evt.getTime(i) +
-                        '}');
-
-            }
-        }
-    }
+//    public void dump() {
+//        System.out.println("\n========================================= ");
+//        if (evt.evtSize() < 0) {
+//            System.out.println("\nWarning: hit-map is inconsistent");
+//        } else {
+//            for (int i = 0; i < evt.evtSize(); i++) {
+//                System.out.println("AdcHit{" +
+//                        "crate=" + evt.getCrate(i) +
+//                        ", slot=" + evt.getSlot(i) +
+//                        ", channel=" + evt.getChannel(i) +
+//                        ", q=" + evt.getCharge(i) +
+//                        ", time=" + evt.getTime(i) +
+//                        '}');
+//
+//            }
+//        }
+//    }
 
 }
