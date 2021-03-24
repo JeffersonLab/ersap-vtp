@@ -22,7 +22,6 @@ public class ObjectPool {
      * @param depth      number of objects in the pool
      */
     public ObjectPool(EventFactory<PayloadDecoder> factory, int depth) {
-        System.out.println("======================================= creating object pool");
         ringBuffer = createSingleProducer(factory, depth,
                 new YieldingWaitStrategy());
         sequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -40,7 +39,7 @@ public class ObjectPool {
      * @return next available object in ring buffer.
      * @throws InterruptedException exception
      */
-    public synchronized PayloadDecoder get() throws InterruptedException {
+    public PayloadDecoder get() throws InterruptedException {
 
         PayloadDecoder item = null;
 
@@ -57,7 +56,7 @@ public class ObjectPool {
         return item;
     }
 
-    public synchronized void put() throws InterruptedException {
+    public void put() throws InterruptedException {
         sequence.set(nextSequence);
         // Go to next object to return on the ring
         nextSequence++;
