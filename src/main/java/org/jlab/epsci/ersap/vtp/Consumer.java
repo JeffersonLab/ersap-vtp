@@ -107,7 +107,8 @@ public class Consumer extends Thread {
                     // experimental object pool
                     Runnable r = () -> {
                         try {
-                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                            oPool.get();
+//                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
                             oPool.put();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
