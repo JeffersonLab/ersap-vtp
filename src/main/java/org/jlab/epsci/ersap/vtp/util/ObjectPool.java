@@ -22,7 +22,7 @@ public class ObjectPool {
      * @param depth      number of objects in the pool
      */
     public ObjectPool(EventFactory<PayloadDecoder> factory, int depth) {
-
+        System.out.println("======================================= creating object pool");
         ringBuffer = createSingleProducer(factory, depth,
                 new YieldingWaitStrategy());
         sequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
