@@ -98,10 +98,14 @@ public class Consumer extends Thread {
         config.setTestOnReturn(true);
         return new PayloadDecoderPool(new PayloadDecoderFactory(), config);
     }
+    private PDPool createDisruptorBasedPool(int size) {
+        return new PDPool(new PDFactory(), size);
+    }
 
     public void run() {
         ExecutorService tPool = Executors.newFixedThreadPool(64);
-        PayloadDecoderPool pool = createPdPool(64);
+//        PayloadDecoderPool pool = createPdPool(64);
+          PDPool pool = createDisruptorBasedPool(64);
 
         while (running.get()) {
 
@@ -117,15 +121,27 @@ public class Consumer extends Thread {
                     put();
 //                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
 
+                    // disruptor based pool
                     Runnable r = () -> {
                         try {
-                            PayloadDecoder pd = pool.borrowObject();
+                            PayloadDecoder pd = pool.get();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
-                            pool.returnObject(pd);
+                            pool.put();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     };
+
+                    // apache common pool
+//                    Runnable r = () -> {
+//                        try {
+//                            PayloadDecoder pd = pool.borrowObject();
+//                            pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
+//                            pool.returnObject(pd);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                    };
 
                     tPool.execute(r);
                 } else {
