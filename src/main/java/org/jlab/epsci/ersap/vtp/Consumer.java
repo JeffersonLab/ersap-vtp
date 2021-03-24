@@ -103,18 +103,22 @@ public class Consumer extends Thread {
                     put();
 //                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
 
+                    Runnable r = () -> {
+                        PayloadDecoder pd = new PayloadDecoder();
+                        pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                    };
 
+/*
                     // experimental object pool
                     Runnable r = () -> {
                         try {
-                            oPool.get();
-//                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                            oPool.get().decode(frameTime, b, 0, buf.getPartLength1() / 4);
                             oPool.put();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     };
-
+*/
                     tPool.execute(r);
                 } else {
                     put();
