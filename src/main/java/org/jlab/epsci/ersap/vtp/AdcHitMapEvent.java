@@ -5,11 +5,21 @@ import java.util.List;
 
 public class AdcHitMapEvent {
 
-    private List<Long> time = new ArrayList<>();
-    private List<Integer> crate = new ArrayList<>();
-    private List<Integer> slot = new ArrayList<>();
-    private List<Integer> channel = new ArrayList<>();
-    private List<Integer> charge = new ArrayList<>();
+    private List<Long> time;
+    private List<Integer> crate;
+    private List<Integer> slot;
+    private List<Integer> channel;
+    private List<Integer> charge;
+
+    public AdcHitMapEvent() {
+        System.out.println("============= creating adchitmapevent object");
+        time = new ArrayList<>();
+        crate = new ArrayList<>();
+        slot = new ArrayList<>();
+        channel = new ArrayList<>();
+        charge = new ArrayList<>();
+
+    }
 
     public void reset() {
         time.clear();
