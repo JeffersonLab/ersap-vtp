@@ -1,7 +1,8 @@
 package org.jlab.epsci.ersap.vtp.util;
 
 
-import org.jlab.epsci.ersap.vtp.AdcHit;
+import org.jlab.epsci.ersap.vtp.util.hitfinder.AdcHit;
+import org.jlab.epsci.ersap.vtp.util.hitfinder.ChargeTime;
 
 import java.io.*;
 import java.math.BigInteger;

@@ -1,4 +1,4 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.vtp.util.hitfinder;
 
 
 import java.io.Serializable;
