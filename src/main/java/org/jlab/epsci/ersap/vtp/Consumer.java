@@ -100,8 +100,8 @@ public class Consumer extends Thread {
     }
 
     public void run() {
-        ExecutorService tPool = Executors.newFixedThreadPool(16);
-        PayloadDecoderPool pool = createPdPool(16);
+        ExecutorService tPool = Executors.newFixedThreadPool(64);
+        PayloadDecoderPool pool = createPdPool(64);
 
         while (running.get()) {
 
