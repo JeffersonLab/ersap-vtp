@@ -1,0 +1,15 @@
+syntax = "proto3";
+option optimize_for = SPEED;
+option java_outer_classname = "AdcDataFormat";
+
+
+// ... Data class ...
+message AdcHitMap {
+
+  repeated sint32 crate = 1; // variable length signed int32
+  repeated sint32 slot = 2; // variable length signed int32
+  repeated sint32 channel = 3; // variable length signed int32
+  repeated sint32 charge = 4; // variable length signed int32
+  repeated sint64 time = 5; // variable length signed int64
+}
+

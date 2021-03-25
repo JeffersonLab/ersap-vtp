@@ -2,17 +2,15 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.jlab.epsci.ersap.vtp.engines.format.PayloadDecoderProto;
 import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderFactory;
 import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderPool;
-import org.jlab.epsci.ersap.vtp.util.disruptor.PDPool;
-import org.jlab.epsci.ersap.vtp.util.disruptor.PDFactory;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 import static org.jlab.epsci.ersap.vtp.util.EUtil.*;
 
 public class Consumer extends Thread {
@@ -120,7 +118,7 @@ public class Consumer extends Thread {
                     // using object pool
                     Runnable r = () -> {
                         try {
-                            PayloadDecoder pd = pool.borrowObject();
+                            PayloadDecoderProto pd = pool.borrowObject();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
                             pool.returnObject(pd);
                         } catch (Exception e) {

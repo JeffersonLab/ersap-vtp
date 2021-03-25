@@ -3,17 +3,17 @@ package org.jlab.epsci.ersap.vtp.util.commons;
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
 import org.apache.commons.pool2.impl.DefaultPooledObject;
-import org.jlab.epsci.ersap.vtp.PayloadDecoder;
+import org.jlab.epsci.ersap.vtp.engines.format.PayloadDecoderProto;
 
-public class PayloadDecoderFactory extends BasePooledObjectFactory<PayloadDecoder> {
+public class PayloadDecoderFactory extends BasePooledObjectFactory<PayloadDecoderProto> {
 
     @Override
-    public PayloadDecoder create() throws Exception {
-        return new PayloadDecoder();
+    public PayloadDecoderProto create() throws Exception {
+        return new PayloadDecoderProto();
     }
 
     @Override
-    public PooledObject<PayloadDecoder> wrap(PayloadDecoder payloadDecoder) {
-        return new DefaultPooledObject<PayloadDecoder>(payloadDecoder);
+    public PooledObject<PayloadDecoderProto> wrap(PayloadDecoderProto payloadDecoder) {
+        return new DefaultPooledObject<PayloadDecoderProto>(payloadDecoder);
     }
 }

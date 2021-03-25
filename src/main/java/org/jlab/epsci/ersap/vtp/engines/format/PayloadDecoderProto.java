@@ -1,21 +1,22 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.vtp.engines.format;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class PayloadDecoder {
-    private final AdcHitMapEvent evt;
+public class PayloadDecoderProto {
+    private final AdcDataFormat.AdcHitMap.Builder hitmap;
     private final List<Integer> pData;
 
-    public PayloadDecoder(){
-        evt = new AdcHitMapEvent();
+    public PayloadDecoderProto(){
+        hitmap = AdcDataFormat.AdcHitMap.newBuilder();
         pData = new ArrayList<>();
     }
 
     public void decode(Long frame_time_ns, ByteBuffer buf, int s1, int s2) {
         pData.clear();
-        evt.reset();
+        hitmap.clear();
 
         buf.rewind();
         while (buf.hasRemaining()) {
@@ -24,10 +25,12 @@ public class PayloadDecoder {
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, s1);
         corePayloadDecoder(frame_time_ns, pData, s2);
+        hitmap.build();
     }
 
-    public AdcHitMapEvent getEvt() {
-        return evt;
+    public byte[] getEvt() {
+        byte[] b = hitmap.build().toByteArray();
+        return Arrays.copyOf(b,b.length);
     }
 
     private void corePayloadDecoder(Long frame_time_ns,
@@ -54,7 +57,11 @@ public class PayloadDecoder {
                                 int channel = (val >> 13) & 0x000F;
                                 long v = ((val >> 17) & 0x3FFF) * 4;
                                 long ht = frame_time_ns + v;
-                                evt.add(ht, crate, slot, channel, q);
+                                hitmap.addCrate(crate);
+                                hitmap.addSlot(slot);
+                                hitmap.addChannel(channel);
+                                hitmap.addCharge(q);
+                                hitmap.addTime(ht);
                             }
                         }
                     }
@@ -65,20 +72,7 @@ public class PayloadDecoder {
 
     public void dump() {
         System.out.println("\n========================================= ");
-        if (evt.evtSize() < 0) {
-            System.out.println("\nWarning: hit-map is inconsistent");
-        } else {
-            for (int i = 0; i < evt.evtSize(); i++) {
-                System.out.println("AdcHit{" +
-                        "crate=" + evt.getCrate(i) +
-                        ", slot=" + evt.getSlot(i) +
-                        ", channel=" + evt.getChannel(i) +
-                        ", q=" + evt.getCharge(i) +
-                        ", time=" + evt.getTime(i) +
-                        '}');
-
-            }
-        }
+        hitmap.toString();
     }
 
 }
