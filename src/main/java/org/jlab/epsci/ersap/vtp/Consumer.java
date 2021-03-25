@@ -2,7 +2,6 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.jlab.epsci.ersap.vtp.engines.format.PayloadDecoderProto;
 import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderFactory;
 import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderPool;
 
@@ -118,7 +117,7 @@ public class Consumer extends Thread {
                     // using object pool
                     Runnable r = () -> {
                         try {
-                            PayloadDecoderProto pd = pool.borrowObject();
+                            PayloadDecoder pd = pool.borrowObject();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
                             pool.returnObject(pd);
                         } catch (Exception e) {

@@ -3,9 +3,9 @@ package org.jlab.epsci.ersap.vtp.util.commons;
 import org.apache.commons.pool2.PooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.jlab.epsci.ersap.vtp.engines.format.PayloadDecoderProto;
+import org.jlab.epsci.ersap.vtp.PayloadDecoder;
 
-public class PayloadDecoderPool extends GenericObjectPool<PayloadDecoderProto> {
+public class PayloadDecoderPool extends GenericObjectPool<PayloadDecoder> {
 
     /**
      * Constructor.
@@ -15,7 +15,7 @@ public class PayloadDecoderPool extends GenericObjectPool<PayloadDecoderProto> {
      *
      * @param factory
      */
-    public PayloadDecoderPool(PooledObjectFactory<PayloadDecoderProto> factory) {
+    public PayloadDecoderPool(PooledObjectFactory<PayloadDecoder> factory) {
         super(factory);
     }
 
@@ -25,7 +25,7 @@ public class PayloadDecoderPool extends GenericObjectPool<PayloadDecoderProto> {
      * @param factory
      * @param config
      */
-    public PayloadDecoderPool(PooledObjectFactory<PayloadDecoderProto> factory,
+    public PayloadDecoderPool(PooledObjectFactory<PayloadDecoder> factory,
                  GenericObjectPoolConfig config) {
         super(factory, config);
     }
