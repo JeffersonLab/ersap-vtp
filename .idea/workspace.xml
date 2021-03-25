@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0347ede3-3a9c-4028-8963-37e89cf771be" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/AdcHitMapBa.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/PayloadDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/PayloadDecoder.java" afterDir="false" />
     </list>
@@ -127,13 +126,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1604436180049</updated>
-    </task>
-    <task id="LOCAL-00281" summary="- increased consumer thread pool size">
-      <created>1614186558365</created>
-      <option name="number" value="00281" />
-      <option name="presentableId" value="LOCAL-00281" />
-      <option name="project" value="LOCAL" />
-      <updated>1614186558365</updated>
     </task>
     <task id="LOCAL-00282" summary="- increased consumer thread pool size">
       <created>1614192628192</created>
@@ -471,7 +463,14 @@
       <option name="project" value="LOCAL" />
       <updated>1616635146852</updated>
     </task>
-    <option name="localTasksCounter" value="330" />
+    <task id="LOCAL-00330" summary="- data format based on byteBuffer">
+      <created>1616637376084</created>
+      <option name="number" value="00330" />
+      <option name="presentableId" value="LOCAL-00330" />
+      <option name="project" value="LOCAL" />
+      <updated>1616637376084</updated>
+    </task>
+    <option name="localTasksCounter" value="331" />
     <servers />
   </component>
   <component name="TodoView">
@@ -484,7 +483,6 @@
     </todo-panel>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-atomic long to measure missed frames." />
     <MESSAGE value="- add total missed" />
     <MESSAGE value="- deleted data folder" />
     <MESSAGE value="- csv creation one line at a time" />
@@ -509,7 +507,8 @@
     <MESSAGE value="- introducing an object pool based on apache commons pool" />
     <MESSAGE value="- some code refactoring" />
     <MESSAGE value="- data format based on protobuf" />
-    <option name="LAST_COMMIT_MESSAGE" value="- data format based on protobuf" />
+    <MESSAGE value="- data format based on byteBuffer" />
+    <option name="LAST_COMMIT_MESSAGE" value="- data format based on byteBuffer" />
   </component>
   <component name="gradleExecuteTaskHistory">
     <option value="" />

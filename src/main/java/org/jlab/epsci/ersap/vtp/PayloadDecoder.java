@@ -2,7 +2,6 @@ package org.jlab.epsci.ersap.vtp;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PayloadDecoder {
@@ -10,7 +9,7 @@ public class PayloadDecoder {
     private final List<Integer> pData;
 
     public PayloadDecoder(){
-        evt = new AdcHitMapBa(200000);
+        evt = new AdcHitMapBa(2000000);
         pData = new ArrayList<>();
     }
 
