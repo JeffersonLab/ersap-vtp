@@ -15,7 +15,7 @@ public class TwoStreamAggregator {
     /**
      * Max ring items
      */
-    private final static int maxRingItems = 4096;
+    private final static int maxRingItems = 8192;
 
     /**
      * Ring buffers
