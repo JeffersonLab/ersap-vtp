@@ -2,14 +2,15 @@ package org.jlab.epsci.ersap.vtp;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PayloadDecoder {
-    private final AdcHitMapEvent evt;
+    private final AdcHitMapBa evt;
     private final List<Integer> pData;
 
     public PayloadDecoder(){
-        evt = new AdcHitMapEvent();
+        evt = new AdcHitMapBa(200000);
         pData = new ArrayList<>();
     }
 
@@ -26,8 +27,12 @@ public class PayloadDecoder {
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
 
-    public AdcHitMapEvent getEvt() {
-        return evt;
+//    public AdcHitMapEvent getEvt() {
+//        return evt;
+//    }
+
+    public ByteBuffer getEvt() {
+        return evt.getEvt();
     }
 
     private void corePayloadDecoder(Long frame_time_ns,
@@ -63,22 +68,22 @@ public class PayloadDecoder {
         }
     }
 
-    public void dump() {
-        System.out.println("\n========================================= ");
-        if (evt.evtSize() < 0) {
-            System.out.println("\nWarning: hit-map is inconsistent");
-        } else {
-            for (int i = 0; i < evt.evtSize(); i++) {
-                System.out.println("AdcHit{" +
-                        "crate=" + evt.getCrate(i) +
-                        ", slot=" + evt.getSlot(i) +
-                        ", channel=" + evt.getChannel(i) +
-                        ", q=" + evt.getCharge(i) +
-                        ", time=" + evt.getTime(i) +
-                        '}');
-
-            }
-        }
-    }
+//    public void dump() {
+//        System.out.println("\n========================================= ");
+//        if (evt.evtSize() < 0) {
+//            System.out.println("\nWarning: hit-map is inconsistent");
+//        } else {
+//            for (int i = 0; i < evt.evtSize(); i++) {
+//                System.out.println("AdcHit{" +
+//                        "crate=" + evt.getCrate(i) +
+//                        ", slot=" + evt.getSlot(i) +
+//                        ", channel=" + evt.getChannel(i) +
+//                        ", q=" + evt.getCharge(i) +
+//                        ", time=" + evt.getTime(i) +
+//                        '}');
+//
+//            }
+//        }
+//    }
 
 }
