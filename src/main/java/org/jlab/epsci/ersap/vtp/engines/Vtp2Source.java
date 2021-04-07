@@ -40,7 +40,6 @@ public class Vtp2Source extends AbstractEventReaderService<TwoStreamAggregator> 
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
-
     }
 
     @Override
