@@ -23,6 +23,9 @@ public class Consumer extends Thread {
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
 
+    private ExecutorService tPool;
+    private PayloadDecoderPool pool;
+
     /**
      * Consumer constructor
      *
@@ -44,6 +47,8 @@ public class Consumer extends Thread {
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
+        tPool = Executors.newFixedThreadPool(128);
+        pool = createPdPool(128);
     }
 
     /**
@@ -97,8 +102,6 @@ public class Consumer extends Thread {
     }
 
     public void run() {
-        ExecutorService tPool = Executors.newFixedThreadPool(128);
-        PayloadDecoderPool pool = createPdPool(128);
 
         while (running.get()) {
 
@@ -108,6 +111,8 @@ public class Consumer extends Thread {
 
                 // Get an empty item from ring and parse the payload
                 RingRawEvent buf = get();
+                put();
+                /*
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
@@ -130,10 +135,19 @@ public class Consumer extends Thread {
                     put();
                 }
 
+                 */
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ByteBuffer getEvent() throws Exception {
+        ByteBuffer out;
+        PayloadDecoder pd = pool.borrowObject();
+        out = pd.getEvt();
+        pool.returnObject(pd);
+        return out;
     }
 
     public void exit() {

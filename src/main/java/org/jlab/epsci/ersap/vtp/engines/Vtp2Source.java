@@ -1,56 +1,31 @@
 package org.jlab.epsci.ersap.vtp.engines;
 
 
-import org.jlab.clara.base.ClaraUtil;
 import org.jlab.clara.engine.EngineDataType;
-import org.jlab.clara.std.services.AbstractEventReaderService;
 import org.jlab.clara.std.services.EventReaderException;
-import org.jlab.epsci.ersap.vtp.TwoStreamAggregator;
+import org.jlab.epsci.ersap.vtp.VTPTwoStreamAggregatorDecoder;
 import org.json.JSONObject;
 
 import java.nio.ByteOrder;
-import java.nio.file.Path;
 
-public class Vtp2Source extends AbstractEventReaderService<TwoStreamAggregator> {
+public class Vtp2Source extends AbstractTwoStreamSourceService<VTPTwoStreamAggregatorDecoder> {
 
-    private static final String CONF_PORT_1 = "port1";
-    private static final String CONF_PORT_2 = "port2";
-    private static final String CONF_NEVENT = "nevents";
-
-    private int nEvents;
-
-    private static int getPort1(JSONObject opts) {
-        return opts.has(CONF_PORT_1) ? opts.getInt(CONF_PORT_1) : 6000;
-    }
-
-    private static int getPort2(JSONObject opts) {
-        return opts.has(CONF_PORT_2) ? opts.getInt(CONF_PORT_2) : 6001;
-    }
-
-    private static int getNumberOfEvents(JSONObject opts) {
-        return opts.has(CONF_NEVENT) ? opts.getInt(CONF_NEVENT) : Integer.MAX_VALUE;
-    }
-
-
+private VTPTwoStreamAggregatorDecoder vtp_ad;
     @Override
-    protected TwoStreamAggregator createReader(Path file, JSONObject opts) throws EventReaderException {
-        nEvents = getNumberOfEvents(opts);
+    protected VTPTwoStreamAggregatorDecoder createStreamSource(int port1, int port2, JSONObject opts) throws EventReaderException {
         try {
-            return new TwoStreamAggregator(getPort1(opts), getPort2(opts));
+            vtp_ad = new VTPTwoStreamAggregatorDecoder(port1, port2);;
+            return vtp_ad;
         } catch (Exception e) {
-            throw new EventReaderException(e);
+            throw new StreamSourceException(e);
         }
     }
 
     @Override
-    protected void closeReader() {
-      reader.close();
+    protected void closeStreamSource() {
+      vtp_ad.close();
     }
 
-    @Override
-    protected int readEventCount() throws EventReaderException {
-        return nEvents;
-    }
 
     @Override
     protected ByteOrder readByteOrder() throws EventReaderException {
@@ -58,14 +33,23 @@ public class Vtp2Source extends AbstractEventReaderService<TwoStreamAggregator> 
     }
 
     @Override
-    protected Object readEvent(int eventNumber) throws EventReaderException {
-        return null;
+    protected void streamStart() {
+        vtp_ad.go();
     }
+
 
     @Override
     protected EngineDataType getDataType() {
         return null;
     }
 
+    @Override
+    protected Object getStreamUnit() throws StreamSourceException {
+        try {
+            return vtp_ad.getDecodedEvent();
+        } catch (Exception e) {
+            throw new StreamSourceException(e);
+        }
+    }
 }
 

@@ -2,9 +2,11 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 
+import java.nio.ByteBuffer;
+
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
-public class TwoStreamAggregator {
+public class VTPTwoStreamAggregatorDecoder {
 
     /**
      * VTP ports
@@ -43,7 +45,7 @@ public class TwoStreamAggregator {
     private Aggregator aggregator12;
     private Consumer consumer;
 
-    public TwoStreamAggregator(int vtpPort1, int vtpPort2) {
+    public VTPTwoStreamAggregatorDecoder(int vtpPort1, int vtpPort2) {
         this.vtpPort1 = vtpPort1;
         this.vtpPort2 = vtpPort2;
 
@@ -88,6 +90,10 @@ public class TwoStreamAggregator {
 
     }
 
+    public ByteBuffer getDecodedEvent() throws Exception {
+        return consumer.getEvent();
+    }
+
     public void close(){
         receiver1.exit();
         receiver2.exit();
@@ -99,7 +105,7 @@ public class TwoStreamAggregator {
         int port1 = Integer.parseInt(args[0]);
         int port2 = Integer.parseInt(args[1]);
 
-        new TwoStreamAggregator(port1, port2).go();
+        new VTPTwoStreamAggregatorDecoder(port1, port2).go();
     }
 
 }
