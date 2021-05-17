@@ -53,7 +53,7 @@ public class Receiver extends Thread {
     /**
      * For statistics
      */
-    private int statLoop;
+    private int vtpPort;
     private int statPeriod;
     private double totalData;
     private int rate;
@@ -63,6 +63,7 @@ public class Receiver extends Thread {
     private byte[] header = new byte[52];
 
     public Receiver(int vtpPort, int streamId, RingBuffer<RingRawEvent> ringBuffer, int statPeriod) {
+        this.vtpPort = vtpPort;
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.statPeriod = statPeriod;
@@ -74,23 +75,6 @@ public class Receiver extends Thread {
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
         timer.schedule(new PrintRates(true), 0, statPeriod * 1000);
-
-        // Connecting to the VTP stream source
-        try {
-            serverSocket = new ServerSocket(vtpPort);
-            System.out.println("Server is listening on port " + vtpPort);
-            Socket socket = serverSocket.accept();
-            System.out.println("VTP client connected");
-            InputStream input = socket.getInputStream();
-//            dataInputStream = new DataInputStream(new BufferedInputStream(input));
-            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536)); //CT suggestion
-            dataInputStream.readInt();
-            dataInputStream.readInt();
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     /**
@@ -205,6 +189,22 @@ public class Receiver extends Thread {
     }
 
     public void run() {
+        // Connecting to the VTP stream source
+        try {
+            serverSocket = new ServerSocket(vtpPort);
+            System.out.println("Server is listening on port " + vtpPort);
+            Socket socket = serverSocket.accept();
+            System.out.println("VTP client connected");
+            InputStream input = socket.getInputStream();
+//            dataInputStream = new DataInputStream(new BufferedInputStream(input));
+            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536)); //CT suggestion
+            dataInputStream.readInt();
+            dataInputStream.readInt();
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+
         while (running.get()) {
             try {
                 // Get an empty item from ring

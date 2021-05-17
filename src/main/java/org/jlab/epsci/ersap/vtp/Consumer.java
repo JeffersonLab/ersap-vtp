@@ -111,8 +111,7 @@ public class Consumer extends Thread {
 
                 // Get an empty item from ring and parse the payload
                 RingRawEvent buf = get();
-                put();
-                /*
+
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
@@ -135,7 +134,7 @@ public class Consumer extends Thread {
                     put();
                 }
 
-                 */
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
