@@ -1,4 +1,4 @@
-package org.jlab.epsci.ersap.vtp.util.hitfinder;
+package org.jlab.epsci.ersap.util.hitfinder;
 
 import java.math.BigInteger;
 import java.util.Objects;

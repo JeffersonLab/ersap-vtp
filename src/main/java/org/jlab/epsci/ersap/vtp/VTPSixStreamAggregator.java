@@ -23,17 +23,17 @@ public class VTPSixStreamAggregator {
     /**
      * Ring buffers
      */
-    private RingBuffer<RingRawEvent> ringBuffer1;
-    private RingBuffer<RingRawEvent> ringBuffer2;
-    private RingBuffer<RingRawEvent> ringBuffer3;
-    private RingBuffer<RingRawEvent> ringBuffer4;
-    private RingBuffer<RingRawEvent> ringBuffer5;
-    private RingBuffer<RingRawEvent> ringBuffer6;
-    private RingBuffer<RingRawEvent> ringBuffer12;
-    private RingBuffer<RingRawEvent> ringBuffer34;
-    private RingBuffer<RingRawEvent> ringBuffer56;
-    private RingBuffer<RingRawEvent> ringBuffer1234;
-    private RingBuffer<RingRawEvent> ringBuffer123456;
+    private RingBuffer<VRingRawEvent> ringBuffer1;
+    private RingBuffer<VRingRawEvent> ringBuffer2;
+    private RingBuffer<VRingRawEvent> ringBuffer3;
+    private RingBuffer<VRingRawEvent> ringBuffer4;
+    private RingBuffer<VRingRawEvent> ringBuffer5;
+    private RingBuffer<VRingRawEvent> ringBuffer6;
+    private RingBuffer<VRingRawEvent> ringBuffer12;
+    private RingBuffer<VRingRawEvent> ringBuffer34;
+    private RingBuffer<VRingRawEvent> ringBuffer56;
+    private RingBuffer<VRingRawEvent> ringBuffer1234;
+    private RingBuffer<VRingRawEvent> ringBuffer123456;
 
     /**
      * Sequences
@@ -79,67 +79,67 @@ public class VTPSixStreamAggregator {
 
         this.runNumber = runNumber;
 
-        ringBuffer1 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer1 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
-        ringBuffer2 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer2 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
-        ringBuffer3 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer3 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence3 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier3 = ringBuffer3.newBarrier();
         ringBuffer3.addGatingSequences(sequence3);
 
-        ringBuffer4 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer4 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence4 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier4 = ringBuffer4.newBarrier();
         ringBuffer4.addGatingSequences(sequence4);
 
-        ringBuffer5 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer5 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence5 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier5 = ringBuffer5.newBarrier();
         ringBuffer5.addGatingSequences(sequence5);
 
-        ringBuffer6 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer6 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence6 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier6 = ringBuffer6.newBarrier();
         ringBuffer6.addGatingSequences(sequence6);
 
-        ringBuffer12 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer12 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
         ringBuffer12.addGatingSequences(sequence12);
 
-        ringBuffer34 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer34 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence34 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier34 = ringBuffer34.newBarrier();
         ringBuffer34.addGatingSequences(sequence34);
 
-        ringBuffer56 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer56 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence56 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier56 = ringBuffer56.newBarrier();
         ringBuffer56.addGatingSequences(sequence56);
 
-        ringBuffer1234 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer1234 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence1234 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1234 = ringBuffer1234.newBarrier();
         ringBuffer1234.addGatingSequences(sequence1234);
 
-        ringBuffer123456 = createSingleProducer(new RingRawEventFactory(), maxRingItems,
+        ringBuffer123456 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
                 new LiteBlockingWaitStrategy());
         sequence123456 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier123456 = ringBuffer123456.newBarrier();
@@ -148,29 +148,29 @@ public class VTPSixStreamAggregator {
     }
 
     private void go() {
-        Receiver receiver1 = new Receiver(vtpPort1, 1, ringBuffer1, 10);
-        Receiver receiver2 = new Receiver(vtpPort2, 2, ringBuffer2, 10);
-        Receiver receiver3 = new Receiver(vtpPort3, 3, ringBuffer3, 10);
-        Receiver receiver4 = new Receiver(vtpPort4, 4, ringBuffer4, 10);
-        Receiver receiver5 = new Receiver(vtpPort5, 5, ringBuffer5, 10);
-        Receiver receiver6 = new Receiver(vtpPort6, 6, ringBuffer6, 10);
+        VReceiver receiver1 = new VReceiver(vtpPort1, 1, ringBuffer1, 10);
+        VReceiver receiver2 = new VReceiver(vtpPort2, 2, ringBuffer2, 10);
+        VReceiver receiver3 = new VReceiver(vtpPort3, 3, ringBuffer3, 10);
+        VReceiver receiver4 = new VReceiver(vtpPort4, 4, ringBuffer4, 10);
+        VReceiver receiver5 = new VReceiver(vtpPort5, 5, ringBuffer5, 10);
+        VReceiver receiver6 = new VReceiver(vtpPort6, 6, ringBuffer6, 10);
 
-        Aggregator aggregator12 = new Aggregator(ringBuffer1, ringBuffer2, sequence1,
+        VAggregator aggregator12 = new VAggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
 
-        Aggregator aggregator34 = new Aggregator(ringBuffer3, ringBuffer4, sequence3,
+        VAggregator aggregator34 = new VAggregator(ringBuffer3, ringBuffer4, sequence3,
                 sequence4, sequenceBarrier3, sequenceBarrier4, ringBuffer34);
 
-        Aggregator aggregator56 = new Aggregator(ringBuffer5, ringBuffer6, sequence5,
+        VAggregator aggregator56 = new VAggregator(ringBuffer5, ringBuffer6, sequence5,
                 sequence6, sequenceBarrier5, sequenceBarrier6, ringBuffer56);
 
-        Aggregator aggregator1234 = new Aggregator(ringBuffer12, ringBuffer34, sequence12,
+        VAggregator aggregator1234 = new VAggregator(ringBuffer12, ringBuffer34, sequence12,
                 sequence34, sequenceBarrier12, sequenceBarrier34, ringBuffer1234);
 
-        Aggregator aggregator123456 = new Aggregator(ringBuffer1234, ringBuffer56, sequence1234,
+        VAggregator aggregator123456 = new VAggregator(ringBuffer1234, ringBuffer56, sequence1234,
                 sequence56, sequenceBarrier1234, sequenceBarrier56, ringBuffer123456);
 
-        Consumer consumer = new Consumer(ringBuffer123456, sequence123456, sequenceBarrier123456, runNumber);
+        VConsumer consumer = new VConsumer(ringBuffer123456, sequence123456, sequenceBarrier123456, runNumber);
 
         receiver1.start();
         receiver2.start();

@@ -3,7 +3,7 @@ package org.jlab.epsci.ersap.vtp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdcHitMapEvent {
+public class VAdcHitMapEvent {
 
     private List<Long> time;
     private List<Integer> crate;
@@ -11,7 +11,7 @@ public class AdcHitMapEvent {
     private List<Integer> channel;
     private List<Integer> charge;
 
-    public AdcHitMapEvent() {
+    public VAdcHitMapEvent() {
         time = new ArrayList<>();
         crate = new ArrayList<>();
         slot = new ArrayList<>();

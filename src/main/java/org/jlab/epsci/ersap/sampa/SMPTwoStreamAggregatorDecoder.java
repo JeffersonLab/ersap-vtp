@@ -1,18 +1,18 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.sampa;
 
 import com.lmax.disruptor.*;
+import org.jlab.epsci.ersap.vtp.VAggregator;
 
 import java.nio.ByteBuffer;
 
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
-public class VTPTwoStreamAggregatorDecoder {
-
+public class SMPTwoStreamAggregatorDecoder {
     /**
-     * VTP ports
+     * SAMPA ports
      */
-    private int vtpPort1;
-    private int vtpPort2;
+    private int sampaPort1;
+    private int sampaPort2;
 
     /**
      * Max ring items
@@ -22,9 +22,9 @@ public class VTPTwoStreamAggregatorDecoder {
     /**
      * Ring buffers
      */
-    private RingBuffer<VRingRawEvent> ringBuffer1;
-    private RingBuffer<VRingRawEvent> ringBuffer2;
-    private RingBuffer<VRingRawEvent> ringBuffer12;
+    private RingBuffer<SRingRawEvent> ringBuffer1;
+    private RingBuffer<SRingRawEvent> ringBuffer2;
+    private RingBuffer<SRingRawEvent> ringBuffer12;
 
     /**
      * Sequences
@@ -40,31 +40,27 @@ public class VTPTwoStreamAggregatorDecoder {
     private SequenceBarrier sequenceBarrier2;
     private SequenceBarrier sequenceBarrier12;
 
-    private VReceiver receiver1;
-    private VReceiver receiver2;
-    private VAggregator aggregator12;
-    private VConsumer consumer;
+    private SReceiver receiver1;
+    private SReceiver receiver2;
+    private SAggregator aggregator12;
 
-    public VTPTwoStreamAggregatorDecoder(int vtpPort1, int vtpPort2) {
-        this.vtpPort1 = vtpPort1;
-        this.vtpPort2 = vtpPort2;
+    public SMPTwoStreamAggregatorDecoder(int sampaPort1, int sampaPort2) {
+        this.sampaPort1 = sampaPort1;
+        this.sampaPort2 = sampaPort2;
 
-        ringBuffer1 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
-//                new LiteBlockingWaitStrategy());
+        ringBuffer1 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
                 new YieldingWaitStrategy());
-//                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
-        ringBuffer2 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
+        ringBuffer2 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
                 new YieldingWaitStrategy());
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
-
-        ringBuffer12 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
+        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
                 new YieldingWaitStrategy());
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
@@ -73,39 +69,28 @@ public class VTPTwoStreamAggregatorDecoder {
     }
 
     public void go() {
-        receiver1 = new VReceiver(vtpPort1, 1, ringBuffer1, 10);
-        receiver2 = new VReceiver(vtpPort2, 2, ringBuffer2, 10);
+        receiver1 = new SReceiver(sampaPort1, 1, ringBuffer1, 10);
+        receiver2 = new SReceiver(sampaPort2, 2, ringBuffer2, 10);
 
-        aggregator12 = new VAggregator(ringBuffer1, ringBuffer2, sequence1,
+        aggregator12 = new SAggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
-
-        int runNumber = 0;
-        consumer = new VConsumer(ringBuffer12, sequence12, sequenceBarrier12, runNumber);
 
         receiver1.start();
         receiver2.start();
 
         aggregator12.start();
-        consumer.start();
-
     }
 
-    public ByteBuffer getDecodedEvent() throws Exception {
-        return consumer.getEvent();
-    }
-
-    public void close(){
+    public void close() {
         receiver1.exit();
         receiver2.exit();
         aggregator12.exit();
-        consumer.exit();
     }
 
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
         int port2 = Integer.parseInt(args[1]);
 
-        new VTPTwoStreamAggregatorDecoder(port1, port2).go();
+        new SMPTwoStreamAggregatorDecoder(port1, port2).go();
     }
-
 }

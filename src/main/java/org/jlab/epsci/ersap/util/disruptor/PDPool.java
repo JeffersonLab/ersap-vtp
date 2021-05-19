@@ -1,12 +1,12 @@
-package org.jlab.epsci.ersap.vtp.util.disruptor;
+package org.jlab.epsci.ersap.util.disruptor;
 
 import com.lmax.disruptor.*;
-import org.jlab.epsci.ersap.vtp.PayloadDecoder;
+import org.jlab.epsci.ersap.vtp.VPayloadDecoder;
 
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
 public class PDPool {
-    private final RingBuffer<PayloadDecoder> ringBuffer;
+    private final RingBuffer<VPayloadDecoder> ringBuffer;
     private final Sequence sequence;
     private final SequenceBarrier sequenceBarrier;
     private long nextSequence;
@@ -21,7 +21,7 @@ public class PDPool {
      * @param factory instance of a processor class
      * @param depth      number of objects in the pool
      */
-    public PDPool(EventFactory<PayloadDecoder> factory, int depth) {
+    public PDPool(EventFactory<VPayloadDecoder> factory, int depth) {
         ringBuffer = createSingleProducer(factory, depth,
                 new YieldingWaitStrategy());
         sequence = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -39,9 +39,9 @@ public class PDPool {
      * @return next available object in ring buffer.
      * @throws InterruptedException exception
      */
-    public PayloadDecoder get() throws InterruptedException {
+    public VPayloadDecoder get() throws InterruptedException {
 
-        PayloadDecoder item = null;
+        VPayloadDecoder item = null;
 
         try {
             if (availableSequence < nextSequence) {

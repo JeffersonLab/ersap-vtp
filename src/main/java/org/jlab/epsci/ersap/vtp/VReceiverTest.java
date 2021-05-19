@@ -1,6 +1,6 @@
 package org.jlab.epsci.ersap.vtp;
 
-import org.jlab.epsci.ersap.vtp.util.EUtil;
+import org.jlab.epsci.ersap.util.EUtil;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
@@ -12,10 +12,10 @@ import java.net.Socket;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static org.jlab.epsci.ersap.vtp.util.EUtil.decodePayload;
-import static org.jlab.epsci.ersap.vtp.util.EUtil.printFrame;
+import static org.jlab.epsci.ersap.util.EUtil.decodePayload;
+import static org.jlab.epsci.ersap.util.EUtil.printFrame;
 
-public class ReceiverTest {
+public class VReceiverTest {
     /**
      * VTP data stream
      */
@@ -37,7 +37,7 @@ public class ReceiverTest {
     private long prev_rec_number;
 
 
-    public ReceiverTest(int vtpPort, int streamId,  int statPeriod) {
+    public VReceiverTest(int vtpPort, int streamId, int statPeriod) {
         this.streamId = streamId;
         this.statPeriod = statPeriod;
 
@@ -99,7 +99,7 @@ public class ReceiverTest {
 
     public static void main(String[] args) {
         int port = Integer.parseInt(args[0]);
-        ReceiverTest rt = new ReceiverTest(port, 1, 10);
+        VReceiverTest rt = new VReceiverTest(port, 1, 10);
         while (true) {
             rt.decodeVtpHeader();
         }

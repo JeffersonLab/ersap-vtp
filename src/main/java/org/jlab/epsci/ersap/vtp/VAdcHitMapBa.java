@@ -2,12 +2,12 @@ package org.jlab.epsci.ersap.vtp;
 
 import java.nio.ByteBuffer;
 
-import static org.jlab.epsci.ersap.vtp.util.EUtil.cloneByteBuffer;
+import static org.jlab.epsci.ersap.util.EUtil.cloneByteBuffer;
 
-public class AdcHitMapBa {
+public class VAdcHitMapBa {
     private ByteBuffer evt;
 
-    public AdcHitMapBa(int size) {
+    public VAdcHitMapBa(int size) {
         evt = ByteBuffer.allocate(size);
     }
 

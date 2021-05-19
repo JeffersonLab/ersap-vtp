@@ -1,11 +1,10 @@
-package org.jlab.epsci.ersap.vtp;
+package org.jlab.epsci.ersap.sampa;
 
 import com.lmax.disruptor.*;
-import org.jlab.epsci.ersap.vtp.util.EUtil;
+import org.jlab.epsci.ersap.util.EUtil;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 
 /**
  * __
@@ -17,13 +16,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * \  /
  * --
  */
-public class Aggregator extends Thread {
-
+public class SAggregator extends Thread {
     /**
      * Maps for aggregation
      */
-    private final HashMap<Long, byte[]> m1 = new HashMap<>();
-    private final HashMap<Long, byte[]> m2 = new HashMap<>();
+    private final HashMap<Integer, byte[]> m1 = new HashMap<>();
+    private final HashMap<Integer, byte[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
@@ -34,8 +32,8 @@ public class Aggregator extends Thread {
     /**
      * 1 RingBuffer per stream.
      */
-    private RingBuffer<RingRawEvent> ringBuffer1;
-    private RingBuffer<RingRawEvent> ringBuffer2;
+    private RingBuffer<SRingRawEvent> ringBuffer1;
+    private RingBuffer<SRingRawEvent> ringBuffer2;
 
     /**
      * 1 sequence per stream
@@ -64,17 +62,15 @@ public class Aggregator extends Thread {
     /**
      * 1 output RingBuffer.
      */
-    private RingBuffer<RingRawEvent> outputRingBuffer;
+    private RingBuffer<SRingRawEvent> outputRingBuffer;
 
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
 
-
-    public Aggregator(RingBuffer<RingRawEvent> ringBuffer1, RingBuffer<RingRawEvent> ringBuffer2,
-                      Sequence sequence1, Sequence sequence2,
-                      SequenceBarrier barrier1, SequenceBarrier barrier2,
-                      RingBuffer<RingRawEvent> outputRingBuffer
-    ) {
+    public SAggregator(RingBuffer<SRingRawEvent> ringBuffer1, RingBuffer<SRingRawEvent> ringBuffer2,
+                       Sequence sequence1, Sequence sequence2,
+                       SequenceBarrier barrier1, SequenceBarrier barrier2,
+                       RingBuffer<SRingRawEvent> outputRingBuffer) {
 
         this.ringBuffer1 = ringBuffer1;
         this.ringBuffer2 = ringBuffer2;
@@ -84,9 +80,6 @@ public class Aggregator extends Thread {
         this.barrier2 = barrier2;
         this.outputRingBuffer = outputRingBuffer;
 
-//        ringBuffer1->addGatingSequences(sequence1);
-//        ringBuffer2->addGatingSequences(sequence2);
-
         nextSequence1 = sequence1.get() + 1L;
         nextSequence2 = sequence2.get() + 1L;
 
@@ -94,90 +87,35 @@ public class Aggregator extends Thread {
         availableSequence2 = -1L;
     }
 
-
     public void get() throws InterruptedException {
 
         try {
             if (availableSequence1 < nextSequence1) {
                 availableSequence1 = barrier1.waitFor(nextSequence1);
             }
-            RingRawEvent inputItem1 = ringBuffer1.get(nextSequence1);
+            SRingRawEvent inputItem1 = ringBuffer1.get(nextSequence1);
 
             if (availableSequence2 < nextSequence2) {
                 availableSequence2 = barrier2.waitFor(nextSequence2);
             }
-            RingRawEvent inputItem2 = ringBuffer2.get(nextSequence2);
+            SRingRawEvent inputItem2 = ringBuffer2.get(nextSequence2);
 
-            long b1 = inputItem1.getRecordNumber();
-            long b2 = inputItem2.getRecordNumber();
+            int b1 = inputItem1.getWindowTime();
+            int b2 = inputItem2.getWindowTime();
 
             int l1 = inputItem1.getPayloadDataLength();
             int l2 = inputItem2.getPayloadDataLength();
-            /*
-            // ...........................................//
-            // we are lucky we found a match
-            if (b1 == b2) {
-                // get the next available sequence on the output ring
-                outSequence = outputRingBuffer.next();
 
-                // get the the event at that sequence
-                RingEvent outputItem = outputRingBuffer.get(outSequence);
-                // clear the bytebuffer of that event
-                outputItem.getPayloadBuffer().clear();
-
-                // see if the byte[] is big enough to hold the aggregated payload
-                if (outputItem.getPayload().length < (l1 + l2) ){
-                    byte [] aggregate = new byte[l1 + l2];
-                    outputItem.setPayload(aggregate);
-                }
-                // set the payload length of the output event
-                outputItem.setPayloadDataLength(l1 + l2);
-                // aggregate payload and set the payload [] in the output event
-                // now the output event byteBuffer will wrap the payload[]
-                EUtil.addByteArrays(inputItem1.getPayload(), l1, inputItem2.getPayload(), l2, outputItem.getPayload());
-                // sat the matching record number. does not matter b1 or b2
-                outputItem.setRecordNumber(b1);
-
-            } else if (b1 > b2) {
-                // read the next in the second ring until b2 >= b1
-                // XXX
-                if (b1 == b2) {
-                    // we found the match
-                } else if (b1 < b2) {
-                    // b2 frame was dropped at the FPGA
-                    // read the next in the first ring until b1 >= b2
-                    if( b1 == b2) {
-                        // we found the match
-                    } else if (b1 > b2) {
-                        //got to XXX
-                    }
-                }
-
-            } else if (b2 > b1){
-               // read the next in the first ring until b1 >= b2
-               /// YYY
-               if (b2 == b1) {
-                   // we found the match
-               } else if (b2 < b1) {
-                   // b1 frame was dropped at the FPGA
-                   // read the next in the second ring until b2 >= b1
-                   if(b2 ==b1) {
-                       // we found the match
-                   } else if (b2 > b1) {
-                       // go to YYY
-                   }
-               }
-            }
-            // ...........................................//
-*/
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
 
-            long aggRecNum = -1;
-
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 outSequence = outputRingBuffer.next();
-                RingRawEvent outputItem = outputRingBuffer.get(outSequence);
+                SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
+                // here we set the length for two aggregated streams
+                outputItem.setPartLength1(l1);
+                outputItem.setPartLength2(l2);
+
                 outputItem.getPayloadBuffer().clear();
 
                 if (outputItem.getPayload().length < (l1 + l2)) {
@@ -187,7 +125,7 @@ public class Aggregator extends Thread {
                 }
 
                 EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
-                outputItem.setRecordNumber(b1);
+                outputItem.setWindowTime(b1);
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b1);
                 m2.remove(b1);
@@ -196,8 +134,7 @@ public class Aggregator extends Thread {
             if (m1.containsKey(b2) && m2.containsKey(b2)) {
 
                 outSequence = outputRingBuffer.next();
-                RingRawEvent outputItem = outputRingBuffer.get(outSequence);
-
+                SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
                 // here we set the length for two aggregated streams
                 outputItem.setPartLength1(l1);
                 outputItem.setPartLength2(l2);
@@ -211,7 +148,7 @@ public class Aggregator extends Thread {
                 }
 
                 EUtil.addByteArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
-                outputItem.setRecordNumber(b2);
+                outputItem.setWindowTime(b2);
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b2);
                 m2.remove(b2);
@@ -219,8 +156,8 @@ public class Aggregator extends Thread {
         } catch (final TimeoutException | AlertException ex) {
             ex.printStackTrace();
         }
-    }
 
+    }
 
     /**
      * This "consumer" is also a producer for the output ring.
@@ -246,7 +183,7 @@ public class Aggregator extends Thread {
         }
     }
 
-    public void exit(){
+    public void exit() {
         running.set(false);
         this.interrupt();
     }

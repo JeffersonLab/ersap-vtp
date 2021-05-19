@@ -1,6 +1,6 @@
-package org.jlab.epsci.ersap.vtp.util.hitfinder;
+package org.jlab.epsci.ersap.util.hitfinder;
 
-import org.jlab.epsci.ersap.vtp.util.EUtil;
+import org.jlab.epsci.ersap.util.EUtil;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

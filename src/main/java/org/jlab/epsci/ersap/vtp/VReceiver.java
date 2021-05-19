@@ -1,7 +1,7 @@
 package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
-import org.jlab.epsci.ersap.vtp.util.EUtil;
+import org.jlab.epsci.ersap.util.EUtil;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * |   | ---> \  /
  * ---        --
  */
-public class Receiver extends Thread {
+public class VReceiver extends Thread {
 
 
     /**
@@ -36,7 +36,7 @@ public class Receiver extends Thread {
     /**
      * Output ring
      */
-    private RingBuffer<RingRawEvent> ringBuffer;
+    private RingBuffer<VRingRawEvent> ringBuffer;
 
     /**
      * Current spot in the ring from which an item was claimed.
@@ -62,7 +62,7 @@ public class Receiver extends Thread {
     private ByteBuffer headerBuffer;
     private byte[] header = new byte[52];
 
-    public Receiver(int vtpPort, int streamId, RingBuffer<RingRawEvent> ringBuffer, int statPeriod) {
+    public VReceiver(int vtpPort, int streamId, RingBuffer<VRingRawEvent> ringBuffer, int statPeriod) {
         this.vtpPort = vtpPort;
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
@@ -83,10 +83,10 @@ public class Receiver extends Thread {
      * @return next available item in ring buffer.
      * @throws InterruptedException if thread interrupted.
      */
-    private RingRawEvent get() throws InterruptedException {
+    private VRingRawEvent get() throws InterruptedException {
 
         sequenceNumber = ringBuffer.next();
-        RingRawEvent buf = ringBuffer.get(sequenceNumber);
+        VRingRawEvent buf = ringBuffer.get(sequenceNumber);
         return buf;
     }
 
@@ -138,7 +138,7 @@ public class Receiver extends Thread {
         }
     }
 
-    private void decodeVtpHeaderCT(RingRawEvent evt) {
+    private void decodeVtpHeaderCT(VRingRawEvent evt) {
         try {
             headerBuffer.clear();
             dataInputStream.readFully(header);
@@ -208,7 +208,7 @@ public class Receiver extends Thread {
         while (running.get()) {
             try {
                 // Get an empty item from ring
-                RingRawEvent buf = get();
+                VRingRawEvent buf = get();
 
 //                decodeVtpHeader();
                 decodeVtpHeaderCT(buf); //CT suggestion

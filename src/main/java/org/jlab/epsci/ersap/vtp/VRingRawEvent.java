@@ -6,7 +6,7 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RingRawEvent {
+public class VRingRawEvent {
     private int streamId;
 //    private BigInteger recordNumber;
     private long recordNumber;
@@ -16,7 +16,7 @@ public class RingRawEvent {
     private int partLength1;
     private int partLength2;
 
-    public RingRawEvent() {
+    public VRingRawEvent() {
         payload = new byte[100000];
         payloadBuffer = ByteBuffer.wrap(payload);
         payloadBuffer.order(ByteOrder.LITTLE_ENDIAN);

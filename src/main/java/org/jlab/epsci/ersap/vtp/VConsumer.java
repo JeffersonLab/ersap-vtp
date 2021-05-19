@@ -2,18 +2,18 @@ package org.jlab.epsci.ersap.vtp;
 
 import com.lmax.disruptor.*;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderFactory;
-import org.jlab.epsci.ersap.vtp.util.commons.PayloadDecoderPool;
+import org.jlab.epsci.ersap.util.commons.PayloadDecoderFactory;
+import org.jlab.epsci.ersap.util.commons.PayloadDecoderPool;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.jlab.epsci.ersap.vtp.util.EUtil.*;
+import static org.jlab.epsci.ersap.util.EUtil.*;
 
-public class Consumer extends Thread {
-    private RingBuffer<RingRawEvent> ringBuffer;
+public class VConsumer extends Thread {
+    private RingBuffer<VRingRawEvent> ringBuffer;
     private Sequence sequence;
     private SequenceBarrier barrier;
     private long nextSequence;
@@ -34,10 +34,10 @@ public class Consumer extends Thread {
      * @param barrier
      * @param runNumber
      */
-    public Consumer(RingBuffer<RingRawEvent> ringBuffer,
-                    Sequence sequence,
-                    SequenceBarrier barrier,
-                    int runNumber) {
+    public VConsumer(RingBuffer<VRingRawEvent> ringBuffer,
+                     Sequence sequence,
+                     SequenceBarrier barrier,
+                     int runNumber) {
 
         this.ringBuffer = ringBuffer;
         this.sequence = sequence;
@@ -59,9 +59,9 @@ public class Consumer extends Thread {
      * @return next available item in ring buffer.
      * @throws InterruptedException
      */
-    public RingRawEvent get() throws InterruptedException {
+    public VRingRawEvent get() throws InterruptedException {
 
-        RingRawEvent item = null;
+        VRingRawEvent item = null;
 
         try {
             if (availableSequence < nextSequence) {
@@ -110,7 +110,7 @@ public class Consumer extends Thread {
             try {
 
                 // Get an empty item from ring and parse the payload
-                RingRawEvent buf = get();
+                VRingRawEvent buf = get();
 
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
@@ -121,7 +121,7 @@ public class Consumer extends Thread {
                     // using object pool
                     Runnable r = () -> {
                         try {
-                            PayloadDecoder pd = pool.borrowObject();
+                            VPayloadDecoder pd = pool.borrowObject();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
                             pool.returnObject(pd);
                         } catch (Exception e) {
@@ -143,7 +143,7 @@ public class Consumer extends Thread {
 
     public ByteBuffer getEvent() throws Exception {
         ByteBuffer out;
-        PayloadDecoder pd = pool.borrowObject();
+        VPayloadDecoder pd = pool.borrowObject();
         out = pd.getEvt();
         pool.returnObject(pd);
         return out;

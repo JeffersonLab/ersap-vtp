@@ -4,12 +4,12 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PayloadDecoder {
-    private final AdcHitMapBa evt;
+public class VPayloadDecoder {
+    private final VAdcHitMapBa evt;
     private final List<Integer> pData;
 
-    public PayloadDecoder(){
-        evt = new AdcHitMapBa(2000000);
+    public VPayloadDecoder(){
+        evt = new VAdcHitMapBa(2000000);
         pData = new ArrayList<>();
     }
 
