@@ -72,7 +72,7 @@ public class SReceiver extends Thread {
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
-        timer.schedule(new PrintRates(true), 0, statPeriod * 1000);
+        timer.schedule(new PrintRates(false), 0, statPeriod * 1000);
     }
 
     /**
