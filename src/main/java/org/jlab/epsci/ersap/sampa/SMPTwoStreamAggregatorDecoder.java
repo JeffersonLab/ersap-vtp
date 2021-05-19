@@ -1,7 +1,6 @@
 package org.jlab.epsci.ersap.sampa;
 
 import com.lmax.disruptor.*;
-import org.jlab.epsci.ersap.vtp.VAggregator;
 
 import java.nio.ByteBuffer;
 
@@ -60,11 +59,11 @@ public class SMPTwoStreamAggregatorDecoder {
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
-        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
-                new YieldingWaitStrategy());
-        sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
-        sequenceBarrier12 = ringBuffer12.newBarrier();
-        ringBuffer12.addGatingSequences(sequence12);
+//        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
+//                new YieldingWaitStrategy());
+//        sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
+//        sequenceBarrier12 = ringBuffer12.newBarrier();
+//        ringBuffer12.addGatingSequences(sequence12);
 
     }
 
@@ -78,7 +77,7 @@ public class SMPTwoStreamAggregatorDecoder {
         receiver1.start();
         receiver2.start();
 
-        aggregator12.start();
+//        aggregator12.start();
     }
 
     public void close() {
