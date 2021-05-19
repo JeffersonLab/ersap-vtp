@@ -119,11 +119,11 @@ public class SReceiver extends Thread {
                         " channel = " + channelAddress +
                         " startTime = " + windowTime +
                         " dataWords = " + numberDataWords);
-//            try {
-//                this.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                this.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             evt.setPayloadDataLength(payload_length);
             evt.setChipAddress(chipAddress);
