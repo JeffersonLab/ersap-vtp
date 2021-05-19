@@ -1,5 +1,5 @@
 # ersap-vtp
-JLAB VTP stream handler package.
+JLAB VTP and SAMPA stream handler package.
 
 ### Java Binding
 #### Build notes
