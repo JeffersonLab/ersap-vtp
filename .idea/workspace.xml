@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SMPTwoStreamAggregatorDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SMPTwoStreamAggregatorDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SReceiver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +186,14 @@
       <option name="project" value="LOCAL" />
       <updated>1621454975312</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="- debugging ... &#10;- do not write statistics into the file.">
+      <created>1621455123960</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1621455123960</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -197,6 +206,7 @@
     <MESSAGE value="- readme update" />
     <MESSAGE value="- ersap_smp executable" />
     <MESSAGE value="- debugging ..." />
-    <option name="LAST_COMMIT_MESSAGE" value="- debugging ..." />
+    <MESSAGE value="- debugging ... &#10;- do not write statistics into the file." />
+    <option name="LAST_COMMIT_MESSAGE" value="- debugging ... &#10;- do not write statistics into the file." />
   </component>
 </project>

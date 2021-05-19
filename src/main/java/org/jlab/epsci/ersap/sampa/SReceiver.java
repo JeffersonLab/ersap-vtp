@@ -84,14 +84,12 @@ public class SReceiver extends Thread {
     private SRingRawEvent get() throws InterruptedException {
 
         sequenceNumber = ringBuffer.next();
-        SRingRawEvent buf = ringBuffer.get(sequenceNumber);
-        return buf;
+        return ringBuffer.get(sequenceNumber);
     }
 
     private void publish() {
         ringBuffer.publish(sequenceNumber);
     }
-
 
     private void decodeSAMPAHeader(SRingRawEvent evt) {
         try {
@@ -101,12 +99,12 @@ public class SReceiver extends Thread {
             // Header word 1
             int h1  = headerBuffer.getInt();
             int chipAddress =  h1 & 0x0000000f;
-            int channelAddress =  (h1 & 0x000000f0) >>> 4;
-            int windowTime = (h1 >>> 16) & 0x00001fff;
+            int channelAddress =  (h1 & 0x000001f0) >>> 4;
+            int windowTime = (h1 >>> 9) & 0x000fffff;
 
             // Header word 2
             int h2 = headerBuffer.getInt();
-            int numberDataWords = (h2 & 0x0000FFFC) >>> 2;
+            int numberDataWords = (h2 >>> 3) & 0x000003ff;
             int payload_length = numberDataWords * 4;
 
             if (evt.getPayload().length < payload_length) {
@@ -116,13 +114,16 @@ public class SReceiver extends Thread {
             dataInputStream.readFully(evt.getPayload(), 0, payload_length);
 
            // Debug printout
-            synchronized (System.out) {
                 System.out.println("DDD: streamId = "+ streamId +
                         " chip = " + chipAddress +
                         " channel = " + channelAddress +
                         " startTime = " + windowTime +
                         " dataWords = " + numberDataWords);
-            }
+//            try {
+//                this.sleep(100);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             evt.setPayloadDataLength(payload_length);
             evt.setChipAddress(chipAddress);
@@ -131,8 +132,7 @@ public class SReceiver extends Thread {
 
             int record_number = 0;
             // Collect statistics
-            long tmp = missed_record + (record_number - (prev_rec_number + 1));
-            missed_record = tmp;
+            missed_record = missed_record + (record_number - (prev_rec_number + 1));
 
             prev_rec_number = record_number;
             totalData = totalData + (double) payload_length / 1000.0;

@@ -10,8 +10,8 @@ public class SMPTwoStreamAggregatorDecoder {
     /**
      * SAMPA ports
      */
-    private int sampaPort1;
-    private int sampaPort2;
+    private final int sampaPort1;
+    private final int sampaPort2;
 
     /**
      * Max ring items
@@ -21,23 +21,23 @@ public class SMPTwoStreamAggregatorDecoder {
     /**
      * Ring buffers
      */
-    private RingBuffer<SRingRawEvent> ringBuffer1;
-    private RingBuffer<SRingRawEvent> ringBuffer2;
-    private RingBuffer<SRingRawEvent> ringBuffer12;
+    private final RingBuffer<SRingRawEvent> ringBuffer1;
+    private final RingBuffer<SRingRawEvent> ringBuffer2;
+    private final RingBuffer<SRingRawEvent> ringBuffer12;
 
     /**
      * Sequences
      */
-    private Sequence sequence1;
-    private Sequence sequence2;
-    private Sequence sequence12;
+    private final Sequence sequence1;
+    private final Sequence sequence2;
+    private final Sequence sequence12;
 
     /**
      * Sequence barriers
      */
-    private SequenceBarrier sequenceBarrier1;
-    private SequenceBarrier sequenceBarrier2;
-    private SequenceBarrier sequenceBarrier12;
+    private final SequenceBarrier sequenceBarrier1;
+    private final SequenceBarrier sequenceBarrier2;
+    private final SequenceBarrier sequenceBarrier12;
 
     private SReceiver receiver1;
     private SReceiver receiver2;
@@ -59,11 +59,11 @@ public class SMPTwoStreamAggregatorDecoder {
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
-//        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
-//                new YieldingWaitStrategy());
-//        sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
-//        sequenceBarrier12 = ringBuffer12.newBarrier();
-//        ringBuffer12.addGatingSequences(sequence12);
+        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
+                new YieldingWaitStrategy());
+        sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
+        sequenceBarrier12 = ringBuffer12.newBarrier();
+        ringBuffer12.addGatingSequences(sequence12);
 
     }
 
@@ -77,7 +77,7 @@ public class SMPTwoStreamAggregatorDecoder {
         receiver1.start();
         receiver2.start();
 
-//        aggregator12.start();
+        aggregator12.start();
     }
 
     public void close() {
