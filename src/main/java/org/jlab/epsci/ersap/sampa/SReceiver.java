@@ -225,6 +225,7 @@ public class SReceiver extends Thread {
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
+            if (packetNumber > 100) System.exit(1);
         }
     }
 
