@@ -149,10 +149,10 @@ public class SReceiver extends Thread {
             headerBuffer.clear();
             dataInputStream.readFully(header);
 
-            System.out.println(Integer.toHexString(headerBuffer.getInt()));
-            System.out.println(Integer.toHexString(headerBuffer.getInt()));
-            System.out.println(Integer.toHexString(headerBuffer.getInt()));
-            System.out.println(Integer.toHexString(headerBuffer.getInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
 
             System.exit(1);
 
