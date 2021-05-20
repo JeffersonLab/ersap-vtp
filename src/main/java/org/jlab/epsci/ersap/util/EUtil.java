@@ -197,6 +197,11 @@ public class EUtil {
         System.arraycopy(b, 0, c, aLength, bLength);
     }
 
+    public static void addIntArrays(int[] a, int aLength, int[] b, int bLength, int[] c) {
+        System.arraycopy(a, 0, c, 0, aLength);
+        System.arraycopy(b, 0, c, aLength, bLength);
+    }
+
     public static byte[] object2ByteArray(Object o) throws IOException {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bos);

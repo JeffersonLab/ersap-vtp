@@ -20,32 +20,31 @@ public class SAggregator extends Thread {
     /**
      * Maps for aggregation
      */
-    private final HashMap<Integer, byte[]> m1 = new HashMap<>();
-    private final HashMap<Integer, byte[]> m2 = new HashMap<>();
+    private final HashMap<Integer, int[]> m1 = new HashMap<>();
+    private final HashMap<Integer, int[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
      */
     private long outSequence;
 
-
     /**
      * 1 RingBuffer per stream.
      */
-    private RingBuffer<SRingRawEvent> ringBuffer1;
-    private RingBuffer<SRingRawEvent> ringBuffer2;
+    private final RingBuffer<SRingRawEvent> ringBuffer1;
+    private final RingBuffer<SRingRawEvent> ringBuffer2;
 
     /**
      * 1 sequence per stream
      */
-    private Sequence sequence1;
-    private Sequence sequence2;
+    private final Sequence sequence1;
+    private final Sequence sequence2;
 
     /**
      * 1 barrier per stream
      */
-    private SequenceBarrier barrier1;
-    private SequenceBarrier barrier2;
+    private final SequenceBarrier barrier1;
+    private final SequenceBarrier barrier2;
 
     /**
      * Track which sequence the aggregating consumer wants next from each of the crate rings.
@@ -62,10 +61,10 @@ public class SAggregator extends Thread {
     /**
      * 1 output RingBuffer.
      */
-    private RingBuffer<SRingRawEvent> outputRingBuffer;
+    private final RingBuffer<SRingRawEvent> outputRingBuffer;
 
     // control for the thread termination
-    private AtomicBoolean running = new AtomicBoolean(true);
+    private final AtomicBoolean running = new AtomicBoolean(true);
 
     public SAggregator(RingBuffer<SRingRawEvent> ringBuffer1, RingBuffer<SRingRawEvent> ringBuffer2,
                        Sequence sequence1, Sequence sequence2,
@@ -103,8 +102,8 @@ public class SAggregator extends Thread {
             int b1 = inputItem1.getWindowTime();
             int b2 = inputItem2.getWindowTime();
 
-            int l1 = inputItem1.getPayloadDataLength();
-            int l2 = inputItem2.getPayloadDataLength();
+            int l1 = inputItem1.getPayload().length;
+            int l2 = inputItem2.getPayload().length;
 
             m1.put(b1, inputItem1.getPayload());
             m2.put(b2, inputItem2.getPayload());
@@ -112,19 +111,9 @@ public class SAggregator extends Thread {
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 outSequence = outputRingBuffer.next();
                 SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
-                // here we set the length for two aggregated streams
-                outputItem.setPartLength1(l1);
-                outputItem.setPartLength2(l2);
 
-                outputItem.getPayloadBuffer().clear();
+                EUtil.addIntArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
 
-                if (outputItem.getPayload().length < (l1 + l2)) {
-                    byte[] aggregate = new byte[l1 + l2];
-                    outputItem.setPayload(aggregate);
-                    outputItem.setPayloadDataLength(l1 + l2);
-                }
-
-                EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
                 outputItem.setWindowTime(b1);
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b1);
@@ -135,19 +124,8 @@ public class SAggregator extends Thread {
 
                 outSequence = outputRingBuffer.next();
                 SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
-                // here we set the length for two aggregated streams
-                outputItem.setPartLength1(l1);
-                outputItem.setPartLength2(l2);
 
-                outputItem.getPayloadBuffer().clear();
-
-                if (outputItem.getPayload().length < (l1 + l2)) {
-                    byte[] aggregate = new byte[l1 + l2];
-                    outputItem.setPayload(aggregate);
-                    outputItem.setPayloadDataLength(l1 + l2);
-                }
-
-                EUtil.addByteArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
+                EUtil.addIntArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
                 outputItem.setWindowTime(b2);
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b2);

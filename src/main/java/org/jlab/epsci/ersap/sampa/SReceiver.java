@@ -30,12 +30,12 @@ public class SReceiver extends Thread {
     /**
      * Stream ID
      */
-    private int streamId;
+    private final int streamId;
 
     /**
      * Output ring
      */
-    private RingBuffer<SRingRawEvent> ringBuffer;
+    private final RingBuffer<SRingRawEvent> ringBuffer;
 
     /**
      * Current spot in the ring from which an item was claimed.
@@ -46,19 +46,17 @@ public class SReceiver extends Thread {
     private ServerSocket serverSocket;
 
     // control for the thread termination
-    private AtomicBoolean running = new AtomicBoolean(true);
+    private final AtomicBoolean running = new AtomicBoolean(true);
 
     /**
      * For statistics
      */
-    private int sampaPort;
-    private int statPeriod;
+    private final int sampaPort;
+    private final int statPeriod;
     private double totalData;
-    private int rate;
-    private long missed_record;
-    private long prev_rec_number;
-    private ByteBuffer headerBuffer;
-    private byte[] header = new byte[8];
+    private int packetNumber;
+    private final ByteBuffer headerBuffer;
+    private final byte[] header = new byte[16]; // 4 words: 2 header and 2 data-header
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
         this.sampaPort = sampaPort;
@@ -72,7 +70,7 @@ public class SReceiver extends Thread {
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
-        timer.schedule(new PrintRates(false), 0, statPeriod * 1000);
+        timer.schedule(new PrintRates(), 0, statPeriod * 1000L);
     }
 
     /**
@@ -95,49 +93,52 @@ public class SReceiver extends Thread {
         try {
             headerBuffer.clear();
             dataInputStream.readFully(header);
+            int header_id;
+            int h1;
 
-            // Header word 1
-            int h1  = headerBuffer.getInt();
-            int chipAddress =  h1 & 0x0000000f;
-            int channelAddress =  (h1 & 0x000001f0) >>> 4;
+            do {
+                h1 = headerBuffer.getInt();
+                header_id = h1 >>> 28;
+            } while (header_id == 5);
+
+            // Header word 1. ID = 5
+            int chipAddress = h1 & 0x0000000f;
+            int channelAddress = (h1 >>> 4) & 0x0000001f;
             int windowTime = (h1 >>> 9) & 0x000fffff;
 
-            // Header word 2
+            // Header word 2. ID = 2
             int h2 = headerBuffer.getInt();
-            int numberDataWords = (h2 >>> 3) & 0x000003ff;
-            int payload_length = numberDataWords * 4;
+            header_id = h2 >>> 28;
+            if (header_id == 2) {
+                int pkt = h2 & 0x00000007;
 
-            if (evt.getPayload().length < payload_length) {
-                byte[] payloadData = new byte[payload_length];
-                evt.setPayload(payloadData);
-            }
-            dataInputStream.readFully(evt.getPayload(), 0, payload_length);
+                // At this point we are only interested in packets of type 4
+                if (pkt == 4) {
+                    System.out.println("DDD packet = " + pkt);
+                    return;
+                }
+                int numberDataWords = (h2 >>> 3) & 0x000003ff;
 
-           // Debug printout
-                System.out.println("DDD: streamId = "+ streamId +
+                int[] dataBank = new int[numberDataWords];
+                for (int i = 0; i < numberDataWords; i++) {
+                    dataBank[i] = headerBuffer.getInt() & 0x000003ff;
+                }
+
+                packetNumber++;
+
+                // Debug printout
+                System.out.println("DDD: streamId = " + streamId +
                         " chip = " + chipAddress +
                         " channel = " + channelAddress +
                         " startTime = " + windowTime +
                         " dataWords = " + numberDataWords);
-            try {
-                this.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                evt.setChipAddress(chipAddress);
+                evt.setChannelAddress(channelAddress);
+                evt.setWindowTime(windowTime);
+                evt.setPayload(dataBank);
+
             }
-
-            evt.setPayloadDataLength(payload_length);
-            evt.setChipAddress(chipAddress);
-            evt.setChannelAddress(channelAddress);
-            evt.setWindowTime(windowTime);
-
-            int record_number = 0;
-            // Collect statistics
-            missed_record = missed_record + (record_number - (prev_rec_number + 1));
-
-            prev_rec_number = record_number;
-            totalData = totalData + (double) payload_length / 1000.0;
-            rate++;
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -169,7 +170,6 @@ public class SReceiver extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
@@ -185,40 +185,15 @@ public class SReceiver extends Thread {
     }
 
     private class PrintRates extends TimerTask {
-        BufferedWriter bw;
-        boolean f_out;
-
-        public PrintRates(boolean file_out) {
-            f_out = file_out;
-            if (f_out) {
-                try {
-                    bw = new BufferedWriter(new FileWriter("stream_" + streamId + ".csv"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
 
         @Override
         public void run() {
-            long m_rate = missed_record / statPeriod;
-            if (f_out) {
-                try {
-                    bw.write(m_rate + "\n");
-                    bw.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
             System.out.println(" stream:" + streamId
-                    + " event rate =" + rate / statPeriod
+                    + " event rate =" + packetNumber / statPeriod
                     + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
-                    + " missed rate = " + m_rate + " Hz."
-                    + " record number = " + prev_rec_number
             );
-            rate = 0;
+            packetNumber = 0;
             totalData = 0;
-            missed_record = 0;
         }
     }
 
