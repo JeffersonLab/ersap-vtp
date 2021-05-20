@@ -144,6 +144,60 @@ public class SReceiver extends Thread {
         }
     }
 
+    private void decodeTest() {
+        try {
+            headerBuffer.clear();
+            dataInputStream.readFully(header);
+            int header_id;
+            int h1;
+
+            do {
+                h1 = headerBuffer.getInt();
+                header_id = h1 >>> 28;
+                System.out.println("DDD DDD: streamId = " + streamId +
+                        " no Header-id = 5 " + header_id);
+            } while (header_id == 5);
+
+            // Header word 1. ID = 5
+            int chipAddress = h1 & 0x0000000f;
+            int channelAddress = (h1 >>> 4) & 0x0000001f;
+            int windowTime = (h1 >>> 9) & 0x000fffff;
+
+            // Header word 2. ID = 2
+            int h2 = headerBuffer.getInt();
+            header_id = h2 >>> 28;
+            if (header_id == 2) {
+                int pkt = h2 & 0x00000007;
+
+                // At this point we are only interested in packets of type 4
+                if (pkt == 4) {
+                    System.out.println("DDD packet = " + pkt);
+                    return;
+                }
+                int numberDataWords = (h2 >>> 3) & 0x000003ff;
+
+                int[] dataBank = new int[numberDataWords];
+                for (int i = 0; i < numberDataWords; i++) {
+                    dataBank[i] = headerBuffer.getInt() & 0x000003ff;
+                }
+
+                packetNumber++;
+
+                // Debug printout
+                System.out.println("DDD: streamId = " + streamId +
+                        " chip = " + chipAddress +
+                        " channel = " + channelAddress +
+                        " startTime = " + windowTime +
+                        " dataWords = " + numberDataWords);
+            } else {
+                System.out.println("DDD DDD: streamId = " + streamId +
+                        " no Header-id = 2 " + header_id);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void run() {
         // Connecting to the sampa stream source
         try {
@@ -159,17 +213,18 @@ public class SReceiver extends Thread {
         }
 
         while (running.get()) {
-            try {
+//            try {
                 // Get an empty item from ring
-                SRingRawEvent buf = get();
+//                SRingRawEvent buf = get();
 
-                decodeSAMPAHeader(buf);
+//                decodeSAMPAHeader(buf);
+                decodeTest();
 
                 // Make the buffer available for consumers
-                publish();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//                publish();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
