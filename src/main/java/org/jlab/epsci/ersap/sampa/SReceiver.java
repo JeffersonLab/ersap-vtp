@@ -56,7 +56,7 @@ public class SReceiver extends Thread {
     private double totalData;
     private int packetNumber;
     private final ByteBuffer headerBuffer;
-    private final byte[] header = new byte[16]; // 4 words: 2 header and 2 data-header
+    private final byte[] header = new byte[4]; // 4 words: 2 header and 2 data-header
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
         this.sampaPort = sampaPort;
@@ -147,13 +147,11 @@ public class SReceiver extends Thread {
     private void decodeTest() {
         try {
             headerBuffer.clear();
-            dataInputStream.readFully(header);
-
-            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
-            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
-            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
-            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(headerBuffer.getInt()));
-
+//            dataInputStream.readFully(header);
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(dataInputStream.readInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(dataInputStream.readInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(dataInputStream.readInt()));
+            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(dataInputStream.readInt()));
             System.exit(1);
 
             int header_id;
