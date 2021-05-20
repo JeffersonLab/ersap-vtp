@@ -211,7 +211,7 @@ public class SReceiver extends Thread {
                 IOException e) {
             e.printStackTrace();
         }
-
+int l = 0;
         while (running.get()) {
 //            try {
                 // Get an empty item from ring
@@ -225,7 +225,7 @@ public class SReceiver extends Thread {
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
 //            }
-            if (packetNumber > 100) System.exit(1);
+            if (l++ > 100) System.exit(1);
         }
     }
 
