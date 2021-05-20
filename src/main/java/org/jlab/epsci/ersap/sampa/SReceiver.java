@@ -148,13 +148,21 @@ public class SReceiver extends Thread {
         try {
             headerBuffer.clear();
             dataInputStream.readFully(header);
+
+            System.out.println(Integer.toHexString(headerBuffer.getInt()));
+            System.out.println(Integer.toHexString(headerBuffer.getInt()));
+            System.out.println(Integer.toHexString(headerBuffer.getInt()));
+            System.out.println(Integer.toHexString(headerBuffer.getInt()));
+
+            System.exit(1);
+
             int header_id;
             int h1;
 
             do {
                 h1 = headerBuffer.getInt();
                 header_id = h1 >>> 28;
-                System.out.println("DDD DDD: streamId = " + streamId +
+                System.out.println("DDD: streamId = " + streamId +
                         " no Header-id = 5 " + header_id);
             } while (header_id == 5);
 
@@ -190,7 +198,7 @@ public class SReceiver extends Thread {
                         " startTime = " + windowTime +
                         " dataWords = " + numberDataWords);
             } else {
-                System.out.println("DDD DDD: streamId = " + streamId +
+                System.out.println("DDD: streamId = " + streamId +
                         " no Header-id = 2 " + header_id);
             }
         } catch (IOException e) {
