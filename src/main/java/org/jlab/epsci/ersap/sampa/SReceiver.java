@@ -56,7 +56,7 @@ public class SReceiver extends Thread {
     private double totalData;
     private int packetNumber;
     private final ByteBuffer headerBuffer;
-    private final byte[] header = new byte[8];
+    private final byte[] header = new byte[400];
 
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
@@ -98,15 +98,12 @@ public class SReceiver extends Thread {
             int h1;
 
             ////////////////// debug //////////////
-            h1 = headerBuffer.getInt();
+            for (int i = 0; i < 100; i++) {
+                h1 = headerBuffer.getInt();
             header_id = h1 >>> 29;
-            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(h1) +
+            System.out.println("DDD: streamId = " + streamId + " " + Integer.toHexString(h1) +
                     " header_id = " + header_id);
-
-            h1 = headerBuffer.getInt();
-            header_id = h1 >>> 29;
-            System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(h1) +
-                    " header_id = " + header_id);
+        }
 
             System.exit(1);
             ////////////////////////////////////////////////////
