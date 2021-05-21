@@ -20,8 +20,8 @@ public class SAggregator extends Thread {
     /**
      * Maps for aggregation
      */
-    private final HashMap<Integer, int[]> m1 = new HashMap<>();
-    private final HashMap<Integer, int[]> m2 = new HashMap<>();
+    private final HashMap<Integer, byte[]> m1 = new HashMap<>();
+    private final HashMap<Integer, byte[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
@@ -112,7 +112,7 @@ public class SAggregator extends Thread {
                 outSequence = outputRingBuffer.next();
                 SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
 
-                EUtil.addIntArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
+                EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
 
                 outputItem.setWindowTime(b1);
                 outputRingBuffer.publish(outSequence);
@@ -125,7 +125,7 @@ public class SAggregator extends Thread {
                 outSequence = outputRingBuffer.next();
                 SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
 
-                EUtil.addIntArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
+                EUtil.addByteArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
                 outputItem.setWindowTime(b2);
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b2);
