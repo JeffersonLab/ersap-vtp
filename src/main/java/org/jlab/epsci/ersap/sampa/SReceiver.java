@@ -99,12 +99,12 @@ public class SReceiver extends Thread {
 
             ////////////////// debug //////////////
             h1 = headerBuffer.getInt();
-            header_id = h1 >>> 28;
+            header_id = h1 &0x00000007;
             System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(h1) +
                     " header_id = " + header_id);
 
             h1 = headerBuffer.getInt();
-            header_id = h1 >>> 28;
+            header_id = h1 &0x00000007;
             System.out.println("DDD: streamId = " + streamId + " " +Integer.toHexString(h1) +
                     " header_id = " + header_id);
 
