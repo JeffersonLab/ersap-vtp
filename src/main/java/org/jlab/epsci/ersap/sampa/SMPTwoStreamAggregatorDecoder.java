@@ -16,7 +16,7 @@ public class SMPTwoStreamAggregatorDecoder {
     /**
      * Max ring items
      */
-    private final static int maxRingItems = 32768;
+    private final static int maxRingItems = 64;
 
     /**
      * Ring buffers
