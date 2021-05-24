@@ -101,7 +101,7 @@ public class SReceiver extends Thread {
             e.printStackTrace();
         }
 
-        for(int i = 0; i<4; i++) {
+        for(int i = 3; i <= 0; i--) {
             data[i] = headerBuffer.getInt();
         }
         for(int eLink = 0; eLink < 28; eLink++) {
