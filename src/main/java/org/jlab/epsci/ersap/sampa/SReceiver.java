@@ -58,6 +58,7 @@ public class SReceiver extends Thread {
     private double totalData;
     private int packetNumber;
     private final ByteBuffer headerBuffer;
+    byte[] header = new byte[32];
 
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
@@ -66,7 +67,6 @@ public class SReceiver extends Thread {
         this.streamId = streamId;
         this.statPeriod = statPeriod;
 
-        byte[] header = new byte[400];
         headerBuffer = ByteBuffer.wrap(header);
 
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -94,6 +94,13 @@ public class SReceiver extends Thread {
 
     private void decodeSampa(SRingRawEvent evt){
         int[] data = new int[4];
+        headerBuffer.clear();
+        try {
+            dataInputStream.readFully(header);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         for(int i = 0; i<4; i++) {
             data[i] = headerBuffer.getInt();
         }
