@@ -11,6 +11,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static org.jlab.epsci.ersap.util.EUtil.decodeSampaSerial;
+
 /**
  * Receives stream packets from a single of the SAMPA based
  * FEC (front-end readout card) and writes them to a RingBuffer
@@ -56,7 +58,6 @@ public class SReceiver extends Thread {
     private double totalData;
     private int packetNumber;
     private final ByteBuffer headerBuffer;
-    private final byte[] header = new byte[400];
 
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
@@ -65,6 +66,7 @@ public class SReceiver extends Thread {
         this.streamId = streamId;
         this.statPeriod = statPeriod;
 
+        byte[] header = new byte[400];
         headerBuffer = ByteBuffer.wrap(header);
 
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -90,6 +92,17 @@ public class SReceiver extends Thread {
         ringBuffer.publish(sequenceNumber);
     }
 
+    private void decodeSampa(SRingRawEvent evt){
+        int[] data = new int[4];
+        for(int i = 0; i<4; i++) {
+            data[i] = headerBuffer.getInt();
+        }
+        for(int eLink = 0; eLink < 28; eLink++) {
+            decodeSampaSerial(eLink, data);
+        }
+
+    }
+/*
     private void decodeSAMPAHeader(SRingRawEvent evt) {
         try {
             headerBuffer.clear();
@@ -158,7 +171,7 @@ public class SReceiver extends Thread {
             e.printStackTrace();
         }
     }
-
+*/
 
     public void run() {
         // Connecting to the sampa stream source
@@ -178,7 +191,7 @@ public class SReceiver extends Thread {
                 // Get an empty item from ring
                 SRingRawEvent buf = get();
 
-                decodeSAMPAHeader(buf);
+                decodeSampa(buf);
 
                 // Make the buffer available for consumers
                 publish();
