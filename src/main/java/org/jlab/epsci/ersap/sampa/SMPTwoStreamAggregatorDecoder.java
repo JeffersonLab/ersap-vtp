@@ -74,7 +74,7 @@ public class SMPTwoStreamAggregatorDecoder {
         aggregator12 = new SAggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
 
-//        receiver1.start();
+        receiver1.start();
         receiver2.start();
 
         aggregator12.start();

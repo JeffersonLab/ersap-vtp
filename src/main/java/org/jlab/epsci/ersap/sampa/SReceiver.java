@@ -111,10 +111,6 @@ public class SReceiver extends Thread {
         data[2] = headerBuffer.getInt();
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
-//            data[3] = (w3 << 16 ) | (w3 >>> 16);
-//            data[2] = (w2 << 16 ) | (w2 >>> 16);
-//            data[1] = (w1 << 16 ) | (w1 >>> 16);
-//            data[0] = (w0 << 16 ) | (w0 >>> 16);
 
         System.out.println(" stream:" + streamId
                 + " w3 =" + String.format("0x%08X", data[3])
@@ -122,7 +118,7 @@ public class SReceiver extends Thread {
                 + " w1 =" + String.format("0x%08X", data[1])
                 + " w0 =" + String.format("0x%08X", data[0])
         );
-        if (gbt_frame_count++ > 50) System.exit(1);
+        if (gbt_frame_count++ > 20) System.exit(1);
 
         for (int eLink = 0; eLink < 28; eLink++) {
             decodeSampaSerial(eLink, data);
