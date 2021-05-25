@@ -72,8 +72,7 @@ public class SReceiver extends Thread {
         this.statPeriod = statPeriod;
 
         headerBuffer = ByteBuffer.wrap(header);
-
-//        headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
+        headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
@@ -108,10 +107,14 @@ public class SReceiver extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-            data[3] = headerBuffer.getInt();
-            data[2] = headerBuffer.getInt();
-            data[1] = headerBuffer.getInt();
-            data[0] = headerBuffer.getInt();
+            int w3 = headerBuffer.getInt();
+            int w2 = headerBuffer.getInt();
+            int w1 = headerBuffer.getInt();
+            int w0 = headerBuffer.getInt();
+            data[3] = (w3 << 16 ) | (w3 >>> 16);
+            data[2] = (w2 << 16 ) | (w2 >>> 16);
+            data[1] = (w1 << 16 ) | (w1 >>> 16);
+            data[0] = (w0 << 16 ) | (w0 >>> 16);
 
         System.out.println(" stream:" + streamId
                 + " w3 =" + String.format("0x%08X", data[3])
