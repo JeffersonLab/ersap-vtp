@@ -63,6 +63,8 @@ public class SReceiver extends Thread {
     byte[] header = new byte[16];
     int[] data = new int[4];
 
+    int gbt_frame_count;
+
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
         this.sampaPort = sampaPort;
         this.ringBuffer = ringBuffer;
@@ -110,6 +112,14 @@ public class SReceiver extends Thread {
             data[2] = headerBuffer.getInt();
             data[1] = headerBuffer.getInt();
             data[0] = headerBuffer.getInt();
+
+        System.out.println(" stream:" + streamId
+                + " w3 =" + String.format("0x%08X", data[3])
+                + " w2 =" + String.format("0x%08X", data[2])
+                + " w1 =" + String.format("0x%08X", data[1])
+                + " w0 =" + String.format("0x%08X", data[0])
+        );
+        if(gbt_frame_count++ > 100) System.exit(1);
 
         for(int eLink = 0; eLink < 28; eLink++) {
 //            decodeSampaSerial(eLink, data);
@@ -230,13 +240,6 @@ public class SReceiver extends Thread {
 
         @Override
         public void run() {
-            System.out.println(" stream:" + streamId
-                    + " w3 =" + String.format("0x%08X", data[3])
-                    + " w2 =" + String.format("0x%08X", data[2])
-                    + " w1 =" + String.format("0x%08X", data[1])
-                    + " w0 =" + String.format("0x%08X", data[0])
-            );
-
 //            System.out.println(" stream:" + streamId
 //                    + " event rate =" + packetNumber / statPeriod
 //                    + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
