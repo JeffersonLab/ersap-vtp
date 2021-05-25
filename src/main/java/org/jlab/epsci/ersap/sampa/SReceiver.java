@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -58,8 +60,8 @@ public class SReceiver extends Thread {
     private double totalData;
     private int packetNumber;
     private final ByteBuffer headerBuffer;
-    byte[] header = new byte[32];
-
+    byte[] header = new byte[16];
+    int[] data = new int[4];
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
         this.sampaPort = sampaPort;
@@ -93,19 +95,24 @@ public class SReceiver extends Thread {
     }
 
     private void decodeSampa(SRingRawEvent evt){
-        int[] data = new int[4];
+        // clear gbt_frame: 4 4-byte, 32-bit words
+        for (int i=0; i<4; i++) {
+            data[i] = 0;
+        }
         headerBuffer.clear();
+
         try {
             dataInputStream.readFully(header);
         } catch (IOException e) {
             e.printStackTrace();
         }
+            data[3] = headerBuffer.getInt();
+            data[2] = headerBuffer.getInt();
+            data[1] = headerBuffer.getInt();
+            data[0] = headerBuffer.getInt();
 
-        for(int i = 3; i <= 0; i--) {
-            data[i] = headerBuffer.getInt();
-        }
         for(int eLink = 0; eLink < 28; eLink++) {
-            decodeSampaSerial(eLink, data);
+//            decodeSampaSerial(eLink, data);
         }
 
     }
@@ -224,9 +231,16 @@ public class SReceiver extends Thread {
         @Override
         public void run() {
             System.out.println(" stream:" + streamId
-                    + " event rate =" + packetNumber / statPeriod
-                    + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
+                    + " w3 =" + String.format("0x%08X", data[3])
+                    + " w2 =" + String.format("0x%08X", data[2])
+                    + " w1 =" + String.format("0x%08X", data[1])
+                    + " w0 =" + String.format("0x%08X", data[0])
             );
+
+//            System.out.println(" stream:" + streamId
+//                    + " event rate =" + packetNumber / statPeriod
+//                    + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
+//            );
             packetNumber = 0;
             totalData = 0;
         }

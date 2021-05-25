@@ -518,13 +518,13 @@ public class EUtil {
 
         if (syncFound[eLink] == 0)                    // find sync header - this will run until first sync packet header is found
         {
-            System.out.println("DDD ============== "+ ii_min +" "+ ii_max);
             for (int ii = ii_max; ii >= ii_min; ii--)        // elink (4 bits per frame)
             {
                 bitValue = (gFrameWord & (1 << ii)) >> ii;
-                if (bitValue == 1)
-                    shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
-                shiftReg[eLink] = shiftReg[eLink] >> 1;
+                if (bitValue == 1) {
+                    shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;// set bit 50 in shiftReg
+                }
+                    shiftReg[eLink] = shiftReg[eLink] >> 1;
 
                 if (syncFound[eLink] == 1) {                   // when sync found count remaining bits of frame for next header
                     headerBitCount[eLink] = headerBitCount[eLink] + 1;
