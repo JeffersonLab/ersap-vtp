@@ -228,7 +228,7 @@ public class EUtil {
     public static int decodeSlotNumber(int csc) {
         // TODO: This seemed like a bug to me so I fixed it, Carl T.
         //return csc & 0x000000f0;
-        return (csc >> 8) & 0xf;
+        return (csc >>> 8) & 0xf;
     }
 
     public static int decodeChannelNumber(int csc) {
@@ -456,7 +456,7 @@ public class EUtil {
 
     }
 
-    public static void decodeSampaSerial(int eLink, int[] gbt_frame_t) {
+    public static void decodeSampaSerial(int eLink, int[] gbt_frame) {
 
         Vector<Vector<Integer>> eLinkDataTemp = new Vector<>(28);
         Vector<Vector<Integer>> eLinkData = new Vector<>(28);
@@ -504,14 +504,15 @@ public class EUtil {
 
         int tempData = 0;
 
-        if (eLink < 8)
-            gFrameWord = gbt_frame_t[0];
-        else if ((eLink >= 8) && (eLink < 16))
-            gFrameWord = gbt_frame_t[1];
-        else if ((eLink >= 16) && (eLink < 24))
-            gFrameWord = gbt_frame_t[2];
-        else
-            gFrameWord = gbt_frame_t[3];
+        if (eLink < 8) {
+            gFrameWord = gbt_frame[0];
+        } else if ((eLink >= 8) && (eLink < 16)) {
+            gFrameWord = gbt_frame[1];
+        } else if ((eLink >= 16) && (eLink < 24)) {
+            gFrameWord = gbt_frame[2];
+        } else {
+            gFrameWord = gbt_frame[3];
+        }
 
         ii_min = (eLink % 8) * 4;
         ii_max = ii_min + 3;
@@ -520,11 +521,11 @@ public class EUtil {
         {
             for (int ii = ii_max; ii >= ii_min; ii--)        // elink (4 bits per frame)
             {
-                bitValue = (gFrameWord & (1 << ii)) >> ii;
+                bitValue = (gFrameWord & (1 << ii)) >>> ii;
                 if (bitValue == 1) {
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;// set bit 50 in shiftReg
                 }
-                    shiftReg[eLink] = shiftReg[eLink] >> 1;
+                    shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
                 if (syncFound[eLink] == 1) {                   // when sync found count remaining bits of frame for next header
                     headerBitCount[eLink] = headerBitCount[eLink] + 1;
@@ -545,10 +546,10 @@ public class EUtil {
         {                                                // we find NEXT header here
             for (int ii = ii_max; ii >= ii_min; ii--)        // elink 0 (4 bits per frame)
             {
-                bitValue = (gFrameWord & (1 << ii)) >> ii;
+                bitValue = (gFrameWord & (1 << ii)) >>> ii;
                 if (bitValue == 1)
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
-                shiftReg[eLink] = shiftReg[eLink] >> 1;
+                shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
                 if (dataHeader[eLink] == 1)                // AFTER data header is found count remaining bits of frame as data bits
                     dataBitCount[eLink] = dataBitCount[eLink] + 1;
@@ -568,14 +569,14 @@ public class EUtil {
                                 " syncCount = " + syncCount[eLink]);
                     } else                                                // non-sync packet header - identify type
                     {
-                        pkt = (int) ((shiftReg[eLink] >> 7) & 0x7);
-                        numWords[eLink] = (int) ((shiftReg[eLink] >> 10) & 0x3FF);
-                        hadd = (int) ((shiftReg[eLink] >> 20) & 0xF);
-                        chadd = (int) ((shiftReg[eLink] >> 24) & 0x1F);
-                        bxCount = (int) ((shiftReg[eLink] >> 29) & 0xFFFFF);
+                        pkt = (int) ((shiftReg[eLink] >>> 7) & 0x7);
+                        numWords[eLink] = (int) ((shiftReg[eLink] >>> 10) & 0x3FF);
+                        hadd = (int) ((shiftReg[eLink] >>> 20) & 0xF);
+                        chadd = (int) ((shiftReg[eLink] >>> 24) & 0x1F);
+                        bxCount = (int) ((shiftReg[eLink] >>> 29) & 0xFFFFF);
                         hamming = (int) ((shiftReg[eLink]) & 0x3F);
-                        dataParity = (int) ((shiftReg[eLink] >> 49) & 0x1);
-                        parity = (int) ((shiftReg[eLink] >> 6) & 0x1);
+                        dataParity = (int) ((shiftReg[eLink] >>> 49) & 0x1);
+                        parity = (int) ((shiftReg[eLink] >>> 6) & 0x1);
 
                         if ((pkt == 0) && (numWords[eLink] == 0) && (chadd == 0x15))        // heartbeat packet (NO payload) - push into output stream
                         {
@@ -646,10 +647,10 @@ public class EUtil {
         {
             for (int ii = ii_max; ii >= ii_min; ii--)        // elink (4 bits per frame)
             {
-                bitValue = (gFrameWord & (1 << ii)) >> ii;
+                bitValue = (gFrameWord & (1 << ii)) >>> ii;
                 if (bitValue == 1)
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
-                shiftReg[eLink] = shiftReg[eLink] >> 1;
+                shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
                 if (dataHeader[eLink] == 1)                // count data word bits until data payload is exhausted
                     dataBitCount[eLink] = dataBitCount[eLink] + 1;
@@ -659,7 +660,7 @@ public class EUtil {
                 if (dataBitCount[eLink] == 10)        // print data word
                 {
                     dataWordCount[eLink] = dataWordCount[eLink] + 1;
-                    dataWord = (int) ((shiftReg[eLink] >> 40) & 0x3FF);
+                    dataWord = (int) ((shiftReg[eLink] >>> 40) & 0x3FF);
                     dataValue = (dataWordCount[eLink] << 16) | dataWord;
                     eLinkDataTemp.get(eLink).add(dataValue);        // push data into temporary storage vector
 
