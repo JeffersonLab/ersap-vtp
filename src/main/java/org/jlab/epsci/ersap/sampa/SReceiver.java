@@ -73,7 +73,7 @@ public class SReceiver extends Thread {
 
         headerBuffer = ByteBuffer.wrap(header);
 
-        headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
+//        headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
