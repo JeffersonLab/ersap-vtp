@@ -3,4 +3,4 @@ export CLASSPATH=/home/gurjyan/Devel/stream/vtp/ersap-vtp/build/libs/ersap-vtp-a
 export JAVA_HOME=/group/da/Java/jdk/jdk-15.0.1
 export PATH=$JAVA_HOME/bin:$PATH
 
-exec java org.jlab.epsci.ersap.sampa.SampaDecoder "$@"
+exec java org.jlab.epsci.ersap.sampa.StreamProcessor "$@"

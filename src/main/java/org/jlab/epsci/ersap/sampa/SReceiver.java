@@ -7,11 +7,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
-
-import static org.jlab.epsci.ersap.util.EUtil.decodeSampaSerial;
 
 /**
  * Receives stream packets from a single of the SAMPA based
@@ -61,7 +60,8 @@ public class SReceiver extends Thread {
     byte[] header = new byte[16];
     int[] data = new int[4];
 
-    int gbt_frame_count;
+    private final SDecoder decoder;
+
 
     public SReceiver(int sampaPort, int streamId, RingBuffer<SRingRawEvent> ringBuffer, int statPeriod) {
         this.sampaPort = sampaPort;
@@ -71,6 +71,8 @@ public class SReceiver extends Thread {
 
         headerBuffer = ByteBuffer.wrap(header);
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+        decoder = new SDecoder();
 
         // Timer for measuring and printing statistics.
         Timer timer = new Timer();
@@ -94,13 +96,11 @@ public class SReceiver extends Thread {
     }
 
     private void decodeSampa(SRingRawEvent evt) {
-        // clear gbt_frame: 4 4-byte, 32-bit words
-        for (int i = 0; i < 4; i++) {
-            data[i] = 0;
-        }
+        Arrays.fill(data, 0);
         headerBuffer.clear();
 
-        try {
+       try {
+            // clear gbt_frame: 4 4-byte, 32-bit words
             dataInputStream.readFully(header);
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,9 +118,8 @@ public class SReceiver extends Thread {
         );
 
         for (int eLink = 0; eLink < 28; eLink++) {
-            decodeSampaSerial(eLink, data);
+            decoder.decodeSerial(eLink, data);
         }
-
     }
 
 /*

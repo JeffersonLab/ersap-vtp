@@ -8,23 +8,25 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Arrays;
 
-import static org.jlab.epsci.ersap.util.EUtil.decodeSampaSerial;
-
-public class SampaDecoder {
+public class StreamProcessor {
 
     private DataInputStream dataInputStream;
     // server socket
     private ServerSocket serverSocket;
-    private final int sampaPort;
     private final ByteBuffer headerBuffer;
-    byte[] header = new byte[16];
-    int[] data = new int[4];
+    private final byte[] header = new byte[16];
+    private final int[] data = new int[4];
 
-    public SampaDecoder(int sampaPort) {
-        this.sampaPort = sampaPort;
+    private final SDecoder sampaDecoder;
+
+    public StreamProcessor(int sampaPort) {
+
         headerBuffer = ByteBuffer.wrap(header);
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
+
+        sampaDecoder = new SDecoder();
 
         // Connecting to the sampa stream source
         try {
@@ -40,14 +42,12 @@ public class SampaDecoder {
         }
     }
 
-    public void decodeSampa() {
-        // clear gbt_frame: 4 4-byte, 32-bit words
-        for (int i = 0; i < 4; i++) {
-            data[i] = 0;
-        }
+    public void process() {
+        Arrays.fill(data, 0);
         headerBuffer.clear();
 
         try {
+            // clear gbt_frame: 4 4-byte, 32-bit words
             dataInputStream.readFully(header);
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,17 +57,18 @@ public class SampaDecoder {
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
 
-        System.out.println(" w3 =" + String.format("0x%08X", data[3])
-                + " w2 =" + String.format("0x%08X", data[2])
-                + " w1 =" + String.format("0x%08X", data[1])
-                + " w0 =" + String.format("0x%08X", data[0])
-        );
+//        System.out.println(" w3 =" + String.format("0x%08X", data[3])
+//                + " w2 =" + String.format("0x%08X", data[2])
+//                + " w1 =" + String.format("0x%08X", data[1])
+//                + " w0 =" + String.format("0x%08X", data[0])
+//        );
 
         for (int eLink = 0; eLink < 28; eLink++) {
-            decodeSampaSerial(eLink, data);
+            sampaDecoder.decodeSerial(eLink, data);
         }
-
+        sampaDecoder.printLinkStats();
     }
+
     public void test() {
         int h1 = 0xb6e08000;
         int chipAddress = h1 & 0x0000000f;
@@ -87,9 +88,9 @@ public class SampaDecoder {
 
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
-        SampaDecoder s = new SampaDecoder(port1);
-        while(true){
-           s.decodeSampa();
+        StreamProcessor s = new StreamProcessor(port1);
+        while (true) {
+            s.process();
         }
 
     }
