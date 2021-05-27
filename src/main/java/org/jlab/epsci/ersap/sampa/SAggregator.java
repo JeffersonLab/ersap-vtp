@@ -137,8 +137,8 @@ public class SAggregator extends Thread {
  */
             outSequence = outputRingBuffer.next();
             SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
-
             outputRingBuffer.publish(outSequence);
+
         } catch (final TimeoutException | AlertException ex) {
             ex.printStackTrace();
         }
