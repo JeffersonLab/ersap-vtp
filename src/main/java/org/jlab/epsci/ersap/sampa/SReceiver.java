@@ -93,7 +93,7 @@ public class SReceiver extends Thread {
         ringBuffer.publish(sequenceNumber);
     }
 
-    private void decodeSampa(SRingRawEvent evt) {
+    public void decodeSampa(SRingRawEvent evt) {
         // clear gbt_frame: 4 4-byte, 32-bit words
         for (int i = 0; i < 4; i++) {
             data[i] = 0;
@@ -122,28 +122,7 @@ public class SReceiver extends Thread {
         }
 
     }
-    private void decodeSampa() {
-        // clear gbt_frame: 4 4-byte, 32-bit words
-        for (int i = 0; i < 4; i++) {
-            data[i] = 0;
-        }
-        headerBuffer.clear();
 
-        try {
-            dataInputStream.readFully(header);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        data[3] = headerBuffer.getInt();
-        data[2] = headerBuffer.getInt();
-        data[1] = headerBuffer.getInt();
-        data[0] = headerBuffer.getInt();
-
-        for (int eLink = 0; eLink < 28; eLink++) {
-            decodeSampaSerial(eLink, data);
-        }
-
-    }
 /*
     private void decodeSAMPAHeader(SRingRawEvent evt) {
         try {
@@ -233,8 +212,7 @@ public class SReceiver extends Thread {
                 // Get an empty item from ring
                 SRingRawEvent buf = get();
 
-//                decodeSampa(buf);
-                decodeSampa();
+                decodeSampa(buf);
 
                 // Make the buffer available for consumers
                 publish();
@@ -265,6 +243,14 @@ public class SReceiver extends Thread {
 //            );
             packetNumber = 0;
             totalData = 0;
+        }
+    }
+
+    public static void main(String[] args) {
+        int port1 = Integer.parseInt(args[0]);
+        SReceiver sr = new SReceiver(port1, 1, null, 0);
+        while (true){
+            sr.decodeSampa(null);
         }
     }
 
