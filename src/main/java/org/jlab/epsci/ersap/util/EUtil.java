@@ -455,11 +455,10 @@ public class EUtil {
         });
 
     }
-
+    @SuppressWarnings("unchecked")
     public static void decodeSampaSerial(int eLink, int[] gbt_frame) {
-
-        Vector<Vector<Integer>> eLinkDataTemp = new Vector<>(28);
-        Vector<Vector<Integer>> eLinkData = new Vector<>(28);
+        Vector<Integer>[] eLinkDataTemp = new Vector[28];
+        Vector<Integer>[] eLinkData = new Vector[28];
 
         int[] syncFoundCount = new int[28];
         int[] syncLostCount = new int[28];
@@ -517,58 +516,67 @@ public class EUtil {
         ii_min = (eLink % 8) * 4;
         ii_max = ii_min + 3;
 
-        if (syncFound[eLink] == 0)                    // find sync header - this will run until first sync packet header is found
-        {
-            for (int ii = ii_max; ii >= ii_min; ii--)        // elink (4 bits per frame)
-            {
+         // find sync header - this will run until first sync packet header is found
+        if (syncFound[eLink] == 0) {
+            for (int ii = ii_max; ii >= ii_min; ii--) {
+                // elink (4 bits per frame)
                 bitValue = (gFrameWord & (1 << ii)) >>> ii;
                 if (bitValue == 1) {
-                    shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;// set bit 50 in shiftReg
+                    shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L; // set bit 50 in shiftReg
                 }
                     shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
-                if (syncFound[eLink] == 1) {                   // when sync found count remaining bits of frame for next header
+                System.out.println("DDD: elink = " + eLink  +
+                        " shiftReg = " + String.format("0x%08X",shiftReg[eLink]));
+
+                if (syncFound[eLink] != 0) {
+                    // when sync found count remaining bits of frame for next header
                     headerBitCount[eLink] = headerBitCount[eLink] + 1;
                 }
-                if (shiftReg[eLink] == syncHeaderPattern)    // check if sync packet header detected
-                {
+                if (shiftReg[eLink] == syncHeaderPattern) {
+                    // check if sync packet header detected
                     syncFound[eLink] = 1;
                     syncFoundCount[eLink]++;
                     syncCount[eLink]++;
                     headerBitCount[eLink] = 0;
+                    System.out.println("DDD:  ****************|| SYNC HEADER  elink = " +  eLink + " ||****************** ");
                 }
             }
-            if (syncFound[eLink] == 1)                    // print headerBitCount after frame where sync packet found
-            {
+            if (syncFound[eLink] != 0) {
+                // print headerBitCount after frame where sync packet found
                 System.out.println("DDD: SyncPacket found headerButCount = " + headerBitCount[eLink]);
             }
-        } else if (dataHeader[eLink] == 0)                // runs only after first sync packet header has been found
-        {                                                // we find NEXT header here
-            for (int ii = ii_max; ii >= ii_min; ii--)        // elink 0 (4 bits per frame)
-            {
+        } else if (dataHeader[eLink] == 0) {
+            // runs only after first sync packet header has been found
+            // we find NEXT header here
+            for (int ii = ii_max; ii >= ii_min; ii--) {
+                // elink 0 (4 bits per frame)
                 bitValue = (gFrameWord & (1 << ii)) >>> ii;
-                if (bitValue == 1)
+                if (bitValue == 1) {
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
-                shiftReg[eLink] = shiftReg[eLink] >>> 1;
+                }
+                    shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
-                if (dataHeader[eLink] == 1)                // AFTER data header is found count remaining bits of frame as data bits
+                if (dataHeader[eLink] == 1) {
+                    // AFTER data header is found count remaining bits of frame as data bits
                     dataBitCount[eLink] = dataBitCount[eLink] + 1;
-                else                            // count frame bits as header bitsis not data type
-                    headerBitCount[eLink] = headerBitCount[eLink] + 1;
-
+                } else {
+                    // count frame bits as header bits not data type
+                     headerBitCount[eLink] = headerBitCount[eLink] + 1;
+                }
 //          -----------------------------------------------------------------------
-                if (headerBitCount[eLink] == 50)        // next packet header - decode
-                {
-                    if (shiftReg[eLink] == syncHeaderPattern)            // sync header
-                    {
+                if (headerBitCount[eLink] == 50) {
+                    // next packet header - decode
+                    if (shiftReg[eLink] == syncHeaderPattern) {
+                        // sync header
                         syncCount[eLink]++;
                         headerBitCount[eLink] = 0;
 
-                        System.out.println("DDD: SYNC HEADER  elink = " + eLink +
+                        System.out.println("DDD: **************** SYNC HEADER  elink = " + eLink +
                                 " shiftReg = " + shiftReg[eLink] +
                                 " syncCount = " + syncCount[eLink]);
-                    } else                                                // non-sync packet header - identify type
-                    {
+                    } else {
+                        // non-sync packet header - identify type
                         pkt = (int) ((shiftReg[eLink] >>> 7) & 0x7);
                         numWords[eLink] = (int) ((shiftReg[eLink] >>> 10) & 0x3FF);
                         hadd = (int) ((shiftReg[eLink] >>> 20) & 0xF);
@@ -578,29 +586,30 @@ public class EUtil {
                         dataParity = (int) ((shiftReg[eLink] >>> 49) & 0x1);
                         parity = (int) ((shiftReg[eLink] >>> 6) & 0x1);
 
-                        if ((pkt == 0) && (numWords[eLink] == 0) && (chadd == 0x15))        // heartbeat packet (NO payload) - push into output stream
-                        {
+                        if ((pkt == 0) && (numWords[eLink] == 0) && (chadd == 0x15)) {
+                            // heartbeat packet (NO payload) - push into output stream
                             heartBeatCount[eLink]++;
                             headerBitCount[eLink] = 0;
                             head1 = 0xA0000000 | (bxCount << 9) | (chadd << 4) | hadd;
                             head2 = 0x40000000 | (parity << 23) | (hamming << 17) | (dataParity << 16) | (numWords[eLink] << 3) | pkt;
-                            System.out.println("DDD: HEARTBEAT HEADER  elink = " + eLink
+
+                            System.out.println("DDD: **************** HEARTBEAT HEADER  elink = " + eLink
                                     + " shiftReg = " + shiftReg[eLink] +
                                     " heartBeatCount = " + heartBeatCount[eLink]);
-                        } else if (pkt == 4)                // initially require only NORMAL data packet headers
-                        {
+                        } else if (pkt == 4) {
+                            // initially require only NORMAL data packet headers
                             // check consistency of data header - verify that 'hadd' and chadd' are consistent with 'eLink' number
                             match = matchSampaDataHeader(eLink, hadd, chadd);
 
-                            if (match)                    // header consistent with data header
-                            {
+                            if (match) {
+                                // header consistent with data header
                                 dataCount[eLink] = dataCount[eLink] + 1;
                                 dataHeaderCount[eLink]++;
                                 fec_channel = (int) (hadd * 32 + chadd);
                                 if ((fec_channel >= 0) && (fec_channel <= 159)) {
                                     dataChannelCount[fec_channel]++;
                                 } else {
-                                    System.out.println("DDD:  ILLEGAL CHANNEL NUMBER  elink = " + eLink +
+                                    System.out.println("DDD:  -------- ILLEGAL CHANNEL NUMBER  elink = " + eLink +
                                             " hadd = " + hadd + " chadd = " + chadd);
                                 }
                                 dataHeader[eLink] = 1;
@@ -610,10 +619,10 @@ public class EUtil {
                                 head1 = 0xA0000000 | (bxCount << 9) | (chadd << 4) | hadd;
                                 head2 = 0x40000000 | (parity << 23) | (hamming << 17) | (dataParity << 16) | (numWords[eLink] << 3) | pkt;
 
-                                eLinkDataTemp.get(eLink).add(head1);        // push header into temporary storage vector
-                                eLinkDataTemp.get(eLink).add(head2);
+                                eLinkDataTemp[eLink].add(head1);        // push header into temporary storage vector
+                                eLinkDataTemp[eLink].add(head2);
 
-                                System.out.println("DDD: DATA HEADER  elink = " + eLink +
+                                System.out.println("DDD: **************** DATA HEADER  elink = " + eLink +
                                         " shiftReg = " + shiftReg[eLink] +
                                         " pkt = " + pkt +
                                         " dataCount = " + dataCount[eLink] +
@@ -621,8 +630,8 @@ public class EUtil {
                                         " hadd = " + hadd +
                                         " chadd = " + chadd +
                                         " bxCount = " + bxCount);
-                            } else                            // inconsistent data header - force the finding of next sync header
-                            {
+                            } else {
+                                // inconsistent data header - force the finding of next sync header
                                 headerBitCount[eLink] = 0;
                                 syncFound[eLink] = 0;
                                 syncLostCount[eLink]++;
@@ -630,12 +639,12 @@ public class EUtil {
                                         " shiftReg = " + shiftReg[eLink] +
                                         " pkt = ");
                             }
-                        } else                            // 'unrecognized' header - force the finding of next sync header
-                        {
+                        } else {
+                            // 'unrecognized' header - force the finding of next sync header
                             headerBitCount[eLink] = 0;
                             syncFound[eLink] = 0;
                             syncLostCount[eLink]++;
-                            System.out.println("DDD: UNRECOGNIZED HEADER  elink = " + eLink +
+                            System.out.println("DDD: -------- UNRECOGNIZED HEADER  elink = " + eLink +
                                     " shiftReg = " + shiftReg[eLink] +
                                     " pkt = " + pkt);
                         }
@@ -643,26 +652,26 @@ public class EUtil {
                 }
                 //-----------------------------------------------------------------------
             }
-        } else if (dataHeader[eLink] == 1)                // runs only after data packet header has been found
-        {
-            for (int ii = ii_max; ii >= ii_min; ii--)        // elink (4 bits per frame)
-            {
+        } else if (dataHeader[eLink] > 0) {
+            // runs only after data packet header has been found
+            for (int ii = ii_max; ii >= ii_min; ii--) {
+                // elink (4 bits per frame)
                 bitValue = (gFrameWord & (1 << ii)) >>> ii;
-                if (bitValue == 1)
+                if (bitValue > 0)
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
                 shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
-                if (dataHeader[eLink] == 1)                // count data word bits until data payload is exhausted
+                if (dataHeader[eLink] > 0)                // count data word bits until data payload is exhausted
                     dataBitCount[eLink] = dataBitCount[eLink] + 1;
                 else                            // if payload is exhausted count remaining bits of frame for next header
                     headerBitCount[eLink] = headerBitCount[eLink] + 1;
 
-                if (dataBitCount[eLink] == 10)        // print data word
-                {
+                if (dataBitCount[eLink] == 10) {
+                    // print data word
                     dataWordCount[eLink] = dataWordCount[eLink] + 1;
                     dataWord = (int) ((shiftReg[eLink] >>> 40) & 0x3FF);
                     dataValue = (dataWordCount[eLink] << 16) | dataWord;
-                    eLinkDataTemp.get(eLink).add(dataValue);        // push data into temporary storage vector
+                    eLinkDataTemp[eLink].add(dataValue);        // push data into temporary storage vector
 
                     System.out.println("DDD:  shiftReg = " + shiftReg[eLink] +
                             " data(hex) = " + String.format("0x%08X", dataWord) +
@@ -672,16 +681,16 @@ public class EUtil {
                     dataBitCount[eLink] = 0;
                 }
 
-                if (dataWordCount[eLink] == numWords[eLink])        // done with packet payload
-                {
+                if (dataWordCount[eLink] == numWords[eLink]) {
+                    // done with packet payload
                     // Both header words and all packet data words have been stored in a temporary vector.
                     // This is done to assure that only complete packets appear in the output data stream.
                     // Now copy the temporary vector to the output stream.
                     for (int jj = 0; jj < (numWords[eLink] + 2); jj++) {
-                        tempData = eLinkDataTemp.get(eLink).get(jj);
-                        eLinkData.get(eLink).add(tempData);        // copy temp data into output stream vector
+                        tempData = eLinkDataTemp[eLink].get(jj);
+                        eLinkData[eLink].add(tempData);        // copy temp data into output stream vector
                     }
-                    eLinkDataTemp.get(eLink).clear();                // delete all data of temporary vector
+                    eLinkDataTemp[eLink].clear();                // delete all data of temporary vector
 
                     dataHeader[eLink] = 0;                    // reset
                     headerBitCount[eLink] = 0;
@@ -709,30 +718,30 @@ public class EUtil {
         boolean match;
 
 // check consistency of header - verify that 'hadd' and chadd' are consistent with 'eLink' number
-        if (eLink < 11)            // eLink 0-10 are from chip 0 (link00) or chip 3 (link01)
-        {
+        if (eLink < 11) {
+            // eLink 0-10 are from chip 0 (link00) or chip 3 (link01)
             chip_a = 0;
             chip_b = 3;
-        } else if (eLink < 22)        // eLink 11-21 are from chip 1 (link00) or chip 4 (link01)
-        {
+        } else if (eLink < 22) {
+            // eLink 11-21 are from chip 1 (link00) or chip 4 (link01)
             chip_a = 1;
             chip_b = 4;
-        } else                        // eLink 22-27 are from chip 2 (link00, link01)
-        {
+        } else {
+            // eLink 22-27 are from chip 2 (link00, link01)
             chip_a = 2;
             chip_b = 2;
         }
 
-        if (eLink < 10)            // compare to 6 possible channel values due to complex chip 2 mapping
-        {
+        if (eLink < 10) {
+            // compare to 6 possible channel values due to complex chip 2 mapping
             chan_a = (eLink % 11) * 3;    // eLink 0 (ch 0,1,2), eLink 1 (ch 3,4,5), ... elink 9 (ch 27,28,29)
             chan_b = chan_a + 1;
             chan_c = chan_a + 2;
             chan_d = chan_a;
             chan_e = chan_b;
             chan_f = chan_c;
-        } else if (eLink == 10)            // eLink 10 (ch 30,31)
-        {
+        } else if (eLink == 10) {
+            // eLink 10 (ch 30,31)
             chan_a = 30;
             chan_b = 31;
             chan_c = 30;
@@ -740,32 +749,33 @@ public class EUtil {
             chan_e = 30;
             chan_f = 31;
         }
-        if (eLink < 21)                // eLink 11 (ch 0,1,2), eLink 12 (ch 3,4,5), ... elink 20 (ch 27,28,29)
-        {
+        if (eLink < 21) {
+            // eLink 11 (ch 0,1,2), eLink 12 (ch 3,4,5), ... elink 20 (ch 27,28,29)
             chan_a = (eLink % 11) * 3;
             chan_b = chan_a + 1;
             chan_c = chan_a + 2;
             chan_d = chan_a;
             chan_e = chan_b;
             chan_f = chan_c;
-        } else if (eLink == 21)            // eLink 21 (ch 30,31)
-        {
+        } else if (eLink == 21) {
+            // eLink 21 (ch 30,31)
             chan_a = 30;
             chan_b = 31;
             chan_c = 30;
             chan_d = 31;
             chan_e = 30;
             chan_f = 31;
-        } else if (eLink < 27)        // Link00:  eLink 22 (ch 0,1,2),    ... elink 26 (ch 12,13,14)
-        {                            // Link01:  eLink 22 (ch 15,16,17), ... elink 26 (ch 27,28,29)
+        } else if (eLink < 27) {
+            // Link00:  eLink 22 (ch 0,1,2),    ... elink 26 (ch 12,13,14)
+            // Link01:  eLink 22 (ch 15,16,17), ... elink 26 (ch 27,28,29)
             chan_a = (eLink % 22) * 3;
             chan_b = chan_a + 1;
             chan_c = chan_a + 2;
             chan_d = chan_a + 15;
             chan_e = chan_b + 15;
             chan_f = chan_c + 15;
-        } else                        // eLink 27 (ch 30,31)
-        {
+        } else {
+            // eLink 27 (ch 30,31)
             chan_a = 30;
             chan_b = 31;
             chan_c = 30;
@@ -780,7 +790,6 @@ public class EUtil {
 
         match = chip_match && channel_match;
         return match;
-
     }
 
 

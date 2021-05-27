@@ -1,6 +1,7 @@
 package org.jlab.epsci.ersap.sampa;
 
 import com.lmax.disruptor.*;
+import org.jlab.epsci.ersap.vtp.VConsumer;
 
 import java.nio.ByteBuffer;
 
@@ -42,6 +43,7 @@ public class SMPTwoStreamAggregatorDecoder {
     private SReceiver receiver1;
     private SReceiver receiver2;
     private SAggregator aggregator12;
+    private SConsumer consumer;
 
     public SMPTwoStreamAggregatorDecoder(int sampaPort1, int sampaPort2) {
         this.sampaPort1 = sampaPort1;
@@ -74,16 +76,19 @@ public class SMPTwoStreamAggregatorDecoder {
         aggregator12 = new SAggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
 
+        consumer = new SConsumer(ringBuffer12, sequence12, sequenceBarrier12);
         receiver1.start();
         receiver2.start();
 
         aggregator12.start();
+        consumer.start();
     }
 
     public void close() {
         receiver1.exit();
         receiver2.exit();
         aggregator12.exit();
+        consumer.exit();
     }
 
     public static void main(String[] args) {

@@ -7,8 +7,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -112,13 +110,12 @@ public class SReceiver extends Thread {
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
 
-        System.out.println(" stream:" + streamId
-                + " w3 =" + String.format("0x%08X", data[3])
-                + " w2 =" + String.format("0x%08X", data[2])
-                + " w1 =" + String.format("0x%08X", data[1])
-                + " w0 =" + String.format("0x%08X", data[0])
-        );
-        if (gbt_frame_count++ > 20) System.exit(1);
+//        System.out.println(" stream:" + streamId
+//                + " w3 =" + String.format("0x%08X", data[3])
+//                + " w2 =" + String.format("0x%08X", data[2])
+//                + " w1 =" + String.format("0x%08X", data[1])
+//                + " w0 =" + String.format("0x%08X", data[0])
+//        );
 
         for (int eLink = 0; eLink < 28; eLink++) {
             decodeSampaSerial(eLink, data);

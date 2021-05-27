@@ -52,7 +52,7 @@ public class VConsumer extends Thread {
     }
 
     /**
-     * Get the next available item from outupt ring buffer.
+     * Get the next available item from output ring buffer.
      * Do NOT call this multiple times in a row!
      * Be sure to call "put" before calling this again.
      *
@@ -109,7 +109,7 @@ public class VConsumer extends Thread {
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
             try {
 
-                // Get an empty item from ring and parse the payload
+                // Get an item from ring and parse the payload
                 VRingRawEvent buf = get();
 
                 if (buf.getPayload().length > 0) {
