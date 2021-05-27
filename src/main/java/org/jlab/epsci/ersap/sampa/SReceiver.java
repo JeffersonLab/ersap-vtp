@@ -248,7 +248,7 @@ public class SReceiver extends Thread {
 
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
-        SReceiver sr = new SReceiver(port1, 1, null, 0);
+        SReceiver sr = new SReceiver(port1, 1, null, 10);
         while (true){
             sr.decodeSampa(null);
         }

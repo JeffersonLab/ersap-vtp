@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bin/sampa_decoder" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SReceiver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -101,13 +99,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00002" summary="readme update">
-      <created>1617810707494</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1617810707494</updated>
     </task>
     <task id="LOCAL-00003" summary="readme update">
       <created>1617810912818</created>
@@ -445,7 +436,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622125084382</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="- receiver class. no disruptor. debugging...">
+      <created>1622125743613</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1622125743613</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -464,6 +462,7 @@
     <MESSAGE value="- new sampa decoder" />
     <MESSAGE value="- debugging..." />
     <MESSAGE value="- decoding debugging &#10;- add SConsumer" />
-    <option name="LAST_COMMIT_MESSAGE" value="- decoding debugging &#10;- add SConsumer" />
+    <MESSAGE value="- receiver class. no disruptor. debugging..." />
+    <option name="LAST_COMMIT_MESSAGE" value="- receiver class. no disruptor. debugging..." />
   </component>
 </project>
