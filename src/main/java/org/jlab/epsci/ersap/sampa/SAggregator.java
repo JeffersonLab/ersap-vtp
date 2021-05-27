@@ -98,6 +98,8 @@ public class SAggregator extends Thread {
                 availableSequence2 = barrier2.waitFor(nextSequence2);
             }
             SRingRawEvent inputItem2 = ringBuffer2.get(nextSequence2);
+/*
+// @todo aggregation. should be a separate method.
 
             int b1 = inputItem1.getWindowTime();
             int b2 = inputItem2.getWindowTime();
@@ -131,6 +133,9 @@ public class SAggregator extends Thread {
                 m1.remove(b2);
                 m2.remove(b2);
             }
+
+ */
+            outputRingBuffer.publish(outSequence);
         } catch (final TimeoutException | AlertException ex) {
             ex.printStackTrace();
         }

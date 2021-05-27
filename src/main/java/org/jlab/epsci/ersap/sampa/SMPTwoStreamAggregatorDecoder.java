@@ -1,7 +1,6 @@
 package org.jlab.epsci.ersap.sampa;
 
 import com.lmax.disruptor.*;
-import org.jlab.epsci.ersap.vtp.VConsumer;
 
 import java.nio.ByteBuffer;
 
