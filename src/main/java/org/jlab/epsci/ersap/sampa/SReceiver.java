@@ -93,7 +93,7 @@ public class SReceiver extends Thread {
         ringBuffer.publish(sequenceNumber);
     }
 
-    public void decodeSampa(SRingRawEvent evt) {
+    private void decodeSampa(SRingRawEvent evt) {
         // clear gbt_frame: 4 4-byte, 32-bit words
         for (int i = 0; i < 4; i++) {
             data[i] = 0;
@@ -246,12 +246,5 @@ public class SReceiver extends Thread {
         }
     }
 
-    public static void main(String[] args) {
-        int port1 = Integer.parseInt(args[0]);
-        SReceiver sr = new SReceiver(port1, 1, null, 10);
-        while (true){
-            sr.decodeSampa(null);
-        }
-    }
 
 }

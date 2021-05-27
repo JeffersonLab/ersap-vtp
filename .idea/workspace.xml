@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SampaDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/sampa_decoder" beforeDir="false" afterPath="$PROJECT_DIR$/bin/sampa_decoder" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SReceiver.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -72,8 +75,8 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="HeaderParserTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.jlab.epsci.ersap.sampa.HeaderParserTest" />
+    <configuration name="SampaDecoder" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.jlab.epsci.ersap.sampa.SampaDecoder" />
       <module name="ersap-vtp.main" />
       <extension name="coverage">
         <pattern>
@@ -87,7 +90,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.HeaderParserTest" />
+        <item itemvalue="Application.SampaDecoder" />
       </list>
     </recent_temporary>
   </component>
@@ -99,13 +102,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00003" summary="readme update">
-      <created>1617810912818</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1617810912818</updated>
     </task>
     <task id="LOCAL-00004" summary="readme update">
       <created>1617811086286</created>
@@ -443,7 +439,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622125743613</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="- receiver class. no disruptor. debugging...">
+      <created>1622125896604</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1622125896604</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
