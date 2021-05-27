@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SAggregator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SMPTwoStreamAggregatorDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SMPTwoStreamAggregatorDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -424,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622123039418</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="- decoding debugging &#10;- add SConsumer">
+      <created>1622123577320</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1622123577320</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
