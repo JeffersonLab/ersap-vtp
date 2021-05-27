@@ -117,9 +117,31 @@ public class SReceiver extends Thread {
                 + " w0 =" + String.format("0x%08X", data[0])
         );
 
-//        for (int eLink = 0; eLink < 28; eLink++) {
-//            decodeSampaSerial(eLink, data);
-//        }
+        for (int eLink = 0; eLink < 28; eLink++) {
+            decodeSampaSerial(eLink, data);
+        }
+
+    }
+    private void decodeSampa() {
+        // clear gbt_frame: 4 4-byte, 32-bit words
+        for (int i = 0; i < 4; i++) {
+            data[i] = 0;
+        }
+        headerBuffer.clear();
+
+        try {
+            dataInputStream.readFully(header);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        data[3] = headerBuffer.getInt();
+        data[2] = headerBuffer.getInt();
+        data[1] = headerBuffer.getInt();
+        data[0] = headerBuffer.getInt();
+
+        for (int eLink = 0; eLink < 28; eLink++) {
+            decodeSampaSerial(eLink, data);
+        }
 
     }
 /*
@@ -211,7 +233,8 @@ public class SReceiver extends Thread {
                 // Get an empty item from ring
                 SRingRawEvent buf = get();
 
-                decodeSampa(buf);
+//                decodeSampa(buf);
+                decodeSampa();
 
                 // Make the buffer available for consumers
                 publish();
