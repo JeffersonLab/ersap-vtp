@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+import static org.jlab.epsci.ersap.util.EUtil.decodeSampaSerial;
+
 public class SampaDecoder {
 
     private DataInputStream dataInputStream;
@@ -61,9 +63,9 @@ public class SampaDecoder {
                 + " w0 =" + String.format("0x%08X", data[0])
         );
 
-//        for (int eLink = 0; eLink < 28; eLink++) {
-//            decodeSampaSerial(eLink, data);
-//        }
+        for (int eLink = 0; eLink < 28; eLink++) {
+            decodeSampaSerial(eLink, data);
+        }
 
     }
     public void test() {
