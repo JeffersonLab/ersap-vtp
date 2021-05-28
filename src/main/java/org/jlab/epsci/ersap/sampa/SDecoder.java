@@ -360,7 +360,7 @@ public class SDecoder {
                     + "  heartbeat count = " + eLinkStats.getHeartBeatCount()[ii] + "\n");
         }
 
-        System.out.println("\n --------------------------------------------- channel counts ----------------------------------------------- \n");
+        System.out.println("\n --------------------------------------------- channel counts -----------------------------------------------");
 
         for(int chip = 0; chip < 5;chip++)
         {
