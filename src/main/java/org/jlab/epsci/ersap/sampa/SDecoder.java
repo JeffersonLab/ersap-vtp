@@ -82,7 +82,7 @@ public class SDecoder {
 
                 if (eLink == 2) {
                     System.out.println("DDD: elink = " + eLink +
-                            " shiftReg = " + String.format("0x%08X", shiftReg[eLink]));
+                            " shiftReg = " +Long.toHexString(shiftReg[eLink]));
                 }
                 if (syncFound[eLink] != 0) {
                     // when sync found count remaining bits of frame for next header
@@ -229,7 +229,7 @@ public class SDecoder {
                     eLinkDataTemp[eLink].add(dataValue);        // push data into temporary storage vector
 
                     System.out.println("DDD:  shiftReg = " + shiftReg[eLink] +
-                            " data(hex) = " + String.format("0x%08X", dataWord) +
+                            " data(hex) = " + Integer.toHexString( dataWord) +
                             " data = " + dataWord +
                             " dataWordCount = " + dataWordCount[eLink] +
                             " elink = " + eLink);
