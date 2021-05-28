@@ -66,7 +66,6 @@ public class StreamProcessor {
         for (int eLink = 0; eLink < 28; eLink++) {
             sampaDecoder.decodeSerial(eLink, data);
         }
-        sampaDecoder.printLinkStats();
     }
 
     public void test() {
@@ -85,13 +84,13 @@ public class StreamProcessor {
 
     }
 
-
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
+        int streamFrameLimit = Integer.parseInt(args[1]);
         StreamProcessor s = new StreamProcessor(port1);
-        while (true) {
+        for(int i= 0; i < streamFrameLimit; i++) {
             s.process();
         }
-
+        s.sampaDecoder.printLinkStats();
     }
 }
