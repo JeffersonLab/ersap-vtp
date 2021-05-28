@@ -101,13 +101,6 @@
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
     </task>
-    <task id="LOCAL-00008" summary="no processing">
-      <created>1619029228687</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1619029228687</updated>
-    </task>
     <task id="LOCAL-00009" summary="comment engine development">
       <created>1619029454678</created>
       <option name="number" value="00009" />
@@ -444,7 +437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622207759310</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="-debugging...">
+      <created>1622207919817</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1622207919817</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

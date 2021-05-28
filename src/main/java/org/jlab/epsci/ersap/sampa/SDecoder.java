@@ -370,8 +370,8 @@ public class SDecoder {
                 if( (channel%16) == 0 )
                     System.out.println("\n" + "chan " + channel +": ");
                 if( (channel%16) == 8 )
-                    System.out.println("  ");
-                System.out.println( eLinkStats.getDataChannelCount()[channel]);
+                    System.out.print("  ");
+                System.out.print( eLinkStats.getDataChannelCount()[channel]);
                 if( channel == 79 )
                     System.out.println();
             }
