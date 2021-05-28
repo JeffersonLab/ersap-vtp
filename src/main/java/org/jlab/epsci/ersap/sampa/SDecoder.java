@@ -368,10 +368,10 @@ public class SDecoder {
             {
                 channel = chip*32 + ch;
                 if( (channel%16) == 0 )
-                    System.out.println("\n" + "chan " + channel +": ");
+                    System.out.print("\n" + "chan " + channel +": ");
                 if( (channel%16) == 8 )
                     System.out.print("  ");
-                System.out.print( eLinkStats.getDataChannelCount()[channel]);
+                System.out.print( eLinkStats.getDataChannelCount()[channel]+" ");
                 if( channel == 79 )
                     System.out.println();
             }
