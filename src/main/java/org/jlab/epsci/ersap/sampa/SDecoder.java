@@ -21,6 +21,14 @@ public class SDecoder {
     private Vector<Integer>[] eLinkDataTemp = new Vector[28];
     private Vector<Integer>[] eLinkData = new Vector[28];
 
+    public SDecoder() {
+        for (int i=0; i<28; i++){
+            eLinkData[i] = new Vector<>();
+            eLinkDataTemp[i] = new Vector<>();
+        }
+
+    }
+
     /**
      * Main decoder
      * @param eLink
@@ -383,11 +391,7 @@ public class SDecoder {
         Arrays.fill(dataWordCount, 0);
         Arrays.fill(dataCount, 0);
         Arrays.fill(numWords, 0);
-        for (int i=0;i<28; i++){
-            eLinkData[i].clear();
-            eLinkDataTemp[i].clear();
-        }
-//        Arrays.stream(eLinkDataTemp).forEach(Vector::clear);
-//        Arrays.stream(eLinkData).forEach(Vector::clear);
+        Arrays.stream(eLinkDataTemp).forEach(Vector::clear);
+        Arrays.stream(eLinkData).forEach(Vector::clear);
     }
 }
