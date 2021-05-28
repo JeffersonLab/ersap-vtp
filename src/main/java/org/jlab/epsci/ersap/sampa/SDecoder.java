@@ -383,7 +383,11 @@ public class SDecoder {
         Arrays.fill(dataWordCount, 0);
         Arrays.fill(dataCount, 0);
         Arrays.fill(numWords, 0);
-        Arrays.stream(eLinkDataTemp).forEach(Vector::clear);
-        Arrays.stream(eLinkData).forEach(Vector::clear);
+        for (int i=0;i<28; i++){
+            eLinkData[i].clear();
+            eLinkDataTemp[i].clear();
+        }
+//        Arrays.stream(eLinkDataTemp).forEach(Vector::clear);
+//        Arrays.stream(eLinkData).forEach(Vector::clear);
     }
 }
