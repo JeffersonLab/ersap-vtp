@@ -74,11 +74,11 @@ public class SDecoder {
         if (syncFound[eLink] == 0) {
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink (4 bits per frame)
-                bitValue = (gFrameWord & (1 << ii)) >> ii;
+                bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
                 if (bitValue == 1) {
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L; // set bit 50 in shiftReg
                 }
-                shiftReg[eLink] = shiftReg[eLink] >> 1;
+                shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
                 if (eLink == 2) {
                     System.out.println("DDD: elink = " + eLink +
@@ -106,7 +106,7 @@ public class SDecoder {
             // we find NEXT header here
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink 0 (4 bits per frame)
-                bitValue = (gFrameWord & (1 << ii)) >>> ii;
+                bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
                 if (bitValue == 1) {
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
                 }
@@ -211,7 +211,7 @@ public class SDecoder {
             // runs only after data packet header has been found
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink (4 bits per frame)
-                bitValue = (gFrameWord & (1 << ii)) >>> ii;
+                bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
                 if (bitValue > 0)
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
                 shiftReg[eLink] = shiftReg[eLink] >>> 1;
