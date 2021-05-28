@@ -80,9 +80,10 @@ public class SDecoder {
                 }
                 shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
-                System.out.println("DDD: elink = " + eLink +
-                        " shiftReg = " + String.format("0x%08X", shiftReg[eLink]));
-
+                if (eLink == 2) {
+                    System.out.println("DDD: elink = " + eLink +
+                            " shiftReg = " + String.format("0x%08X", shiftReg[eLink]));
+                }
                 if (syncFound[eLink] != 0) {
                     // when sync found count remaining bits of frame for next header
                     headerBitCount[eLink] = headerBitCount[eLink] + 1;
