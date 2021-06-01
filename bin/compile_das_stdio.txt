@@ -1,0 +1,294 @@
+[  6%] Building CXX object src/CMakeFiles/fec.dir/utils.cpp.o
+[ 10%] Building CXX object src/CMakeFiles/fec.dir/simple_log.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/fec.dir/hdlc_core.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/fec.dir/gbt_sca_i2c.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/fec.dir/fec_revision.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/fec.dir/sampa.cpp.o
+[ 14%] Building CXX object src/CMakeFiles/fec.dir/fec.cpp.o
+[ 20%] Building CXX object src/trorc/CMakeFiles/trorc.dir/gbt_link.cpp.o
+[ 24%] Building CXX object src/trorc/CMakeFiles/trorc.dir/trigger.cpp.o
+[ 24%] Building CXX object src/trorc/CMakeFiles/trorc.dir/hdlc_sw_trorc.cpp.o
+[ 24%] Building CXX object src/trorc/CMakeFiles/trorc.dir/sampa_tester.cpp.o
+[ 24%] Building CXX object src/trorc/CMakeFiles/trorc.dir/file_writer.cpp.o
+[ 26%] Linking CXX static library libtrorc.a
+[ 26%] Built target trorc
+[ 28%] Linking CXX static library libfec.a
+[ 28%] Built target fec
+[ 34%] Building CXX object src/trorc/CMakeFiles/trorc_trigger_control.dir/trorc_trigger_control.cpp.o
+[ 38%] Building CXX object src/trorc/CMakeFiles/trorc_dma_in.dir/trorc_dma_in.cpp.o
+[ 38%] Building CXX object src/trorc/CMakeFiles/trorc_rw.dir/trorc_rw.cpp.o
+[ 40%] Building CXX object src/trorc/CMakeFiles/sampa_raw_data_decoder_dsp.dir/__/sampa_raw_data_decoder_dsp.cpp.o
+[ 40%] Building CXX object src/trorc/CMakeFiles/trorc_fec_readout_control.dir/trorc_fec_readout_control.cpp.o
+[ 40%] Building CXX object src/trorc/CMakeFiles/sampa_raw_data_decoder_das.dir/__/sampa_raw_data_decoder_das.cpp.o
+[ 54%] Building CXX object src/trorc/CMakeFiles/trorc_gbtctrl.dir/trorc_gbtctrl.cpp.o
+[ 56%] Building CXX object src/trorc/CMakeFiles/trorc_fec_readout.dir/trorc_fec_readout.cpp.o
+[ 60%] Building CXX object src/trorc/CMakeFiles/tsca.dir/__/tsca.cpp.o
+[ 62%] Building CXX object src/trorc/CMakeFiles/tfec.dir/__/tfec.cpp.o
+[ 62%] Building CXX object src/trorc/CMakeFiles/trorc_init.dir/trorc_init.cpp.o
+[ 62%] Building CXX object src/trorc/CMakeFiles/tcheck.dir/tcheck.cpp.o
+[ 64%] Building CXX object src/trorc/CMakeFiles/trorc_reset.dir/trorc_reset.cpp.o
+[ 64%] Building CXX object src/trorc/CMakeFiles/trorc_status_dump.dir/trorc_status_dump.cpp.o
+[ 64%] Building CXX object src/trorc/CMakeFiles/tsampa.dir/__/tsampa.cpp.o
+[ 64%] Building CXX object src/trorc/CMakeFiles/tdbg.dir/__/tdbg.cpp.o
+[ 64%] Building CXX object src/trorc/CMakeFiles/trorc_dma_monitor.dir/trorc_dma_monitor.cpp.o
+[ 64%] Building CXX object src/trorc/CMakeFiles/treadout.dir/treadout.cpp.o
+[ 66%] Linking CXX executable trorc_status_dump
+[ 68%] Linking CXX executable trorc_dma_monitor
+[ 70%] Linking CXX executable trorc_init
+[ 72%] Linking CXX executable trorc_trigger_control
+[ 72%] Built target trorc_status_dump
+[ 72%] Built target trorc_dma_monitor
+[ 72%] Built target trorc_init
+[ 72%] Built target trorc_trigger_control
+[ 74%] Linking CXX executable trorc_fec_readout
+[ 76%] Linking CXX executable trorc_fec_readout_control
+[ 78%] Linking CXX executable trorc_reset
+[ 80%] Linking CXX executable trorc_dma_in
+[ 80%] Built target trorc_fec_readout
+[ 82%] Built target trorc_fec_readout_control
+[ 82%] Linking CXX executable sampa_raw_data_decoder_dsp
+[ 84%] Linking CXX executable trorc_rw
+[ 84%] Built target trorc_reset
+[ 84%] Built target trorc_dma_in
+[ 86%] Linking CXX executable trorc_gbtctrl
+[ 88%] Linking CXX executable sampa_raw_data_decoder_das
+[ 88%] Built target trorc_rw
+[ 88%] Built target sampa_raw_data_decoder_dsp
+[ 88%] Built target trorc_gbtctrl
+[ 88%] Built target sampa_raw_data_decoder_das
+[ 90%] Linking CXX executable tcheck
+[ 90%] Built target tcheck
+[ 92%] Linking CXX executable tfec
+[ 94%] Linking CXX executable tsca
+[ 98%] Linking CXX executable tsampa
+[ 98%] Linking CXX executable tdbg
+[ 98%] Built target tsca
+[ 98%] Built target tfec
+[100%] Linking CXX executable treadout
+[100%] Built target tdbg
+[100%] Built target tsampa
+[100%] Built target treadout
+Install the project...
+-- Install configuration: "Debug"
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_init
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_init" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_gbtctrl
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_gbtctrl" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_dma_in
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_dma_in" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_reset
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_reset" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_fec_readout
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_fec_readout" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_fec_readout_control
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_fec_readout_control" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_trigger_control
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_trigger_control" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_status_dump
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_status_dump" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_dma_monitor
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_dma_monitor" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_rw
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/trorc_rw" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/treadout
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/treadout" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tcheck
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tcheck" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tdbg
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tdbg" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tfec
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tfec" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tsca
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tsca" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tsampa
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/tsampa" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/sampa_raw_data_decoder_das
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/sampa_raw_data_decoder_das" to ""
+-- Installing: /home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/sampa_raw_data_decoder_dsp
+-- Set runtime path of "/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/bin/sampa_raw_data_decoder_dsp" to ""
+Writing configuration '/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/config/fec-gbtx0-cfg-wb-wd-to.txt' to GBTx at address 0xf
+Writing configuration '/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/config/fec-gbtx0-cfg-wb-wd-to.txt' to GBTx at address 0xf
+Writing configuration '/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/config/fec-gbtx0-cfg-wb-wd-to.txt' to GBTx at address 0xf
+Writing configuration '/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/config/fec-gbtx0-cfg-wb-wd-to.txt' to GBTx at address 0xf
+Writing configuration '/home/gurjyan/Devel/stream/exp-sampa/dist/trorc/config/fec-gbtx0-cfg-wb-wd-to.txt' to GBTx at address 0xf
+*** Initializing GBTs on FEC ***
+Resetting QSFPs...
+Resetting Transceivers...
+Reconfiguring Reference Clock to 240 MHz...
+Releasing Transceiver Resets...
+Releasing QSFP Resets...
+Waiting 10s for GBT RX READY...
+RX READY received on GBT2
+RX READY received on GBT3
+RX READY received on GBT4
+RX READY received on GBT5
+RX READY received on GBT6
+RX READY received on GBT7
+RX READY received on GBT0
+RX READY received on GBT1
+NO RX READY on GBT8!
+NO RX READY on GBT9!
+NO RX READY on GBT10!
+NO RX READY on GBT11!
+Configuring SCA cores...
+Communicating with SCA0
+HDLC core 0 initialized
+Communicating with SCA1
+HDLC core 1 initialized
+Communicating with SCA2
+HDLC core 2 initialized
+Communicating with SCA3
+HDLC core 3 initialized
+Communicating with SCA4
+HDLC core 4 initialized
+done
+Running FEC init
+Communicating with SCA0
+Configuring GBT SCA basic registers
+Updating SCA ID and version information
+Configuring GBT SCA GPIO
+Configuring GBT SCA ADC
+Configuring GBT SCA I2C interfaces
+GBT-SCA GPIO status
+  DIR  0xffc003ff
+  DIN  0x20bb4140
+  DOUT 0x20800140
+
+GBT-SCA ADC status
+  gain            0x0cce
+  current enable  0x00000000
+  input select    0x0
+
+Communicating with SCA1
+Configuring GBT SCA basic registers
+Updating SCA ID and version information
+Configuring GBT SCA GPIO
+Configuring GBT SCA ADC
+Configuring GBT SCA I2C interfaces
+GBT-SCA GPIO status
+  DIR  0xffc003ff
+  DIN  0x20bb4540
+  DOUT 0x20800140
+
+GBT-SCA ADC status
+  gain            0x0cd3
+  current enable  0x00000000
+  input select    0x0
+
+Communicating with SCA2
+Configuring GBT SCA basic registers
+Updating SCA ID and version information
+Configuring GBT SCA GPIO
+Configuring GBT SCA ADC
+Configuring GBT SCA I2C interfaces
+GBT-SCA GPIO status
+  DIR  0xffc003ff
+  DIN  0x20bb4940
+  DOUT 0x20800140
+
+GBT-SCA ADC status
+  gain            0x0db7
+  current enable  0x00000000
+  input select    0x0
+
+Communicating with SCA3
+Configuring GBT SCA basic registers
+Updating SCA ID and version information
+Configuring GBT SCA GPIO
+Configuring GBT SCA ADC
+Configuring GBT SCA I2C interfaces
+GBT-SCA GPIO status
+  DIR  0xffc003ff
+  DIN  0x20bb4d40
+  DOUT 0x20800140
+
+GBT-SCA ADC status
+  gain            0x0d5a
+  current enable  0x00000000
+  input select    0x0
+
+Communicating with SCA4
+ERROR. Exiting.
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Configuring the TRORC Environment
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Configuration of the TRORC Environment Complete
+
+
+Configuration of DAQ in DAS Mode Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Configuring GBTX0 chip via bus pirate 1 mounted at /dev/bp1
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Configuration of GBTX0 chip via bus pirate 1 mounted at /dev/bp1 Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Configuring GBTX0 chip via bus pirate 2 mounted at /dev/bp2
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Configuration of GBTX0 chip via bus pirate 2 mounted at /dev/bp2 Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Configuring GBTX0 chip via bus pirate 3 mounted at /dev/bp3
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Configuration of GBTX0 chip via bus pirate 3 mounted at /dev/bp3 Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Configuring GBTX0 chip via bus pirate 4 mounted at /dev/bp4
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Configuration of GBTX0 chip via bus pirate 4 mounted at /dev/bp4 Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Configuring GBTX0 chip via bus pirate 5 mounted at /dev/bp5
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Configuration of GBTX0 chip via bus pirate 5 mounted at /dev/bp5 Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:
+
+Initializing the TRORC
+
+=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Initialization of the TRORC Complete
+
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+Initializing the FEC for DAS Mode
+
+=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:=:
+
+
+Initialization of the FEC for DAS Mode Complete 
+
