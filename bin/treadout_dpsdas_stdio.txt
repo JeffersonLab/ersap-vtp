@@ -1,0 +1,19 @@
+ 2021-06-01 09:05:44  [[0;32m INFO[;39m] : Starting readout [run 121]
+ 2021-06-01 09:05:44  [[0;36m  SYS[;39m] : Assuming  FEC mode. Using board mask: 000001 , Channel mask: 000000000011
+ 2021-06-01 09:05:44  [[0;36m  SYS[;39m] : Created channel 0 readout thread
+
+Readout configured in DAS mode
+
+ 2021-06-01 09:05:44  [[0;36m  SYS[;39m] : Created channel 1 readout thread
+
+Readout configured in DAS mode
+
+ 2021-06-01 09:05:44  [[0;32m INFO[;39m] : Initiated SYNC pattern and recording of event [txPatMask 0x3, roMask 0x3]
+ 2021-06-01 09:05:44  [[0;32m INFO[;39m] : Channel 1 readout thread active
+ 2021-06-01 09:05:44  [[0;32m INFO[;39m] : Channel 0 readout thread active
+ 2021-06-01 09:05:48  [[0;32m INFO[;39m] : Readout done: 1 events recorded
+ 2021-06-01 09:05:48  [[0;32m INFO[;39m] : Readout done: 1 events recorded
+ 2021-06-01 09:05:48  [[0;36m  SYS[;39m] : Waiting for threads to join
+ 2021-06-01 09:05:48  [[0;32m INFO[;39m] : Readout done [run 121]
+ 2021-06-01 09:05:48  [[0;36m  SYS[;39m] : Finalizing channel 1 readout
+ 2021-06-01 09:05:48  [[0;36m  SYS[;39m] : Finalizing channel 0 readout
