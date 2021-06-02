@@ -68,7 +68,6 @@ public class SDecoder {
         }
         ii_min = (eLink % 8) * 4;
         ii_max = ii_min + 3;
-        System.out.println("DDD: ii_min = " + ii_min + " ii_max = " + ii_max);
 
         // find sync header - this will run until first sync packet header is found
         // sync packet header pattern
@@ -76,6 +75,7 @@ public class SDecoder {
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink (4 bits per frame)
                 bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
+                System.out.println( "DDD-> "+ ii + " " + Integer.toHexString(gFrameWord) + " " + Integer.toHexString(bitValue));
                 if (bitValue == 1) {
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L; // set bit 50 in shiftReg
                 }
