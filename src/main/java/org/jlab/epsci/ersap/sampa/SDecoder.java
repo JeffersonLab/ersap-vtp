@@ -22,7 +22,7 @@ public class SDecoder {
     private Vector<Integer>[] eLinkData = new Vector[28];
 
     public SDecoder() {
-        for (int i=0; i<28; i++){
+        for (int i = 0; i < 28; i++) {
             eLinkData[i] = new Vector<>();
             eLinkDataTemp[i] = new Vector<>();
         }
@@ -31,6 +31,7 @@ public class SDecoder {
 
     /**
      * Main decoder
+     *
      * @param eLink
      * @param gbt_frame
      */
@@ -74,23 +75,23 @@ public class SDecoder {
         if (syncFound[eLink] == 0) {
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink (4 bits per frame)
-                bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
+                bitValue = (gFrameWord & (0x00000001 << ii)) >> ii;
 
                 if (bitValue == 1) {
                     if (eLink == 2) {
-                        System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]) );
+                        System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]));
                     }
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L; // set bit 50 in shiftReg
                     if (eLink == 2) {
-                        System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]) );
+                        System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]));
                     }
-                    }
-                shiftReg[eLink] = shiftReg[eLink] >>> 1;
+                }
+                shiftReg[eLink] = shiftReg[eLink] >> 1;
 
                 if (eLink == 2) {
-                    System.out.println( "DDD-> "+ ii + " " + Integer.toHexString(gFrameWord) + " " + Integer.toHexString(bitValue));
+                    System.out.println("DDD-> " + ii + " " + Integer.toHexString(gFrameWord) + " " + Integer.toHexString(bitValue));
                     System.out.println("elink = " + eLink +
-                            " shiftReg = " +Long.toHexString(shiftReg[eLink]));
+                            " shiftReg = " + Long.toHexString(shiftReg[eLink]));
                 }
                 if (syncFound[eLink] != 0) {
                     // when sync found count remaining bits of frame for next header
@@ -237,7 +238,7 @@ public class SDecoder {
                     eLinkDataTemp[eLink].add(dataValue);        // push data into temporary storage vector
 
                     System.out.println("DDD:  shiftReg = " + shiftReg[eLink] +
-                            " data(hex) = " + Integer.toHexString( dataWord) +
+                            " data(hex) = " + Integer.toHexString(dataWord) +
                             " data = " + dataWord +
                             " dataWordCount = " + dataWordCount[eLink] +
                             " elink = " + eLink);
@@ -353,35 +354,32 @@ public class SDecoder {
         return match;
     }
 
-    public void printLinkStats(){
+    public void printLinkStats() {
         // print elink stats
         int channel;
 
         System.out.println();
 
-        for(int ii = 0; ii < 28; ii++)
-        {
-            System.out.println( "-------------------------------- elink = " + ii +  " ---------------------------------------- \n");
-            System.out.println( " sync count = " + eLinkStats.getSyncCount()[ii]
+        for (int ii = 0; ii < 28; ii++) {
+            System.out.println("-------------------------------- elink = " + ii + " ---------------------------------------- \n");
+            System.out.println(" sync count = " + eLinkStats.getSyncCount()[ii]
                     + "  sync found count = " + eLinkStats.getSyncFoundCount()[ii]
                     + "  sync lost count = " + eLinkStats.getSyncLostCount()[ii] + "\n");
-            System.out.println( " data header count = " + eLinkStats.getDataHeaderCount()[ii]
+            System.out.println(" data header count = " + eLinkStats.getDataHeaderCount()[ii]
                     + "  heartbeat count = " + eLinkStats.getHeartBeatCount()[ii] + "\n");
         }
 
         System.out.println("\n --------------------------------------------- channel counts -----------------------------------------------");
 
-        for(int chip = 0; chip < 5;chip++)
-        {
-            for(int ch = 0; ch < 32; ch++)
-            {
-                channel = chip*32 + ch;
-                if( (channel%16) == 0 )
-                    System.out.print("\n" + "chan " + channel +": ");
-                if( (channel%16) == 8 )
+        for (int chip = 0; chip < 5; chip++) {
+            for (int ch = 0; ch < 32; ch++) {
+                channel = chip * 32 + ch;
+                if ((channel % 16) == 0)
+                    System.out.print("\n" + "chan " + channel + ": ");
+                if ((channel % 16) == 8)
                     System.out.print("  ");
-                System.out.print( eLinkStats.getDataChannelCount()[channel]+" ");
-                if( channel == 79 )
+                System.out.print(eLinkStats.getDataChannelCount()[channel] + " ");
+                if (channel == 79)
                     System.out.println();
             }
         }
