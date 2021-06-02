@@ -68,6 +68,7 @@ public class SDecoder {
         }
         ii_min = (eLink % 8) * 4;
         ii_max = ii_min + 3;
+        System.out.println("DDD: ii_min = " + ii_min + " ii_max = " + ii_max);
 
         // find sync header - this will run until first sync packet header is found
         // sync packet header pattern

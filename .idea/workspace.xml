@@ -4,23 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="-debugging...">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
+    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/a.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/compile_das_stdio.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/compile_dsp_stdio.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/das_analysis_stdio.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/das_run000121_trorc00_link00_adc.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/das_run000121_trorc00_link00_stats.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/dpsdas_analysis_stdio.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/dpsdas_run000121_trorc00_link00_adc.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/dpsdas_run000121_trorc00_link00_stats.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/treadout_das_stdio.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/treadout_dpsdas_stdio.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/StreamProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/StreamProcessor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,13 +101,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00018" summary="- fixed the bug in the header decoding">
-      <created>1621457570980</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1621457570980</updated>
     </task>
     <task id="LOCAL-00019" summary="- debugging ...">
       <created>1621459077260</created>
@@ -459,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622213860048</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="-debugging...">
+      <created>1622648418284</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1622648418285</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
