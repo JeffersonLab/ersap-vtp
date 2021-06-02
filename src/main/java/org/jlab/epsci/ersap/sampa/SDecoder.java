@@ -77,13 +77,19 @@ public class SDecoder {
                 bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
 
                 if (bitValue == 1) {
+                    if (eLink == 2) {
+                        System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]) );
+                    }
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L; // set bit 50 in shiftReg
-                }
+                    if (eLink == 2) {
+                        System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]) );
+                    }
+                    }
                 shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
                 if (eLink == 2) {
                     System.out.println( "DDD-> "+ ii + " " + Integer.toHexString(gFrameWord) + " " + Integer.toHexString(bitValue));
-                    System.out.println("DDD: elink = " + eLink +
+                    System.out.println("elink = " + eLink +
                             " shiftReg = " +Long.toHexString(shiftReg[eLink]));
                 }
                 if (syncFound[eLink] != 0) {
