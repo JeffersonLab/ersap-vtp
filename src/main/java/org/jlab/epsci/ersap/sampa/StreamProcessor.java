@@ -57,11 +57,11 @@ public class StreamProcessor {
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
 
-//        System.out.println(" w3 =" + String.format("0x%08X", data[3])
-//                + " w2 =" + String.format("0x%08X", data[2])
-//                + " w1 =" + String.format("0x%08X", data[1])
-//                + " w0 =" + String.format("0x%08X", data[0])
-//        );
+        System.out.println(" w3 =" + Integer.toHexString(data[3])
+                + " w2 =" + Integer.toHexString(data[2])
+                + " w1 =" + Integer.toHexString(data[1])
+                + " w0 =" + Integer.toHexString(data[0])
+        );
 
         for (int eLink = 0; eLink < 28; eLink++) {
             sampaDecoder.decodeSerial(eLink, data);

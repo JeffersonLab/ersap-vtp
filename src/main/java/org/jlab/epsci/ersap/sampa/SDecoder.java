@@ -58,13 +58,13 @@ public class SDecoder {
         reset();
 
         if (eLink < 8) {
-            gFrameWord = gbt_frame[3];
-        } else if ((eLink >= 8) && (eLink < 16)) {
-            gFrameWord = gbt_frame[2];
-        } else if ((eLink >= 16) && (eLink < 24)) {
-            gFrameWord = gbt_frame[1];
-        } else {
             gFrameWord = gbt_frame[0];
+        } else if ((eLink >= 8) && (eLink < 16)) {
+            gFrameWord = gbt_frame[1];
+        } else if ((eLink >= 16) && (eLink < 24)) {
+            gFrameWord = gbt_frame[2];
+        } else {
+            gFrameWord = gbt_frame[3];
         }
         ii_min = (eLink % 8) * 4;
         ii_max = ii_min + 3;
