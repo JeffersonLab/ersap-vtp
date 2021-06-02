@@ -55,7 +55,7 @@ public class SDecoder {
         boolean match;
         int tempData;
 
-        reset();
+//        reset();
 
         if (eLink < 8) {
             gFrameWord = gbt_frame[0];
