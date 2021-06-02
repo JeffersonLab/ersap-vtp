@@ -9,14 +9,6 @@ public class SDecoder {
 
     private final ELinkStats eLinkStats = new ELinkStats();
 
-    private final long[] shiftReg = new long[28]; // static variables for 28 elink serial streams
-    private final int[] syncFound = new int[28];
-    private final int[] dataHeader = new int[28];
-    private final int[] headerBitCount = new int[28];
-    private final int[] dataBitCount = new int[28];
-    private final int[] dataWordCount = new int[28];
-    private final int[] dataCount = new int[28];
-    private final int[] numWords = new int[28];
 
     private Vector<Integer>[] eLinkDataTemp = new Vector[28];
     private Vector<Integer>[] eLinkData = new Vector[28];
@@ -37,6 +29,15 @@ public class SDecoder {
      */
     public void decodeSerial(int eLink, int[] gbt_frame) {
         long syncHeaderPattern = 0x1555540F00113L;
+        long[] shiftReg = new long[28]; // static variables for 28 elink serial streams
+        int[] syncFound = new int[28];
+        int[] dataHeader = new int[28];
+        int[] headerBitCount = new int[28];
+        int[] dataBitCount = new int[28];
+        int[] dataWordCount = new int[28];
+        int[] dataCount = new int[28];
+        int[] numWords = new int[28];
+
         int bitValue;
         int dataWord;
         int pkt;
@@ -390,14 +391,14 @@ public class SDecoder {
 
     private void reset() {
         eLinkStats.reset();
-        Arrays.fill(shiftReg, 0);
-        Arrays.fill(syncFound, 0);
-        Arrays.fill(dataHeader, 0);
-        Arrays.fill(headerBitCount, 0);
-        Arrays.fill(dataBitCount, 0);
-        Arrays.fill(dataWordCount, 0);
-        Arrays.fill(dataCount, 0);
-        Arrays.fill(numWords, 0);
+//        Arrays.fill(shiftReg, 0);
+//        Arrays.fill(syncFound, 0);
+//        Arrays.fill(dataHeader, 0);
+//        Arrays.fill(headerBitCount, 0);
+//        Arrays.fill(dataBitCount, 0);
+//        Arrays.fill(dataWordCount, 0);
+//        Arrays.fill(dataCount, 0);
+//        Arrays.fill(numWords, 0);
         Arrays.stream(eLinkDataTemp).forEach(Vector::clear);
         Arrays.stream(eLinkData).forEach(Vector::clear);
     }
