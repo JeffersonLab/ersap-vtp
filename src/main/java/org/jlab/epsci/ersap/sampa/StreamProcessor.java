@@ -65,7 +65,7 @@ public class StreamProcessor {
 //        );
 
         for (int eLink = 0; eLink < 28; eLink++) {
-            System.out.println("=========================" + eLink + "========================");
+//            System.out.println("=========================" + eLink + "========================");
             sampaDecoder.decodeSerial(eLink, data);
         }
         sampaDecoder.printBlockData(streamId);
