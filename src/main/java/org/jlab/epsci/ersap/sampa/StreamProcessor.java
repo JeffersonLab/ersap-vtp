@@ -58,33 +58,13 @@ public class StreamProcessor {
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
 
-//        System.out.println(" w3 =" + Integer.toHexString(data[3])
-//                + " w2 =" + Integer.toHexString(data[2])
-//                + " w1 =" + Integer.toHexString(data[1])
-//                + " w0 =" + Integer.toHexString(data[0])
-//        );
+        sampaDecoder.frameCount = sampaDecoder.frameCount + 1;
+        sampaDecoder.block_frameCount = sampaDecoder.block_frameCount + 1;
 
         for (int eLink = 0; eLink < 28; eLink++) {
-//            System.out.println("=========================" + eLink + "========================");
             sampaDecoder.decodeSerial(eLink, data);
         }
         sampaDecoder.printBlockData(streamId);
-    }
-
-    public void test() {
-        int h1 = 0xb6e08000;
-        int chipAddress = h1 & 0x0000000f;
-        int channelAddress = (h1 & 0x000001f0) >>> 4;
-        int windowTime = (h1 >>> 9) & 0x000fffff;
-
-        int h2 = 0x406200b4;
-        int numberDataWords = (h2 >>> 3) & 0x000003ff;
-
-        System.out.println("DDD:  chip = " + chipAddress +
-                " channel = " + channelAddress +
-                " startTime = " + windowTime +
-                " dataWords = " + numberDataWords);
-
     }
 
     public static void main(String[] args) {
@@ -96,5 +76,8 @@ public class StreamProcessor {
             s.process();
         }
         s.sampaDecoder.printLinkStats();
+        System.out.println("   num stream = " +streamId);
+        System.out.println( "   block count = " +s.sampaDecoder.block_count) ;
+
     }
 }

@@ -24,12 +24,12 @@ public class SDecoder {
     private static final int N_BLOCK = 1;
     private static final int frames_in_block = 2000*N_BLOCK;
 
-    private int frameCount = 0;
-    private int block_frameCount = 0;
-    private int block_count = 0;
-    private int block_header = 0;
-    private int data = 0;
-    private int numData = 0;
+    public int frameCount = 0;
+    public int block_frameCount = 0;
+    public int block_count = 0;
+    public int block_header = 0;
+    public int data = 0;
+    public int numData = 0;
 
     public SDecoder() {
         eLinkStats.init(); // not necessary, but anyways

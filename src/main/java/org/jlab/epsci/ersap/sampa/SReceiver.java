@@ -88,8 +88,10 @@ public class SReceiver extends Thread {
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
 
+        sampaDecoder.frameCount = sampaDecoder.frameCount + 1;
+        sampaDecoder.block_frameCount = sampaDecoder.block_frameCount + 1;
+
         for (int eLink = 0; eLink < 28; eLink++) {
-            System.out.println("=========================" + eLink + "========================");
             sampaDecoder.decodeSerial(eLink, data);
         }
         sampaDecoder.printBlockData(streamId);
