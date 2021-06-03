@@ -21,7 +21,18 @@ public class SDecoder {
     private Vector<Integer>[] eLinkDataTemp = new Vector[28];
     private Vector<Integer>[] eLinkData = new Vector[28];
 
+    private static final int N_BLOCK = 1;
+    private static final int frames_in_block = 2000*N_BLOCK;
+
+    private int frameCount = 0;
+    private int block_frameCount = 0;
+    private int block_count = 0;
+    private int block_header = 0;
+    private int data = 0;
+    private int numData = 0;
+
     public SDecoder() {
+        eLinkStats.init(); // not necessary, but anyways
         for (int i = 0; i < 28; i++) {
             eLinkData[i] = new Vector<>();
             eLinkDataTemp[i] = new Vector<>();
@@ -54,8 +65,6 @@ public class SDecoder {
         int fec_channel;
         boolean match;
         int tempData;
-
-//        reset();
 
         if (eLink < 8) {
             gFrameWord = gbt_frame[0];
@@ -353,51 +362,38 @@ public class SDecoder {
         return match;
     }
 
-    public void printLinkStats() {
-        // print elink stats
-        int channel;
+    public void printBlockData(int steamId){
+        if( block_frameCount == frames_in_block )
+        {
+            // write block header to file
+            block_count = block_count + 1;		  // block count is 26 bits
+            block_header = 0x20000000 | ((0xF & steamId) << 26) | (0x3FFFFFF & block_count);
+            System.out.println(Integer.toHexString(block_header));
 
-        System.out.println();
+            // write vector data for block to file
+            for(int jj = 0; jj < 28; jj++)
+            {
+                numData = eLinkData[jj].size();
+                System.out.println(" eLink = " + jj + "   num data = " + numData );
 
-        for (int ii = 0; ii < 28; ii++) {
-            System.out.println("-------------------------------- elink = " + ii + " ---------------------------------------- \n");
-            System.out.println(" sync count = " + eLinkStats.getSyncCount()[ii]
-                    + "  sync found count = " + eLinkStats.getSyncFoundCount()[ii]
-                    + "  sync lost count = " + eLinkStats.getSyncLostCount()[ii] + "\n");
-            System.out.println(" data header count = " + eLinkStats.getDataHeaderCount()[ii]
-                    + "  heartbeat count = " + eLinkStats.getHeartBeatCount()[ii] + "\n");
-        }
-
-        System.out.println("\n --------------------------------------------- channel counts -----------------------------------------------");
-
-        for (int chip = 0; chip < 5; chip++) {
-            for (int ch = 0; ch < 32; ch++) {
-                channel = chip * 32 + ch;
-                if ((channel % 16) == 0)
-                    System.out.print("\n" + "chan " + channel + ": ");
-                if ((channel % 16) == 8)
-                    System.out.print("  ");
-                System.out.print(eLinkStats.getDataChannelCount()[channel] + " ");
-                if (channel == 79)
-                    System.out.println();
+                if( numData > 0 )
+                {
+                    for(int ii = 0; ii < numData; ii++)
+                    {
+                        data = eLinkData[jj].get(ii);
+                        System.out.println(Integer.toHexString(data));
+                    }
+                }
+                // clear vector contents after file write
+                eLinkData[jj].clear();
             }
+            // reset block frame count
+            block_frameCount = 0;
         }
-
-        System.out.println("\n------------------------------------------------------------------------------------------------------------\n\n");
-
     }
 
-    private void reset() {
-        eLinkStats.reset();
-        Arrays.fill(shiftReg, 0);
-        Arrays.fill(syncFound, 0);
-        Arrays.fill(dataHeader, 0);
-        Arrays.fill(headerBitCount, 0);
-        Arrays.fill(dataBitCount, 0);
-        Arrays.fill(dataWordCount, 0);
-        Arrays.fill(dataCount, 0);
-        Arrays.fill(numWords, 0);
-        Arrays.stream(eLinkDataTemp).forEach(Vector::clear);
-        Arrays.stream(eLinkData).forEach(Vector::clear);
+    public void printLinkStats() {
+        eLinkStats.print();
+
     }
 }

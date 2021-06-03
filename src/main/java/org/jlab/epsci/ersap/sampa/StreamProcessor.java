@@ -13,6 +13,7 @@ import java.util.Arrays;
 public class StreamProcessor {
 
     private DataInputStream dataInputStream;
+    private int streamId;
     // server socket
     private ServerSocket serverSocket;
     private final ByteBuffer headerBuffer;
@@ -21,8 +22,8 @@ public class StreamProcessor {
 
     private final SDecoder sampaDecoder;
 
-    public StreamProcessor(int sampaPort) {
-
+    public StreamProcessor(int sampaPort, int streamId) {
+        this.streamId = streamId;
         headerBuffer = ByteBuffer.wrap(header);
         headerBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
@@ -67,6 +68,7 @@ public class StreamProcessor {
             System.out.println("=========================" + eLink + "========================");
             sampaDecoder.decodeSerial(eLink, data);
         }
+        sampaDecoder.printBlockData(streamId);
     }
 
     public void test() {
@@ -87,8 +89,9 @@ public class StreamProcessor {
 
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
-        int streamFrameLimit = Integer.parseInt(args[1]);
-        StreamProcessor s = new StreamProcessor(port1);
+        int streamId = Integer.parseInt(args[1]);
+        int streamFrameLimit = Integer.parseInt(args[2]);
+        StreamProcessor s = new StreamProcessor(port1, streamId);
         for(int i= 0; i < streamFrameLimit; i++) {
             s.process();
         }
