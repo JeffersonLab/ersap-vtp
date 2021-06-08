@@ -1,88 +1,31 @@
 package org.jlab.epsci.ersap.sampa;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.util.Vector;
 
 public class SRingRawEvent {
 
-    private int chipAddress;
-    private int channelAddress;
+    private int blockNumber;
+    private Vector<Integer>[] data = new Vector[28];
 
-    private int windowTime;
-    private byte[] payload;
-    private ByteBuffer payloadBuffer;
-    private int payloadDataLength;
-    private int partLength1;
-    private int partLength2;
-
-    public SRingRawEvent() {
-        payload = new byte[400000];
-        payloadBuffer = ByteBuffer.wrap(payload);
-        payloadBuffer.order(ByteOrder.LITTLE_ENDIAN);
-
+    public int getBlockNumber() {
+        return blockNumber;
     }
 
-    public int getChipAddress() {
-        return chipAddress;
+    public void setBlockNumber(int blockNumber) {
+        this.blockNumber = blockNumber;
     }
 
-    public void setChipAddress(int chipAddress) {
-        this.chipAddress = chipAddress;
+    public Vector<Integer>[] getData() {
+        return data;
     }
 
-    public int getChannelAddress() {
-        return channelAddress;
+    public void setData(Vector<Integer>[] data) {
+        this.data = data;
     }
 
-    public void setChannelAddress(int channelAddress) {
-        this.channelAddress = channelAddress;
-    }
-
-    public int getWindowTime() {
-        return windowTime;
-    }
-
-    public void setWindowTime(int windowTime) {
-        this.windowTime = windowTime;
-    }
-
-    public byte[] getPayload() {
-        return payload;
-    }
-
-    public void setPayload(byte[] payload) {
-        this.payload = payload;
-    }
-
-    public ByteBuffer getPayloadBuffer() {
-        return payloadBuffer;
-    }
-
-    public void setPayloadBuffer(ByteBuffer payloadBuffer) {
-        this.payloadBuffer = payloadBuffer;
-    }
-
-    public int getPayloadDataLength() {
-        return payloadDataLength;
-    }
-
-    public void setPayloadDataLength(int payloadDataLength) {
-        this.payloadDataLength = payloadDataLength;
-    }
-
-    public int getPartLength1() {
-        return partLength1;
-    }
-
-    public void setPartLength1(int partLength1) {
-        this.partLength1 = partLength1;
-    }
-
-    public int getPartLength2() {
-        return partLength2;
-    }
-
-    public void setPartLength2(int partLength2) {
-        this.partLength2 = partLength2;
+    public void reset() {
+        for (int i = 0; i > 28; i++) {
+            data[i].clear();
+        }
     }
 }

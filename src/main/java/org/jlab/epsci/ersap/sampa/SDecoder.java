@@ -22,7 +22,7 @@ public class SDecoder {
     private Vector<Integer>[] eLinkData = new Vector[28];
 
     private static final int N_BLOCK = 1;
-    private static final int frames_in_block = 2000*N_BLOCK;
+    private static final int frames_in_block = 2000 * N_BLOCK;
 
     public int frameCount = 0;
     public int block_frameCount = 0;
@@ -116,7 +116,7 @@ public class SDecoder {
             }
             if (syncFound[eLink] != 0) {
                 // print headerBitCount after frame where sync packet found
-                System.out.println("DDD: SyncPacket found headerButCount = " + headerBitCount[eLink]);
+                System.out.println("DDD: SyncPacket found headerBitCount = " + headerBitCount[eLink]);
             }
         } else if (dataHeader[eLink] == 0) {
             // runs only after first sync packet header has been found
@@ -362,24 +362,30 @@ public class SDecoder {
         return match;
     }
 
-    public void printBlockData(int steamId){
-        if( block_frameCount == frames_in_block )
-        {
+    public void getBlockData(SRingRawEvent rawEvent) {
+        rawEvent.reset();
+        rawEvent.setBlockNumber(block_count);
+        rawEvent.setData(eLinkData);
+    }
+
+    public boolean icBlockComplete() {
+        return block_frameCount == frames_in_block;
+    }
+
+    public void printBlockData(int steamId) {
+        if (block_frameCount == frames_in_block) {
             // write block header to file
-            block_count = block_count + 1;		  // block count is 26 bits
+            block_count = block_count + 1;          // block count is 26 bits
             block_header = 0x20000000 | ((0xF & steamId) << 26) | (0x3FFFFFF & block_count);
             System.out.println(Integer.toHexString(block_header));
 
             // write vector data for block to file
-            for(int jj = 0; jj < 28; jj++)
-            {
+            for (int jj = 0; jj < 28; jj++) {
                 numData = eLinkData[jj].size();
-                System.out.println(" eLink = " + jj + "   num data = " + numData );
+                System.out.println(" eLink = " + jj + "   num data = " + numData);
 
-                if( numData > 0 )
-                {
-                    for(int ii = 0; ii < numData; ii++)
-                    {
+                if (numData > 0) {
+                    for (int ii = 0; ii < numData; ii++) {
                         data = eLinkData[jj].get(ii);
                         System.out.println(Integer.toHexString(data));
                     }

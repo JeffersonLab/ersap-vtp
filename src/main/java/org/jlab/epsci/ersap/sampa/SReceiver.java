@@ -73,7 +73,7 @@ public class SReceiver extends Thread {
         ringBuffer.publish(sequenceNumber);
     }
 
-    public void process() {
+    public void process(SRingRawEvent rawEvent) {
         Arrays.fill(data, 0);
         headerBuffer.clear();
 
@@ -94,16 +94,15 @@ public class SReceiver extends Thread {
         for (int eLink = 0; eLink < 28; eLink++) {
             sampaDecoder.decodeSerial(eLink, data);
         }
-        sampaDecoder.printBlockData(streamId);
+//        sampaDecoder.printBlockData(streamId);
     }
 
     public void run() {
         for(int i= 0; i < streamFrameLimit; i++) {
             try {
                 // Get an empty item from ring
-                SRingRawEvent buf = get();
-               //@todo process method should accept SRingRawEvent and fill it with decoded/processed data
-                process();
+                SRingRawEvent sRawEvent = get();
+                process(sRawEvent);
 
                 // Make the buffer available for consumers
                 publish();
