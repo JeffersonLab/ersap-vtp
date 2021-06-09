@@ -16,8 +16,8 @@ public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggr
 
     @Override
     protected VTPTwoStreamAggregatorDecoder createReader(Path file, JSONObject opts) throws EventReaderException {
-        int port1 = opts.has(VTP_PORT1) ? opts.getInt(VTP_PORT1) : 7000;
-        int port2 = opts.has(VTP_PORT2) ? opts.getInt(VTP_PORT2) : 7001;
+        int port1 = opts.has(VTP_PORT1) ? opts.getInt(VTP_PORT1) : 6000;
+        int port2 = opts.has(VTP_PORT2) ? opts.getInt(VTP_PORT2) : 6001;
         try {
             return new VTPTwoStreamAggregatorDecoder(port1, port2);
         } catch (Exception e) {
