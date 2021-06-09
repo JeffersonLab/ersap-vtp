@@ -94,14 +94,19 @@ public class SReceiver extends Thread {
         for (int eLink = 0; eLink < 28; eLink++) {
             sampaDecoder.decodeSerial(eLink, data);
         }
+        // update ring event with the decoded data
+        sampaDecoder.getBlockData(rawEvent);
+
 //        sampaDecoder.printBlockData(streamId);
     }
 
     public void run() {
-        for(int i= 0; i < streamFrameLimit; i++) {
+        for(int i = 0; i < streamFrameLimit; i++) {
             try {
                 // Get an empty item from ring
                 SRingRawEvent sRawEvent = get();
+                sRawEvent.reset();
+
                 process(sRawEvent);
 
                 // Make the buffer available for consumers

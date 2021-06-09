@@ -1,6 +1,5 @@
 package org.jlab.epsci.ersap.sampa;
 
-import java.util.Arrays;
 import java.util.Vector;
 
 @SuppressWarnings("unchecked")
@@ -368,7 +367,7 @@ public class SDecoder {
         rawEvent.setData(eLinkData);
     }
 
-    public boolean icBlockComplete() {
+    public boolean isBlockComplete() {
         return block_frameCount == frames_in_block;
     }
 

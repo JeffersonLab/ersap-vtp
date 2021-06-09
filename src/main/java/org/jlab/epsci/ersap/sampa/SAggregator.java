@@ -1,9 +1,11 @@
 package org.jlab.epsci.ersap.sampa;
 
+import com.google.common.escape.ArrayBasedUnicodeEscaper;
 import com.lmax.disruptor.*;
 import org.jlab.epsci.ersap.util.EUtil;
 
 import java.util.HashMap;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -20,8 +22,8 @@ public class SAggregator extends Thread {
     /**
      * Maps for aggregation
      */
-    private final HashMap<Integer, byte[]> m1 = new HashMap<>();
-    private final HashMap<Integer, byte[]> m2 = new HashMap<>();
+    private final HashMap<Integer, Vector<Integer>[]> m1 = new HashMap<>();
+    private final HashMap<Integer, Vector<Integer>[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
@@ -66,6 +68,7 @@ public class SAggregator extends Thread {
     // control for the thread termination
     private final AtomicBoolean running = new AtomicBoolean(true);
 
+
     public SAggregator(RingBuffer<SRingRawEvent> ringBuffer1, RingBuffer<SRingRawEvent> ringBuffer2,
                        Sequence sequence1, Sequence sequence2,
                        SequenceBarrier barrier1, SequenceBarrier barrier2,
@@ -98,51 +101,50 @@ public class SAggregator extends Thread {
                 availableSequence2 = barrier2.waitFor(nextSequence2);
             }
             SRingRawEvent inputItem2 = ringBuffer2.get(nextSequence2);
-/*
-// @todo aggregation. should be a separate method.
 
-            int b1 = inputItem1.getWindowTime();
-            int b2 = inputItem2.getWindowTime();
+            aggregateAndPublish(inputItem1, inputItem2);
 
-            int l1 = inputItem1.getPayload().length;
-            int l2 = inputItem2.getPayload().length;
+        } catch (final TimeoutException | AlertException ex) {
+            ex.printStackTrace();
+        }
+    }
 
-            m1.put(b1, inputItem1.getPayload());
-            m2.put(b2, inputItem2.getPayload());
+    private void aggregateAndPublish(SRingRawEvent e1, SRingRawEvent e2){
+            int b1 = e1.getBlockNumber();
+            int b2 = e2.getBlockNumber();
+
+            m1.put(b1, e1.getData());
+            m2.put(b2, e2.getData());
 
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 outSequence = outputRingBuffer.next();
                 SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
-
-                EUtil.addByteArrays(m1.get(b1), l1, m2.get(b1), l2, outputItem.getPayload());
-
-                outputItem.setWindowTime(b1);
+                outputItem.reset();
+                // set output ring item block number
+                outputItem.setBlockNumber(b1);
+                // add two array of vectors together and add to the output item
+                outputItem.setData(m1.get(b1));
+                outputItem.addData(m2.get(b1));
+                // publish
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b1);
                 m2.remove(b1);
             }
 
             if (m1.containsKey(b2) && m2.containsKey(b2)) {
-
                 outSequence = outputRingBuffer.next();
                 SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
-
-                EUtil.addByteArrays(m1.get(b2), l1, m2.get(b2), l2, outputItem.getPayload());
-                outputItem.setWindowTime(b2);
+                outputItem.reset();
+                // set output ring item block number
+                outputItem.setBlockNumber(b2);
+                // add two array of vectors together and add to the output item
+                outputItem.setData(m1.get(b2));
+                outputItem.addData(m2.get(b2));
+                // publish
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b2);
                 m2.remove(b2);
             }
-
- */
-            outSequence = outputRingBuffer.next();
-            SRingRawEvent outputItem = outputRingBuffer.get(outSequence);
-            outputRingBuffer.publish(outSequence);
-
-        } catch (final TimeoutException | AlertException ex) {
-            ex.printStackTrace();
-        }
-
     }
 
     /**
