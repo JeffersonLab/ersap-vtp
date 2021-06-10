@@ -45,6 +45,8 @@ public class VTPTwoStreamAggregatorDecoder {
     private VAggregator aggregator12;
     private VConsumer consumer;
 
+    private boolean started = false;
+
     public VTPTwoStreamAggregatorDecoder(int vtpPort1, int vtpPort2) {
         this.vtpPort1 = vtpPort1;
         this.vtpPort2 = vtpPort2;
@@ -73,21 +75,23 @@ public class VTPTwoStreamAggregatorDecoder {
     }
 
     public void go() {
-        receiver1 = new VReceiver(vtpPort1, 1, ringBuffer1, 10);
-        receiver2 = new VReceiver(vtpPort2, 2, ringBuffer2, 10);
+        if(!started) {
+            receiver1 = new VReceiver(vtpPort1, 1, ringBuffer1, 10);
+            receiver2 = new VReceiver(vtpPort2, 2, ringBuffer2, 10);
 
-        aggregator12 = new VAggregator(ringBuffer1, ringBuffer2, sequence1,
-                sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
+            aggregator12 = new VAggregator(ringBuffer1, ringBuffer2, sequence1,
+                    sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
 
-        int runNumber = 0;
-        consumer = new VConsumer(ringBuffer12, sequence12, sequenceBarrier12, runNumber);
+            int runNumber = 0;
+            consumer = new VConsumer(ringBuffer12, sequence12, sequenceBarrier12, runNumber);
 
-        receiver1.start();
-        receiver2.start();
+            receiver1.start();
+            receiver2.start();
 
-        aggregator12.start();
-        consumer.start();
-
+            aggregator12.start();
+            consumer.start();
+            started = true;
+        }
     }
 
     public ByteBuffer getDecodedEvent() throws Exception {
@@ -99,6 +103,7 @@ public class VTPTwoStreamAggregatorDecoder {
         receiver2.exit();
         aggregator12.exit();
         consumer.exit();
+        started = false;
     }
 
     public static void main(String[] args) {
