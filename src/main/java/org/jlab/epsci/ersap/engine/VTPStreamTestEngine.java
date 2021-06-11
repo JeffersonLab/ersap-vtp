@@ -40,7 +40,8 @@ public class VTPStreamTestEngine implements Engine {
 
     @Override
     public Set<EngineDataType> getInputDataTypes() {
-        return ClaraUtil.buildDataTypes(StreamingDataTypes.VTP_G);
+        return ClaraUtil.buildDataTypes(StreamingDataTypes.VTP_G,
+                EngineDataType.JSON);
     }
 
     @Override
