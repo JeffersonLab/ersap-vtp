@@ -56,10 +56,6 @@ public class SConsumer extends Thread {
         return item;
     }
 
-    /**
-     * This "consumer" is also a producer for the output ring.
-     * So get items from the output ring and fill them with items claimed from the input rings.
-     */
     public void put() throws InterruptedException {
 
         // Tell input (crate) ring that we're done with the item we're consuming

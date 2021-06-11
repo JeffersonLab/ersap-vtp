@@ -139,12 +139,6 @@ public class EUtil {
     }
 
 
-    /**
-     * Avoid the creation of long[] objects by providing as an arg.
-     *
-     * @param dataInputStream
-     * @param payload         array to be filled
-     */
     public static void readLtPayload(DataInputStream dataInputStream, long[] payload) {
         int j = 0;
         for (long i = 0; i < payload.length; i = i + 4) {

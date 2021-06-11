@@ -38,10 +38,7 @@ public class SDecoder {
         }
     }
 
-    /**
-     * Main decoder
-     *
-     */
+
     public void decodeSerial(int eLink, int[] gbt_frame) {
         long syncHeaderPattern = 0x1555540F00113L;
         int bitValue;
