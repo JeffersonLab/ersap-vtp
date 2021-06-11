@@ -35,7 +35,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.9.0'
     implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.15.6'
-//    implementation 'com.lmax:disruptor:3.4.0'
+    implementation 'com.lmax:disruptor:3.4.0'
 }
 
 

@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.SJ" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.SJ" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,13 +102,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00038" summary="- debugging...">
-      <created>1621908883930</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1621908883930</updated>
     </task>
     <task id="LOCAL-00039" summary="- debugging...">
       <created>1621909785045</created>
@@ -447,11 +439,17 @@
       <option name="project" value="LOCAL" />
       <updated>1623435139498</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="- more appropriate gradle build, that is dependent from Clara.">
+      <created>1623436689407</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1623436689407</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="readme update" />
     <MESSAGE value="no processing" />
     <MESSAGE value="comment engine development" />
     <MESSAGE value="TwoStreamAggregator name change" />
@@ -476,6 +474,7 @@
     <MESSAGE value="- added a new engine package" />
     <MESSAGE value="- vtp dummy writer engine" />
     <MESSAGE value="- yaml description files for IO services" />
-    <option name="LAST_COMMIT_MESSAGE" value="- yaml description files for IO services" />
+    <MESSAGE value="- more appropriate gradle build, that is dependent from Clara." />
+    <option name="LAST_COMMIT_MESSAGE" value="- more appropriate gradle build, that is dependent from Clara." />
   </component>
 </project>

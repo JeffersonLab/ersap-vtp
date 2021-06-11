@@ -38,10 +38,11 @@ repositories {
 
 dependencies {
     compileOnly 'org.jlab.coda:jclara:4.3-SNAPSHOT'
+    compileOnly 'com.google.code.findbugs:findbugs-annotations:3.0.1'
     compile 'org.json:json:20160810'
+    implementation 'com.lmax:disruptor:3.4.0'
     implementation 'org.jetbrains:annotations:19.0.0'
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.9.0'
-    compileOnly 'com.google.code.findbugs:findbugs-annotations:3.0.1'
     deployerJars 'org.apache.maven.wagon:wagon-ssh-external:2.12'
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
