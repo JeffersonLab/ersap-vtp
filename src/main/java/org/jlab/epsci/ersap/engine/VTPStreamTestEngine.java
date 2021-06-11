@@ -13,7 +13,7 @@ public class VTPStreamTestEngine implements Engine {
     @Override
     public EngineData configure(EngineData input) {
         System.out.println("VTPStreamTestEngine engine configure...");
-        return input;
+        return null;
     }
 
     @Override
