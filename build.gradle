@@ -39,6 +39,8 @@ repositories {
 dependencies {
     compileOnly 'org.jlab.coda:jclara:4.3-SNAPSHOT'
     compile 'org.json:json:20160810'
+    compile 'com.lmax:disruptor:3.4.0'
+    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.9.0'
     implementation 'org.jetbrains:annotations:19.0.0'
     implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.9.0'
     compileOnly 'com.google.code.findbugs:findbugs-annotations:3.0.1'
