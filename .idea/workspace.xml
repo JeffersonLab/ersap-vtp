@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSyncEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/SAMPASourceEngine.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSourceEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VTPTwoStreamAggregatorDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VTPTwoStreamAggregatorDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSyncEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,13 +101,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00035" summary="- debugging...">
-      <created>1621892072437</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1621892072437</updated>
     </task>
     <task id="LOCAL-00036" summary="- debugging...">
       <created>1621892668644</created>
@@ -449,7 +438,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623273876760</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="- added a new engine package">
+      <created>1623359478834</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1623359478834</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

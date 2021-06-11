@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import java.nio.file.Path;
 
-public class VTPSyncEngine extends AbstractEventWriterService<Object> {
+public class VTPWriterEngine extends AbstractEventWriterService<Object> {
     @Override
     protected Object createWriter(Path file, JSONObject opts) throws EventWriterException {
         return null;
