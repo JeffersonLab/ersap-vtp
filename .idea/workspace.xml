@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSourceEngine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/ersap/engine/VTPSourceEngine.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/ersap/engine/VTPWriterEngine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,20 +108,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00051" summary="- receiver class. no disruptor. debugging...">
-      <created>1622125743613</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1622125743613</updated>
-    </task>
-    <task id="LOCAL-00052" summary="- receiver class. no disruptor. debugging...">
-      <created>1622125896604</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1622125896604</updated>
     </task>
     <task id="LOCAL-00053" summary="- receiver class. no disruptor. debugging...">
       <created>1622126933779</created>
@@ -457,11 +438,24 @@
       <option name="project" value="LOCAL" />
       <updated>1623442087300</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="-yaml service description files">
+      <created>1623444224659</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1623444224659</updated>
+    </task>
+    <task id="LOCAL-00101" summary="-yaml service description files">
+      <created>1623444367536</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1623444367536</updated>
+    </task>
+    <option name="localTasksCounter" value="102" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="no processing" />
     <MESSAGE value="comment engine development" />
     <MESSAGE value="TwoStreamAggregator name change" />
     <MESSAGE value="reorganization of the receiver code." />
@@ -486,6 +480,7 @@
     <MESSAGE value="- vtp dummy writer engine" />
     <MESSAGE value="- yaml description files for IO services" />
     <MESSAGE value="- more appropriate gradle build, that is dependent from Clara." />
-    <option name="LAST_COMMIT_MESSAGE" value="- more appropriate gradle build, that is dependent from Clara." />
+    <MESSAGE value="-yaml service description files" />
+    <option name="LAST_COMMIT_MESSAGE" value="-yaml service description files" />
   </component>
 </project>
