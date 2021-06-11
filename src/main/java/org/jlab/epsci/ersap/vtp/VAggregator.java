@@ -7,16 +7,7 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-/**
- * __
- * /  \
- * \  /     ___       __
- * --  --> |   |     /  \
- * __      |   |-->  \  /
- * /  \ --> ---       --
- * \  /
- * --
- */
+
 public class VAggregator extends Thread {
 
     /**

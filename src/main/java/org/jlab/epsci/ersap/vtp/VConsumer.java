@@ -29,10 +29,6 @@ public class VConsumer extends Thread {
     /**
      * Consumer constructor
      *
-     * @param ringBuffer
-     * @param sequence
-     * @param barrier
-     * @param runNumber
      */
     public VConsumer(RingBuffer<VRingRawEvent> ringBuffer,
                      Sequence sequence,

@@ -13,17 +13,12 @@ public class PayloadDecoderPool extends GenericObjectPool<VPayloadDecoder> {
      * It uses the default configuration for pool provided by
      * apache-commons-pool2.
      *
-     * @param factory
      */
     public PayloadDecoderPool(PooledObjectFactory<VPayloadDecoder> factory) {
         super(factory);
     }
 
     /**
-     *
-     *
-     * @param factory
-     * @param config
      */
     public PayloadDecoderPool(PooledObjectFactory<VPayloadDecoder> factory,
                  GenericObjectPoolConfig config) {
