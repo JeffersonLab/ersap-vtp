@@ -36,7 +36,7 @@ public class SConsumer extends Thread {
      * Be sure to call "put" before calling this again.
      *
      * @return next available item in ring buffer.
-     * @throws InterruptedException
+     * @throws InterruptedException e
      */
     public SRingRawEvent get() throws InterruptedException {
 

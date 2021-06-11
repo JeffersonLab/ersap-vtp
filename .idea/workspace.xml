@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/libsrc/Consumer.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/libsrc/Consumer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SAggregator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/sampa/SConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/util/commons/PayloadDecoderPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/util/commons/PayloadDecoderPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VAggregator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/vtp/VConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,13 +104,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00048" summary="- decoding debugging &#10;- add SConsumer">
-      <created>1622123872020</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1622123872020</updated>
     </task>
     <task id="LOCAL-00049" summary="- decoding debugging &#10;- add SConsumer">
       <created>1622124776958</created>
@@ -449,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623441146538</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="- more appropriate gradle build, that is dependent from Clara.">
+      <created>1623441429433</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1623441429433</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

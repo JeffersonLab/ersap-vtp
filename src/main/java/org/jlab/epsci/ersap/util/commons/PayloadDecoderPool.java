@@ -7,19 +7,10 @@ import org.jlab.epsci.ersap.vtp.VPayloadDecoder;
 
 public class PayloadDecoderPool extends GenericObjectPool<VPayloadDecoder> {
 
-    /**
-     * Constructor.
-     *
-     * It uses the default configuration for pool provided by
-     * apache-commons-pool2.
-     *
-     */
     public PayloadDecoderPool(PooledObjectFactory<VPayloadDecoder> factory) {
         super(factory);
     }
 
-    /**
-     */
     public PayloadDecoderPool(PooledObjectFactory<VPayloadDecoder> factory,
                  GenericObjectPoolConfig config) {
         super(factory, config);

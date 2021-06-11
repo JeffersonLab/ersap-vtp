@@ -26,10 +26,6 @@ public class VConsumer extends Thread {
     private ExecutorService tPool;
     private PayloadDecoderPool pool;
 
-    /**
-     * Consumer constructor
-     *
-     */
     public VConsumer(RingBuffer<VRingRawEvent> ringBuffer,
                      Sequence sequence,
                      SequenceBarrier barrier,
@@ -53,7 +49,7 @@ public class VConsumer extends Thread {
      * Be sure to call "put" before calling this again.
      *
      * @return next available item in ring buffer.
-     * @throws InterruptedException
+     * @throws InterruptedException e
      */
     public VRingRawEvent get() throws InterruptedException {
 
@@ -73,11 +69,7 @@ public class VConsumer extends Thread {
         return item;
     }
 
-    /**
-     * This "consumer" is also a producer for the output ring.
-     * So get items from the output ring and fill them with items claimed from the input rings.
-     */
-    public void put() throws InterruptedException {
+     public void put() throws InterruptedException {
 
         // Tell input (crate) ring that we're done with the item we're consuming
         sequence.set(nextSequence);

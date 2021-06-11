@@ -8,16 +8,6 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
- * __
- * /  \
- * \  /     ___       __
- * --  --> |   |     /  \
- * __      |   |-->  \  /
- * /  \ --> ---       --
- * \  /
- * --
- */
 public class SAggregator extends Thread {
     /**
      * Maps for aggregation
