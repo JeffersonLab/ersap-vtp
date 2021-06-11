@@ -14,14 +14,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Receives stream frames from a VTP and writes them to a RingBuffer
- * <p>
- * ___        __
- * |   |      /  \
- * |   | ---> \  /
- * ---        --
  */
 public class VReceiver extends Thread {
-
 
     /**
      * VTP data stream
