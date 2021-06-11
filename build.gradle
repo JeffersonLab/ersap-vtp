@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'maven'
 
-    id 'checkstyle'
+//    id 'checkstyle'
     id 'findbugs'
 
     id 'eclipse'
@@ -119,10 +119,10 @@ task deploy(type: Copy, overwrite: true, dependsOn: jar) {
 
 
 
-checkstyle {
-    toolVersion = '8.0'
-    configFile = file('config/quality/checkstyle.xml')
-}
+//checkstyle {
+//    toolVersion = '8.0'
+//    configFile = file('config/quality/checkstyle.xml')
+//}
 
 findbugs {
     toolVersion = '3.0.1'
