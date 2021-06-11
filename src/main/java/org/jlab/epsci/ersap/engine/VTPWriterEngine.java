@@ -9,7 +9,8 @@ import java.nio.file.Path;
 
 public class VTPWriterEngine extends AbstractEventWriterService<Object> {
     @Override
-    protected Object createWriter(Path file, JSONObject opts) throws EventWriterException {
+    protected Object createWriter(Path file, JSONObject opts)
+            throws EventWriterException {
         return null;
     }
 

@@ -1,0 +1,11 @@
+---
+name: VTPWriterEngine
+engine: org.jlab.epsci.ersap.engine.VTPWriterEngine
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Does nothing.

@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSourceEngine.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSyncEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPSourceEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/ersap/engine/VTPWriterEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,13 +104,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00036" summary="- debugging...">
-      <created>1621892668644</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1621892668644</updated>
     </task>
     <task id="LOCAL-00037" summary="- debugging...">
       <created>1621908348167</created>
@@ -445,7 +441,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623359478834</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="- vtp dummy writer engine">
+      <created>1623416188343</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1623416188343</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -472,6 +475,7 @@
     <MESSAGE value="- c++ output consistent" />
     <MESSAGE value="- working on the sampa aggregator" />
     <MESSAGE value="- added a new engine package" />
-    <option name="LAST_COMMIT_MESSAGE" value="- added a new engine package" />
+    <MESSAGE value="- vtp dummy writer engine" />
+    <option name="LAST_COMMIT_MESSAGE" value="- vtp dummy writer engine" />
   </component>
 </project>
