@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'maven'
 
-//    id 'checkstyle'
     id 'findbugs'
 
     id 'eclipse'
@@ -70,7 +69,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 
 artifacts {
-//    archives javadocJar
     archives sourcesJar
 }
 
@@ -118,12 +116,6 @@ task deploy(type: Copy, overwrite: true, dependsOn: jar) {
 }
 
 
-
-//checkstyle {
-//    toolVersion = '8.0'
-//    configFile = file('config/quality/checkstyle.xml')
-//}
-
 findbugs {
     toolVersion = '3.0.1'
     effort = 'max'
@@ -152,7 +144,6 @@ gradle.taskGraph.whenReady { taskGraph ->
         taskGraph.hasTask((tasks.findbugs))
     }
 }
-
 
 
 eclipse {
