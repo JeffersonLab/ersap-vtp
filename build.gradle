@@ -95,10 +95,10 @@ test {
 
 
 def deploySpec = copySpec {
-    into ('plugins/epsci/lib/services') {
+    into ('plugins/epsci/lib') {
         from configurations.runtime
     }
-    into ('plugins/epsci/lib/services') {
+    into ('plugins/epsci/lib') {
         from jar.archivePath
     }
 }
