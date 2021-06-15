@@ -1,6 +1,6 @@
 package org.jlab.epsci.stream.engine;
 
-import org.jlab.epsci.ersap.base.ersapUtil;
+import org.jlab.epsci.ersap.base.ErsapUtil;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
