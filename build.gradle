@@ -35,7 +35,6 @@ repositories {
     mavenLocal()
 }
 
-
 dependencies {
     compileOnly 'org.jlab.epsci:ersap:1.0-SNAPSHOT'
     compileOnly 'com.google.code.findbugs:findbugs-annotations:3.0.1'
