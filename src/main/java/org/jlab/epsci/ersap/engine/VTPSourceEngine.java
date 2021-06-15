@@ -20,7 +20,9 @@ public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggr
         int port1 = opts.has(VTP_PORT1) ? opts.getInt(VTP_PORT1) : 6000;
         int port2 = opts.has(VTP_PORT2) ? opts.getInt(VTP_PORT2) : 6001;
         try {
-            return new VTPTwoStreamAggregatorDecoder(port1, port2);
+            VTPTwoStreamAggregatorDecoder v = new VTPTwoStreamAggregatorDecoder(port1, port2);
+            v.go();
+            return v;
         } catch (Exception e) {
             throw new EventReaderException(e);
         }
@@ -44,7 +46,8 @@ public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggr
     @Override
     protected Object readEvent(int eventNumber) throws EventReaderException {
         try {
-            reader.go();
+            System.out.println("DDDDDDDDDDDDD =====> readEvent.............");
+//            reader.go();
             return reader.getDecodedEvent();
         } catch (Exception e) {
             throw new EventReaderException(e);
