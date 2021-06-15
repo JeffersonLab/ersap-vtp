@@ -36,7 +36,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'org.jlab.epsci:ersap:1.0-SNAPSHOT'
+    compileOnly 'org.jlab.epsci:ersap-java:1.0-SNAPSHOT'
     compileOnly 'com.google.code.findbugs:findbugs-annotations:3.0.1'
     compile 'org.json:json:20160810'
     compile 'com.lmax:disruptor:3.4.0'
