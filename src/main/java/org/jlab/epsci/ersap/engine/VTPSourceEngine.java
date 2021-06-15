@@ -35,7 +35,7 @@ public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggr
 
     @Override
     protected int readEventCount() throws EventReaderException {
-        return 0;
+        return 10000000;
     }
 
     @Override
