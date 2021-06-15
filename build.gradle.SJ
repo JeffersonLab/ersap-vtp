@@ -3,7 +3,7 @@ plugins {
     id 'java-library'
 }
 
-group 'org.jlab.epsci.ersap.vtp'
+group 'org.jlab.epsci.stream.vtp'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_11

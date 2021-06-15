@@ -8,7 +8,7 @@ plugins {
     id 'idea'
 }
 
-group = 'org.jlab.epsci.ersap.vtp'
+group = 'org.jlab.epsci.stream.vtp'
 archivesBaseName = 'ersap-vtp'
 version = '1.0-SNAPSHOT'
 
