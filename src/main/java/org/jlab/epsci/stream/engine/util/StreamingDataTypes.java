@@ -1,6 +1,6 @@
 package org.jlab.epsci.stream.engine.util;
 
-import org.jlab.clara.engine.EngineDataType;
+import org.jlab.epsci.ersap.engine.EngineDataType;
 
 public final class StreamingDataTypes {
 

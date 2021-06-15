@@ -1,8 +1,8 @@
 package org.jlab.epsci.stream.engine;
 
-import org.jlab.clara.engine.EngineDataType;
-import org.jlab.clara.std.services.AbstractEventReaderService;
-import org.jlab.clara.std.services.EventReaderException;
+import org.jlab.epsci.ersap.engine.EngineDataType;
+import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
+import org.jlab.epsci.ersap.std.services.EventReaderException;
 import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
 import org.jlab.epsci.stream.vtp.VTPTwoStreamAggregatorDecoder;
 import org.json.JSONObject;

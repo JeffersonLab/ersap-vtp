@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPSourceEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPStreamTestEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPWriterEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/util/StreamingDataTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/util/StreamingDataTypes.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,20 +114,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00063" summary="-debugging...">
-      <created>1622212200578</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1622212200578</updated>
-    </task>
-    <task id="LOCAL-00064" summary="-debugging...">
-      <created>1622212920313</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1622212920313</updated>
     </task>
     <task id="LOCAL-00065" summary="-debugging...">
       <created>1622213297562</created>
@@ -453,11 +444,24 @@
       <option name="project" value="LOCAL" />
       <updated>1623780741870</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="- ersap dependency in build.gradle">
+      <created>1623787201970</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1623787201970</updated>
+    </task>
+    <task id="LOCAL-00113" summary="- ersap dependency in build.gradle">
+      <created>1623787217206</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1623787217206</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- ersap_smp executable" />
     <MESSAGE value="- debugging ... &#10;- do not write statistics into the file." />
     <MESSAGE value="- fixed the bug in the header decoding" />
     <MESSAGE value="- add payload parsing" />
@@ -482,6 +486,7 @@
     <MESSAGE value="- VTPWriterEngine debug" />
     <MESSAGE value="- updated deployment dir" />
     <MESSAGE value="- package name change" />
-    <option name="LAST_COMMIT_MESSAGE" value="- package name change" />
+    <MESSAGE value="- ersap dependency in build.gradle" />
+    <option name="LAST_COMMIT_MESSAGE" value="- ersap dependency in build.gradle" />
   </component>
 </project>

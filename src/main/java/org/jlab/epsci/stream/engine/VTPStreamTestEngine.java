@@ -1,9 +1,9 @@
 package org.jlab.epsci.stream.engine;
 
-import org.jlab.clara.base.ClaraUtil;
-import org.jlab.clara.engine.Engine;
-import org.jlab.clara.engine.EngineData;
-import org.jlab.clara.engine.EngineDataType;
+import org.jlab.epsci.ersap.base.epsci.ersapUtil;
+import org.jlab.epsci.ersap.engine.Engine;
+import org.jlab.epsci.ersap.engine.EngineData;
+import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
 
 import java.nio.ByteBuffer;
@@ -40,13 +40,13 @@ public class VTPStreamTestEngine implements Engine {
 
     @Override
     public Set<EngineDataType> getInputDataTypes() {
-        return ClaraUtil.buildDataTypes(StreamingDataTypes.VTP_G,
+        return ErsapUtil.buildDataTypes(StreamingDataTypes.VTP_G,
                 EngineDataType.JSON);
     }
 
     @Override
     public Set<EngineDataType> getOutputDataTypes() {
-        return ClaraUtil.buildDataTypes(StreamingDataTypes.VTP_G);
+        return ErsapUtil.buildDataTypes(StreamingDataTypes.VTP_G);
     }
 
     @Override
