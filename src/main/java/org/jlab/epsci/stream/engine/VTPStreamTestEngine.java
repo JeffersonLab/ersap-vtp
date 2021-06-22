@@ -14,8 +14,8 @@ import java.util.TimerTask;
 
 public class VTPStreamTestEngine implements Engine {
     private static final String PRINT_INTERVAL = "print-interval";
+    private boolean print;
 
-    //    private boolean print;
     @Override
     public EngineData configure(EngineData input) {
         System.out.println("VTPStreamTestEngine engine configure...");
@@ -26,13 +26,13 @@ public class VTPStreamTestEngine implements Engine {
             if (data.has(PRINT_INTERVAL)) {
                 int pi = data.getInt(PRINT_INTERVAL);
                 // Timer for measuring and printing statistics.
-//                Timer timer = new Timer();
-//                timer.schedule(new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        print = true;
-//                    }
-//                }, 0, pi * 1000);
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        print = true;
+                    }
+                }, 0, pi * 1000);
 
             }
         }
@@ -47,7 +47,7 @@ public class VTPStreamTestEngine implements Engine {
         int slot = data.getInt();
         int channel = data.getInt();
         int charge = data.getInt();
-        if (slot == 3) {
+        if (slot == 3 && print) {
             System.out.println("========================");
 //            System.out.println("Composition  = " + input.getComposition());
             System.out.println("MimeType     = " + input.getMimeType());
