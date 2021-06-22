@@ -21,8 +21,7 @@ public class VRingBuffer<E> {
             writeSequence++;
     }
     public E get() {
-        boolean isEmpty = writeSequence < readSequence;
-        if (!isEmpty) {
+        if (readSequence < writeSequence) {
             E nextValue = data[readSequence % capacity];
             readSequence++;
             return nextValue;

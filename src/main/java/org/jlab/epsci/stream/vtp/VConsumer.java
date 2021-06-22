@@ -137,12 +137,12 @@ public class VConsumer extends Thread {
 
     public ByteBuffer getEvent() throws Exception {
         ByteBuffer out = null;
-        while(out == null) {
-            out = outStreamRing.get();
-        }
-//        VPayloadDecoder pd = pool.borrowObject();
-//        out = pd.getEvt();
-//        pool.returnObject(pd);
+//        while(out == null) {
+//            out = outStreamRing.get();
+//        }
+        VPayloadDecoder pd = pool.borrowObject();
+        out = pd.getEvt();
+        pool.returnObject(pd);
         return out;
     }
 
