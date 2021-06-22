@@ -14,7 +14,9 @@ import java.util.TimerTask;
 
 public class VTPStreamTestEngine implements Engine {
     private static final String PRINT_INTERVAL = "print-interval";
+    private static final String SLOT = "slot";
     private boolean print;
+    private int slotToPrint;
 
     @Override
     public EngineData configure(EngineData input) {
@@ -33,7 +35,9 @@ public class VTPStreamTestEngine implements Engine {
                         print = true;
                     }
                 }, 0, pi * 1000);
-
+                if (data.has(SLOT)) {
+                    slotToPrint = data.getInt(SLOT);
+                }
             }
         }
         return null;
@@ -47,7 +51,7 @@ public class VTPStreamTestEngine implements Engine {
         int slot = data.getInt();
         int channel = data.getInt();
         int charge = data.getInt();
-        if (slot > 0 && print) {
+        if (slot == slotToPrint && print) {
             System.out.println("========================");
 //            System.out.println("Composition  = " + input.getComposition());
             System.out.println("MimeType     = " + input.getMimeType());
