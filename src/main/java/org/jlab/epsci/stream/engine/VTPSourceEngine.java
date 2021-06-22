@@ -46,8 +46,6 @@ public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggr
     @Override
     protected Object readEvent(int eventNumber) throws EventReaderException {
         try {
-            System.out.println("DDDDDDDDDDDDD =====> readEvent.............");
-//            reader.go();
             return reader.getDecodedEvent();
         } catch (Exception e) {
             throw new EventReaderException(e);
