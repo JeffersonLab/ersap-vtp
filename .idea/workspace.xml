@@ -110,13 +110,6 @@
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
     </task>
-    <task id="LOCAL-00077" summary="-completed debugging of the decoder. &#10;- updated SReceiver">
-      <created>1622727568097</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1622727568097</updated>
-    </task>
     <task id="LOCAL-00078" summary="- completed debugging of the decoder. &#10;- updated SReceiver">
       <created>1622727917519</created>
       <option name="number" value="00078" />
@@ -453,7 +446,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624385211212</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="- debugging">
+      <created>1624385350057</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1624385350057</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
