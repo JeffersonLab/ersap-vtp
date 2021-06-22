@@ -5,31 +5,46 @@ import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
+import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.Set;
 
 public class VTPStreamTestEngine implements Engine {
+    private static final String PRINT_INTERVAL = "print-interval";
+    private int pi;
+    private int i;
     @Override
     public EngineData configure(EngineData input) {
         System.out.println("VTPStreamTestEngine engine configure...");
-        return null;
+        if (input.getMimeType().equalsIgnoreCase(EngineDataType.JSON.mimeType())) {
+            String source = (String) input.getData();
+            JSONObject data = new JSONObject(source);
+            if (data.has(PRINT_INTERVAL)) {
+                pi = data.getInt(PRINT_INTERVAL);
+            }
+        }
+            return null;
     }
 
     @Override
     public EngineData execute(EngineData input) {
-        System.out.println("========================");
-        System.out.println("Composition  = " + input.getComposition());
-        System.out.println("MimeType     = " + input.getMimeType());
-        System.out.println("ComId        = " + input.getCommunicationId());
-        ByteBuffer data = (ByteBuffer)input.getData();
-        System.out.println("-------------------------");
-        System.out.println("Time         = " + data.getLong());
-        System.out.println("Crate        = " + data.getInt());
-        System.out.println("Slot         = " + data.getInt());
-        System.out.println("Channel      = " + data.getInt());
-        System.out.println("Charge       = " + data.getInt());
-        System.out.println("");
+        i++;
+        if(i >= pi) {
+            System.out.println("========================");
+            System.out.println("Composition  = " + input.getComposition());
+            System.out.println("MimeType     = " + input.getMimeType());
+            System.out.println("ComId        = " + input.getCommunicationId());
+            ByteBuffer data = (ByteBuffer) input.getData();
+            System.out.println("-------------------------");
+            System.out.println("Time         = " + data.getLong());
+            System.out.println("Crate        = " + data.getInt());
+            System.out.println("Slot         = " + data.getInt());
+            System.out.println("Channel      = " + data.getInt());
+            System.out.println("Charge       = " + data.getInt());
+            System.out.println();
+            i = 0;
+        }
         return input;
     }
 
