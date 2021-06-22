@@ -59,6 +59,7 @@ public class VTPStreamTestEngine implements Engine {
             System.out.println("Channel      = " + channel);
             System.out.println("Charge       = " + charge);
             System.out.println();
+            print = false;
         }
         return input;
     }
