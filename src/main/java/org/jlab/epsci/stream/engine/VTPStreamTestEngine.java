@@ -51,6 +51,7 @@ public class VTPStreamTestEngine implements Engine {
         int slot = data.getInt();
         int channel = data.getInt();
         int charge = data.getInt();
+        if(slot>0) {
 //        if (slot == slotToPrint && print) {
             System.out.println("========================");
 //            System.out.println("Composition  = " + input.getComposition());
@@ -64,7 +65,7 @@ public class VTPStreamTestEngine implements Engine {
             System.out.println("Charge       = " + charge);
             System.out.println();
             print = false;
-//        }
+        }
         return input;
     }
 
