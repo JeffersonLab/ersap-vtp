@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/util/VRingBuffer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/util/VRingBuffer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,13 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00073" summary="-debugging...">
-      <created>1622665115284</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1622665115284</updated>
     </task>
     <task id="LOCAL-00074" summary="-debugging...">
       <created>1622665957984</created>
@@ -454,11 +446,17 @@
       <option name="project" value="LOCAL" />
       <updated>1624383057405</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="- new VRingBuffer class. debugging">
+      <created>1624384061379</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1624384061379</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- decoding debugging &#10;- add SConsumer" />
     <MESSAGE value="- receiver class. no disruptor. debugging..." />
     <MESSAGE value="- sampa code reorganization" />
     <MESSAGE value="-debugging..." />
@@ -483,7 +481,8 @@
     <MESSAGE value="- removed debug printout in the VTPSourceEngine" />
     <MESSAGE value="- use timer and timerTask for demo printing in the VTP StreamTestEngine" />
     <MESSAGE value="- new VRingBuffer class. This will decouple stream source from the stream processor pipeline." />
-    <option name="LAST_COMMIT_MESSAGE" value="- new VRingBuffer class. This will decouple stream source from the stream processor pipeline." />
+    <MESSAGE value="- new VRingBuffer class. debugging" />
+    <option name="LAST_COMMIT_MESSAGE" value="- new VRingBuffer class. debugging" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

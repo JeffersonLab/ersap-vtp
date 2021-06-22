@@ -27,7 +27,7 @@ public class VConsumer extends Thread {
     private ExecutorService tPool;
     private PayloadDecoderPool pool;
 
-    private VRingBuffer<ByteBuffer> outStreamRing;
+//    private VRingBuffer<ByteBuffer> outStreamRing;
 
     public VConsumer(RingBuffer<VRingRawEvent> ringBuffer,
                      Sequence sequence,
@@ -45,7 +45,7 @@ public class VConsumer extends Thread {
         tPool = Executors.newFixedThreadPool(128);
         pool = createPdPool(128);
 
-        outStreamRing = new VRingBuffer<>(128);
+//        outStreamRing = new VRingBuffer<>(128);
     }
 
     /**
@@ -116,7 +116,7 @@ public class VConsumer extends Thread {
                         try {
                             VPayloadDecoder pd = pool.borrowObject();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
-                            outStreamRing.put(pd.getEvt());
+//                            outStreamRing.put(pd.getEvt());
                             pool.returnObject(pd);
                         } catch (Exception e) {
                             e.printStackTrace();
