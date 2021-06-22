@@ -5,23 +5,35 @@ import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
+import org.jlab.epsci.stream.vtp.VReceiver;
 import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VTPStreamTestEngine implements Engine {
     private static final String PRINT_INTERVAL = "print-interval";
-    private int pi;
-    private int i;
+    private boolean print;
     @Override
     public EngineData configure(EngineData input) {
         System.out.println("VTPStreamTestEngine engine configure...");
+
         if (input.getMimeType().equalsIgnoreCase(EngineDataType.JSON.mimeType())) {
             String source = (String) input.getData();
             JSONObject data = new JSONObject(source);
             if (data.has(PRINT_INTERVAL)) {
-                pi = data.getInt(PRINT_INTERVAL);
+                int pi = data.getInt(PRINT_INTERVAL);
+                // Timer for measuring and printing statistics.
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        print = true;
+                    }
+                }, 0, pi * 1000);
+
             }
         }
             return null;
@@ -29,8 +41,7 @@ public class VTPStreamTestEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-        i++;
-        if(i >= pi) {
+        if(print) {
             System.out.println("========================");
             System.out.println("Composition  = " + input.getComposition());
             System.out.println("MimeType     = " + input.getMimeType());
@@ -43,7 +54,7 @@ public class VTPStreamTestEngine implements Engine {
             System.out.println("Channel      = " + data.getInt());
             System.out.println("Charge       = " + data.getInt());
             System.out.println();
-            i = 0;
+            print = false;
         }
         return input;
     }
