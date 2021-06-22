@@ -2,6 +2,7 @@ package org.jlab.epsci.stream.vtp;
 
 import com.lmax.disruptor.*;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.jlab.epsci.stream.util.VRingBuffer;
 import org.jlab.epsci.stream.util.commons.PayloadDecoderFactory;
 import org.jlab.epsci.stream.util.commons.PayloadDecoderPool;
 
@@ -26,6 +27,8 @@ public class VConsumer extends Thread {
     private ExecutorService tPool;
     private PayloadDecoderPool pool;
 
+    private VRingBuffer<ByteBuffer> outStreamRing;
+
     public VConsumer(RingBuffer<VRingRawEvent> ringBuffer,
                      Sequence sequence,
                      SequenceBarrier barrier,
@@ -41,6 +44,8 @@ public class VConsumer extends Thread {
 
         tPool = Executors.newFixedThreadPool(128);
         pool = createPdPool(128);
+
+        outStreamRing = new VRingBuffer<>(128);
     }
 
     /**
@@ -111,6 +116,7 @@ public class VConsumer extends Thread {
                         try {
                             VPayloadDecoder pd = pool.borrowObject();
                             pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
+                            outStreamRing.put(pd.getEvt());
                             pool.returnObject(pd);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -130,10 +136,13 @@ public class VConsumer extends Thread {
     }
 
     public ByteBuffer getEvent() throws Exception {
-        ByteBuffer out;
-        VPayloadDecoder pd = pool.borrowObject();
-        out = pd.getEvt();
-        pool.returnObject(pd);
+        ByteBuffer out = null;
+        while(out == null) {
+            out = outStreamRing.get();
+        }
+//        VPayloadDecoder pd = pool.borrowObject();
+//        out = pd.getEvt();
+//        pool.returnObject(pd);
         return out;
     }
 

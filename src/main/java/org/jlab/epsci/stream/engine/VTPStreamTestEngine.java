@@ -43,7 +43,7 @@ public class VTPStreamTestEngine implements Engine {
     public EngineData execute(EngineData input) {
         if(print) {
             System.out.println("========================");
-            System.out.println("Composition  = " + input.getComposition());
+//            System.out.println("Composition  = " + input.getComposition());
             System.out.println("MimeType     = " + input.getMimeType());
             System.out.println("ComId        = " + input.getCommunicationId());
             ByteBuffer data = (ByteBuffer) input.getData();
