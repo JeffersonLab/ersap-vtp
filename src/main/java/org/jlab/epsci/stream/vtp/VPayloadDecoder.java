@@ -48,7 +48,6 @@ public class VPayloadDecoder {
                         int slot = -1;
                         for (int jj = 0; jj < slot_len; jj++) {
                             int val = pData.get(slot_ind + pIndex + jj);
-
                             if ((val & 0x80000000) == 0x80000000) {
                                 type = (val >> 15) & 0xFFFF;
                                 crate = (val >> 8) & 0x007F;
