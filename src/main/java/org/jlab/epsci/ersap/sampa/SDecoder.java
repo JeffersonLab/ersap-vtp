@@ -83,7 +83,9 @@ public class SDecoder {
         if (syncFound[eLink] == 0) {
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink (4 bits per frame)
-                bitValue = (gFrameWord & (0x00000001 << ii)) >> ii;
+                // Carl, more efficient to do:
+                bitValue = (gFrameWord >>> ii) & 1;
+                // bitValue = (gFrameWord & (0x00000001 << ii)) >> ii;
 
                 if (bitValue == 1) {
                     if (eLink == 2) {
@@ -94,7 +96,8 @@ public class SDecoder {
                         System.out.println("-> " + ii + " " + Long.toHexString(shiftReg[eLink]));
                     }
                 }
-                shiftReg[eLink] = shiftReg[eLink] >> 1;
+                // Carl, needed a >>> instead of >>
+                shiftReg[eLink] = shiftReg[eLink] >>> 1;
 
                 if (eLink == 2) {
                     System.out.println("DDD-> " + ii + " " + Integer.toHexString(gFrameWord) + " " + Integer.toHexString(bitValue));
@@ -123,7 +126,9 @@ public class SDecoder {
             // we find NEXT header here
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink 0 (4 bits per frame)
-                bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
+                // Carl, more efficient to do:
+                bitValue = (gFrameWord >>> ii) & 1;
+                // bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
                 if (bitValue == 1) {
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
                 }
@@ -158,6 +163,7 @@ public class SDecoder {
                         dataParity = (int) ((shiftReg[eLink] >>> 49) & 0x1);
                         parity = (int) ((shiftReg[eLink] >>> 6) & 0x1);
 
+                        // Carl, this is different than Ed's, Ed's code looks like an error
                         if ((pkt == 0) && (numWords[eLink] == 0) && (chadd == 0x15)) {
                             // heartbeat packet (NO payload) - push into output stream
                             eLinkStats.getHeartBeatCount()[eLink]++;
@@ -228,7 +234,9 @@ public class SDecoder {
             // runs only after data packet header has been found
             for (int ii = ii_max; ii >= ii_min; ii--) {
                 // elink (4 bits per frame)
-                bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
+                // Carl, more efficient to do:
+                bitValue = (gFrameWord >>> ii) & 1;
+                // bitValue = (gFrameWord & (0x00000001 << ii)) >>> ii;
                 if (bitValue > 0)
                     shiftReg[eLink] = shiftReg[eLink] | 0x0004000000000000L;        // set bit 50 in shiftReg
                 shiftReg[eLink] = shiftReg[eLink] >>> 1;
@@ -319,7 +327,10 @@ public class SDecoder {
             chan_e = 30;
             chan_f = 31;
         }
-        if (eLink < 21) {
+        // Carl, Ed's logic must be wrong! This if clause overwrites the  previous if statement.
+        // Change   if   to   else if.
+        // if (eLink < 21) {
+        else if (eLink < 21) {
             // eLink 11 (ch 0,1,2), eLink 12 (ch 3,4,5), ... elink 20 (ch 27,28,29)
             chan_a = (eLink % 11) * 3;
             chan_b = chan_a + 1;
