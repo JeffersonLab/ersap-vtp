@@ -45,11 +45,6 @@ namespace ersap {
 
         /**
          * Consumer constructor
-         *
-         * @param ringBuffer
-         * @param sequence
-         * @param barrier
-         * @param runNumber
          */
         Consumer(std::shared_ptr<RingBuffer<std::shared_ptr<RingEvent>>> & ringBuffer,
                  std::shared_ptr<ISequence> & sequence,

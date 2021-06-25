@@ -1,0 +1,11 @@
+---
+name: VTPSourceEngine
+engine: org.jlab.epsci.ersap.engine.VTPSourceEngine
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  Gets data from 2 VTP links, aggregates, decodes and returns an event on each request.

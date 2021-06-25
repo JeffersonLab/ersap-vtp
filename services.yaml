@@ -1,0 +1,25 @@
+---
+io-services:
+  reader:
+    class: org.jlab.epsci.stream.engine.VTPSourceEngine
+    name: VTPSource
+  writer:
+    class: org.jlab.epsci.stream.engine.VTPWriterEngine
+    name: VTPWriter
+services:
+   - class: org.jlab.epsci.stream.engine.VTPStreamTestEngine
+     name: VTPStreamTest
+   - class: jana_service
+     name: JanaService
+     lang: cpp
+configuration:
+  io-services:
+    reader:
+      port1: 6000
+      port2: 6001
+  services:
+    VTPStreamTest:
+      print-interval: 10
+      slot: 3
+mime-types:
+  - binary/data-vtp-g
