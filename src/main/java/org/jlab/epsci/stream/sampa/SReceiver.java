@@ -10,7 +10,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.Arrays;
 
 public class SReceiver extends Thread {
 
@@ -74,7 +73,7 @@ public class SReceiver extends Thread {
     }
 
     public void process(SRingRawEvent rawEvent) {
-        Arrays.fill(data, 0);
+        //Arrays.fill(data, 0);
         headerBuffer.clear();
 
         try {
@@ -88,8 +87,8 @@ public class SReceiver extends Thread {
         data[1] = headerBuffer.getInt();
         data[0] = headerBuffer.getInt();
 
-        sampaDecoder.frameCount = sampaDecoder.frameCount + 1;
-        sampaDecoder.block_frameCount = sampaDecoder.block_frameCount + 1;
+        sampaDecoder.frameCount++;
+        sampaDecoder.block_frameCount++;
 
         for (int eLink = 0; eLink < 28; eLink++) {
             sampaDecoder.decodeSerial(eLink, data);

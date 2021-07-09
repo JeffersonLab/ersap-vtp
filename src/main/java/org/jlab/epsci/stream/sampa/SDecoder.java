@@ -1,10 +1,21 @@
+/*
+ * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
+ * See License.txt file.
+ *
+ * Thomas Jefferson National Accelerator Facility
+ * Experimental Physics Software and Computing Infrastructure Group
+ *
+ * 12000, Jefferson Ave, Newport News, VA 23606
+ * Phone : (757)-269-7100
+ */
+
 package org.jlab.epsci.stream.sampa;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 @SuppressWarnings("unchecked")
 
-public class SDecoder {
+public class SDecoder implements SampaDecoder {
 
     private final ELinkStats eLinkStats = new ELinkStats();
 
@@ -17,8 +28,17 @@ public class SDecoder {
     private final int[] dataCount = new int[28];
     private final int[] numWords = new int[28];
 
-    private Vector<Integer>[] eLinkDataTemp = new Vector[28];
-    private Vector<Integer>[] eLinkData = new Vector[28];
+    // There are 28 eLinks. Each link has either 2 or 3 channels' data on it.
+    // There are 80 channels coming over the 28 links representing 2.5 of the 5 SAMPA chips.
+    // There are 2 groups of 80 for a total of 160 channels representing all 5 chips.
+    // Each of the 2, 80 channel groups go to one of 2 high speed serial links.
+    //
+    // The data from each link is reformatted into 2, 32-bit header words, followed by data words.
+    // Each data word starts with the 10 bit ADC value, # of ADC samples, or Time. The other bits
+    // contain a packet word number and 3 bits identifying it as a data word (0).
+
+    private ArrayList<Integer>[] eLinkDataTemp = new ArrayList[28];
+    private ArrayList<Integer>[] eLinkData = new ArrayList[28];
 
     private static final int N_BLOCK = 1;
     private static final int frames_in_block = 2000 * N_BLOCK;
@@ -33,8 +53,8 @@ public class SDecoder {
     public SDecoder() {
         eLinkStats.init(); // not necessary, but anyways
         for (int i = 0; i < 28; i++) {
-            eLinkData[i] = new Vector<>();
-            eLinkDataTemp[i] = new Vector<>();
+            eLinkData[i] = new ArrayList<>();
+            eLinkDataTemp[i] = new ArrayList<>();
         }
     }
 
@@ -276,7 +296,7 @@ public class SDecoder {
         }
     }
 
-    public static boolean matchDataHeader(int eLink, int hadd, int chadd) {
+    private boolean matchDataHeader(int eLink, int hadd, int chadd) {
         int chip_a;
         int chip_b;
         int chan_a;

@@ -3,15 +3,15 @@ package org.jlab.epsci.stream.sampa;
 import com.lmax.disruptor.*;
 
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SAggregator extends Thread {
     /**
      * Maps for aggregation
      */
-    private final HashMap<Integer, Vector<Integer>[]> m1 = new HashMap<>();
-    private final HashMap<Integer, Vector<Integer>[]> m2 = new HashMap<>();
+    private final HashMap<Integer, ArrayList<Integer>[]> m1 = new HashMap<>();
+    private final HashMap<Integer, ArrayList<Integer>[]> m2 = new HashMap<>();
 
     /**
      * Current spot in output ring from which an item was claimed.
