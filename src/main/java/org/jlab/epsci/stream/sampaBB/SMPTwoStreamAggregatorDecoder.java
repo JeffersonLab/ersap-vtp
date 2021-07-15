@@ -1,8 +1,24 @@
+/*
+ * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
+ * See LICENSE.txt file.
+ *
+ * Thomas Jefferson National Accelerator Facility
+ * Experimental Physics Software and Computing Infrastructure Group
+ *
+ * 12000, Jefferson Ave, Newport News, VA 23606
+ * Phone : (757)-269-7100
+ */
+
+
 package org.jlab.epsci.stream.sampaBB;
+
 
 import com.lmax.disruptor.*;
 
+import java.io.IOException;
+
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
+
 
 public class SMPTwoStreamAggregatorDecoder {
     /**
@@ -14,10 +30,13 @@ public class SMPTwoStreamAggregatorDecoder {
     private int streamId2;
     private int streamFrameLimit;
 
+    /** Format of data SAMPA chips are sending. */
+    private SampaType sampaType;
+
     /**
      * Max ring items
      */
-    private final static int maxRingItems = 64;
+    private final static int maxRingItems = 16;
 
     /**
      * Ring buffers
@@ -47,26 +66,28 @@ public class SMPTwoStreamAggregatorDecoder {
 
     public SMPTwoStreamAggregatorDecoder(int sampaPort1, int sampaPort2,
                                          int streamId1, int streamId2,
-                                         int streamFrameLimit) {
+                                         int streamFrameLimit,
+                                         SampaType sampaType) {
         this.sampaPort1 = sampaPort1;
         this.sampaPort2 = sampaPort2;
         this.streamId1 = streamId1;
         this.streamId2 = streamId2;
         this.streamFrameLimit = streamFrameLimit;
+        this.sampaType = sampaType;
 
-        ringBuffer1 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
+        ringBuffer1 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
                 new YieldingWaitStrategy());
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
-        ringBuffer2 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
+        ringBuffer2 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
                 new YieldingWaitStrategy());
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
-        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(), maxRingItems,
+        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
                 new YieldingWaitStrategy());
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
@@ -74,9 +95,9 @@ public class SMPTwoStreamAggregatorDecoder {
 
     }
 
-    public void go() {
-        receiver1 = new SReceiver(sampaPort1, streamId1, ringBuffer1, streamFrameLimit);
-        receiver2 = new SReceiver(sampaPort2, streamId2, ringBuffer2, streamFrameLimit);
+    public void go() throws IOException {
+        receiver1 = new SReceiver(sampaPort1, streamId1, ringBuffer1, streamFrameLimit, sampaType);
+        receiver2 = new SReceiver(sampaPort2, streamId2, ringBuffer2, streamFrameLimit, sampaType);
 
         aggregator12 = new SAggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
@@ -105,6 +126,11 @@ public class SMPTwoStreamAggregatorDecoder {
 
         int streamFrameLimit = Integer.parseInt(args[4]);
 
-        new SMPTwoStreamAggregatorDecoder(port1, port2, streamId1, streamId2,streamFrameLimit ).go();
+        try {
+            new SMPTwoStreamAggregatorDecoder(port1, port2, streamId1, streamId2,
+                                              streamFrameLimit, SampaType.DSP ).go();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

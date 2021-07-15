@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
- * See License.txt file.
+ * See LICENSE.txt file.
  *
  * Thomas Jefferson National Accelerator Facility
  * Experimental Physics Software and Computing Infrastructure Group
@@ -10,17 +10,57 @@
  */
 
 package org.jlab.epsci.stream.sampaBB;
-import java.io.OutputStream;
 
+
+/**
+ * This interface allows for using 2 different decoders,
+ * one for the DSP and the other for the DAS format data from the SAMPA board.
+ * They're similar enough to warrant using the same interface.
+ */
 public interface SampaDecoder {
 
-    DecoderType getDecoderType();
-    void decodeSerial(int[] gbt_frame, SRingRawEvent ringRawEvent) throws Exception;
+    /**
+     * Get the type of Decoder this is.
+     * @return type of Decoder this is.
+     */
+    SampaType getSampaType();
 
+    /**
+     * Decode a single frame of streamed data from SAMPA card.
+     *
+     * @param gbt_frame frame of streamed data.
+     * @param rawEvent  object from ring buffer for storing data and passing to next ring consumer.
+     * @throws Exception thrown if looking for a sync from each stream, but only some are found, while
+     *                   at the same time the storage limit for streamed data has been reached.
+     *                   Thrown only in DAS mode.
+     */
+    void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception;
+
+    /**
+     * Get the number of frames that have been processed by this decoder.
+     * @return number of frames that have been processed by this decoder.
+     */
+    long getFrameCount();
+
+
+    // For DAS mode only
+
+    /** Force looking for the next sync signal on all streams (DAS mode only). */
+    void reSync();
+
+    // For DSP mode only which organizes data into blocks
+
+    /**
+     * Get the number of full blocks of data parsed (DSP mode only).
+     * @return number of full blocks of data parsed.
+     */
     int getBlockCount();
-    boolean isBlockComplete();
 
-    void writeData(OutputStream out, int streamId, SRingRawEvent rawEvent, boolean hex);
-    void printLinkStats();
+    /**
+     * Increment by one the number of full blocks of data parsed (DSP mode only).
+     * @return number of full blocks of data parsed after the increment.
+     */
+    int incrementBlockCount();
+
 }
 

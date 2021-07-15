@@ -1,10 +1,20 @@
+/*
+ * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
+ * See LICENSE.txt file.
+ *
+ * Thomas Jefferson National Accelerator Facility
+ * Experimental Physics Software and Computing Infrastructure Group
+ *
+ * 12000, Jefferson Ave, Newport News, VA 23606
+ * Phone : (757)-269-7100
+ */
+
 package org.jlab.epsci.stream.sampaBB;
 
 import com.lmax.disruptor.*;
 
 import java.nio.ByteBuffer;
 import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SAggregator extends Thread {
@@ -102,8 +112,8 @@ public class SAggregator extends Thread {
             int b1 = e1.getBlockNumber();
             int b2 = e2.getBlockNumber();
 
-            m1.put(b1, e1.getBBData());
-            m2.put(b2, e2.getBBData());
+            m1.put(b1, e1.getData());
+            m2.put(b2, e2.getData());
 
             if (m1.containsKey(b1) && m2.containsKey(b1)) {
                 outSequence = outputRingBuffer.next();
@@ -112,8 +122,8 @@ public class SAggregator extends Thread {
                 // set output ring item block number
                 outputItem.setBlockNumber(b1);
                 // add two array of vectors together and add to the output item
-                outputItem.setBBData(m1.get(b1));
-                outputItem.addBBData(m2.get(b1));
+                outputItem.setData(m1.get(b1));
+                outputItem.addData(m2.get(b1));
                 // publish
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b1);
@@ -127,8 +137,8 @@ public class SAggregator extends Thread {
                 // set output ring item block number
                 outputItem.setBlockNumber(b2);
                 // add two array of vectors together and add to the output item
-                outputItem.setBBData(m1.get(b2));
-                outputItem.addBBData(m2.get(b2));
+                outputItem.setData(m1.get(b2));
+                outputItem.addData(m2.get(b2));
                 // publish
                 outputRingBuffer.publish(outSequence);
                 m1.remove(b2);

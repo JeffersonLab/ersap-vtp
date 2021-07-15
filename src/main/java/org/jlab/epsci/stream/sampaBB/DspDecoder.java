@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
- * See License.txt file.
+ * See LICENSE.txt file.
  *
  * Thomas Jefferson National Accelerator Facility
  * Experimental Physics Software and Computing Infrastructure Group
@@ -12,19 +12,16 @@
 package org.jlab.epsci.stream.sampaBB;
 
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
-@SuppressWarnings("unchecked")
 
 public class DspDecoder implements SampaDecoder {
 
     /** If true, print out debug info. */
-    private boolean verbose;
+    private final boolean verbose;
 
     /** Link (0-27) to debug when in verbose mode. */
-    int eLinkToDebug = 2;
+    private final int eLinkToDebug = 2;
 
     /** Object in which to keep statistics about each link. */
     private final ELinkStats eLinkStats = new ELinkStats();
@@ -48,47 +45,86 @@ public class DspDecoder implements SampaDecoder {
     // Each data word starts with the 10 bit ADC value, # of ADC samples, or Time. The other bits
     // contain a packet word number and 3 bits identifying it as a data word (0).
 
-    // Try switching over from ArrayLists or Vectors to ByteBuffers
+    /** Buffers, one for each link, to store data temporarily while transforming data into another format. */
     private final ByteBuffer[] eLinkDataTemp = new ByteBuffer[28];
 
     /** Sync pattern. */
     private static final long syncHeaderPattern = 0x1555540F00113L;
 
+    // According to Ed,
+    // Currently the SAMPA chips are programmed to transmit non-empty packet data every 1000 ADC samples.
+    // The period is called the sample window and equates to 50 us when sampling at 20 MHz.
+    // This corresponds to 2000 frames of the 4.8 Gb/s data stream. We define a BLOCK of packets
+    // to be the set of all packets collected during N_BLOCK consecutive sampling windows.
+    // N_BLOCK is programmable (see below for current val). A BLOCK HEADER is written to a file followed
+    // by all the packet data of the BLOCK. For N_BOCK = 10, the BLOCK represents 500 us of time,
+    // so the file written is time-ordered to this level.
     private static final int N_BLOCK = 1;
-    private static final int frames_in_block = 2000 * N_BLOCK;
+    private static final int framesInBlock = 2000 * N_BLOCK;
 
-    public long frameCount;
-    public int blockFrameCount;
-    public int block_count;
-    public int block_header;
-    public int data;
-    public int numData;
+    /** Total number of frames parsed. */
+    private long frameCount;
 
-
-    public DspDecoder() {
-        this(false);
-    }
+    /** Number of full blocks of data parsed. */
+    private int blockCount;
 
 
+
+    /** Constructor with no debug output. */
+    public DspDecoder() {this(false);}
+
+
+    /**
+     * Constructor.
+     * @param verbose if true, enable debug output.
+     */
     public DspDecoder(boolean verbose) {
         this.verbose = verbose;
         eLinkStats.init(); // not necessary, but anyways
 
         for (int i = 0; i < 28; i++) {
-            // 2 headers + (1024 samples + times + counts) * 32 bits each -> max < 65k
-            // This allocates about 1MB, but eliminates having to always check if we
+            // 2 headers + (1024 samples + times + counts) * 4 bytes each -> max < 16k
+            // This allocates about .5MB, but eliminates having to always check if we
             // need to expand these buffers (and then expand them).
-            eLinkDataTemp[i] = ByteBuffer.allocate(65536);
+            eLinkDataTemp[i] = ByteBuffer.allocate(16384);
         }
     }
 
 
-    public void incrementFrameCount() {frameCount++;}
-    public void incrementBlockFrameCount() {blockFrameCount++;}
-    public void clearBlockFrameCount() {blockFrameCount = 0;}
+    /**
+     * Get the number of sequential sampling windows (2000 frames each) of SAMPA board per block.
+     * @return number of sequential sampling windows of SAMPA board per block.
+     */
+    public static int getNBlock() {return N_BLOCK;}
+
+    /**
+     * Get the number of frames in 1 block.
+     * @return number of frames in 1 block.
+     */
+    public static int getFramesInBlock() {return framesInBlock;}
+
+    /** {@inheritDoc} */
+    public SampaType getSampaType() {return SampaType.DSP;}
+
+    /** {@inheritDoc} */
+    public int getBlockCount() {return blockCount;}
+
+    /** {@inheritDoc} */
+    public int incrementBlockCount() { return ++blockCount;}
+
+    /** {@inheritDoc} */
+    public void printStats(OutputStream out, boolean json) {eLinkStats.write(out);}
+
+    /** {@inheritDoc} */
+    public long getFrameCount() {return frameCount;}
+
+    /** Not applicable to DSP mode. Do nothing. */
+    public void reSync() {}
 
 
+    /** {@inheritDoc} */
     public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) {
+
         int bitValue;
         int dataWord;
         int pkt;
@@ -107,14 +143,17 @@ public class DspDecoder implements SampaDecoder {
         int fec_channel;
         boolean match;
 
+        rawEvent.incrementFramesStored();
+        frameCount++;
+
         // Loop thru all 28 eLinks ...
         for (int eLink = 0; eLink < 28; eLink++) {
 
             if (eLink < 8) {
                 gFrameWord = gbt_frame[0];
-            } else if ((eLink >= 8) && (eLink < 16)) {
+            } else if (eLink < 16) {
                 gFrameWord = gbt_frame[1];
-            } else if ((eLink >= 16) && (eLink < 24)) {
+            } else if (eLink < 24) {
                 gFrameWord = gbt_frame[2];
             } else {
                 gFrameWord = gbt_frame[3];
@@ -332,11 +371,14 @@ public class DspDecoder implements SampaDecoder {
                         int dataBytes = 4 * (numWords[eLink] + 2);
                         // Write directly into raw event's ByteBuffer.
                         // Expand it if necessary to handle all data.
-                        ByteBuffer bb = rawEvent.expandBB(eLink, dataBytes);
+                        ByteBuffer bb = rawEvent.expandBuffer(eLink, dataBytes);
                         System.arraycopy(eLinkDataTemp[eLink].array(), 0,
                                 bb.array(), bb.position(), dataBytes);
 
-                        // delete all data of temporary vector
+                        // Be sure to track how much we've written to date
+                        bb.position(bb.position() + dataBytes);
+
+                        // Delete all data of temporary vector
                         eLinkDataTemp[eLink].clear();
 
                         // Reset
@@ -445,72 +487,5 @@ public class DspDecoder implements SampaDecoder {
         return match;
     }
 
-    public int getBlockCount() {return block_count;}
 
-    public DecoderType getDecoderType() {return DecoderType.DSP;}
-
-    public boolean isBlockComplete() {
-        return blockFrameCount == frames_in_block;
-    }
-
-
-    /**
-     * Write data values to output stream.
-     * Note, even if specifying hex output, the values following
-     * "eLink" and "num data" are always decimal.
-     *
-     * @param out output stream to write data to.
-     * @param streamId id number of data stream.
-     * @param rawEvent object that contains data to write.
-     * @param hex if true, output values are in hexadecimal, else in decimal.
-     */
-    public void writeData(OutputStream out, int streamId, SRingRawEvent rawEvent, boolean hex) {
-
-        boolean autoFlush = true;
-        PrintWriter writer = new PrintWriter(out, autoFlush, Charset.forName("US_ASCII"));
-
-        // TODO: Is there a better way to handle the printout when dealing with blocks ???
-        if (blockFrameCount == frames_in_block) {
-            // write block header to file
-            block_count = block_count + 1;          // block count is 26 bits
-            block_header = 0x20000000 | ((0xF & streamId) << 26) | (0x3FFFFFF & block_count);
-            if (hex) {
-                writer.println(Integer.toHexString(block_header));
-            }
-            else {
-                writer.println(block_header);
-            }
-
-            // write vector data for block to file
-            for (int jj = 0; jj < 28; jj++) {
-                numData = rawEvent.getBB(jj).limit()/4;
-                writer.print("  eLink = ");
-                writer.print(jj);
-                writer.print("   num data = ");
-                writer.println(numData);
-
-                if (numData > 0) {
-                    for (int ii = 0; ii < numData; ii++) {
-                        data = rawEvent.getBB(jj).getInt(ii);
-                        if (hex) {
-                            writer.print(Integer.toHexString(data));
-                        }
-                        else {
-                            writer.print(data);
-                        }
-                        writer.print(" ");
-                    }
-                    writer.println();
-                }
-                else {
-                    writer.println();
-                }
-            }
-        }
-
-        writer.flush();
-    }
-
-
-    public void printLinkStats() {eLinkStats.print();}
 }

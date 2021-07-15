@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2021, Jefferson Science Associates, all rights reserved.
- * See License.txt file.
+ * See LICENSE.txt file.
  *
  * Thomas Jefferson National Accelerator Facility
  * Experimental Physics Software and Computing Infrastructure Group
@@ -11,18 +11,20 @@
 
 package org.jlab.epsci.stream.sampaBB;
 
-import org.jetbrains.annotations.NotNull;
 
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 
 
 /**
  * <p>This class implements parsing the output of the Direct ADC Serialization
  * (DAS) mode of operating the SAMPA board.
  * This is one of 2 standard modes of readout, the other being the DSP mode.</p>
+ *
+ * <p>There are 80 channels worth of data. Each frame gets parsed into 20 bytes of data,
+ * where 5 ByteBuffers each contain 4 bytes. So, if we set a max of 262144 frames to store,
+ * then we're using a total of 5,242,880 bytes (1048576 bytes in each of 5 BBs).
+ * If this memory is divided into 80 channels, each channel has 65536 bytes of data.
+ * </p>
  *
  * Base this class on storing data in the underlying structure of the ByteBuffer
  * instead of an ArrayList&lt;Integer&gt; for efficiency. This avoids the mountains
@@ -38,20 +40,14 @@ public class DasDecoder implements SampaDecoder {
     /** Number of samples from a channel to use in calculating and printing statistics. */
     private final int numTimebins;
 
-    public int block_frameCount = 0;
-    public int block_count = 0;
-
     /** Total number of frames parsed. */
-    private long framesCount;
-
-    /** Number of frames from which data is locally stored. */
-    private long framesStored;
+    private long frameCount;
 
     /** Max number of frames that can be locally stored.
      * Also the target "block" size to fit in one raw event.
      * The first and last block will, most likely, be of different size.
      * The first must sync, and who knows when the data ends. */
-    private static final int maxStored = 65536;
+    private static final int maxStored = 262144;
 
     /** Max number of bytes in local ByteBuffer.
      * Each buf has 4 bytes/frame. */
@@ -89,13 +85,10 @@ public class DasDecoder implements SampaDecoder {
     private final ByteBuffer sampa_stream_high_1_ = ByteBuffer.allocate(maxBufSize);
     private final ByteBuffer sampa_stream_2_      = ByteBuffer.allocate(maxBufSize); // for SAMPA2 (1 stream only)
 
-    private final ByteBuffer sampa_stream_clock_0_ = ByteBuffer.allocate(maxBufSize); // for SAMPA0 e-link 10 (clock)
-    private final ByteBuffer sampa_stream_clock_1_ = ByteBuffer.allocate(maxBufSize); // for SAMPA1 e-link 10 (clock)
-    private final ByteBuffer sampa_stream_clock_2_ = ByteBuffer.allocate(maxBufSize); // for SAMPA3 e-link 10 (clock)
-
-    // Statistics
-    private final double[] mean = new double[80];
-    private final double[] sdv  = new double[80];
+    // Clock data is currently unused
+//    private final ByteBuffer sampa_stream_clock_0_ = ByteBuffer.allocate(maxBufSize); // for SAMPA0 e-link 10 (clock)
+//    private final ByteBuffer sampa_stream_clock_1_ = ByteBuffer.allocate(maxBufSize); // for SAMPA1 e-link 10 (clock)
+//    private final ByteBuffer sampa_stream_clock_2_ = ByteBuffer.allocate(maxBufSize); // for SAMPA3 e-link 10 (clock)
 
     /** SYNC Pattern. The following sequence in the data is the SYNC pattern. 0 = 0x2B5 and 1 = 0x14A.
      *  When 0x2B5 is split into 2 5bit words, each is 0x15. When 0x14A is split, each 5bit word is 0xA. */
@@ -106,13 +99,11 @@ public class DasDecoder implements SampaDecoder {
 
 
     /**
-     * Constructor. No debug output.
-     * @param numTimebins number of samples to use when calculating statistics or printing out.
+     * Constructor. No debug output. 1024 samples for statistics.
      */
-    public DasDecoder(int numTimebins) {
-        this(numTimebins, false);
+    public DasDecoder() {
+        this(1024, false);
     }
-
 
     /**
      * Constructor.
@@ -122,30 +113,49 @@ public class DasDecoder implements SampaDecoder {
     public DasDecoder(int numTimebins, boolean verbose) {
         this.verbose = verbose;
         this.numTimebins = numTimebins;
-     }
+    }
 
-    /** Force looking for the next sync signal on all streams. */
+
+    /**
+     * Get the max number of frames that can be stored in a SRingRawEvent in DAS mode.
+     * @return max number of frames that can be stored in a SRingRawEvent in DAS mode.
+     */
+    public static int getMaxFramesStored() {return maxStored;}
+
+
+    /** {@inheritDoc} */
     public void reSync() {
         gotSync = syncLow0Found = syncLow1Found = syncHigh0Found = syncHigh1Found = sync2Found = false;
     }
 
+    /** {@inheritDoc} */
+    public SampaType getSampaType() {return SampaType.DAS;}
+
+    /** Not applicable to DAS mode. Do nothing. */
+    public void printStats() {}
+
+    /** {@inheritDoc} */
+    public long getFrameCount() {return frameCount;}
+
+
+    //--------------------------------------------------
+    // Interface methods irrelevant to DAS mode
+    //--------------------------------------------------
+
     /**
-     * Get the type of Decoder this is.
-     * @return type of Decoder this is.
+     * Not applicable to DAS mode.
+     * @return -1.
      */
-    public DecoderType getDecoderType() {return DecoderType.DAS;}
+    public int getBlockCount() {return -1;}
 
-    public int getBlockCount() {int block_count = 0; return block_count;}
+    /**
+     * Not applicable to DAS mode.
+     * @return 0
+     */
+    public int incrementBlockCount() {return 0;}
 
-    public boolean isBlockComplete() {
-        //return block_frameCount == frames_in_block;
-        return true;
-    }
 
-
-    public void printBlockData(int streamId, SRingRawEvent rawEvent) {
-        // do nothing
-    }
+    //--------------------------------------------------
 
 
     /** Clear all stored data. */
@@ -156,11 +166,9 @@ public class DasDecoder implements SampaDecoder {
         sampa_stream_high_1_.clear();
         sampa_stream_2_.clear();
 
-        sampa_stream_clock_0_.clear();
-        sampa_stream_clock_1_.clear();
-        sampa_stream_clock_2_.clear();
-
-        framesStored = 0;
+//        sampa_stream_clock_0_.clear();
+//        sampa_stream_clock_1_.clear();
+//        sampa_stream_clock_2_.clear();
     }
 
 
@@ -176,9 +184,6 @@ public class DasDecoder implements SampaDecoder {
 
         getHalfWords(gbt_frame);
 
-         framesCount++;
-         framesStored++;
-
          // The first thing we need to do is look for a(nother) sync
         if (!gotSync) {
             // Update gotSync by looking for syncs
@@ -189,7 +194,7 @@ public class DasDecoder implements SampaDecoder {
                 dumpData();
             }
             // But what if we have some syncs but have reached our data storage limit?
-            else if (framesStored > maxStored) {
+            else if (rawEvent.getFramesStored() > maxStored) {
                 throw new Exception("Reached data storage limit, but only partial syncs found");
             }
 
@@ -198,16 +203,14 @@ public class DasDecoder implements SampaDecoder {
         else {
             // Data is probably good, but we can't store it forever.
             // Dump it as we're done with it.
-            if (framesStored > maxStored) {
+            if (rawEvent.getFramesStored() > maxStored) {
                 getAdcValues(rawEvent);
                 dumpData();
             }
         }
-    }
 
-
-    public void printLinkStats() {
-        // do nothing
+        frameCount++;
+        rawEvent.incrementFramesStored();
     }
 
 
@@ -261,22 +264,22 @@ public class DasDecoder implements SampaDecoder {
         sampa_stream_2_.put((byte)(bit(gf[3],  9, 4) | bit(gf[3], 5, 3) | bit(gf[3], 1, 2) | bit(gf[2], 29, 1) | bit(gf[2], 25, 0)));
         sampa_stream_2_.put((byte)(bit(gf[3],  8, 4) | bit(gf[3], 4, 3) | bit(gf[3], 0, 2) | bit(gf[2], 28, 1) | bit(gf[2], 24, 0)));
 
-        // SAMPA e-link 10 (clock) streams
-        sampa_stream_clock_0_.put((byte)(bit(gf[1], 11, 0)));
-        sampa_stream_clock_0_.put((byte)(bit(gf[1], 10, 0)));
-        sampa_stream_clock_0_.put((byte)(bit(gf[1],  9, 0)));
-        sampa_stream_clock_0_.put((byte)(bit(gf[1],  8, 0)));
-
-        sampa_stream_clock_1_.put((byte)(bit(gf[2], 23, 0)));
-        sampa_stream_clock_1_.put((byte)(bit(gf[2], 22, 0)));
-        sampa_stream_clock_1_.put((byte)(bit(gf[2], 21, 0)));
-        sampa_stream_clock_1_.put((byte)(bit(gf[2], 20, 0)));
-
-        sampa_stream_clock_2_.put((byte)(bit(gf[3], 15, 0)));
-        sampa_stream_clock_2_.put((byte)(bit(gf[3], 14, 0)));
-        sampa_stream_clock_2_.put((byte)(bit(gf[3], 13, 0)));
-        sampa_stream_clock_2_.put((byte)(bit(gf[3], 12, 0)));
-
+//        // SAMPA e-link 10 (clock) streams
+//        sampa_stream_clock_0_.put((byte)(bit(gf[1], 11, 0)));
+//        sampa_stream_clock_0_.put((byte)(bit(gf[1], 10, 0)));
+//        sampa_stream_clock_0_.put((byte)(bit(gf[1],  9, 0)));
+//        sampa_stream_clock_0_.put((byte)(bit(gf[1],  8, 0)));
+//
+//        sampa_stream_clock_1_.put((byte)(bit(gf[2], 23, 0)));
+//        sampa_stream_clock_1_.put((byte)(bit(gf[2], 22, 0)));
+//        sampa_stream_clock_1_.put((byte)(bit(gf[2], 21, 0)));
+//        sampa_stream_clock_1_.put((byte)(bit(gf[2], 20, 0)));
+//
+//        sampa_stream_clock_2_.put((byte)(bit(gf[3], 15, 0)));
+//        sampa_stream_clock_2_.put((byte)(bit(gf[3], 14, 0)));
+//        sampa_stream_clock_2_.put((byte)(bit(gf[3], 13, 0)));
+//        sampa_stream_clock_2_.put((byte)(bit(gf[3], 12, 0)));
+//
 
         // for debug printing of data streams
         if (verbose) {
@@ -379,7 +382,7 @@ public class DasDecoder implements SampaDecoder {
      *
      * @return the number of buffers that found a sync pattern (5 max).
      */
-    public int getSyncCount() {
+    private int getSyncCount() {
 
         if (gotSync) return 5;
 
@@ -462,7 +465,7 @@ public class DasDecoder implements SampaDecoder {
      * @param startIndex index of byte to start the search
      * @return position of the last SYNC pattern value (0xA) in the stream or -1 if unknown.
      */
-    public int findSync(ByteBuffer data, int startIndex) {
+    private int findSync(ByteBuffer data, int startIndex) {
         int index = 0;
 
         for (int i = 0; i < data.limit(); i++) {
@@ -500,7 +503,7 @@ public class DasDecoder implements SampaDecoder {
      * @param channel_offset offset into the array of buffers at which to start placing ADC values.
      * @param rawEvent object into which to write the extracted ADC values.
      */
-    public void extractAdcValues(ByteBuffer data, int startPos, int channel_offset, SRingRawEvent rawEvent) {
+    private void extractAdcValues(ByteBuffer data, int startPos, int channel_offset, SRingRawEvent rawEvent) {
         short adc_value;
         int maxSamples, offset;
 
@@ -513,7 +516,7 @@ public class DasDecoder implements SampaDecoder {
             System.out.println("Maximum number of samples : " + maxSamples);
 
         // Array of buffers in which to place data
-        ByteBuffer[] dataBufs = rawEvent.getDasBBs();
+        ByteBuffer[] dataBufs = rawEvent.getData();
 
         // Loop over the samples
         for (int numSamples = 0; numSamples < maxSamples; numSamples++) {
@@ -544,169 +547,6 @@ public class DasDecoder implements SampaDecoder {
             data.compact();
             // Get ready to add more data after what is still remains
             data.flip();
-        }
-    }
-
-
-    /**
-     * Calculate statistics.
-     * @param rawEvent object in which ADC data is stored.
-     */
-    public void calculateStats(SRingRawEvent rawEvent) {
-        double m, M2, variance, delta, dataPt;
-
-        ByteBuffer[] dataBufs = rawEvent.getDasBBs();
-
-        // Check if the number of TimeBins doesn't exceed the amount of decoded timebins
-        int sampleLimit = numTimebins;
-        // Remember, data stored in shorts
-        if (numTimebins > dataBufs[0].limit()/2 || numTimebins == 0) {
-            sampleLimit = dataBufs[0].limit()/2;
-        }
-
-        for (int channel = 0; channel < 80; channel++) {
-            m = 0;
-            M2 = 0;
-            variance = 0;
-
-            for (int sample = 0; sample < sampleLimit; sample++) {
-                dataPt = dataBufs[channel].getShort(sample);
-                delta = dataPt - m;
-                m  += delta / (sample + 1);
-                M2 += delta * (dataPt - m);
-                variance = M2 / (sample + 1);
-            };
-
-            mean[channel] = m;
-            sdv[channel] = Math.sqrt(variance);
-
-            if (verbose)
-                System.out.printf("[%02d] : %8.4f   %8.4f",   channel, mean[channel], sdv[channel]);
-        };
-    }
-
-
-    /**
-     * Write statistics to output stream.
-     * @param out output stream
-     * @param json true if json format desired
-     */
-    public void writeStats(OutputStream out, boolean json) {
-
-        boolean autoFlush = true;
-        PrintWriter writer = new PrintWriter(out, autoFlush, Charset.forName("US_ASCII"));
-
-        writer.print(5);
-        writer.write((json ? "{\n" : ""));
-        writer.write((json ? "\"input_name\" : " : "Input name : "));
-        writer.write("\"");
-        writer.write("streaming");
-        writer.write("\"");
-        writer.write((json ? ",\n" : "\n"));
-
-        writer.write((json ? "\"sync_low\"  : " : "SYNC Low : ")  + sync_low_  + (json ? ",\n" : "\n"));
-        writer.write((json ? "\"sync_high\" : " : "SYNC High : ") + sync_high_ + (json ? ",\n" : "\n"));
-
-        if (json) {
-            writer.write("\"mean\": [");
-            for (int channel = 0; channel < 80; channel++) {
-                writer.printf("%8.4f", mean[channel]);
-                writer.write((channel == 79 ? "]" : ", "));
-            }
-
-            writer.write(",\n");
-            writer.write("\"stdev\": [");
-
-            for (int channel = 0; channel < 80; channel++) {
-                writer.printf("%6.4f", sdv[channel]);
-                writer.write((channel == 79 ? "]" : ", "));
-            }
-        }
-        else {
-            for (int channel = 0; channel < 80; channel++) {
-                writer.write("[ CHA ");
-                writer.printf("%2d] : ", channel);
-                writer.printf("%8.4f   ", mean[channel]);
-                writer.printf("%6.4f\n", sdv[channel]);
-
-            };
-        };
-
-        writer.write((json ? "\n}" : ""));
-        writer.write("\n");
-    }
-
-
-    /**
-     * Write ADC values to output stream.
-     *
-     * @param out output stream to write data to.
-     * @param streamId id number of data stream.
-     * @param rawEvent object that contains data to write.
-     * @param hex if true, output values are in hexadecimal, else in decimal.
-     */
-    public void writeData(OutputStream out, int streamId, @NotNull SRingRawEvent rawEvent, boolean hex) {
-        boolean autoFlush = true;
-        PrintWriter writer = new PrintWriter(out, autoFlush, Charset.forName("US_ASCII"));
-
-        ByteBuffer[] dataBufs = rawEvent.getDasBBs();
-
-        // Check if the number of TimeBins doesn't exceed the amount of decoded timebins
-        int sampleLimit = numTimebins;
-        // Remember, data stored in shorts
-        if (numTimebins > dataBufs[0].limit()/2 || numTimebins == 0) {
-            sampleLimit = dataBufs[0].limit()/2;
-        }
-
-        for (int sample = 0; sample < sampleLimit; sample++) {
-            for (int channel = 0; channel < 80; channel++) {
-                if (hex) {
-                    writer.printf("%4s", Integer.toHexString(dataBufs[channel].getShort(sample)));
-                }
-                else {
-                    writer.printf("%4d", dataBufs[channel].getShort(sample));
-                }
-                writer.print(" ");
-            }
-            writer.println();
-        }
-    }
-
-
-    public static void main(String[] args) {
-
-        // Instantiate the SDasDecoder
-        int samples = 1024;
-        DasDecoder sDec = new DasDecoder(samples, false);
-
-//        try {
-//            // now we check incoming data for SYNCs as we parse
-//            sDec.decodeSerial(1, null, null);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-        // check for the SYNC pattern
-        // boolean foundSync = sDec.getSync();
-
-        // extract the Adc values
-        //sDec.getAdcValues();
-
-        // write Adc values to file
-        //sDec.writeAdcValues(System.out);
-
-        // calculate the mean and sdv for each Adc channel
-        //sDec.calculateStats();
-        sDec.writeStats(System.out,true);
-
-        boolean json = true;
-        if (json)
-            sDec.writeStats(System.out, true);
-        else {
-            System.out.println("-----------------------------------");
-            System.out.println("          Stats");
-            System.out.println("-----------------------------------");
-            sDec.writeStats(System.out, false);
         }
     }
 
