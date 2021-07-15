@@ -10,9 +10,6 @@
  */
 
 package org.jlab.epsci.stream.sampa;
-import org.jlab.epsci.stream.sampaBB.DecoderType;
-import org.jlab.epsci.stream.sampaBB.SRingRawEvent;
-import org.jlab.epsci.stream.sampaBB.SampaDecoder;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -83,7 +80,6 @@ public class SDasDecoder implements SampaDecoder {
         }
     }
 
-    public DecoderType getDecoderType() {return DecoderType.DAS;}
 
     public int getBlockCount() {int block_count = 0; return block_count;}
     public boolean isBlockComplete() {
@@ -91,11 +87,15 @@ public class SDasDecoder implements SampaDecoder {
         return true;
     }
 
-    public void printBlockData(int streamId, org.jlab.epsci.stream.sampaBB.SRingRawEvent rawEvent) {
+    public void printBlockData(int streamId) {
         // do nothing
     }
 
-    public void decodeSerial(int eLink, int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
+    public void getBlockData(SRingRawEvent rawEvent) {
+        // do nothing
+    }
+
+    public void decodeSerial(int eLink, int[] gbt_frame)  {
         getHalfWords(gbt_frame);
     }
 
@@ -504,10 +504,10 @@ public class SDasDecoder implements SampaDecoder {
 
         // Instantiate the SDasDecoder
         int samples = 1024;
-        org.jlab.epsci.stream.sampaBB.DasDecoder sDec = new org.jlab.epsci.stream.sampaBB.DasDecoder(samples, false);
+        SDasDecoder sDec = new SDasDecoder(samples, false);
 
         try {
-            sDec.decodeSerial(1, null, null);
+            sDec.decodeSerial(1, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
