@@ -26,12 +26,12 @@ public class SMPTwoStreamAggregatorDecoder {
      */
     private final int sampaPort1;
     private final int sampaPort2;
-    private int streamId1;
-    private int streamId2;
-    private int streamFrameLimit;
+    private final int streamId1;
+    private final int streamId2;
+    private final int streamFrameLimit;
 
     /** Format of data SAMPA chips are sending. */
-    private SampaType sampaType;
+    private final SampaType sampaType;
 
     /**
      * Max ring items
@@ -75,20 +75,27 @@ public class SMPTwoStreamAggregatorDecoder {
         this.streamFrameLimit = streamFrameLimit;
         this.sampaType = sampaType;
 
+        // RingBuffer in which receiver1 will get & fill events, then pass them to the aggregator
         ringBuffer1 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
-                new YieldingWaitStrategy());
+                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
+        // RingBuffer in which receiver2 will get & fill events, then pass them to the aggregator
         ringBuffer2 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
-                new YieldingWaitStrategy());
+                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier2 = ringBuffer2.newBarrier();
         ringBuffer2.addGatingSequences(sequence2);
 
+        // RingBuffer in which Aggregator will get empty events and fill them with data aggregated
+        // from the 2 streams. It then passes them to the consumer.
         ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
-                new YieldingWaitStrategy());
+                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         sequenceBarrier12 = ringBuffer12.newBarrier();
         ringBuffer12.addGatingSequences(sequence12);
@@ -99,8 +106,10 @@ public class SMPTwoStreamAggregatorDecoder {
         receiver1 = new SReceiver(sampaPort1, streamId1, ringBuffer1, streamFrameLimit, sampaType);
         receiver2 = new SReceiver(sampaPort2, streamId2, ringBuffer2, streamFrameLimit, sampaType);
 
-        aggregator12 = new SAggregator(ringBuffer1, ringBuffer2, sequence1,
-                sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
+        aggregator12 = new SAggregator(ringBuffer1, ringBuffer2,
+                                       sequence1, sequence2,
+                                       sequenceBarrier1, sequenceBarrier2,
+                                       ringBuffer12, sampaType);
 
         consumer = new SConsumer(ringBuffer12, sequence12, sequenceBarrier12);
         receiver1.start();
@@ -117,6 +126,18 @@ public class SMPTwoStreamAggregatorDecoder {
         consumer.exit();
     }
 
+    /**
+     * Main method. Arguments are:
+     * <ol>
+     * <li>port of TCP server to run in first SReceiver object
+     * <li>port of TCP server to run in second SReceiver object
+     * <li>id of first SReceiver's data stream
+     * <li>id of second SReceiver's data stream
+     * <li>limit on number of frames to parse on each stream
+     * <li>optional: if = DAS, it switches from parsing DSP format to DAS format data
+     * </ol>
+     * @param args array of args.
+     */
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
         int port2 = Integer.parseInt(args[1]);
@@ -126,9 +147,17 @@ public class SMPTwoStreamAggregatorDecoder {
 
         int streamFrameLimit = Integer.parseInt(args[4]);
 
+        SampaType sampaType = SampaType.DSP;
+        if (args.length > 5) {
+            String sType = args[5];
+            if (sType.equalsIgnoreCase("das")) {
+                sampaType = SampaType.DAS;
+            }
+        }
+
         try {
             new SMPTwoStreamAggregatorDecoder(port1, port2, streamId1, streamId2,
-                                              streamFrameLimit, SampaType.DSP ).go();
+                                              streamFrameLimit, sampaType).go();
         } catch (IOException e) {
             e.printStackTrace();
         }

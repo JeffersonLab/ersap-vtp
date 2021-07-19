@@ -37,9 +37,6 @@ public class DasDecoder implements SampaDecoder {
     /** If true, print out debug info. */
     private final boolean verbose;
 
-    /** Number of samples from a channel to use in calculating and printing statistics. */
-    private final int numTimebins;
-
     /** Total number of frames parsed. */
     private long frameCount;
 
@@ -102,17 +99,15 @@ public class DasDecoder implements SampaDecoder {
      * Constructor. No debug output. 1024 samples for statistics.
      */
     public DasDecoder() {
-        this(1024, false);
+        this(false);
     }
 
     /**
      * Constructor.
-     * @param numTimebins number of samples to use when calculating statistics or printing out.
      * @param verbose if true, print debug info.
      */
-    public DasDecoder(int numTimebins, boolean verbose) {
+    public DasDecoder(boolean verbose) {
         this.verbose = verbose;
-        this.numTimebins = numTimebins;
     }
 
 
@@ -264,7 +259,9 @@ public class DasDecoder implements SampaDecoder {
         sampa_stream_2_.put((byte)(bit(gf[3],  9, 4) | bit(gf[3], 5, 3) | bit(gf[3], 1, 2) | bit(gf[2], 29, 1) | bit(gf[2], 25, 0)));
         sampa_stream_2_.put((byte)(bit(gf[3],  8, 4) | bit(gf[3], 4, 3) | bit(gf[3], 0, 2) | bit(gf[2], 28, 1) | bit(gf[2], 24, 0)));
 
-//        // SAMPA e-link 10 (clock) streams
+        // SAMPA e-link 10 (clock) streams
+        // Manual says that this clock is not guaranteed to be related to the data.
+        // Thus it can't be used as a marker in the data.
 //        sampa_stream_clock_0_.put((byte)(bit(gf[1], 11, 0)));
 //        sampa_stream_clock_0_.put((byte)(bit(gf[1], 10, 0)));
 //        sampa_stream_clock_0_.put((byte)(bit(gf[1],  9, 0)));

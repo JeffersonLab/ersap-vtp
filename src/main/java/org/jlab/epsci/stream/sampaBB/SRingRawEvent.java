@@ -59,7 +59,8 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>Finally, let's just say each array = 131072 bytes. DSP mode uses 28, DAS mode uses 80 of them.
  * If 16 of these exist, 131072*80*16 = 167MB total memory used in ring buffer.
- * 131072 * 80 < 11 MB total allocated in this object.</p>
+ * 131072 * 80 < 11 MB total allocated in this object.
+ * If this event is used for aggregating, double the memory numbers.</p>
 */
 public class SRingRawEvent {
 
@@ -81,6 +82,16 @@ public class SRingRawEvent {
      */
     private final ByteBuffer[] localData;
 
+    /**
+     * <p>In DSP mode this is the BX count or bunch-crossing counter (also stored
+     * in the first header word of each packet) which indicates
+     * the time associated with a packet. Since all packets in one block come from
+     * the same time, this single value applies to all packets contained in the block.</p>
+     *
+     * <p>In DAS mode no reliable time is available in the data.</p>
+     */
+    private int time;
+
     /** Mean ADC values for each channel (DAS mode only). */
     private double[] mean;
 
@@ -93,14 +104,29 @@ public class SRingRawEvent {
      * Constructor.
      * @param type the type of data being stored.
      */
-    public SRingRawEvent(SampaType type) {
+    public SRingRawEvent(SampaType type) {this(type, false);}
+
+
+    /**
+     * Constructor.
+     * @param type the type of data being stored.
+     * @param forAggregation if true, this is used to hold aggregated data -
+     *                       all 160 channels of a SAMPA board. Or, in other words,
+     *                       it needs hold 2x the data coming from a single stream.
+     */
+    public SRingRawEvent(SampaType type, boolean forAggregation) {
         sampaType = type;
 
-        int bufferCount = 28;
+        // If aggregating we need double the channels
+        int factor = 1;
+        if (forAggregation) factor = 2;
+
+        int bufferCount = 28*factor;
+
         if (sampaType.isDAS()) {
-            bufferCount = 80;
-            mean = new double[80];
-            sdv  = new double[80];
+            bufferCount = 80*factor;
+            mean = new double[bufferCount];
+            sdv  = new double[bufferCount];
         }
 
         localData = new ByteBuffer[bufferCount];
@@ -108,6 +134,7 @@ public class SRingRawEvent {
         for (int i=0; i < localData.length; i++) {
             localData[i] = ByteBuffer.allocate(131072);
         }
+
     }
 
 
@@ -131,6 +158,18 @@ public class SRingRawEvent {
         return localData[index];
     }
 
+
+    /**
+     * Get the DSP mode bunch crossing (time) for this block.
+     * @return DSP mode bunch crossing (time) for this block.
+     */
+    public int getTime() {return time;}
+
+    /**
+     * Set the DSP mode bunch crossing (time) for this block.
+     * @param time DSP mode bunch crossing (time) for this block.
+     */
+    public void setTime(int time) {this.time = time;}
 
     /**
      * Get the type of sampa data contained in the data buffers.
@@ -221,6 +260,7 @@ public class SRingRawEvent {
         }
     }
 
+
     /**
      * Copy data from ByteBuffer into the internal array of such buffers.
      * Excess elements (when internal array is full) of the input array are ignored.
@@ -242,14 +282,16 @@ public class SRingRawEvent {
                 }
 
                 System.arraycopy(data[i].array(), 0,
-                                 localData[localDataSize++].array(), 0,
+                                 localData[localDataSize].array(), 0,
                                  data[i].remaining());
+                localDataSize++;
             }
         }
     }
 
     /** Clear the buffer stored internally. */
     public void reset() {
+        time = 0;
         blockNumber = 0;
         framesStored = 0;
         localDataSize = 0;
@@ -279,7 +321,7 @@ public class SRingRawEvent {
      */
     public void printData(OutputStream out, int streamId, boolean hex) {
         if (sampaType.isDAS()) {
-            printDataDAS(out, streamId, hex);
+            printDataDAS(out, hex);
         }
         else {
             printDataDSP(out, streamId, hex);
@@ -352,10 +394,9 @@ public class SRingRawEvent {
      * Write ADC values to output stream.
      *
      * @param out output stream to write data to.
-     * @param streamId id number of data stream.
      * @param hex if true, output values are in hexadecimal, else in decimal.
      */
-    private void printDataDAS(OutputStream out, int streamId, boolean hex) {
+    private void printDataDAS(OutputStream out, boolean hex) {
         boolean autoFlush = true;
         PrintWriter writer = new PrintWriter(out, autoFlush, StandardCharsets.US_ASCII);
 

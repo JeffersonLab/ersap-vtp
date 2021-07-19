@@ -13,21 +13,39 @@ package org.jlab.epsci.stream.sampaBB;
 
 import com.lmax.disruptor.*;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * This class consumes events that have data which
+ * has been aggregated from multiple input sources.
+ */
 public class SConsumer extends Thread {
-    private RingBuffer<SRingRawEvent> ringBuffer;
-    private Sequence sequence;
-    private SequenceBarrier barrier;
+
+    /** Ring buffer containing input events. */
+    private final RingBuffer<SRingRawEvent> ringBuffer;
+    /** Sequence of event taken from ring. */
+    private final Sequence sequence;
+    /** Ring barrier used to get events from ring. */
+    private final SequenceBarrier barrier;
+    /** Sequence of event to get next from ring. */
     private long nextSequence;
+    /** Largest sequence of all events immediately available from ring. */
     private long availableSequence;
 
-    // control for the thread termination
-    private AtomicBoolean running = new AtomicBoolean(true);
+    /** Control for the thread termination. */
+    private volatile boolean running = true;
 
+
+    /**
+     * Constructor.
+     * @param ringBuffer ring buffer containing events that
+     *                   have data aggregated from multiple inputs.
+     * @param sequence   ring sequence for consuming events.
+     * @param barrier    ring barrier for consuming events.
+     */
     public SConsumer(RingBuffer<SRingRawEvent> ringBuffer,
                      Sequence sequence,
                      SequenceBarrier barrier) {
+
         this.ringBuffer = ringBuffer;
         this.sequence = sequence;
         this.barrier = barrier;
@@ -36,13 +54,14 @@ public class SConsumer extends Thread {
         availableSequence = -1L;
     }
 
+
     /**
      * Get the next available item from output ring buffer.
      * Do NOT call this multiple times in a row!
      * Be sure to call "put" before calling this again.
      *
      * @return next available item in ring buffer.
-     * @throws InterruptedException e
+     * @throws InterruptedException if thread interrupted.
      */
     public SRingRawEvent get() throws InterruptedException {
 
@@ -62,8 +81,9 @@ public class SConsumer extends Thread {
         return item;
     }
 
-    public void put() throws InterruptedException {
 
+    /** Release item claimed from input ring buffer. */
+    public void put() {
         // Tell input (crate) ring that we're done with the item we're consuming
         sequence.set(nextSequence);
 
@@ -71,13 +91,17 @@ public class SConsumer extends Thread {
         nextSequence++;
     }
 
+
+    /** Run this thread. */
     public void run() {
 
-        while (running.get()) {
+        while (running) {
             try {
 
                 // Get an item from ring and parse the payload
-                SRingRawEvent buf = get();
+                SRingRawEvent ev = get();
+
+                ev.printData(System.out, 0, true);
                 put();
 
             } catch (InterruptedException e) {
@@ -86,9 +110,11 @@ public class SConsumer extends Thread {
         }
     }
 
+
+    /** Stop this thread. */
     public void exit() {
-        running.set(false);
-        this.interrupt();
+        running = false;
+        //this.interrupt();
     }
 
 }

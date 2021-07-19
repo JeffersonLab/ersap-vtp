@@ -130,7 +130,7 @@ public class DspDecoder implements SampaDecoder {
         int pkt;
         int hadd;
         int chadd;
-        int bxCount;
+        int bxCount = 0;
         int hamming;
         int parity;
         int dataParity;
@@ -371,6 +371,7 @@ public class DspDecoder implements SampaDecoder {
                         int dataBytes = 4 * (numWords[eLink] + 2);
                         // Write directly into raw event's ByteBuffer.
                         // Expand it if necessary to handle all data.
+                        rawEvent.setTime(bxCount);
                         ByteBuffer bb = rawEvent.expandBuffer(eLink, dataBytes);
                         System.arraycopy(eLinkDataTemp[eLink].array(), 0,
                                 bb.array(), bb.position(), dataBytes);
