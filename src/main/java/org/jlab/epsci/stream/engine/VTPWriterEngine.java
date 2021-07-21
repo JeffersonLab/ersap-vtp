@@ -3,7 +3,6 @@ package org.jlab.epsci.stream.engine;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventWriterService;
 import org.jlab.epsci.ersap.std.services.EventWriterException;
-import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
 import org.json.JSONObject;
 
 import java.io.FileWriter;
@@ -36,6 +35,6 @@ public class VTPWriterEngine extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected EngineDataType getDataType() {
-        return StreamingDataTypes.VTP_G;
+        return EngineDataType.BYTES;
     }
 }

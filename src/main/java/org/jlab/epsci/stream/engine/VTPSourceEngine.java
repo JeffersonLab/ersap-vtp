@@ -3,7 +3,6 @@ package org.jlab.epsci.stream.engine;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
-import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
 import org.jlab.epsci.stream.vtp.VTPTwoStreamAggregatorDecoder;
 import org.json.JSONObject;
 
@@ -54,6 +53,6 @@ public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggr
 
     @Override
     protected EngineDataType getDataType() {
-        return StreamingDataTypes.VTP_G;
+        return EngineDataType.BYTES;
     }
 }
