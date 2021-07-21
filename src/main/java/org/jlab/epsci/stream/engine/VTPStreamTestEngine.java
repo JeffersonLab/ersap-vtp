@@ -52,7 +52,7 @@ public class VTPStreamTestEngine implements Engine {
         int charge = data.getInt();
 //        if(slot>0) {
 //        if (slot == slotToPrint && print) {
-        if (slot > 0  && print) {
+        if (print) {
             System.out.println("========================");
 //            System.out.println("Composition  = " + input.getComposition());
             System.out.println("MimeType     = " + input.getMimeType());
