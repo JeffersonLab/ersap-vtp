@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPHistogram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/util/SlotChannelCanvas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPStreamTestEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +66,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.11764705" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
   </component>
@@ -113,55 +109,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00085" summary="- vtp dummy writer engine">
-      <created>1623416188343</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1623416188343</updated>
-    </task>
-    <task id="LOCAL-00086" summary="- yaml description files for IO services">
-      <created>1623435139497</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1623435139498</updated>
-    </task>
-    <task id="LOCAL-00087" summary="- more appropriate gradle build, that is dependent from Clara.">
-      <created>1623436689407</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1623436689407</updated>
-    </task>
-    <task id="LOCAL-00088" summary="- more appropriate gradle build, that is dependent from Clara.">
-      <created>1623437000141</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1623437000144</updated>
-    </task>
-    <task id="LOCAL-00089" summary="- more appropriate gradle build, that is dependent from Clara.">
-      <created>1623437085737</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1623437085737</updated>
-    </task>
-    <task id="LOCAL-00090" summary="- more appropriate gradle build, that is dependent from Clara.">
-      <created>1623438155151</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1623438155151</updated>
-    </task>
-    <task id="LOCAL-00091" summary="- more appropriate gradle build, that is dependent from Clara.">
-      <created>1623438301724</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1623438301724</updated>
     </task>
     <task id="LOCAL-00092" summary="- more appropriate gradle build, that is dependent from Clara.">
       <created>1623438972011</created>
@@ -457,11 +404,59 @@
       <option name="project" value="LOCAL" />
       <updated>1624558641013</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="- working on histogram service engine">
+      <created>1626213514013</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1626213514014</updated>
+    </task>
+    <task id="LOCAL-00135" summary="- working on histogram service engine">
+      <created>1626810181316</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1626810181317</updated>
+    </task>
+    <task id="LOCAL-00136" summary="- working on histogram service engine">
+      <created>1626892748768</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1626892748769</updated>
+    </task>
+    <task id="LOCAL-00137" summary="- working on histogram service engine">
+      <created>1626896437315</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1626896437316</updated>
+    </task>
+    <task id="LOCAL-00138" summary="- working on histogram service engine">
+      <created>1626896572034</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1626896572034</updated>
+    </task>
+    <task id="LOCAL-00139" summary="- working on histogram service engine">
+      <created>1626897806090</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1626897806090</updated>
+    </task>
+    <task id="LOCAL-00140" summary="- working on histogram service engine">
+      <created>1626898426793</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1626898426793</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-debugging..." />
     <MESSAGE value="-completed debugging of the decoder. &#10;- updated SReceiver" />
     <MESSAGE value="- completed debugging of the decoder. &#10;- updated SReceiver" />
     <MESSAGE value="- c++ output consistent" />
@@ -486,7 +481,8 @@
     <MESSAGE value="- new VRingBuffer class. debugging" />
     <MESSAGE value="- debugging" />
     <MESSAGE value="- readEventCount set int.max_value" />
-    <option name="LAST_COMMIT_MESSAGE" value="- readEventCount set int.max_value" />
+    <MESSAGE value="- working on histogram service engine" />
+    <option name="LAST_COMMIT_MESSAGE" value="- working on histogram service engine" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

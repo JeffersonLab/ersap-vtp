@@ -4,7 +4,7 @@ JLAB VTP and SAMPA stream handler package.
 ### Java Binding
 #### Build notes
 
-ERSAP requires the Java 14 or higher JDK.
+The project requires JDK 14 or higher.
 
 #### Ubuntu
 
@@ -37,10 +37,11 @@ To build ERSAP use the provided [Gradle](https://gradle.org/) wrapper.
 It will download the required Gradle version and all the ERSAP dependencies.
 
     $ ./gradlew clean
-
+    $ ./gradlew 
+    
 To deploy the binary distribution to `$ERSAP_HOME`:
 
-    $ ./gradlew fatJar
+    $ ./gradlew deploy
 
 
 

@@ -4,7 +4,6 @@ import org.jlab.epsci.ersap.base.ErsapUtil;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
-import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
 import org.json.JSONObject;
 
 import java.nio.ByteBuffer;
@@ -76,13 +75,13 @@ public class VTPStreamTestEngine implements Engine {
 
     @Override
     public Set<EngineDataType> getInputDataTypes() {
-        return ErsapUtil.buildDataTypes(StreamingDataTypes.VTP_G,
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES,
                 EngineDataType.JSON);
     }
 
     @Override
     public Set<EngineDataType> getOutputDataTypes() {
-        return ErsapUtil.buildDataTypes(StreamingDataTypes.VTP_G);
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES);
     }
 
     @Override
@@ -97,7 +96,7 @@ public class VTPStreamTestEngine implements Engine {
 
     @Override
     public String getVersion() {
-        return "0.0";
+        return "0.1";
     }
 
     @Override

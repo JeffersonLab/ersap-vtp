@@ -4,7 +4,6 @@ import org.jlab.epsci.ersap.base.ErsapUtil;
 import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
-import org.jlab.epsci.stream.engine.util.StreamingDataTypes;
 
 import java.util.Set;
 
@@ -26,13 +25,13 @@ public class VTPHistogram implements Engine {
 
     @Override
     public Set<EngineDataType> getInputDataTypes() {
-        return ErsapUtil.buildDataTypes(StreamingDataTypes.VTP_G,
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES,
                 EngineDataType.JSON);
     }
 
     @Override
     public Set<EngineDataType> getOutputDataTypes() {
-        return ErsapUtil.buildDataTypes(StreamingDataTypes.VTP_G);
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES);
     }
 
     @Override

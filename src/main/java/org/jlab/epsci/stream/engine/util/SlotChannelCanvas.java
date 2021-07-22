@@ -34,7 +34,7 @@ public class SlotChannelCanvas extends Application {
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                     // get byte array and draw slot/channel axes a square which side = fADC integral charge.
-                    gc.fillRect(crate,slot,charge,charge);
+//                    gc.fillRect(crate,slot,charge,charge);
                 }
             }
         }.start();
