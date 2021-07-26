@@ -76,14 +76,16 @@ public class SMPTwoStreamAggregatorDecoder {
 
     public void go() {
         receiver1 = new SReceiver(sampaPort1, streamId1, ringBuffer1, streamFrameLimit);
+        receiver1.start();
         receiver2 = new SReceiver(sampaPort2, streamId2, ringBuffer2, streamFrameLimit);
+        receiver2.start();
 
         aggregator12 = new SAggregator(ringBuffer1, ringBuffer2, sequence1,
                 sequence2, sequenceBarrier1, sequenceBarrier2, ringBuffer12);
 
         consumer = new SConsumer(ringBuffer12, sequence12, sequenceBarrier12);
-        receiver1.start();
-        receiver2.start();
+
+
 
         aggregator12.start();
         consumer.start();
