@@ -17,6 +17,7 @@ public class SReceiver extends Thread {
     private final int streamId;
     private final int streamFrameLimit;
     // server socket
+    private int sampaPort;
     private ServerSocket serverSocket;
     private final ByteBuffer headerBuffer;
     private final byte[] header = new byte[16];
@@ -33,6 +34,7 @@ public class SReceiver extends Thread {
                      int streamId,
                      RingBuffer<SRingRawEvent> ringBuffer,
                      int streamFrameLimit) {
+        this.sampaPort = sampaPort;
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.streamFrameLimit = streamFrameLimit;
@@ -42,18 +44,6 @@ public class SReceiver extends Thread {
 
         sampaDecoder = new SDecoder();
 
-        // Connecting to the sampa stream source
-        try {
-            serverSocket = new ServerSocket(sampaPort);
-            System.out.println("Server is listening on port " + sampaPort);
-            Socket socket = serverSocket.accept();
-            System.out.println("SAMPA client connected");
-            InputStream input = socket.getInputStream();
-            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
-        } catch (
-                IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -100,6 +90,19 @@ public class SReceiver extends Thread {
     }
 
     public void run() {
+        // Connecting to the sampa stream source
+        try {
+            serverSocket = new ServerSocket(sampaPort);
+            System.out.println("Server is listening on port " + sampaPort);
+            Socket socket = serverSocket.accept();
+            System.out.println("SAMPA client connected");
+            InputStream input = socket.getInputStream();
+            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+
         for(int i = 0; i < streamFrameLimit; i++) {
             try {
                 // Get an empty item from ring
