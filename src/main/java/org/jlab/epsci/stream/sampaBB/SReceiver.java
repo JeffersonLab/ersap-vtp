@@ -33,10 +33,12 @@ import java.nio.ByteOrder;
 public class SReceiver extends Thread {
 
     /** Input data stream carrying data from the client. */
-    private final DataInputStream dataInputStream;
+    private DataInputStream dataInputStream;
 
     /** ID number of the data stream. */
     private final int streamId;
+
+    private int sampaPort;
 
     /** Buffer used to read a single frame of data. */
     private final ByteBuffer frameBuffer;
@@ -57,7 +59,7 @@ public class SReceiver extends Thread {
     private final int streamFrameLimit;
 
     /** TCP server socket. */
-    private final ServerSocket serverSocket;
+    private ServerSocket serverSocket;
 
     //--------------------------------
     // Disruptor stuff
@@ -86,6 +88,7 @@ public class SReceiver extends Thread {
                      RingBuffer<SRingRawEvent> ringBuffer,
                      int streamFrameLimit,
                      SampaType sampaType) throws IOException {
+        this.sampaPort = sampaPort;
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.streamFrameLimit = streamFrameLimit;
@@ -101,13 +104,13 @@ public class SReceiver extends Thread {
             sampaDecoder = new DasDecoder();
         }
 
-        // Connecting to the sampa stream source
-        serverSocket = new ServerSocket(sampaPort);
-        System.out.println("Server is listening on port " + sampaPort);
-        Socket socket = serverSocket.accept();
-        System.out.println("SAMPA client connected");
-        InputStream input = socket.getInputStream();
-        dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
+//        // Connecting to the sampa stream source
+//        serverSocket = new ServerSocket(sampaPort);
+//        System.out.println("Server is listening on port " + sampaPort);
+//        Socket socket = serverSocket.accept();
+//        System.out.println("SAMPA client connected");
+//        InputStream input = socket.getInputStream();
+//        dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
     }
 
     /**
@@ -151,7 +154,18 @@ public class SReceiver extends Thread {
     }
 
     public void run() {
-
+        // Connecting to the sampa stream source
+        try {
+            serverSocket = new ServerSocket(sampaPort);
+            System.out.println("Server is listening on port " + sampaPort);
+            Socket socket = serverSocket.accept();
+            System.out.println("SAMPA client connected");
+            InputStream input = socket.getInputStream();
+            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
         int frameCount = 0;
 
         try {
