@@ -97,11 +97,13 @@ public class SReceiver extends Thread {
         frameBuffer = ByteBuffer.wrap(frameArray);
         frameBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
+        boolean verbose = true;
+
         if (sampaType.isDSP()) {
-            sampaDecoder = new DspDecoder();
+            sampaDecoder = new DspDecoder(verbose);
         }
         else {
-            sampaDecoder = new DasDecoder();
+            sampaDecoder = new DasDecoder(verbose);
         }
 
 //        // Connecting to the sampa stream source
@@ -111,6 +113,7 @@ public class SReceiver extends Thread {
 //        System.out.println("SAMPA client connected");
 //        InputStream input = socket.getInputStream();
 //        dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
+
     }
 
     /**
@@ -134,7 +137,9 @@ public class SReceiver extends Thread {
 
         try {
             // clear gbt_frame: 4 4-byte, 32-bit words
+System.out.println("Receiver: try reading frame of data");
             dataInputStream.readFully(frameArray);
+System.out.println("Receiver: GOT frame of data");
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -171,8 +176,10 @@ public class SReceiver extends Thread {
         try {
             do {
                 // Get an empty item from ring
+System.out.println("Receiver: try getting empty ring event");
                 SRingRawEvent rawEvent = get();
                 rawEvent.reset();
+System.out.println("Receiver: GOT empty ring event");
 
                 // Fill event with data until it's full or hits the frame limit
                 do {

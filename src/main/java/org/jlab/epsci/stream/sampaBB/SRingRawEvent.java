@@ -46,7 +46,7 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>What does that mean for memory? Currently:<br>
  * <code>DspDecoder.N_BLOCK = 1;
- * DspDecoder.frames_in_block = 2000 * N_BLOCK = 2000 frames/block;
+ * DspDecoder.frames_in_block = 2000 * N_BLOCK = 2000 frames/block;</code>
  * It's not possible to do an exact calculation because of zero suppression but
  * 2000 frames * 16 bytes/frame = 32kBytes. This gets expanded by a factor of ~3.2 because of
  * the way the data is repackaged (10 bits -> 32 bits). Thus, we currently need over
@@ -59,7 +59,7 @@ import java.nio.charset.StandardCharsets;
  *
  * <p>Finally, let's just say each array = 131072 bytes. DSP mode uses 28, DAS mode uses 80 of them.
  * If 16 of these exist, 131072*80*16 = 167MB total memory used in ring buffer.
- * 131072 * 80 < 11 MB total allocated in this object.
+ * 131072 * 80 &lt; 11 MB total allocated in this object.
  * If this event is used for aggregating, double the memory numbers.</p>
 */
 public class SRingRawEvent {
@@ -313,7 +313,7 @@ public class SRingRawEvent {
      * If this contains DAS data, then write ADC values to the output stream.
      * If this contains DSP data, write out values up to one whole <b>BLOCK</b>.
      * Note, even if specifying hex output, the values following
-     * "eLink" and "num data" are always decimal in DSP mode.</p>
+     * "eLink" and "num data" are always decimal in DSP mode.
      *
      * @param out output stream to write data to.
      * @param streamId id number of data stream.
