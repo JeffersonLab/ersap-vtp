@@ -37,6 +37,8 @@ public class DasDecoder implements SampaDecoder {
     /** If true, print out debug info. */
     private final boolean verbose;
 
+    private final int streamId;
+
     /** Total number of frames parsed. */
     private long frameCount;
 
@@ -44,7 +46,8 @@ public class DasDecoder implements SampaDecoder {
      * Also the target "block" size to fit in one raw event.
      * The first and last block will, most likely, be of different size.
      * The first must sync, and who knows when the data ends. */
-    private static final int maxStored = 262144;
+    //private static final int maxStored = 262144;
+    private static final int maxStored = 2000;
 
     /** Max number of bytes in local ByteBuffer.
      * Each buf has 4 bytes/frame. */
@@ -55,11 +58,11 @@ public class DasDecoder implements SampaDecoder {
 
     // SYNC positions, index in the ByteBuffer at the sync start - for each stream
     private final int sync_unknown_ = -1;
-    private int sync_low_;
-    private int sync_high_;
-    private int sync_low_1_;
-    private int sync_high_1_;
-    private int sync_2_;
+    private int sync_low_    = sync_unknown_; // Need to do this since we're not looking for a sync at the moment
+    private int sync_high_   = sync_unknown_;
+    private int sync_low_1_  = sync_unknown_;
+    private int sync_high_1_ = sync_unknown_;
+    private int sync_2_      = sync_unknown_;
 
     // Has the sync been found in this channel?
     private boolean syncLow0Found;
@@ -99,15 +102,16 @@ public class DasDecoder implements SampaDecoder {
      * Constructor. No debug output. 1024 samples for statistics.
      */
     public DasDecoder() {
-        this(false);
+        this(false, 0);
     }
 
     /**
      * Constructor.
      * @param verbose if true, print debug info.
      */
-    public DasDecoder(boolean verbose) {
+    public DasDecoder(boolean verbose, int streamId) {
         this.verbose = verbose;
+        this.streamId = streamId;
     }
 
 
@@ -131,6 +135,12 @@ public class DasDecoder implements SampaDecoder {
 
     /** {@inheritDoc} */
     public long getFrameCount() {return frameCount;}
+
+    /** {@inheritDoc} */
+    public boolean isFull() {
+        // This buffer contains the most of any, so use it to determine if more can be held
+        return sampa_stream_low_.remaining() < 32;
+    }
 
 
     //--------------------------------------------------
@@ -175,18 +185,22 @@ public class DasDecoder implements SampaDecoder {
      * @throws Exception thrown if looking for a sync from each stream, but only some are found, while
      *                   at the same time the storage limit for streamed data has been reached.
      */
-    public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
+    public void decodeSerialOrig(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
 
         getHalfWords(gbt_frame);
 
          // The first thing we need to do is look for a(nother) sync
         if (!gotSync) {
+//System.out.println("decodeSerial: Don't have a sync yet.");
+
             // Update gotSync by looking for syncs
             int count = getSyncCount();
+//System.out.println("decodeSerial: Sync count = " + count);
 
             // If there are still no syncs found, dump the data since it's of no use
             if (count == 0) {
                 dumpData();
+//System.out.println("decodeSerial: DUMP DATA");
             }
             // But what if we have some syncs but have reached our data storage limit?
             else if (rawEvent.getFramesStored() > maxStored) {
@@ -196,16 +210,45 @@ public class DasDecoder implements SampaDecoder {
             // If we still don't have all syncs, read more data and try looking again
         }
         else {
+//System.out.println("decodeSerial: HAVE a sync!!!");
             // Data is probably good, but we can't store it forever.
             // Dump it as we're done with it.
-            if (rawEvent.getFramesStored() > maxStored) {
-                getAdcValues(rawEvent);
+            if (rawEvent.getFramesStored() + 1 > maxStored) {
                 dumpData();
             }
+            getAdcValues(rawEvent);
         }
 
         frameCount++;
         rawEvent.incrementFramesStored();
+    }
+
+
+    /**
+     * Decode a single frame of streamed data from SAMPA card.
+     *
+     * @param gbt_frame frame of streamed data.
+     * @param rawEvent  object from ring buffer for storing data and passing to next ring consumer.
+     * @throws Exception thrown if looking for a sync from each stream, but only some are found, while
+     *                   at the same time the storage limit for streamed data has been reached.
+     */
+    public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
+        getHalfWords(gbt_frame);
+        frameCount++;
+        rawEvent.incrementFramesStored();
+    }
+
+
+    /** {@inheritDoc} */
+    public void transferData(SRingRawEvent rawEvent) {
+        getAdcValues(rawEvent);
+
+        // Data is probably good, but we can't store it forever.
+        // Dump it as we're done with it.
+        if (rawEvent.getFramesStored() >= maxStored) {
+            if (streamId == 2) System.out.println("decodeSerial " + streamId + ", DUMP DATA at frames stored = " + rawEvent.getFramesStored());
+            dumpData();
+        }
     }
 
 
@@ -228,6 +271,85 @@ public class DasDecoder implements SampaDecoder {
      * @param gf frame of data - array of 4 ints which contains 112 bytes of actual data.
      */
     private void getHalfWords(int[] gf) {
+
+        // extract the 4 halfwords for SAMPA0 higher data stream and insert them into the stream_high vector
+        byte b1 = (byte)(bit(gf[1], 7, 4) | bit(gf[1], 3, 3) | bit(gf[0], 31, 2) | bit(gf[0], 27, 1) | bit(gf[0], 23, 0));
+        byte b2 = (byte)(bit(gf[1], 6, 4) | bit(gf[1], 2, 3) | bit(gf[0], 30, 2) | bit(gf[0], 26, 1) | bit(gf[0], 22, 0));
+        byte b3 = (byte)(bit(gf[1], 5, 4) | bit(gf[1], 1, 3) | bit(gf[0], 29, 2) | bit(gf[0], 25, 1) | bit(gf[0], 21, 0));
+        byte b4 = (byte)(bit(gf[1], 4, 4) | bit(gf[1], 0, 3) | bit(gf[0], 28, 2) | bit(gf[0], 24, 1) | bit(gf[0], 20, 0));
+
+        //System.out.println("getHalfWords " + streamId + ": room in BB = " + sampa_stream_high_.remaining());
+
+        sampa_stream_high_.put(b1);
+        sampa_stream_high_.put(b2);
+        sampa_stream_high_.put(b3);
+        sampa_stream_high_.put(b4);
+
+        //if (streamId == 2) System.out.println(streamId + ": --> " + b1 + " " + b2 + " " + b3 + " " + b4);
+
+        // extract the 4 halfwords for SAMPA0 lower data stream and insert them into the stream_low vector
+        b1 = (byte)(bit(gf[0], 19, 4) | bit(gf[0], 15, 3) | bit(gf[0], 11, 2) | bit(gf[0], 7, 1) | bit(gf[0], 3, 0));
+        b2 = (byte)(bit(gf[0], 18, 4) | bit(gf[0], 14, 3) | bit(gf[0], 10, 2) | bit(gf[0], 6, 1) | bit(gf[0], 2, 0));
+        b3 = (byte)(bit(gf[0], 17, 4) | bit(gf[0], 13, 3) | bit(gf[0],  9, 2) | bit(gf[0], 5, 1) | bit(gf[0], 1, 0));
+        b4 = (byte)(bit(gf[0], 16, 4) | bit(gf[0], 12, 3) | bit(gf[0],  8, 2) | bit(gf[0], 4, 1) | bit(gf[0], 0, 0));
+
+        sampa_stream_low_.put(b1);
+        sampa_stream_low_.put(b2);
+        sampa_stream_low_.put(b3);
+        sampa_stream_low_.put(b4);
+
+        //System.out.println(streamId + ": --> " + b1 + " " + b2 + " " + b3 + " " + b4);
+
+        // extract the 4 halfwords for SAMPA1 higher data stream and insert them into the stream_high vector
+        b1 = (byte)(bit(gf[2], 19, 4) | bit(gf[2], 15, 3) | bit(gf[2], 11, 2) | bit(gf[2], 7, 1) | bit(gf[2], 3, 0));
+        b2 = (byte)(bit(gf[2], 18, 4) | bit(gf[2], 14, 3) | bit(gf[2], 10, 2) | bit(gf[2], 6, 1) | bit(gf[2], 2, 0));
+        b3 = (byte)(bit(gf[2], 17, 4) | bit(gf[2], 13, 3) | bit(gf[2],  9, 2) | bit(gf[2], 5, 1) | bit(gf[2], 1, 0));
+        b4 = (byte)(bit(gf[2], 16, 4) | bit(gf[2], 12, 3) | bit(gf[2],  8, 2) | bit(gf[2], 4, 1) | bit(gf[2], 0, 0));
+
+        sampa_stream_high_1_.put(b1);
+        sampa_stream_high_1_.put(b2);
+        sampa_stream_high_1_.put(b3);
+        sampa_stream_high_1_.put(b4);
+
+        //System.out.println(streamId + ": --> " + b1 + " " + b2 + " " + b3 + " " + b4);
+
+        // extract the 4 halfwords for SAMPA1 lower data stream and insert them into the stream_low vector
+        b1 = (byte)(bit(gf[1], 31, 4) | bit(gf[1], 27, 3) | bit(gf[1], 23, 2) | bit(gf[1], 19, 1) | bit(gf[1], 15, 0));
+        b2 = (byte)(bit(gf[1], 30, 4) | bit(gf[1], 26, 3) | bit(gf[1], 22, 2) | bit(gf[1], 18, 1) | bit(gf[1], 14, 0));
+        b3 = (byte)(bit(gf[1], 29, 4) | bit(gf[1], 25, 3) | bit(gf[1], 21, 2) | bit(gf[1], 17, 1) | bit(gf[1], 13, 0));
+        b4 = (byte)(bit(gf[1], 28, 4) | bit(gf[1], 24, 3) | bit(gf[1], 20, 2) | bit(gf[1], 16, 1) | bit(gf[1], 12, 0));
+
+        sampa_stream_low_1_.put(b1);
+        sampa_stream_low_1_.put(b2);
+        sampa_stream_low_1_.put(b3);
+        sampa_stream_low_1_.put(b4);
+
+        //System.out.println(streamId + ": --> " + b1 + " " + b2 + " " + b3 + " " + b4);
+
+        // extract the 4 halfwords for SAMPA2 data stream and insert them into the stream_vector
+        b1 = (byte)(bit(gf[3], 11, 4) | bit(gf[3], 7, 3) | bit(gf[3], 3, 2) | bit(gf[2], 31, 1) | bit(gf[2], 27, 0));
+        b2 = (byte)(bit(gf[3], 10, 4) | bit(gf[3], 6, 3) | bit(gf[3], 2, 2) | bit(gf[2], 30, 1) | bit(gf[2], 26, 0));
+        b3 = (byte)(bit(gf[3],  9, 4) | bit(gf[3], 5, 3) | bit(gf[3], 1, 2) | bit(gf[2], 29, 1) | bit(gf[2], 25, 0));
+        b4 = (byte)(bit(gf[3],  8, 4) | bit(gf[3], 4, 3) | bit(gf[3], 0, 2) | bit(gf[2], 28, 1) | bit(gf[2], 24, 0));
+
+        sampa_stream_2_.put(b1);
+        sampa_stream_2_.put(b2);
+        sampa_stream_2_.put(b3);
+        sampa_stream_2_.put(b4);
+
+        //System.out.println(streamId + ": --> " + b1 + " " + b2 + " " + b3 + " " + b4 + "\n");
+        //System.out.println("getHalfWords END " + streamId + ": room in BB = " + sampa_stream_high_.remaining());
+    }
+
+
+    /**
+     * Parse incoming frames and store as 5 bit values (1 half word) in ByteBuffers.
+     * Each 5 bit values is stored in 1 byte as opposed to the original C++
+     * version which stored them in 32 bit ints.
+     *
+     * @param gf frame of data - array of 4 ints which contains 112 bytes of actual data.
+     */
+    private void getHalfWordsOrig(int[] gf) {
 
         // extract the 4 halfwords for SAMPA0 higher data stream and insert them into the stream_high vector
         sampa_stream_high_.put((byte)(bit(gf[1], 7, 4) | bit(gf[1], 3, 3) | bit(gf[0], 31, 2) | bit(gf[0], 27, 1) | bit(gf[0], 23, 0)));
@@ -285,7 +407,7 @@ public class DasDecoder implements SampaDecoder {
 
             // Get rid of any negative values
             System.out.println(" w3 = " + ((long)gf[3] & lowInt) + " w2 = " + ((long)gf[2] & lowInt) +
-                               " w1 = " + ((long)gf[1] & lowInt) + " w0 = " + ((long)gf[0] & lowInt));
+                    " w1 = " + ((long)gf[1] & lowInt) + " w0 = " + ((long)gf[0] & lowInt));
 
             long bw1_7_4  = ((long)bit(gf[1],7,4)  & lowInt);
             long bw1_3_3  = ((long)bit(gf[1],3,3)  & lowInt);
@@ -293,7 +415,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_27_1 = ((long)bit(gf[0],27,1) & lowInt);
             long bw0_23_0 = ((long)bit(gf[0],23,0) & lowInt);
             System.out.println(" bw1_7_4  = " + bw1_7_4  + " bw1_3_3 = "  + bw1_3_3  + " bw0_31_2 = " + bw0_31_2 +
-                               " bw0_27_1 = " + bw0_27_1 + " bw0_23_0 = " + bw0_23_0);
+                    " bw0_27_1 = " + bw0_27_1 + " bw0_23_0 = " + bw0_23_0);
 
             long bw1_6_4  = ((long)bit(gf[1],6,4)  & lowInt);
             long bw1_2_3  = ((long)bit(gf[1],2,3)  & lowInt);
@@ -301,7 +423,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_26_1 = ((long)bit(gf[0],26,1) & lowInt);
             long bw0_22_0 = ((long)bit(gf[0],22,0) & lowInt);
             System.out.println(" bw1_6_4  = " + bw1_6_4  + " bw1_2_3 = "  + bw1_2_3  + " bw0_30_2 = " + bw0_30_2 +
-                               " bw0_26_1 = " + bw0_26_1 + " bw0_22_0 = " + bw0_22_0);
+                    " bw0_26_1 = " + bw0_26_1 + " bw0_22_0 = " + bw0_22_0);
 
             long bw1_5_4  = ((long)bit(gf[1],5,4)  & lowInt);
             long bw1_1_3  = ((long)bit(gf[1],1,3)  & lowInt);
@@ -309,7 +431,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_25_1 = ((long)bit(gf[0],25,1) & lowInt);
             long bw0_21_0 = ((long)bit(gf[0],21,0) & lowInt);
             System.out.println(" bw1_5_4  = " + bw1_5_4  + " bw1_1_3 = "  + bw1_1_3  + " bw0_29_2 = " + bw0_29_2 +
-                               " bw0_25_1 = " + bw0_25_1 + " bw0_21_0 = " + bw0_21_0);
+                    " bw0_25_1 = " + bw0_25_1 + " bw0_21_0 = " + bw0_21_0);
 
             long bw1_4_4  = ((long)bit(gf[1],4,4)  & lowInt);
             long bw1_0_3  = ((long)bit(gf[1],0,3)  & lowInt);
@@ -317,7 +439,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_24_1 = ((long)bit(gf[0],24,1) & lowInt);
             long bw0_20_0 = ((long)bit(gf[0],20,0) & lowInt);
             System.out.println(" bw1_4_4  = " + bw1_4_4  + " bw1_0_3 = "  + bw1_0_3  + " bw0_28_2 = " + bw0_28_2 +
-                               " bw0_24_1 = " + bw0_24_1 + " bw0_20_0 = " + bw0_20_0);
+                    " bw0_24_1 = " + bw0_24_1 + " bw0_20_0 = " + bw0_20_0);
 
             long high_1  = bw1_7_4 | bw1_3_3 | bw0_31_2 | bw0_27_1 | bw0_23_0;
             long high_2  = bw1_6_4 | bw1_2_3 | bw0_30_2 | bw0_26_1 | bw0_22_0;
@@ -332,7 +454,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_7_1  = ((long)bit(gf[0],7,1)  & lowInt);
             long bw0_3_0  = ((long)bit(gf[0],3,0)  & lowInt);
             System.out.println(" bw0_19_4 = " + bw0_19_4 + " bw0_15_3 = " + bw0_15_3 + " bw0_11_2 = " + bw0_11_2 +
-                               " bw0_7_1  = " + bw0_7_1  + " bw0_3_0 = "  + bw0_3_0);
+                    " bw0_7_1  = " + bw0_7_1  + " bw0_3_0 = "  + bw0_3_0);
 
             long bw0_18_4 = ((long)bit(gf[0],18,4) & lowInt);
             long bw0_14_3 = ((long)bit(gf[0],14,3) & lowInt);
@@ -340,7 +462,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_6_1  = ((long)bit(gf[0],6,1)  & lowInt);
             long bw0_2_0  = ((long)bit(gf[0],2,0)  & lowInt);
             System.out.println(" bw0_18_4 = " + bw0_18_4 + " bw0_14_3 = " + bw0_14_3 + " bw0_10_2 = " + bw0_10_2 +
-                               " bw0_6_1  = " + bw0_6_1  + " bw0_2_0 = "  + bw0_2_0);
+                    " bw0_6_1  = " + bw0_6_1  + " bw0_2_0 = "  + bw0_2_0);
 
             long bw0_17_4 = ((long)bit(gf[0],17,4) & lowInt);
             long bw0_13_3 = ((long)bit(gf[0],13,3) & lowInt);
@@ -348,7 +470,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_5_1  = ((long)bit(gf[0],5,1)  & lowInt);
             long bw0_1_0  = ((long)bit(gf[0],1,0)  & lowInt);
             System.out.println(" bw0_17_4 = " + bw0_17_4 + " bw0_13_3 = " + bw0_13_3 + " bw0_9_2 = " + bw0_9_2 +
-                               " bw0_5_1  = " + bw0_5_1  + " bw0_1_0 = "  + bw0_1_0);
+                    " bw0_5_1  = " + bw0_5_1  + " bw0_1_0 = "  + bw0_1_0);
 
             long bw0_16_4 = ((long)bit(gf[0],16,4) & lowInt);
             long bw0_12_3 = ((long)bit(gf[0],12,3) & lowInt);
@@ -356,7 +478,7 @@ public class DasDecoder implements SampaDecoder {
             long bw0_4_1  = ((long)bit(gf[0],4,1)  & lowInt);
             long bw0_0_0  = ((long)bit(gf[0],0,0)  & lowInt);
             System.out.println(" bw0_16_4 = " + bw0_16_4 + " bw0_12_3 = " + bw0_12_3 + " bw0_8_2 = " + bw0_8_2 +
-                               " bw0_4_1  = " + bw0_4_1  + " bw0_0_0 = "  + bw0_0_0);
+                    " bw0_4_1  = " + bw0_4_1  + " bw0_0_0 = "  + bw0_0_0);
 
             long low_1  = bw0_19_4 | bw0_15_3 | bw0_11_2 | bw0_7_1 | bw0_3_0;
             long low_2  = bw0_18_4 | bw0_14_3 | bw0_10_2 | bw0_6_1 | bw0_2_0;
@@ -365,7 +487,6 @@ public class DasDecoder implements SampaDecoder {
             System.out.println(" low_1 = " + low_1  + " low_2 = "  + low_2  + " low_3 = " + low_3 + " low_4 = " + low_4);
         }
     }
-
 
     /**
      * <p>Find the sync position for all streams and store internally.
@@ -501,16 +622,20 @@ public class DasDecoder implements SampaDecoder {
      * @param rawEvent object into which to write the extracted ADC values.
      */
     private void extractAdcValues(ByteBuffer data, int startPos, int channel_offset, SRingRawEvent rawEvent) {
-        short adc_value;
-        int maxSamples, offset;
 
-        // Calculate the number of full Adc channel entries in the stream (16 channels * 2 HalfWords)
-        maxSamples = (data.limit() - startPos) / 32;
+        // Calculate the number of full Adc channel entries in the stream.
+        // Each data buffer contains data from 1 chip in split mode.
+        // (16 channels where each channel has 2 sequential 5 bit (1 byte) halfwords
+        // entries which needs to be combined into one ADC value)
+        int maxSamples = (data.limit() - startPos) / 32;
         // Did we read all the data?
         boolean readAll = 32 * maxSamples == (data.limit() - startPos);
 
-        if (verbose)
-            System.out.println("Maximum number of samples : " + maxSamples);
+//        if (verbose)
+        if (streamId == 2) {
+            System.out.println("extractAdcValues Id = " + streamId + ", samples in substream: " +
+                               maxSamples + ", readAll = " + readAll + ", data bytes : " + (data.limit() - startPos));
+        }
 
         // Array of buffers in which to place data
         ByteBuffer[] dataBufs = rawEvent.getData();
@@ -518,21 +643,27 @@ public class DasDecoder implements SampaDecoder {
         // Loop over the samples
         for (int numSamples = 0; numSamples < maxSamples; numSamples++) {
             // Extract the 16 channels
-            offset = startPos + numSamples * 32;
+            int offset = startPos + numSamples * 32;
 
             for (int channel = 0; channel < 16; channel++) {
                 // Reconstructing a 10-bit value from 2, 5-bit values.
                 // This will fit into a short w/out having to worry about sign extension.
-                adc_value = (short)((data.get(offset + channel * 2 + 1) << 5) + data.get(offset + channel * 2));
+if (streamId == 0)  System.out.println("get " + streamId + " at " + (offset + channel * 2 + 1));
+                short adc_value = (short)((data.get(offset + channel * 2 + 1) << 5) + data.get(offset + channel * 2));
+if ((streamId == 0) && numSamples == 0) {
+    System.out.print(adc_value + "  ");
+}
                 // Read this into a SRingRawEvent, not into local memory ...
                 // sampaData[channel + channel_offset].putShort(adc_value);
                 dataBufs[channel + channel_offset].putShort(adc_value);
             }
+if (streamId == 0) System.out.println();
         }
 
         // Now if we've read ALL the data, just clear the buffer - which is most efficient
         if (readAll) {
             data.clear();
+//System.out.println("clear data from chip BB " + streamId);
         }
         // Otherwise, shift data to beginning, then reset limit so we can add more data properly.
         else {
@@ -542,9 +673,11 @@ public class DasDecoder implements SampaDecoder {
             // We read # samples/chan * 16 chan * 2 entries/chan
             data.position(maxSamples*32 + startPos);
             data.compact();
-            // Get ready to add more data after what is still remains
-            data.flip();
+//System.out.println("COMPACTED " + streamId);
         }
+
+//System.out.println("extractAdcValues END Id = " + streamId + ", Data bytes : " + (data.limit() - startPos));
+
     }
 
 }
