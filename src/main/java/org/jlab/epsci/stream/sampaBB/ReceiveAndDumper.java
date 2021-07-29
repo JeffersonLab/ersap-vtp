@@ -90,37 +90,22 @@ public class ReceiveAndDumper extends Thread {
         }
     }
 
-    public void processOneFrame(SRingRawEvent rawEvent) {
+    public void processOneFrame(SRingRawEvent rawEvent) throws Exception {
         frameBuffer.clear();
 
-        try {
-            dataInputStream.readFully(frameArray);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        dataInputStream.readFully(frameArray);
 
         data[3] = frameBuffer.getInt();
         data[2] = frameBuffer.getInt();
         data[1] = frameBuffer.getInt();
         data[0] = frameBuffer.getInt();
 
-        try {
-            sampaDecoder.decodeSerial(data, rawEvent);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        sampaDecoder.decodeSerial(data, rawEvent);
     }
 
 
-    public void readAndDumpOneFrame() {
-        try {
-            dataInputStream.readFully(frameArray);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void readAndDumpOneFrame() throws IOException {
+        dataInputStream.readFully(frameArray);
     }
 
 
