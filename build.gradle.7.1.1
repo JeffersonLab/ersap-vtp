@@ -1,0 +1,62 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+group 'org.jlab.epsci.stream.vtp'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = JavaVersion.VERSION_15
+targetCompatibility = JavaVersion.VERSION_15
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+    archiveBaseName = project.name + '-all'
+    from {
+        // Error from including duplicate versions of this class into 1 jar, so exclude it
+        exclude '**/module-info.class'
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+repositories {
+
+    exclusiveContent {
+        forRepository {
+            flatDir {
+                dirs 'libs'
+            }
+        }
+        filter {
+            // this repository *only* contains artifacts with group "my.company"
+            includeGroup "com.lmax.disruptor"
+        }
+    }
+
+    maven {
+        url 'https://clasweb.jlab.org/jhep/maven/'
+    }
+    maven {
+        url 'https://clasweb.jlab.org/clas12maven/'
+    }
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation files('libs/disruptor-3.4.3.jar')
+
+    compileOnly 'org.jlab.epsci:ersap-java:1.0-SNAPSHOT'
+    compileOnly 'org.jlab.coda:jclara:4.3-SNAPSHOT'
+    implementation 'org.json:json:20160810'
+    implementation 'org.jetbrains:annotations:19.0.0'
+    implementation group: 'org.apache.commons', name: 'commons-pool2', version: '2.9.0'
+    implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.15.6'
+}
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls' ]
+}
