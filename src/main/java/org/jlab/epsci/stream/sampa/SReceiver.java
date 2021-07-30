@@ -71,7 +71,6 @@ public class SReceiver extends Thread {
             dataInputStream.readFully(header);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Frame count = "+sampaDecoder.frameCount);
         }
         data[3] = headerBuffer.getInt();
         data[2] = headerBuffer.getInt();

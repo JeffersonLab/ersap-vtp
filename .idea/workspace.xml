@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
+    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="- debug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampa/SReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampa/SReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/ReceiveAndDumper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/ReceiveAndDumper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,13 +113,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00101" summary="-yaml service description files">
-      <created>1623444367536</created>
-      <option name="number" value="00101" />
-      <option name="presentableId" value="LOCAL-00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1623444367536</updated>
     </task>
     <task id="LOCAL-00102" summary="-yaml service description files">
       <created>1623444598712</created>
@@ -456,7 +450,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627649699940</updated>
     </task>
-    <option name="localTasksCounter" value="150" />
+    <task id="LOCAL-00150" summary="- debug">
+      <created>1627651640064</created>
+      <option name="number" value="00150" />
+      <option name="presentableId" value="LOCAL-00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1627651640064</updated>
+    </task>
+    <option name="localTasksCounter" value="151" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -478,14 +479,14 @@
     <MESSAGE value="- debugging" />
     <MESSAGE value="- readEventCount set int.max_value" />
     <MESSAGE value="- working on histogram service engine" />
-    <MESSAGE value="- debug" />
     <MESSAGE value="- sampa tcp connection to the source update" />
     <MESSAGE value="- deleted fatJar from the libs durectory" />
     <MESSAGE value="- SReceiver update in sampaBB" />
     <MESSAGE value="- new script for ersap_sampa" />
     <MESSAGE value="- debug to print frame count seen by the SReceiver" />
     <MESSAGE value="- Fixed call to the DasDecoder constructor" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Fixed call to the DasDecoder constructor" />
+    <MESSAGE value="- debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- debug" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

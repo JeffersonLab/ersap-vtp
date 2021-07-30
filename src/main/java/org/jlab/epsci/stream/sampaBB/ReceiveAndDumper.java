@@ -105,6 +105,7 @@ public class ReceiveAndDumper extends Thread {
 
 
     public void readAndDumpOneFrame() throws IOException {
+        frameBuffer.clear();
         dataInputStream.readFully(frameArray);
     }
 
