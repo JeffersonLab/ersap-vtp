@@ -103,7 +103,8 @@ public class SReceiver extends Thread {
             sampaDecoder = new DspDecoder(verbose);
         }
         else {
-            sampaDecoder = new DasDecoder(verbose);
+//            sampaDecoder = new DasDecoder(verbose);
+            sampaDecoder = new DasDecoder();
         }
 
 //        // Connecting to the sampa stream source
