@@ -118,6 +118,7 @@ public class SReceiver extends Thread {
             }
         }
         sampaDecoder.printLinkStats();
+        System.out.printf("Frame count = "+sampaDecoder.frameCount);
         exit();
     }
 
