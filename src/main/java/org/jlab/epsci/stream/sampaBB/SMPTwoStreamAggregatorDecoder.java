@@ -93,7 +93,7 @@ public class SMPTwoStreamAggregatorDecoder {
 
         // RingBuffer in which Aggregator will get empty events and fill them with data aggregated
         // from the 2 streams. It then passes them to the consumer.
-        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
+        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType, true), maxRingItems,
                 new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
 
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);

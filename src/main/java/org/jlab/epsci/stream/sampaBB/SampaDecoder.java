@@ -47,6 +47,7 @@ public interface SampaDecoder {
 
     /** Force looking for the next sync signal on all streams (DAS mode only). */
     void reSync();
+    boolean isFull();
 
     // For DSP mode only which organizes data into blocks
 

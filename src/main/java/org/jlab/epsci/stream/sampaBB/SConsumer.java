@@ -101,7 +101,7 @@ public class SConsumer extends Thread {
                 // Get an item from ring and parse the payload
                 SRingRawEvent ev = get();
 
-                ev.printData(System.out, 0, true);
+                //ev.printData(System.out, 0, true);
                 put();
 
             } catch (InterruptedException e) {

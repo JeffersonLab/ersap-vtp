@@ -121,6 +121,9 @@ public class DspDecoder implements SampaDecoder {
     /** Not applicable to DSP mode. Do nothing. */
     public void reSync() {}
 
+    /** Not applicable to DSP mode. Do nothing. */
+    public boolean isFull() {return false;}
+
 
     /** {@inheritDoc} */
     public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) {

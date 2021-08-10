@@ -47,7 +47,7 @@ public class DasDecoder implements SampaDecoder {
      * The first and last block will, most likely, be of different size.
      * The first must sync, and who knows when the data ends. */
     //private static final int maxStored = 262144;
-    private static final int maxStored = 2000;
+    private static final int maxStored = 2007;
 
     /** Max number of bytes in local ByteBuffer.
      * Each buf has 4 bytes/frame. */
@@ -79,11 +79,11 @@ public class DasDecoder implements SampaDecoder {
     private static final int channel_offset_2_      = 64;
 
     // ByteBuffers for SAMPA half-words (5-bit each) used for constructing ADC values
-    private final ByteBuffer sampa_stream_low_    = ByteBuffer.allocate(maxBufSize); // for SAMPA0 (or SAMPA 3)
-    private final ByteBuffer sampa_stream_high_   = ByteBuffer.allocate(maxBufSize);
-    private final ByteBuffer sampa_stream_low_1_  = ByteBuffer.allocate(maxBufSize); // for SAMPA1 (or SAMPA 4)
-    private final ByteBuffer sampa_stream_high_1_ = ByteBuffer.allocate(maxBufSize);
-    private final ByteBuffer sampa_stream_2_      = ByteBuffer.allocate(maxBufSize); // for SAMPA2 (1 stream only)
+    public final ByteBuffer sampa_stream_low_    = ByteBuffer.allocate(maxBufSize); // for SAMPA0 (or SAMPA 3)
+    public final ByteBuffer sampa_stream_high_   = ByteBuffer.allocate(maxBufSize);
+    public final ByteBuffer sampa_stream_low_1_  = ByteBuffer.allocate(maxBufSize); // for SAMPA1 (or SAMPA 4)
+    public final ByteBuffer sampa_stream_high_1_ = ByteBuffer.allocate(maxBufSize);
+    public final ByteBuffer sampa_stream_2_      = ByteBuffer.allocate(maxBufSize); // for SAMPA2 (1 stream only)
 
     // Clock data is currently unused
 //    private final ByteBuffer sampa_stream_clock_0_ = ByteBuffer.allocate(maxBufSize); // for SAMPA0 e-link 10 (clock)
@@ -139,7 +139,7 @@ public class DasDecoder implements SampaDecoder {
     /** {@inheritDoc} */
     public boolean isFull() {
         // This buffer contains the most of any, so use it to determine if more can be held
-        return sampa_stream_low_.remaining() < 32;
+        return sampa_stream_low_.remaining() < 4;
     }
 
 
@@ -185,7 +185,7 @@ public class DasDecoder implements SampaDecoder {
      * @throws Exception thrown if looking for a sync from each stream, but only some are found, while
      *                   at the same time the storage limit for streamed data has been reached.
      */
-    public void decodeSerialOrig(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
+    public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
 
         getHalfWords(gbt_frame);
 
@@ -198,19 +198,19 @@ public class DasDecoder implements SampaDecoder {
 //System.out.println("decodeSerial: Sync count = " + count);
 
             // If there are still no syncs found, dump the data since it's of no use
-            if (count == 0) {
-                dumpData();
+//            if (count == 0) {
+//                dumpData();
 //System.out.println("decodeSerial: DUMP DATA");
-            }
+//            }
             // But what if we have some syncs but have reached our data storage limit?
-            else if (rawEvent.getFramesStored() > maxStored) {
-                throw new Exception("Reached data storage limit, but only partial syncs found");
-            }
+//            else if (rawEvent.getFramesStored() > maxStored) {
+//                throw new Exception("Reached data storage limit, but only partial syncs found");
+//            }
 
             // If we still don't have all syncs, read more data and try looking again
         }
         else {
-//System.out.println("decodeSerial: HAVE a sync!!!");
+System.out.println("decodeSerial: HAVE a sync!!!");
             // Data is probably good, but we can't store it forever.
             // Dump it as we're done with it.
             if (rawEvent.getFramesStored() + 1 > maxStored) {
@@ -232,11 +232,11 @@ public class DasDecoder implements SampaDecoder {
      * @throws Exception thrown if looking for a sync from each stream, but only some are found, while
      *                   at the same time the storage limit for streamed data has been reached.
      */
-    public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
-        getHalfWords(gbt_frame);
-        frameCount++;
-        rawEvent.incrementFramesStored();
-    }
+//    public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
+//        getHalfWords(gbt_frame);
+//        frameCount++;
+//        rawEvent.incrementFramesStored();
+//    }
 
 
     /** {@inheritDoc} */
@@ -250,6 +250,7 @@ public class DasDecoder implements SampaDecoder {
             dumpData();
         }
     }
+
 
 
     /**
@@ -505,6 +506,70 @@ public class DasDecoder implements SampaDecoder {
         if (gotSync) return 5;
 
         // Start by assuming we have all syncs
+        int count = 0;
+
+            sync_low_ = findSync(sampa_stream_low_, 0);
+            sync_high_ = findSync(sampa_stream_high_, 0);
+            sync_low_1_ = findSync(sampa_stream_low_1_, 0);
+            sync_high_1_ = findSync(sampa_stream_high_1_, 0);
+            sync_2_ = findSync(sampa_stream_2_, 0);
+
+        if (sync_low_ == 32) {
+            System.out.println("Found full SYNC on Sampa 0 stream low");
+            count++;
+        }
+
+        if (sync_high_ == 32) {
+            System.out.println("Found full SYNC on Sampa 0 stream high");
+            count++;
+        }
+
+        if (sync_low_1_ == 32) {
+            System.out.println("Found full SYNC on Sampa 1 stream low");
+            count++;
+        }
+
+        if (sync_high_1_ == 32) {
+            System.out.println("Found full SYNC on Sampa 1 stream high");
+            count++;
+        }
+
+        if (sync_2_ == 32) {
+            System.out.println("Found full SYNC on Sampa 2 stream");
+            count++;
+        }
+
+        gotSync = (count == 5);
+
+        if (verbose) {
+            System.out.println("SYNC SAMPA0 Stream Low  : " + sync_low_);
+            System.out.println("SYNC SAMPA0 Stream High : " + sync_high_);
+            System.out.println("SYNC SAMPA1 Stream Low  : " + sync_low_1_);
+            System.out.println("SYNC SAMPA1 Stream High : " + sync_high_1_);
+            System.out.println("SYNC SAMPA2 Stream      : " + sync_2_);
+        }
+
+        return count;
+    }
+
+
+    /**
+     * <p>Find the sync position for all streams and store internally.
+     * A returned value of 5 indicates that all of the 5 total streams have found
+     * the sync signal. Any value less than 5 indicates that more data needs to be
+     * read so that the remaining stream(s) can find a sync.</p>
+     *
+     * If all syncs have already been found, this method returns without doing
+     * any work. To begin the search for another sync, the user must first
+     * call {@link #reSync()}.
+     *
+     * @return the number of buffers that found a sync pattern (5 max).
+     */
+    private int getSyncCountNew() {
+
+        if (gotSync) return 5;
+
+        // Start by assuming we have all syncs
         int count = 5;
 
         // If a sync is already found for this stream, do NOT repeat the search
@@ -587,14 +652,16 @@ public class DasDecoder implements SampaDecoder {
         int index = 0;
 
         for (int i = 0; i < data.limit(); i++) {
-            //System.out.println("Check : " + index + " 0x" + Integer.toHexString((int)(data.get(i))) + " - " + (int)(SYNC_PATTERN[index + startIndex]));
-            if (data.get(i) == SYNC_PATTERN[index + startIndex])
+            if (data.get(i) == SYNC_PATTERN[index + startIndex]) {
                 index++;
-            else
+                if (index > 2) System.out.println("Check : " + index + " 0x" + Integer.toHexString((int)(data.get(i))) + " - 0x" + Integer.toHexString(SYNC_PATTERN[index + startIndex]));
+            }
+            else {
                 index = 0;
+            }
 
             if (index == (32 - startIndex))
-                return i/4;
+                return i;
         }
         return sync_unknown_;
     }
@@ -632,10 +699,10 @@ public class DasDecoder implements SampaDecoder {
         boolean readAll = 32 * maxSamples == (data.limit() - startPos);
 
 //        if (verbose)
-        if (streamId == 2) {
-            System.out.println("extractAdcValues Id = " + streamId + ", samples in substream: " +
-                               maxSamples + ", readAll = " + readAll + ", data bytes : " + (data.limit() - startPos));
-        }
+//        if (streamId == 2) {
+//            System.out.println("extractAdcValues Id = " + streamId + ", samples in substream: " +
+//                               maxSamples + ", readAll = " + readAll + ", data bytes : " + (data.limit() - startPos));
+//        }
 
         // Array of buffers in which to place data
         ByteBuffer[] dataBufs = rawEvent.getData();
@@ -648,16 +715,16 @@ public class DasDecoder implements SampaDecoder {
             for (int channel = 0; channel < 16; channel++) {
                 // Reconstructing a 10-bit value from 2, 5-bit values.
                 // This will fit into a short w/out having to worry about sign extension.
-if (streamId == 0)  System.out.println("get " + streamId + " at " + (offset + channel * 2 + 1));
+//if (streamId == 2)  System.out.println("get " + streamId + " at " + (offset + channel * 2 + 1));
                 short adc_value = (short)((data.get(offset + channel * 2 + 1) << 5) + data.get(offset + channel * 2));
-if ((streamId == 0) && numSamples == 0) {
-    System.out.print(adc_value + "  ");
-}
+//if ((streamId == 2) && numSamples == 0) {
+//    System.out.print(adc_value + "  ");
+//}
                 // Read this into a SRingRawEvent, not into local memory ...
                 // sampaData[channel + channel_offset].putShort(adc_value);
                 dataBufs[channel + channel_offset].putShort(adc_value);
             }
-if (streamId == 0) System.out.println();
+//if (streamId == 2) System.out.println();
         }
 
         // Now if we've read ALL the data, just clear the buffer - which is most efficient

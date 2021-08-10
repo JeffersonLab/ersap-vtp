@@ -132,7 +132,7 @@ public class SRingRawEvent {
         localData = new ByteBuffer[bufferCount];
 
         for (int i=0; i < localData.length; i++) {
-            localData[i] = ByteBuffer.allocate(131072);
+            localData[i] = ByteBuffer.allocate(131072/16);        // 8192 bytes
         }
 
     }
