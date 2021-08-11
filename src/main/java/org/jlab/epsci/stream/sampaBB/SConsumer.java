@@ -95,13 +95,18 @@ public class SConsumer extends Thread {
     /** Run this thread. */
     public void run() {
 
+        boolean gotFirst = false;
         while (running) {
             try {
 
                 // Get an item from ring and parse the payload
                 SRingRawEvent ev = get();
 
-                //ev.printData(System.out, 0, true);
+                if (!gotFirst) {
+                    ev.printData(System.out, 0, true);
+                    gotFirst = true;
+                }
+                
                 put();
 
             } catch (InterruptedException e) {

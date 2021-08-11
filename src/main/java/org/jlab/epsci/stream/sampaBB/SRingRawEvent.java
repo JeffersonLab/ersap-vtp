@@ -68,13 +68,16 @@ public class SRingRawEvent {
     private int blockNumber;
 
     /** Keep track of valid entries in localData. */
-    private int localDataSize;
+    private int validChannels;
 
     /** Data type. */
     private final SampaType sampaType;
 
     /** Number of frames from which stored data has been taken. */
     private int framesStored;
+
+    /** Number of channels (and buffers in localData). */
+    private int channelCount;
 
     /**
      * One ByteBuffer for each of 80 channels in DAS mode, 28 available in DSP mode.
@@ -123,17 +126,17 @@ public class SRingRawEvent {
         int factor = 1;
         if (forAggregation) factor = 2;
 
-        int bufferCount = 28*factor;
+       channelCount = 28*factor;
 
         if (sampaType.isDAS()) {
-            bufferCount = 80*factor;
-            mean = new double[bufferCount];
-            sdv  = new double[bufferCount];
+            channelCount = 80*factor;
+            mean = new double[channelCount];
+            sdv  = new double[channelCount];
         }
 
-        localData = new ByteBuffer[bufferCount];
+        localData = new ByteBuffer[channelCount];
 
-        for (int i=0; i < localData.length; i++) {
+        for (int i=0; i < channelCount; i++) {
             localData[i] = ByteBuffer.allocate(byteSize);
         }
     }
@@ -159,6 +162,12 @@ public class SRingRawEvent {
         return localData[index];
     }
 
+
+    /**
+     * Get the number of channels and therefore buffers.
+     * @return number of channels and therefore buffers.
+     */
+    public int getChannelCount() {return channelCount;}
 
     /**
      * Get the DSP mode bunch crossing (time) for this block.
@@ -244,7 +253,7 @@ public class SRingRawEvent {
      *             All elements at and after a null buffer are ignored.
      */
     public void setData(ByteBuffer[] data) {
-        localDataSize = 0;
+        validChannels = 0;
         int dataEntries = Math.min(data.length, localData.length);
         for (int i = 0; i < dataEntries; i++) {
             // Ignore everything at and after a null buf
@@ -257,7 +266,7 @@ public class SRingRawEvent {
             // will change as soon as it reads more from the source.
             // This should be much faster than using Vectors or ArrayLists element by element
             System.arraycopy(data[i].array(), 0, localData[i].array(), 0, data[i].remaining());
-            localDataSize++;
+            validChannels++;
         }
     }
 
@@ -270,11 +279,11 @@ public class SRingRawEvent {
      *             All elements at and after a null buffer are ignored.
      */
     public void addData(ByteBuffer[] data) {
-        if (localDataSize >= localData.length) {
+        if (validChannels >= channelCount) {
             System.out.println("SRingRawEvent: Error, RingBuffer data array limit reached.");
         }
         else {
-            int dataEntries = Math.min(data.length, (localData.length - localDataSize));
+            int dataEntries = Math.min(data.length, (channelCount - validChannels));
             for (int i = 0; i < dataEntries; i++) {
                 // Ignore everything at and after a null buf
                 if (data[i] == null) {
@@ -283,9 +292,9 @@ public class SRingRawEvent {
                 }
 
                 System.arraycopy(data[i].array(), 0,
-                                 localData[localDataSize].array(), 0,
+                                 localData[validChannels].array(), 0,
                                  data[i].remaining());
-                localDataSize++;
+                validChannels++;
             }
         }
     }
@@ -295,7 +304,7 @@ public class SRingRawEvent {
         time = 0;
         blockNumber = 0;
         framesStored = 0;
-        localDataSize = 0;
+        validChannels = 0;
 
         // Not necessary to clear mean & sdv arrays as
         // calling calculateStats() will overwrite everything
@@ -322,7 +331,11 @@ public class SRingRawEvent {
      */
     public void printData(OutputStream out, int streamId, boolean hex) {
         if (sampaType.isDAS()) {
-            printDataDAS(out, hex);
+            //printDataDAS(out, hex);
+            //printDataDASChannelFirst(out, hex);
+            printDataDASChannel(out, hex, 0);
+            //printDataDASChannel(out, hex, 15);
+            //printDataDASChannel(out, hex, 1);
         }
         else {
             printDataDSP(out, streamId, hex);
@@ -401,11 +414,14 @@ public class SRingRawEvent {
         boolean autoFlush = true;
         PrintWriter writer = new PrintWriter(out, autoFlush, StandardCharsets.US_ASCII);
 
+        // TODO: The amount of data in each channel can differ depending on the misalignment of
+        // TODO: values found during the sync process. They can be off by 1 ADC value.
+
         // How much data do we have?
         int sampleLimit = localData[0].limit()/2;
 
         for (int sample = 0; sample < sampleLimit; sample++) {
-            for (int channel = 0; channel < 80; channel++) {
+            for (int channel = 0; channel < validChannels; channel++) {
                 if (hex) {
                     writer.printf("%3x", localData[channel].getShort(sample));
                 }
@@ -421,6 +437,87 @@ public class SRingRawEvent {
             }
             writer.println();
         }
+        //writer.flush();
+    }
+
+    /**
+     * Write ADC values to output stream.
+     *
+     * @param out output stream to write data to.
+     * @param hex if true, output values are in hexadecimal, else in decimal.
+     */
+    private void printDataDASChannelFirst(OutputStream out, boolean hex) {
+        boolean autoFlush = true;
+        PrintWriter writer = new PrintWriter(out, autoFlush, StandardCharsets.US_ASCII);
+
+
+        for (int channel = 0; channel < validChannels; channel++) {
+            writer.print("Channel #");
+            writer.println(channel);
+
+            // How much data do we have?
+            int sampleLimit = localData[channel].limit()/2;
+
+            for (int sample = 0; sample < sampleLimit; sample++) {
+                if (hex) {
+                    writer.printf("%3x", localData[channel].getShort(sample));
+                }
+                else {
+                    writer.printf("%4d", localData[channel].getShort(sample));
+                }
+
+                if ((sample+1) % 10 == 0) {
+                    writer.println();
+                }
+                else {
+                    writer.print(" ");
+                }
+            }
+
+            writer.println();
+            writer.println();
+        }
+        //writer.flush();
+    }
+
+    /**
+     * Write ADC values to output stream.
+     *
+     * @param out output stream to write data to.
+     * @param hex if true, output values are in hexadecimal, else in decimal.
+     */
+    private void printDataDASChannel(OutputStream out, boolean hex, int channel) {
+        boolean autoFlush = true;
+        PrintWriter writer = new PrintWriter(out, autoFlush, StandardCharsets.US_ASCII);
+
+             if (channel > validChannels - 1) {
+                 channel =  validChannels - 1;
+             }
+
+            writer.print("Channel #");
+            writer.println(channel);
+
+            // How much data do we have?
+            int sampleLimit = localData[channel].limit()/2;
+
+            for (int sample = 0; sample < sampleLimit; sample++) {
+                if (hex) {
+                    writer.printf("%3x", localData[channel].getShort(sample));
+                }
+                else {
+                    writer.printf("%4d", localData[channel].getShort(sample));
+                }
+
+                if ((sample+1) % 10 == 0) {
+                    writer.println();
+                }
+                else {
+                    writer.print(" ");
+                }
+            }
+
+            writer.println();
+            writer.println();
         //writer.flush();
     }
 
