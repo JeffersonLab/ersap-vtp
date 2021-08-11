@@ -61,6 +61,9 @@ public class SReceiver extends Thread {
     /** TCP server socket. */
     private ServerSocket serverSocket;
 
+    /** Size in bytes of each raw event's internal buffer. */
+    private int byteSize;
+
     //--------------------------------
     // Disruptor stuff
     //--------------------------------
@@ -81,18 +84,21 @@ public class SReceiver extends Thread {
      *                   to an aggregator and from there it's passed to a data consumer.
      * @param streamFrameLimit total number of frames consumed before printing stats and exiting.
      * @param sampaType type of data coming over TCP client's socket.
-     * @throws IOException if error communicating over TCP.
+     * @param byteSize  size in bytes of each raw event's internal buffer.
      */
     public SReceiver(int sampaPort,
                      int streamId,
                      RingBuffer<SRingRawEvent> ringBuffer,
                      int streamFrameLimit,
-                     SampaType sampaType) throws IOException {
+                     SampaType sampaType,
+                     int byteSize) {
+
         this.sampaPort = sampaPort;
         this.ringBuffer = ringBuffer;
         this.streamId = streamId;
         this.streamFrameLimit = streamFrameLimit;
         this.sampaType = sampaType;
+        this.byteSize = byteSize;
 
         frameBuffer = ByteBuffer.wrap(frameArray);
         frameBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -103,18 +109,8 @@ public class SReceiver extends Thread {
             sampaDecoder = new DspDecoder(verbose);
         }
         else {
-//            sampaDecoder = new DasDecoder(verbose);
-            sampaDecoder = new DasDecoder(false, streamId);
+            sampaDecoder = new DasDecoder(false, streamId, byteSize);
         }
-
-//        // Connecting to the sampa stream source
-//        serverSocket = new ServerSocket(sampaPort);
-//        System.out.println("Server is listening on port " + sampaPort);
-//        Socket socket = serverSocket.accept();
-//        System.out.println("SAMPA client connected");
-//        InputStream input = socket.getInputStream();
-//        dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
-
     }
 
     /**
@@ -133,18 +129,13 @@ public class SReceiver extends Thread {
         ringBuffer.publish(sequenceNumber);
     }
 
-    public void processOneFrame(SRingRawEvent rawEvent) {
+    public void processOneFrame(SRingRawEvent rawEvent) throws IOException {
         frameBuffer.clear();
 
-        try {
             // clear gbt_frame: 4 4-byte, 32-bit words
 //System.out.println("Receiver: try reading frame of data");
-            dataInputStream.readFully(frameArray);
+        dataInputStream.readFully(frameArray);
 //System.out.println("Receiver: GOT frame of data");
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
 
         data[3] = frameBuffer.getInt();
         data[2] = frameBuffer.getInt();
@@ -251,6 +242,10 @@ System.out.println("SAMPA client connected");
                     // Loop until event is full or we run into our given limit of frames
 
                     System.out.println("decoder.remaining() = " + ((DasDecoder)sampaDecoder).sampa_stream_low_.remaining() + ", full = " + rawEvent.isFull());
+
+                    // TODO: WE need to quit this loop when all sync data is collected, RIGHT?
+
+
 
                 } while (!(rawEvent.isFull() || (frameCount >= streamFrameLimit)));
 

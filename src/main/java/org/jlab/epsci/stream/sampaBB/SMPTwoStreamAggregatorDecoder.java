@@ -14,56 +14,76 @@ package org.jlab.epsci.stream.sampaBB;
 
 
 import com.lmax.disruptor.*;
-
 import java.io.IOException;
-
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
 
 public class SMPTwoStreamAggregatorDecoder {
-    /**
-     * SAMPA ports and stream info
-     */
+
+    /** TCP Port for receiving data from first stream. */
     private final int sampaPort1;
+    /** TCP Port for receiving data from second stream. */
     private final int sampaPort2;
+    /** Stream id of first stream. */
     private final int streamId1;
+    /** Stream id of second stream. */
     private final int streamId2;
+    /** Max number of frames to receive before ending program. */
     private final int streamFrameLimit;
 
     /** Format of data SAMPA chips are sending. */
     private final SampaType sampaType;
 
-    /**
-     * Max ring items
-     */
+    /** Max ring items */
     private final static int maxRingItems = 16;
 
-    /**
-     * Ring buffers
-     */
+    /** Size in bytes of each buffer in a raw event (1 buf per channel). */
+    private final int byteSize;
+    
+
+    /** Ring buffer for data transfer between receiver 1 and aggregator. */
     private final RingBuffer<SRingRawEvent> ringBuffer1;
+    /** Ring buffer for data transfer between receiver 2 and aggregator. */
     private final RingBuffer<SRingRawEvent> ringBuffer2;
+    /** Ring buffer for data transfer between aggregator and consumer. */
     private final RingBuffer<SRingRawEvent> ringBuffer12;
 
-    /**
-     * Sequences
-     */
+
+    /** Ring sequence used by aggregator to read data from first receiver. */
     private final Sequence sequence1;
+    /** Ring sequence used by aggregator to read data from second receiver. */
     private final Sequence sequence2;
+    /** Ring sequence used by consumer to read data from aggregator. */
     private final Sequence sequence12;
 
-    /**
-     * Sequence barriers
-     */
+
+    /** Ring barrier used by aggregator to read data from first receiver. */
     private final SequenceBarrier sequenceBarrier1;
+    /** Ring barrier used by aggregator to read data from second receiver. */
     private final SequenceBarrier sequenceBarrier2;
+    /** Ring barrier used by consumer to read data from aggregator. */
     private final SequenceBarrier sequenceBarrier12;
 
+    /** Data receiver reading from first data stream. */
     private SReceiver receiver1;
+    /** Data receiver reading from second data stream. */
     private SReceiver receiver2;
+    /** Data aggregator reading from both receivers. */
     private SAggregator aggregator12;
+    /** Data consumer reading from aggregator. */
     private SConsumer consumer;
 
+
+    /**
+     * Constructor.
+     *
+     * @param sampaPort1       TCP port for first  data producer to connect to.
+     * @param sampaPort2       TCP port for second data producer to connect to.
+     * @param streamId1        id number of first  data stream / producer.
+     * @param streamId2        id number of second data stream / producer.
+     * @param streamFrameLimit total number of frames consumed before exiting.
+     * @param sampaType        type of data coming over TCP sockets.
+     */
     public SMPTwoStreamAggregatorDecoder(int sampaPort1, int sampaPort2,
                                          int streamId1, int streamId2,
                                          int streamFrameLimit,
@@ -75,8 +95,11 @@ public class SMPTwoStreamAggregatorDecoder {
         this.streamFrameLimit = streamFrameLimit;
         this.sampaType = sampaType;
 
+        // Byte size of each buffer in each raw event
+        byteSize = 8192;
+
         // RingBuffer in which receiver1 will get & fill events, then pass them to the aggregator
-        ringBuffer1 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
+        ringBuffer1 = createSingleProducer(new SRingRawEventFactory(sampaType, byteSize, false), maxRingItems,
                 new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
 
         sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -84,7 +107,7 @@ public class SMPTwoStreamAggregatorDecoder {
         ringBuffer1.addGatingSequences(sequence1);
 
         // RingBuffer in which receiver2 will get & fill events, then pass them to the aggregator
-        ringBuffer2 = createSingleProducer(new SRingRawEventFactory(sampaType), maxRingItems,
+        ringBuffer2 = createSingleProducer(new SRingRawEventFactory(sampaType, byteSize, false), maxRingItems,
                 new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
 
         sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -93,7 +116,7 @@ public class SMPTwoStreamAggregatorDecoder {
 
         // RingBuffer in which Aggregator will get empty events and fill them with data aggregated
         // from the 2 streams. It then passes them to the consumer.
-        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType, true), maxRingItems,
+        ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType, byteSize, true), maxRingItems,
                 new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
 
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -103,8 +126,8 @@ public class SMPTwoStreamAggregatorDecoder {
     }
 
     public void go() throws IOException {
-        receiver1 = new SReceiver(sampaPort1, streamId1, ringBuffer1, streamFrameLimit, sampaType);
-        receiver2 = new SReceiver(sampaPort2, streamId2, ringBuffer2, streamFrameLimit, sampaType);
+        receiver1 = new SReceiver(sampaPort1, streamId1, ringBuffer1, streamFrameLimit, sampaType, byteSize);
+        receiver2 = new SReceiver(sampaPort2, streamId2, ringBuffer2, streamFrameLimit, sampaType, byteSize);
 
         aggregator12 = new SAggregator(ringBuffer1, ringBuffer2,
                                        sequence1, sequence2,

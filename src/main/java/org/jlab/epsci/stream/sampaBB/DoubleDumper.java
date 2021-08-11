@@ -29,14 +29,27 @@ public class DoubleDumper {
     private final int streamId1;
     private final int streamId2;
     private final int streamFrameLimit;
+    private final int byteSize;
 
     /** Format of data SAMPA chips are sending. */
     private final SampaType sampaType;
 
+
+    /**
+     * Constructor.
+     *
+     * @param sampaPort1       TCP port for first  data producer to connect to.
+     * @param sampaPort2       TCP port for second data producer to connect to.
+     * @param streamId1        id number of first  data stream / producer.
+     * @param streamId2        id number of second data stream / producer.
+     * @param streamFrameLimit total number of frames consumed before exiting.
+     * @param sampaType        type of data coming over TCP sockets.
+     */
     public DoubleDumper(int sampaPort1, int sampaPort2,
                         int streamId1, int streamId2,
                         int streamFrameLimit,
-                        SampaType sampaType) {
+                        SampaType sampaType,
+                        int byteSize) {
 
         this.sampaPort1 = sampaPort1;
         this.sampaPort2 = sampaPort2;
@@ -44,11 +57,12 @@ public class DoubleDumper {
         this.streamId2 = streamId2;
         this.streamFrameLimit = streamFrameLimit;
         this.sampaType = sampaType;
+        this.byteSize = byteSize;
     }
 
     public void go() {
-        ReceiveAndDumper receiver1 = new ReceiveAndDumper(sampaPort1, streamId1, streamFrameLimit, sampaType);
-        ReceiveAndDumper receiver2 = new ReceiveAndDumper(sampaPort2, streamId2, streamFrameLimit, sampaType);
+        ReceiveAndDumper receiver1 = new ReceiveAndDumper(sampaPort1, streamId1, streamFrameLimit, sampaType, byteSize);
+        ReceiveAndDumper receiver2 = new ReceiveAndDumper(sampaPort2, streamId2, streamFrameLimit, sampaType, byteSize);
 
         receiver1.start();
         receiver2.start();
@@ -78,6 +92,8 @@ public class DoubleDumper {
 
         int streamFrameLimit = Integer.parseInt(args[4]);
 
+        int byteSize = 8192;
+
         SampaType sampaType = SampaType.DSP;
         if (args.length > 5) {
             String sType = args[5];
@@ -88,7 +104,7 @@ public class DoubleDumper {
 
         try {
             new DoubleDumper(port1, port2, streamId1, streamId2,
-                             streamFrameLimit, sampaType).go();
+                             streamFrameLimit, sampaType, byteSize).go();
         } catch (Exception e) {
             e.printStackTrace();
         }

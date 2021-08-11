@@ -67,11 +67,14 @@ public class ReceiveAndDumper extends Thread {
      * @param streamId  data stream id number.
      * @param streamFrameLimit total number of frames consumed before printing stats and exiting.
      * @param sampaType type of data coming over TCP client's socket.
+     * @param byteSize  size in bytes of each raw event's internal buffer.
      */
     public ReceiveAndDumper(int sampaPort,
                            int streamId,
                            int streamFrameLimit,
-                           SampaType sampaType) {
+                           SampaType sampaType,
+                           int byteSize) {
+
         this.sampaPort = sampaPort;
         this.streamId = streamId;
         this.streamFrameLimit = streamFrameLimit;
@@ -86,7 +89,7 @@ public class ReceiveAndDumper extends Thread {
             sampaDecoder = new DspDecoder(verbose);
         }
         else {
-            sampaDecoder = new DasDecoder(verbose, streamId);
+            sampaDecoder = new DasDecoder(verbose, streamId, byteSize);
         }
     }
 

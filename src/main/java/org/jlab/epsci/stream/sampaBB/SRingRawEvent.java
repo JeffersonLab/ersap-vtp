@@ -101,20 +101,22 @@ public class SRingRawEvent {
 
 
     /**
-     * Constructor.
+     * Constructor. Internal buffers are set to 131072 bytes each.
+     * The number of buffers is half that being used for aggregation.
      * @param type the type of data being stored.
      */
-    public SRingRawEvent(SampaType type) {this(type, false);}
+    public SRingRawEvent(SampaType type) {this(type, 131072, false);}
 
 
     /**
      * Constructor.
      * @param type the type of data being stored.
+     * @param byteSize number of bytes in each internal buffer.
      * @param forAggregation if true, this is used to hold aggregated data -
      *                       all 160 channels of a SAMPA board. Or, in other words,
      *                       it needs hold 2x the data coming from a single stream.
      */
-    public SRingRawEvent(SampaType type, boolean forAggregation) {
+    public SRingRawEvent(SampaType type, int byteSize, boolean forAggregation) {
         sampaType = type;
 
         // If aggregating we need double the channels
@@ -132,9 +134,8 @@ public class SRingRawEvent {
         localData = new ByteBuffer[bufferCount];
 
         for (int i=0; i < localData.length; i++) {
-            localData[i] = ByteBuffer.allocate(131072/16);        // 8192 bytes
+            localData[i] = ByteBuffer.allocate(byteSize);
         }
-
     }
 
 
