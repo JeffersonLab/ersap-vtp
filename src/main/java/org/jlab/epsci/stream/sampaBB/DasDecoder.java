@@ -119,6 +119,8 @@ public class DasDecoder implements SampaDecoder {
         maxBufSize = ((rawEventByteSize + 3)/4)*4;
         maxFramesStored = maxBufSize / 4;    // 4 bytes per frame in each local buffer
 
+        System.out.print("Constructor: each buffer is of size " + maxBufSize + " bytes, max frames stored = " + maxFramesStored );
+
         sampa_stream_low_    = ByteBuffer.allocate(maxBufSize);
         sampa_stream_high_   = ByteBuffer.allocate(maxBufSize);
         sampa_stream_low_1_  = ByteBuffer.allocate(maxBufSize);
@@ -137,6 +139,7 @@ public class DasDecoder implements SampaDecoder {
     /** {@inheritDoc} */
     public void reSync() {
         gotSync = syncLow0Found = syncLow1Found = syncHigh0Found = syncHigh1Found = sync2Found = false;
+        clearSyncOffsets();
     }
 
     /** {@inheritDoc} */
@@ -150,8 +153,15 @@ public class DasDecoder implements SampaDecoder {
 
     /** {@inheritDoc} */
     public boolean isFull() {
-        // This buffer contains the most of any, so use it to determine if more can be held
-        return sampa_stream_low_.remaining() < 4;
+        // Full if anyone of the buffers doesn't have enough room to read another frame.
+        // Different buffers may have differing amounts of data depending on whether
+        // in the last data transfer it was closer to a multiple of 32. It will also
+        // depend on the initial sync offsets.
+        return ( (sampa_stream_low_.remaining() < 4) ||
+                 (sampa_stream_high_.remaining() < 4) ||
+                 (sampa_stream_low_1_.remaining() < 4) ||
+                 (sampa_stream_high_1_.remaining() < 4) ||
+                 (sampa_stream_2_.remaining() < 4) );
     }
 
 
@@ -173,6 +183,17 @@ public class DasDecoder implements SampaDecoder {
 
 
     //--------------------------------------------------
+
+
+    /**
+     * After a sync event has been triggered and read, the offsets
+     * due to synchronization are necessary on the first data read,
+     * but must be cleared for subsequent reads as the sync offsets
+     * will have been taken into account.
+     */
+    void clearSyncOffsets() {
+        sync_low_ = sync_high_  = sync_low_1_ = sync_high_1_ = sync_2_ = -1;
+    }
 
 
     /** Clear all stored data. */
@@ -243,13 +264,6 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
     /** {@inheritDoc} */
     public void transferData(SRingRawEvent rawEvent) {
         getAdcValues(rawEvent);
-
-        // Data is probably good, but we can't store it forever.
-        // Dump it as we're done with it.
-        if (rawEvent.getFramesStored() >= maxFramesStored) {
-            if (streamId == 2) System.out.println("decodeSerial " + streamId + ", DUMP DATA at frames stored = " + rawEvent.getFramesStored());
-            dumpData();
-        }
     }
 
 
@@ -287,6 +301,7 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
         sampa_stream_high_.put(b3);
         sampa_stream_high_.put(b4);
 
+        //if (streamId == 2) System.out.println(streamId + ": --> buf pos = " + sampa_stream_high_.position());
         //if (streamId == 2) System.out.println(streamId + ": --> " + b1 + " " + b2 + " " + b3 + " " + b4);
 
         // extract the 4 halfwords for SAMPA0 lower data stream and insert them into the stream_low vector
@@ -582,10 +597,11 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
     /**
      * Loop over the 5-bit half-word stream and search for the SYNC pattern.
      * and find the position of the last SYNC pattern value (0xA) in the stream.
+     * The number of bytes to skip to get to real data = returned position + 1.
      *
      * @param data input data "stream".
      * @param startIndex index of byte to start the search
-     * @return position of the last SYNC pattern value (0xA) in the stream or -1 if unknown.
+     * @return position of the last SYNC pattern value (0xA) in the data buffer or -1 if unknown.
      */
     private int findSync(ByteBuffer data, int startIndex) {
         int index = 0;
@@ -617,6 +633,8 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
         extractAdcValues(3, sampa_stream_low_1_,  sync_low_1_ + 1,  channel_offset_low_1_,  rawEvent);
         extractAdcValues(4, sampa_stream_high_1_, sync_high_1_ + 1, channel_offset_high_1_, rawEvent);
         extractAdcValues(5, sampa_stream_2_,      sync_2_ + 1,      channel_offset_2_,      rawEvent);
+        // The offsets must only be used once before being cleared
+        clearSyncOffsets();
     }
 
 
@@ -624,7 +642,7 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
      * Extract the ADC values from the data stream.
      *
      * @param data data from a single stream.
-     * @param startPos starting position in data.
+     * @param startPos starting position in data (# of bad bytes to skip).
      * @param channel_offset offset into the array of buffers at which to start placing ADC values.
      * @param rawEvent object into which to write the extracted ADC values.
      */
@@ -634,18 +652,24 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
         // Each data buffer contains data from 1 chip in split mode.
         // (16 channels where each channel has 2 sequential 5 bit (1 byte) halfwords
         // entries which needs to be combined into one ADC value)
-        int maxSamples = (data.limit() - startPos) / 32;
+
+        // At this point data has been added, byte by byte, to the data ByteBuffer.
+        // It's position tells how many bytes have been added.
+        // It's limit will be its capacity.
+        int dataBytes = data.position();
+
+        int maxSamples = (dataBytes - startPos) / 32;
         // Did we read all the data?
-        boolean readAll = 32 * maxSamples == (data.limit() - startPos);
+        boolean readAll = 32 * maxSamples == (dataBytes - startPos);
 
 //        if (verbose)
         // Array of buffers in which to place data
         ByteBuffer[] dataBufs = rawEvent.getData();
 
-        if ((id == 1) && (streamId == 2)) {
-            System.out.println("extractAdcValues Id = " + streamId + ", samples in substream: " +
-                                       maxSamples + ", readAll = " + readAll + ", data bytes : " + (data.limit() - startPos) +
-                                       ", dataBufs[0].pos = " + dataBufs[0].position() + ", lim = " + dataBufs[0].limit());
+        if (id == 1 && streamId == 2) {
+            System.out.println("extractAdcValues stream = " + streamId + " : BB " + id + ": samples in substream: " +
+                                       maxSamples + ", readAll = " + readAll + ", real data bytes : " + (dataBytes - startPos) +
+                                       ", all bytes = " + dataBytes + ", startPos = " + startPos);
         }
 
 //        if (id == 1 && streamId == 2) {
@@ -661,9 +685,9 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
                 // Reconstructing a 10-bit value from 2, 5-bit values.
                 // This will fit into a short w/out having to worry about sign extension.
 //if (streamId == 2)  System.out.println("get stream " + streamId + " at " + (offset + channel * 2 + 1));
-                short adc_value = (short)((data.get(offset + channel * 2 + 1) << 5) + data.get(offset + channel * 2));
+                short adc_value = (short)(((data.get(offset + channel * 2 + 1)) << 5) | (data.get(offset + channel * 2)));
 if ((id == 1) && (channel == 0) && (streamId == 2)) {
-    System.out.print(Integer.toHexString(adc_value) + "  ");
+    System.out.print(Integer.toHexString(adc_value) + "  " );
 }
                 // Read this into a SRingRawEvent, not into local memory ...
                 // sampaData[channel + channel_offset].putShort(adc_value);
@@ -675,13 +699,15 @@ if ((id == 1) && (channel == 0) && (streamId == 2)) {
                     //e.printStackTrace();
                 }
             }
-//if (streamId == 2) System.out.println();
         }
+if (id == 1 && streamId == 2) System.out.println();
 
         // Now if we've read ALL the data, just clear the buffer - which is most efficient
         if (readAll) {
             data.clear();
-//if (id == 1 && streamId == 2) System.out.println("clear data from chip BB " + streamId);
+if (id == 1 && streamId == 2) System.out.println("CLEAR instead of compact, str " + streamId + " : BB " + id +
+                                     ", all data bytes = " + dataBytes + ", bytes consumed " +
+                                          (maxSamples*32 + startPos));
         }
         // Otherwise, shift data to beginning, then reset limit so we can add more data properly.
         else {
@@ -689,11 +715,14 @@ if ((id == 1) && (channel == 0) && (streamId == 2)) {
             // what's stored locally by setting its position just past the
             // used data and then compacting the buffer.
             // We read # samples/chan * 16 chan * 2 entries/chan
+if (id == 1 && (streamId == 2)) System.out.println("Before COMPACT stream " + streamId + " : " + id + ": all data bytes = " + dataBytes + ", bytes consumed " +
+                                                (maxSamples*32 + startPos) + ", for next round = " + (dataBytes - maxSamples*32 - startPos));
+            data.limit(dataBytes);
             data.position(maxSamples*32 + startPos);
             data.compact();
-if ((streamId == 2)) System.out.println("COMPACTED " + id + ", data.pos = " + data.position() + ", lim = " + data.limit() +
-        ", orig pos = " + (maxSamples*32 + startPos));
+if (id == 1 && (streamId == 2)) System.out.println("COMPACTED stream " + streamId + " : " + id + ": data.pos = " + data.position() + ", lim = " + data.limit());
         }
+
 
 //System.out.println("extractAdcValues END Id = " + streamId + ", Data bytes : " + (data.limit() - startPos));
 

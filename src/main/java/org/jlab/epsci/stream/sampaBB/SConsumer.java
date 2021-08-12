@@ -103,6 +103,7 @@ public class SConsumer extends Thread {
                 SRingRawEvent ev = get();
 
                 if (!gotFirst) {
+                    Thread.sleep(1000);
                     ev.printData(System.out, 0, true);
                     gotFirst = true;
                 }

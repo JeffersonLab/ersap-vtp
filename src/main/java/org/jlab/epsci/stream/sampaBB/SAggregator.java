@@ -13,6 +13,8 @@ package org.jlab.epsci.stream.sampaBB;
 
 import com.lmax.disruptor.*;
 
+import java.nio.ByteBuffer;
+
 /**
  * This class implements an "aggregator" which combines 2 input data streams
  * into one output data stream. These streams are data coming from a SAMPA
@@ -205,6 +207,27 @@ public class SAggregator extends Thread {
         outputItem.setBlockNumber(b1);
 
         // Add two data arrays together and add to the output item
+//        ByteBuffer[] data1 = e1.getData();
+//        int numShorts = data1[0].position()/2;
+//
+//        System.out.println("AGGREGATOR:");
+//        for (int i = 0; i < numShorts; i++) {
+//            short s = data1[0].getShort(i*2);
+//            System.out.print(" " + Integer.toHexString(s));
+//            if ((i+1) % 10 == 0) System.out.println();
+//        }
+//        System.out.println();
+//
+//        ByteBuffer[] data2 = e2.getData();
+//        numShorts = data2[0].position()/2;
+//        System.out.println();
+//        for (int i = 0; i < numShorts; i++) {
+//            short s = data2[0].getShort(i*2);
+//            System.out.print(" " + Integer.toHexString(s));
+//            if ((i+1) % 10 == 0) System.out.println();
+//        }
+//        System.out.println();
+
         outputItem.setData(e1.getData());
         outputItem.addData(e2.getData());
 

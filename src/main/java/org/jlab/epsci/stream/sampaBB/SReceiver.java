@@ -192,6 +192,8 @@ System.out.println("SAMPA client connected");
                 }
                 else {
                     ((DasDecoder) sampaDecoder).transferData(rawEvent);
+                    ByteBuffer[] data = rawEvent.getData();
+                    System.out.println("Transfered buf: pos = " + data[0].position() + ", lim = " + data[0].limit());
                 }
 
                 // Print out
