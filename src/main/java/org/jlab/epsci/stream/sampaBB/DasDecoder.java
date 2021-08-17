@@ -55,8 +55,6 @@ public class DasDecoder implements SampaDecoder {
     /** Got sync on all channels. */
     private boolean gotSync = false;
 
-    private int test = 23;
-
     // SYNC positions, index in the ByteBuffer at the sync start - for each stream
     private final int sync_unknown_ = -1;
     private int sync_low_    = sync_unknown_; // Need to do this since we're not looking for a sync at the moment
