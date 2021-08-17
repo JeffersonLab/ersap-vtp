@@ -96,17 +96,24 @@ public class SConsumer extends Thread {
     public void run() {
 
         boolean gotFirst = false;
+        long evCount = 0L;
+
         while (running) {
             try {
 
                 // Get an item from ring and parse the payload
                 SRingRawEvent ev = get();
+                evCount++;
 
-                if (!gotFirst) {
-                    Thread.sleep(1000);
-                    ev.printData(System.out, 0, true);
-                    gotFirst = true;
+                if (evCount % 1000 == 0) {
+                    System.out.println("Consumer: event count = " + evCount);
                 }
+
+
+//                if (!gotFirst) {
+//                    ev.printData(System.out, 0, true);
+//                    gotFirst = true;
+//                }
                 
                 put();
 

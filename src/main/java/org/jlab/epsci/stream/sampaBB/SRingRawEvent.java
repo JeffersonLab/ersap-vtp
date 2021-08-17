@@ -416,9 +416,9 @@ public class SRingRawEvent {
      */
     public void printData(OutputStream out, int streamId, boolean hex) {
         if (sampaType.isDAS()) {
-            //printDataDAS(out, hex);
-            printDataDASChannel(out, hex, 0, 0);
-            printDataDASChannel(out, hex, 80, 0);
+            printDataDAS(out, hex);
+            //printDataDASChannel(out, hex, 0, 10);
+            //printDataDASChannel(out, hex, 80, 10);
         }
         else {
             printDataDSP(out, streamId, hex);

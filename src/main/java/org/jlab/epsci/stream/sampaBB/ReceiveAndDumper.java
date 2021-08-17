@@ -93,7 +93,7 @@ public class ReceiveAndDumper extends Thread {
         }
     }
 
-    public void processOneFrame(SRingRawEvent rawEvent) throws Exception {
+    public void processOneFrame(SRingRawEvent rawEvent) throws IOException {
         frameBuffer.clear();
 
         dataInputStream.readFully(frameArray);
@@ -103,7 +103,12 @@ public class ReceiveAndDumper extends Thread {
         data[1] = frameBuffer.getInt();
         data[0] = frameBuffer.getInt();
 
-        sampaDecoder.decodeSerial(data, rawEvent);
+        try {
+            sampaDecoder.decodeSerial(data, rawEvent);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -112,7 +117,7 @@ public class ReceiveAndDumper extends Thread {
     }
 
 
-    public void run() {
+    public void run1() {
         // Connecting to the sampa stream source
         try {
             ServerSocket serverSocket = new ServerSocket(sampaPort);
@@ -152,6 +157,63 @@ public class ReceiveAndDumper extends Thread {
             e.printStackTrace();
         }
     }
+
+
+    public void run() {
+        // Connecting to the sampa stream source
+        try {
+            ServerSocket serverSocket = new ServerSocket(sampaPort);
+            System.out.println("Server is listening on port " + sampaPort);
+            Socket socket = serverSocket.accept();
+            System.out.println("SAMPA client connected");
+            InputStream input = socket.getInputStream();
+            dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
+        } catch (
+                IOException e) {
+            e.printStackTrace();
+        }
+        int frameCount = 0;
+
+        try {
+
+            SRingRawEvent rawEvent = new SRingRawEvent(SampaType.DAS);
+
+            do {
+                rawEvent.reset();
+
+                // Fill event with data until it's full or hits the frame limit
+                do {
+                    processOneFrame(rawEvent);
+                    // readAndDumpOneFrame();
+                    frameCount++;
+                    // Loop until event is full or we run into our given limit of frames
+
+                    //System.out.println("decoder.remaining() = " + ((DasDecoder)sampaDecoder).sampa_stream_low_.remaining() + ", full = " + sampaDecoder.isFull());
+
+                } while ( !(sampaDecoder.isFull() || ((streamFrameLimit != 0) && (frameCount >= streamFrameLimit))) );
+
+                if (sampaType.isDSP()) {
+                    if (rawEvent.isFull()) {
+                        // Update the block number since the event becomes full once
+                        // a complete block of data has been written into it.
+                        rawEvent.setBlockNumber(sampaDecoder.incrementBlockCount());
+                    }
+                }
+                else {
+                    ((DasDecoder) sampaDecoder).transferData(rawEvent);
+                    // ByteBuffer[] data = rawEvent.getData();
+                    // if (streamId == 2) System.out.println("Transferred buf: pos = " + data[0].position() + ", lim = " + data[0].limit());
+                    if (streamId == 2) System.out.println("Transferred str2 at framecount = " + frameCount);
+                }
+
+                // Loop until we run into our given limit of frames
+            } while ((streamFrameLimit == 0) || (frameCount < streamFrameLimit));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
