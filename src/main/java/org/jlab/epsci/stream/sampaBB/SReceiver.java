@@ -106,7 +106,7 @@ public class SReceiver extends Thread {
         frameBuffer = ByteBuffer.wrap(frameArray);
         frameBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-        boolean verbose = true;
+        boolean verbose = false;
 
         if (sampaType.isDSP()) {
             sampaDecoder = new DspDecoder(verbose);
@@ -206,6 +206,8 @@ System.out.println("SAMPA client connected");
                         // Update the block number since the event becomes full once
                         // a complete block of data has been written into it.
                         rawEvent.setBlockNumber(sampaDecoder.incrementBlockCount());
+                        //int blockCount = sampaDecoder.getBlockCount();
+                        //if (streamId == 2 && (blockCount % 1000 == 0)) System.out.println("Raw event full, set block num to " + blockCount);
                     }
                 }
                 else {
