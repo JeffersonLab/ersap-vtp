@@ -55,9 +55,6 @@ public class DasDecoder implements SampaDecoder {
     /** Got sync on all channels. */
     private boolean gotSync = false;
 
-    /** A sync is expected once in this many frames. */
-    private int syncFramePeriod;
-
     private long offset = 20000;
 
     // SYNC positions, index in the ByteBuffer at the sync start - for each stream
@@ -123,10 +120,6 @@ public class DasDecoder implements SampaDecoder {
     public DasDecoder(boolean verbose, int streamId, int rawEventByteSize) {
         this.verbose = verbose;
         this.streamId = streamId;
-
-        // Sync data is expected once every 5000 events, each of which have 2000 frames.
-        // The sync will take up 32 frames.
-        syncFramePeriod = 5000*2000;   // 10 M
 
         // Round up buffer size to 4 byte boundary.
         // Each single source rawEvent has 80 buffers whereas this decoder
@@ -230,6 +223,7 @@ public class DasDecoder implements SampaDecoder {
      *
      * @param gbt_frame frame of streamed data.
      * @param rawEvent  object from ring buffer for storing data and passing to next ring consumer.
+     *                  Not used in DAS mode.
      * @throws Exception thrown if storage limit of rawEvent is reached.
      *                   This can happen if looking for a sync from each stream, but only some are found, while
      *                   at the same time the storage limit for streamed data has been reached.
@@ -238,19 +232,25 @@ public class DasDecoder implements SampaDecoder {
      */
     public void decodeSerial(int[] gbt_frame, SRingRawEvent rawEvent) throws Exception {
 
+        // First check to make sure we have room for more parsed data ...
+        if (isFull()) {
+            if (!gotSync) {
+                System.out.println("decodeSerial " + streamId + ", data storage limit reached but only partial syncs found");
+                throw new Exception("Data storage limit reached in DAS decoder, but only partial syncs found");
+            }
+
+            // Data is probably good, but no room to store it. Something wrong with internal logic.
+            System.out.println("decodeSerial " + streamId + ", data storage limit reached");
+            throw new Exception("Data storage limit reached in DAS decoder");
+        }
+
         // Get and parse 1 frame of data (adds 20 bytes of data to this decoder)
         getHalfWords(gbt_frame);
 
-        // Performance KILLER here, so comment out searching for another sync!
-
-//        // Initially there is no sync so the first thing we need to do is look for it.
-//        // Once found and the data starts flowing, another sync signal will arrive at
-//        // some unknown time. This must be scanned for in the data:
-//        if (gotSync && frameCount > 985000) {
-//            //clearSyncOffsets();
-//            boolean found = getMiniSyncCount();
-//            if (found) System.out.println("\ndecodeSerial: Found sync again at " + sync_high_mini_);
-//        }
+        // Initially there is no sync so the first thing we need to do is look for it.
+        // Once found and the data starts flowing, all data values are good.
+        // Perhaps in the future, another sync signal will be sent at some unknown time.
+        // Tests show, however, that this KILLS performance. So skip if for now.
 
         if (!gotSync) {
 
@@ -265,26 +265,12 @@ public class DasDecoder implements SampaDecoder {
             // Update gotSync by looking for syncs
             getSyncCount();
 
-            // what if we have some syncs but have reached our data storage limit?
-            if (rawEvent.getFramesStored() > maxFramesStored) {
-System.out.println("decodeSerial " + streamId + ", limit of stored frames reached but only partial syncs found");
-                throw new Exception("Reached data storage limit in raw event, but only partial syncs found");
-            }
-
             // If we still don't have all syncs, read more data and try looking again
         }
         else {
-            // Data is probably good, but no room to store it.
-            // Something wrong with internal logic.
-            if (rawEvent.getFramesStored() + 1 > maxFramesStored) {
- System.out.println("decodeSerial " + streamId + ", limit of stored frames reached");
-                throw new Exception("Reached data storage limit in raw event");
-            }
-
-            //rawEvent.incrementFramesStored();
+            rawEvent.incrementFramesStored();
         }
 
-        rawEvent.incrementFramesStored();
         frameCount++;
     }
 
@@ -303,8 +289,9 @@ System.out.println("decodeSerial " + streamId + ", limit of stored frames reache
      * @return integer resulting from this transformation.
      */
     private int bit(int d, int src, int trg) { return ((d >>> src) & 1) << trg; }
-    // ORIGINAL VERSION --> private int bit(int d, int src, int trg) { return ((d & (1 << src)) >> src) << trg; }
 
+    // Ed's method does NOT work when src = 31. It runs into issues with sign extension
+    // private int bit(int d, int src, int trg) { return ((d & (1 << src)) >> src) << trg; }
 
     /**
      * <p>Parse incoming frames and store as 5 bit values (1 half word) in ByteBuffers.

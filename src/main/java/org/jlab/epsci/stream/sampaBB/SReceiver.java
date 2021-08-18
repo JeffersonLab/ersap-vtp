@@ -61,8 +61,12 @@ public class SReceiver extends Thread {
     /** TCP server socket. */
     private ServerSocket serverSocket;
 
-    /** Size in bytes of each raw event's internal buffer. */
-    private int byteSize;
+    /** Is the incoming data format DAS? */
+    private final boolean isDAS;
+
+    /** Is the incoming data format DSP? */
+    private final boolean isDSP;
+
 
     //--------------------------------
     // Disruptor stuff
@@ -98,7 +102,6 @@ public class SReceiver extends Thread {
         this.streamId = streamId;
         this.streamFrameLimit = streamFrameLimit;
         this.sampaType = sampaType;
-        this.byteSize = byteSize;
 
         frameBuffer = ByteBuffer.wrap(frameArray);
         frameBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -107,9 +110,13 @@ public class SReceiver extends Thread {
 
         if (sampaType.isDSP()) {
             sampaDecoder = new DspDecoder(verbose);
+            isDSP = true;
+            isDAS = false;
         }
         else {
             sampaDecoder = new DasDecoder(false, streamId, byteSize);
+            isDAS = true;
+            isDSP = false;
         }
     }
 
@@ -125,17 +132,26 @@ public class SReceiver extends Thread {
         return ringBuffer.get(sequenceNumber);
     }
 
+
+    /**
+     * Place full rawEvent back into ring buffer for aggregator to receive.
+     */
     private void publish() {
         ringBuffer.publish(sequenceNumber);
     }
 
+
+    /**
+     * Process one frame of data and place update rawEvent
+     * @param rawEvent event to update (write data into it if DSP, or track frames if DAS).
+     * @throws IOException   if error reading data.
+     */
     public void processOneFrame(SRingRawEvent rawEvent) throws IOException {
         frameBuffer.clear();
 
-            // clear gbt_frame: 4 4-byte, 32-bit words
-//System.out.println("Receiver: try reading frame of data");
+        // clear gbt_frame: 4, 4-byte words
         dataInputStream.readFully(frameArray);
-//System.out.println("Receiver: GOT frame of data");
+
 
         data[3] = frameBuffer.getInt();
         data[2] = frameBuffer.getInt();
@@ -159,8 +175,8 @@ System.out.println("Server is listening on port " + sampaPort);
 System.out.println("SAMPA client connected");
             InputStream input = socket.getInputStream();
             dataInputStream = new DataInputStream(new BufferedInputStream(input, 65536));
-        } catch (
-                IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         int frameCount = 0;
@@ -175,13 +191,17 @@ System.out.println("SAMPA client connected");
                 do {
                     processOneFrame(rawEvent);
                     frameCount++;
-                    // Loop until event is full or we run into our given limit of frames
+                    
+                    // In DSP mode, the rawEvent becomes full once "block" number of frames have been stored in it.
+                    // In DAS mode, the decoder becomes full when it cannot hold any more raw data bytes and needs
+                    // to pass them to the rawEvent.
+                    // We also need to account for any frame limit specified on the command line.
 
-                    //System.out.println("decoder.remaining() = " + ((DasDecoder)sampaDecoder).sampa_stream_low_.remaining() + ", full = " + sampaDecoder.isFull());
+                } while ( !((isDAS && sampaDecoder.isFull()) ||
+                            (isDSP && rawEvent.isFull())     ||
+                            ((streamFrameLimit != 0) && (frameCount >= streamFrameLimit))) );
 
-                } while ( !(sampaDecoder.isFull() || ((streamFrameLimit != 0) && (frameCount >= streamFrameLimit))) );
-
-                if (sampaType.isDSP()) {
+                if (isDSP) {
                     if (rawEvent.isFull()) {
                         // Update the block number since the event becomes full once
                         // a complete block of data has been written into it.
@@ -190,9 +210,7 @@ System.out.println("SAMPA client connected");
                 }
                 else {
                     ((DasDecoder) sampaDecoder).transferData(rawEvent);
-                    //ByteBuffer[] data = rawEvent.getData();
-                    //if (streamId == 2) System.out.println("Transferred buf: pos = " + data[0].position() + ", lim = " + data[0].limit());
-                    if (streamId == 2) System.out.println("Transferred str2 at framecount = " + frameCount);
+                    //if (streamId == 2) System.out.println("Transferred str2 at framecount = " + frameCount);
                 }
 
                 // Print out
