@@ -55,7 +55,7 @@ public class SConsumer extends Thread {
     }
 
 
-    /**                                                                                                                                      25519
+    /**
      * Get the next available item from output ring buffer.
      * Do NOT call this multiple times in a row!
      * Be sure to call "put" before calling this again.
@@ -108,7 +108,6 @@ public class SConsumer extends Thread {
                 if (evCount % 1000 == 0) {
                     System.out.println("Consumer: event count = " + evCount);
                 }
-
 
 //                if (!gotFirst) {
 //                    ev.printData(System.out, 0, true);

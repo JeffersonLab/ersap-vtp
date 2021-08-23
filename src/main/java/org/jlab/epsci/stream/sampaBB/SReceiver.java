@@ -178,7 +178,9 @@ System.out.println("SAMPA client connected");
         }
         catch (IOException e) {
             e.printStackTrace();
+            return;
         }
+
         int frameCount = 0;
 
         try {
