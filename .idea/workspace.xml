@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ersap_sampa" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ersap_smp" beforeDir="false" afterPath="$PROJECT_DIR$/bin/ersap_smp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00112" summary="- ersap dependency in build.gradle">
-      <created>1623787201970</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1623787201970</updated>
     </task>
     <task id="LOCAL-00113" summary="- ersap dependency in build.gradle">
       <created>1623787217206</created>
@@ -459,11 +449,17 @@
       <option name="project" value="LOCAL" />
       <updated>1629835013274</updated>
     </task>
-    <option name="localTasksCounter" value="161" />
+    <task id="LOCAL-00161" summary="- making SMPTwoStreamEngineAggregator executable to run standalone tests.">
+      <created>1629837378041</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1629837378041</updated>
+    </task>
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- ersap dependency in build.gradle" />
     <MESSAGE value="- ersap dependency in engine classes" />
     <MESSAGE value="- typo in the import statement" />
     <MESSAGE value="- VTPStreamTestEngine control for printout" />
@@ -488,7 +484,8 @@
     <MESSAGE value="- typo" />
     <MESSAGE value="- temporarily stopped treadout start from the engine" />
     <MESSAGE value="- debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="- debug" />
+    <MESSAGE value="- making SMPTwoStreamEngineAggregator executable to run standalone tests." />
+    <option name="LAST_COMMIT_MESSAGE" value="- making SMPTwoStreamEngineAggregator executable to run standalone tests." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

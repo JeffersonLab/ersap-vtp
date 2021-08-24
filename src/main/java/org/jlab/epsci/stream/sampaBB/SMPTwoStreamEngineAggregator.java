@@ -250,21 +250,9 @@ public class SMPTwoStreamEngineAggregator {
         int port1 = Integer.parseInt(args[0]);
         int port2 = Integer.parseInt(args[1]);
 
-        int streamId1 = Integer.parseInt(args[2]);
-        int streamId2 = Integer.parseInt(args[3]);
-
-        int streamFrameLimit = Integer.parseInt(args[4]);
-
-        SampaType sampaType = SampaType.DSP;
-        if (args.length > 5) {
-            String sType = args[5];
-            if (sType.equalsIgnoreCase("das")) {
-                sampaType = SampaType.DAS;
-            }
-        }
-
-        SMPTwoStreamEngineAggregator s = new SMPTwoStreamEngineAggregator(port1, port2, streamId1, streamId2,
-                    streamFrameLimit, sampaType);
+        SMPTwoStreamEngineAggregator s = new SMPTwoStreamEngineAggregator(port1, port2,
+                1, 2,
+                0, SampaType.DAS);
         s.go();
         int evCount = 0;
 
