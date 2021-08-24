@@ -22,7 +22,7 @@ import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
 
 /**
- * This class is the SMPTwoStreamAggregatorDeccoder except that this class
+ * This class is the SMPTwoStreamAggregatorDecoder except that this class
  * replaces the Consumer. This class is wrapped up as an engine to
  * provide SAMPA data.
  *
