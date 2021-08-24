@@ -17,6 +17,7 @@ import com.lmax.disruptor.*;
 import org.jlab.epsci.ersap.base.error.ErsapException;
 import org.jlab.epsci.stream.engine.util.SampaDasType;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
@@ -244,6 +245,42 @@ public class SMPTwoStreamEngineAggregator {
         running = false;
         //this.interrupt();
     }
+
+    public static void main(String[] args) {
+        int port1 = Integer.parseInt(args[0]);
+        int port2 = Integer.parseInt(args[1]);
+
+        int streamId1 = Integer.parseInt(args[2]);
+        int streamId2 = Integer.parseInt(args[3]);
+
+        int streamFrameLimit = Integer.parseInt(args[4]);
+
+        SampaType sampaType = SampaType.DSP;
+        if (args.length > 5) {
+            String sType = args[5];
+            if (sType.equalsIgnoreCase("das")) {
+                sampaType = SampaType.DAS;
+            }
+        }
+
+        SMPTwoStreamEngineAggregator s = new SMPTwoStreamEngineAggregator(port1, port2, streamId1, streamId2,
+                    streamFrameLimit, sampaType);
+        s.go();
+        int evCount = 0;
+
+        while (true) {
+            try {
+                evCount++;
+                if (evCount % 1000 == 0) {
+                    System.out.println("Consumer: event count = " + evCount);
+                }
+                s.getSerializedData();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        }
 
 
 }

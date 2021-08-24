@@ -3,4 +3,4 @@ export CLASSPATH="$ERSAP_HOME/plugins/epsci/lib/*"
 export JAVA_HOME=/group/da/Java/jdk/jdk-15.0.1
 export PATH=$JAVA_HOME/bin:$PATH
 
-exec java org.jlab.epsci.stream.sampa.SMPTwoStreamAggregatorDecoder "$@"
+exec java org.jlab.epsci.stream.sampaBB.SMPTwoStreamEngineAggregator "$@"

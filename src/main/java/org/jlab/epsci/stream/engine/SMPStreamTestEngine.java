@@ -46,12 +46,12 @@ public class SMPStreamTestEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
         ByteBuffer data = (ByteBuffer) input.getData();
-//        if (print) {
+        if (print) {
             System.out.println("========================");
             System.out.println(data.limit());
             System.out.println();
-//            print = false;
-//        }
+            print = false;
+        }
         return input;
     }
 
