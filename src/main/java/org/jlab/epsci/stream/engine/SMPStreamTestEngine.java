@@ -46,22 +46,9 @@ public class SMPStreamTestEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
         ByteBuffer data = (ByteBuffer) input.getData();
-        long time = data.getLong();
-        int crate = data.getInt();
-        int slot = data.getInt();
-        int channel = data.getInt();
-        int charge = data.getInt();
-        if (slot == slotToPrint && print) {
+        if (print) {
             System.out.println("========================");
-//            System.out.println("Composition  = " + input.getComposition());
-            System.out.println("MimeType     = " + input.getMimeType());
-            System.out.println("ComId        = " + input.getCommunicationId());
-            System.out.println("-------------------------");
-            System.out.println("Time         = " + time);
-            System.out.println("Crate        = " + crate);
-            System.out.println("Slot         = " + slot);
-            System.out.println("Channel      = " + channel);
-            System.out.println("Charge       = " + charge);
+            System.out.println(data.limit());
             System.out.println();
             print = false;
         }

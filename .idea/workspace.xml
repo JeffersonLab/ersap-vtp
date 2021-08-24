@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00105" summary="- VTPSourceEngine debug">
-      <created>1623719632454</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1623719632454</updated>
     </task>
     <task id="LOCAL-00106" summary="- VTPSourceEngine debug">
       <created>1623720894641</created>
@@ -458,11 +449,17 @@
       <option name="project" value="LOCAL" />
       <updated>1629477802312</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="- SMPStreamWriter and SMPStreamTestEngine">
+      <created>1629815147538</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1629815147538</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-yaml service description files" />
     <MESSAGE value="- multiple data types in the VTPStreamTestEngine" />
     <MESSAGE value="- VTPSourceEngine debug" />
     <MESSAGE value="- VTPWriterEngine debug" />
@@ -487,7 +484,8 @@
     <MESSAGE value="- Fixed call to the DasDecoder constructor" />
     <MESSAGE value="- debug" />
     <MESSAGE value="- EvioDataType example class" />
-    <option name="LAST_COMMIT_MESSAGE" value="- EvioDataType example class" />
+    <MESSAGE value="- SMPStreamWriter and SMPStreamTestEngine" />
+    <option name="LAST_COMMIT_MESSAGE" value="- SMPStreamWriter and SMPStreamTestEngine" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
