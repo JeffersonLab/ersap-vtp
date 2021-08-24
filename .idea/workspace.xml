@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/libs/ersap-vtp-all-1.0-SNAPSHOT.jar" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/SMPWriterEngine.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/SamaSourceEngine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,13 +113,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00107" summary="- VTPWriterEngine debug">
-      <created>1623722110048</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1623722110048</updated>
     </task>
     <task id="LOCAL-00108" summary="- VTPWriterEngine debug">
       <created>1623765556378</created>
@@ -455,11 +450,17 @@
       <option name="project" value="LOCAL" />
       <updated>1629829567611</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="- removed precompiled file in the libs dir">
+      <created>1629830492691</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1629830492691</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- VTPSourceEngine debug" />
     <MESSAGE value="- VTPWriterEngine debug" />
     <MESSAGE value="- updated deployment dir" />
     <MESSAGE value="- package name change" />
@@ -484,7 +485,8 @@
     <MESSAGE value="- EvioDataType example class" />
     <MESSAGE value="- SMPStreamWriter and SMPStreamTestEngine" />
     <MESSAGE value="- Just printout from the SMPStreamTestEngine" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Just printout from the SMPStreamTestEngine" />
+    <MESSAGE value="- removed precompiled file in the libs dir" />
+    <option name="LAST_COMMIT_MESSAGE" value="- removed precompiled file in the libs dir" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

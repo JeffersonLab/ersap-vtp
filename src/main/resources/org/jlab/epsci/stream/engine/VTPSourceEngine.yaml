@@ -1,6 +1,6 @@
 ---
 name: VTPSourceEngine
-engine: org.jlab.epsci.ersap.engine.VTPSourceEngine
+engine: org.jlab.epsci.stream.engine.VTPSourceEngine
 type: java
 
 author: Vardan Gyurjyan

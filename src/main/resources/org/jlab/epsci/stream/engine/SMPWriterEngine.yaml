@@ -1,6 +1,6 @@
 ---
-name: VTPWriterEngine
-engine: org.jlab.epsci.stream.engine.VTPWriterEngine
+name: SMPWriterEngine
+engine: org.jlab.epsci.stream.engine.SMPWriterEngine
 type: java
 
 author: Vardan Gyurjyan
