@@ -103,10 +103,10 @@ public class SampaSourceEngine extends AbstractEventReaderService<SMPTwoStreamEn
             v.go();
 
             // Sleep briefly so the receivers-aggregator can start first
-            Thread.sleep(1);
+//            Thread.sleep(1);
 
             // Start up code to sent sampa data to the receivers-aggregator
-            startupTreadout();
+//            startupTreadout();
 
             return v;
         }
