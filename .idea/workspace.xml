@@ -113,13 +113,6 @@
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
     </task>
-    <task id="LOCAL-00117" summary="- typo in the import statement">
-      <created>1623789737507</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1623789737507</updated>
-    </task>
     <task id="LOCAL-00118" summary="- VTPStreamTestEngine control for printout">
       <created>1624370175349</created>
       <option name="number" value="00118" />
@@ -456,11 +449,17 @@
       <option name="project" value="LOCAL" />
       <updated>1629893984224</updated>
     </task>
-    <option name="localTasksCounter" value="166" />
+    <task id="LOCAL-00166" summary="- using YieldingWaitStrategy strategy for the rings">
+      <created>1629894564952</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1629894564952</updated>
+    </task>
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- removed debug printout in the VTPSourceEngine" />
     <MESSAGE value="- use timer and timerTask for demo printing in the VTP StreamTestEngine" />
     <MESSAGE value="- new VRingBuffer class. This will decouple stream source from the stream processor pipeline." />
     <MESSAGE value="- new VRingBuffer class. debugging" />
@@ -485,7 +484,8 @@
     <MESSAGE value="- making SMPTwoStreamEngineAggregator executable to run standalone tests. corrected a typo" />
     <MESSAGE value="- ersap_smp executable" />
     <MESSAGE value="- increased ring size" />
-    <option name="LAST_COMMIT_MESSAGE" value="- increased ring size" />
+    <MESSAGE value="- using YieldingWaitStrategy strategy for the rings" />
+    <option name="LAST_COMMIT_MESSAGE" value="- using YieldingWaitStrategy strategy for the rings" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
