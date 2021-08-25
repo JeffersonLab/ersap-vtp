@@ -216,6 +216,13 @@ public class SMPTwoStreamEngineAggregator extends Thread {
     }
 
     public ByteBuffer getEvent() {
+        while (pool.isEmpty()){
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return pool.poll();
     }
 

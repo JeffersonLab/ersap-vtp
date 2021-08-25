@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="- debug">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/util/commons/ByteBufferPool.java" afterDir="false" />
+    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,20 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00122" summary="- new VRingBuffer class. debugging">
-      <created>1624384061379</created>
-      <option name="number" value="00122" />
-      <option name="presentableId" value="LOCAL-00122" />
-      <option name="project" value="LOCAL" />
-      <updated>1624384061379</updated>
-    </task>
-    <task id="LOCAL-00123" summary="- new VRingBuffer class. debugging">
-      <created>1624384272384</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1624384272384</updated>
     </task>
     <task id="LOCAL-00124" summary="- debugging">
       <created>1624384958332</created>
@@ -459,12 +442,24 @@
       <option name="project" value="LOCAL" />
       <updated>1629897239166</updated>
     </task>
-    <option name="localTasksCounter" value="171" />
+    <task id="LOCAL-00171" summary="- Introduced a ConcurrentLinkedQueue to separate DAQ from the ERSAP stream source service">
+      <created>1629904681347</created>
+      <option name="number" value="00171" />
+      <option name="presentableId" value="LOCAL-00171" />
+      <option name="project" value="LOCAL" />
+      <updated>1629904681348</updated>
+    </task>
+    <task id="LOCAL-00172" summary="- Removed unnecessary object pool">
+      <created>1629904803182</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1629904803182</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- new VRingBuffer class. This will decouple stream source from the stream processor pipeline." />
-    <MESSAGE value="- new VRingBuffer class. debugging" />
     <MESSAGE value="- debugging" />
     <MESSAGE value="- readEventCount set int.max_value" />
     <MESSAGE value="- working on histogram service engine" />
@@ -488,7 +483,9 @@
     <MESSAGE value="- using YieldingWaitStrategy strategy for the rings" />
     <MESSAGE value="- testing different rings sizes" />
     <MESSAGE value="- debug" />
-    <option name="LAST_COMMIT_MESSAGE" value="- debug" />
+    <MESSAGE value="- Introduced a ConcurrentLinkedQueue to separate DAQ from the ERSAP stream source service" />
+    <MESSAGE value="- Removed unnecessary object pool" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Removed unnecessary object pool" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
