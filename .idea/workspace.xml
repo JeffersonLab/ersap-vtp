@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/sampaBB/SMPTwoStreamEngineAggregator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,13 +111,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00119" summary="- removed debug printout in the VTPSourceEngine">
-      <created>1624371397053</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1624371397054</updated>
     </task>
     <task id="LOCAL-00120" summary="- use timer and timerTask for demo printing in the VTP StreamTestEngine">
       <created>1624372303974</created>
@@ -457,7 +448,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629894768445</updated>
     </task>
-    <option name="localTasksCounter" value="168" />
+    <task id="LOCAL-00168" summary="- debug">
+      <created>1629895880591</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1629895880591</updated>
+    </task>
+    <option name="localTasksCounter" value="169" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -479,14 +477,14 @@
     <MESSAGE value="- For each source engine we have to create an engine description yaml file in the resources directory." />
     <MESSAGE value="- typo" />
     <MESSAGE value="- temporarily stopped treadout start from the engine" />
-    <MESSAGE value="- debug" />
     <MESSAGE value="- making SMPTwoStreamEngineAggregator executable to run standalone tests." />
     <MESSAGE value="- making SMPTwoStreamEngineAggregator executable to run standalone tests. corrected a typo" />
     <MESSAGE value="- ersap_smp executable" />
     <MESSAGE value="- increased ring size" />
     <MESSAGE value="- using YieldingWaitStrategy strategy for the rings" />
     <MESSAGE value="- testing different rings sizes" />
-    <option name="LAST_COMMIT_MESSAGE" value="- testing different rings sizes" />
+    <MESSAGE value="- debug" />
+    <option name="LAST_COMMIT_MESSAGE" value="- debug" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
