@@ -100,7 +100,7 @@ public class SampaSourceEngine extends AbstractEventReaderService<SMPTwoStreamEn
                                             1, 2,
                                       0, SampaType.DAS);
             // start up receivers and aggregator
-            v.go();
+            v.start();
 
             // Sleep briefly so the receivers-aggregator can start first
 //            Thread.sleep(1);
@@ -141,11 +141,7 @@ public class SampaSourceEngine extends AbstractEventReaderService<SMPTwoStreamEn
     @Override
     protected Object readEvent(int eventNumber) throws EventReaderException {
         System.out.println("DDD: Read event...");
-        try {
-            return reader.getSerializedData();
-        } catch (Exception e) {
-            throw new EventReaderException(e);
-        }
+            return reader.getEvent();
     }
 
     @Override

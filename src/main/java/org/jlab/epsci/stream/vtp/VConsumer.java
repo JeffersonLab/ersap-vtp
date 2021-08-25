@@ -2,7 +2,6 @@ package org.jlab.epsci.stream.vtp;
 
 import com.lmax.disruptor.*;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.jlab.epsci.stream.util.VRingBuffer;
 import org.jlab.epsci.stream.util.commons.PayloadDecoderFactory;
 import org.jlab.epsci.stream.util.commons.PayloadDecoderPool;
 

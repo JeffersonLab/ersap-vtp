@@ -14,11 +14,15 @@ package org.jlab.epsci.stream.sampaBB;
 
 
 import com.lmax.disruptor.*;
+import edu.umd.cs.findbugs.annotations.NonNull;
 import org.jlab.epsci.ersap.base.error.ErsapException;
 import org.jlab.epsci.stream.engine.util.SampaDasType;
+import org.jlab.epsci.stream.util.commons.ByteBufferPool;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import static com.lmax.disruptor.RingBuffer.createSingleProducer;
 
 
@@ -29,7 +33,7 @@ import static com.lmax.disruptor.RingBuffer.createSingleProducer;
  *
  * @author timmer
  */
-public class SMPTwoStreamEngineAggregator {
+public class SMPTwoStreamEngineAggregator extends Thread {
 
     /** Max number of frames to receive before ending program. */
     private final int streamFrameLimit;
@@ -62,6 +66,8 @@ public class SMPTwoStreamEngineAggregator {
     /** Control for the go method termination. */
     private volatile boolean running = true;
 
+    /** Pool of ByteBuffers of serialized sampa stream data */
+    private ConcurrentLinkedQueue<ByteBuffer> pool;
 
     /**
      * Constructor.
@@ -130,44 +136,28 @@ public class SMPTwoStreamEngineAggregator {
         // Get this thread ready
         nextSequence = sequence12.get() + 1L;
         availableSequence = -1L;
+
+        // Create a pool of ByteBuffers
+        pool = new ConcurrentLinkedQueue<>();
     }
 
 
 
-    public void go() {
+    @Override
+    public void run() {
 
         receiver1.start();
         receiver2.start();
         aggregator12.start();
-
-//        boolean gotFirst = false;
-//        long evCount = 0L;
-//
-//        while (running) {
-//
-//            try {
-//                // Get an item from ring and parse the payload
-//                SRingRawEvent ev = get();
-//                evCount++;
-//
-//                if (evCount % 1000 == 0) {
-//                    System.out.println("Consumer: event count = " + evCount);
-//                }
-//
-////                if (!gotFirst) {
-////                    ev.printData(System.out, 0, true);
-////                    gotFirst = true;
-////                }
-//
-//                put();
-//            }
-//            catch (Exception e) {
-//                e.printStackTrace();
-//                break;
-//            }
-//        }
+        while (running) {
+            try {
+                ByteBuffer b = getSerializedData();
+                if(b!=null) pool.add(b);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
-
 
 
     public void close() {
@@ -175,8 +165,6 @@ public class SMPTwoStreamEngineAggregator {
         receiver2.exit();
         aggregator12.exit();
     }
-
-
 
     /**
      * Get the next available item from output ring buffer.
@@ -215,10 +203,9 @@ public class SMPTwoStreamEngineAggregator {
      * @return next available item in ring buffer.
      * @throws InterruptedException if thread interrupted.
      */
-    public ByteBuffer getSerializedData() throws InterruptedException {
+    private ByteBuffer getSerializedData() throws InterruptedException {
 
         SRingRawEvent item = get();
-        System.out.println("DDD: get data from the output ring...");
         // Serialize this data here. By doing the copy here,
         // the put() can be done immediately, greatly simplifying
         // the engine code to wrap this class.
@@ -228,11 +215,12 @@ public class SMPTwoStreamEngineAggregator {
         } catch (ErsapException e) {/* never happen */}
 
         put();
-        System.out.println("DDD: put data from the output ring...");
-
         return bb;
     }
 
+    public ByteBuffer getEvent() {
+        return pool.poll();
+    }
 
     /** Release item claimed from input ring buffer. */
     public void put() {
@@ -244,36 +232,31 @@ public class SMPTwoStreamEngineAggregator {
     }
 
 
-    /** Stop this thread. */
-    public void exit() {
-        running = false;
-        //this.interrupt();
-    }
 
-    public static void main(String[] args) {
-        int port1 = Integer.parseInt(args[0]);
-        int port2 = Integer.parseInt(args[1]);
-
-        SMPTwoStreamEngineAggregator s = new SMPTwoStreamEngineAggregator(port1, port2,
-                1, 2,
-                0, SampaType.DAS);
-        s.go();
-        int evCount = 0;
-
-
-        while (true) {
-            try {
-                evCount++;
-                if (evCount % 1000 == 0) {
-                    System.out.println("Consumer: event count = " + evCount);
-                }
-                s.getSerializedData();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        }
+    //    public static void main(String[] args) {
+//        int port1 = Integer.parseInt(args[0]);
+//        int port2 = Integer.parseInt(args[1]);
+//
+//        SMPTwoStreamEngineAggregator s = new SMPTwoStreamEngineAggregator(port1, port2,
+//                1, 2,
+//                0, SampaType.DAS);
+//        s.go();
+//        int evCount = 0;
+//
+//
+//        while (true) {
+//            try {
+//                evCount++;
+//                if (evCount % 1000 == 0) {
+//                    System.out.println("Consumer: event count = " + evCount);
+//                }
+//                s.getSerializedData();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        }
 
 
 }
