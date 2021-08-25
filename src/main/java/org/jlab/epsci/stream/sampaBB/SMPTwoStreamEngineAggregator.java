@@ -35,7 +35,7 @@ public class SMPTwoStreamEngineAggregator {
     private final int streamFrameLimit;
 
     /** Max ring items */
-    private final static int maxRingItems = 16;
+    private final static int maxRingItems = 32768;
 
 
     /** Ring buffer for data transfer between aggregator and this object. */
