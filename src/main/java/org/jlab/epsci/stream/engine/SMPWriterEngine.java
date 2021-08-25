@@ -3,6 +3,7 @@ package org.jlab.epsci.stream.engine;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventWriterService;
 import org.jlab.epsci.ersap.std.services.EventWriterException;
+import org.jlab.epsci.stream.engine.util.SampaDasType;
 import org.json.JSONObject;
 
 import java.io.FileWriter;
@@ -35,6 +36,6 @@ public class SMPWriterEngine extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected EngineDataType getDataType() {
-        return EngineDataType.BYTES;
+        return SampaDasType.SAMPA_DAS;
     }
 }
