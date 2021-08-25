@@ -86,7 +86,8 @@ public class SMPTwoStreamEngineAggregator {
 
         // RingBuffer in which receiver1 will get & fill events, then pass them to the aggregator
         RingBuffer<SRingRawEvent> ringBuffer1 = createSingleProducer(new SRingRawEventFactory(sampaType, byteSize, false), maxRingItems,
-                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+//                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+        new YieldingWaitStrategy());
 
         // Ring sequence used by aggregator to read data from first receiver
         Sequence sequence1 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -96,7 +97,8 @@ public class SMPTwoStreamEngineAggregator {
 
         // RingBuffer in which receiver2 will get & fill events, then pass them to the aggregator
         RingBuffer<SRingRawEvent> ringBuffer2 = createSingleProducer(new SRingRawEventFactory(sampaType, byteSize, false), maxRingItems,
-                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+//                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+        new YieldingWaitStrategy());
 
         // Ring sequence used by aggregator to read data from second receiver
         Sequence sequence2 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
@@ -107,7 +109,8 @@ public class SMPTwoStreamEngineAggregator {
         // RingBuffer in which Aggregator will get empty events and fill them with data aggregated
         // from the 2 streams. It then passes to this object which takes the place of the consumer.
         ringBuffer12 = createSingleProducer(new SRingRawEventFactory(sampaType, byteSize, true), maxRingItems,
-                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+//                new SpinCountBackoffWaitStrategy(30000, new LiteBlockingWaitStrategy()));
+        new YieldingWaitStrategy());
 
         sequence12 = new Sequence(Sequencer.INITIAL_CURSOR_VALUE);
         barrier12 = ringBuffer12.newBarrier();
