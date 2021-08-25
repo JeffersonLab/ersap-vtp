@@ -31,7 +31,6 @@ public class SMPWriterEngine extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected void writeEvent(Object event) throws EventWriterException {
-        System.out.println("DDD: writing event...");
     }
 
     @Override
