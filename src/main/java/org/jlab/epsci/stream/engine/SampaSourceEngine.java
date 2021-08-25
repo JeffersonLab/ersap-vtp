@@ -140,6 +140,7 @@ public class SampaSourceEngine extends AbstractEventReaderService<SMPTwoStreamEn
 
     @Override
     protected Object readEvent(int eventNumber) throws EventReaderException {
+        System.out.println("DDD: Read event...");
         try {
             return reader.getSerializedData();
         } catch (Exception e) {

@@ -218,7 +218,7 @@ public class SMPTwoStreamEngineAggregator {
     public ByteBuffer getSerializedData() throws InterruptedException {
 
         SRingRawEvent item = get();
-
+        System.out.println("DDD: get data from the output ring...");
         // Serialize this data here. By doing the copy here,
         // the put() can be done immediately, greatly simplifying
         // the engine code to wrap this class.
@@ -228,6 +228,7 @@ public class SMPTwoStreamEngineAggregator {
         } catch (ErsapException e) {/* never happen */}
 
         put();
+        System.out.println("DDD: put data from the output ring...");
 
         return bb;
     }
