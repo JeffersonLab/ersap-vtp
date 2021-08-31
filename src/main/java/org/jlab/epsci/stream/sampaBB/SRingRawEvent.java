@@ -14,6 +14,7 @@ package org.jlab.epsci.stream.sampaBB;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -82,6 +83,8 @@ public class SRingRawEvent {
     /**
      * One ByteBuffer for each of 80 channels in DAS mode, 28 available in DSP mode.
      * In the DAS mode, each contained ADC value is stored in a short.
+     * These ByteBuffers will be set to little endian by default since the data
+     * from the sampa / trorc boards are little endian.
      */
     private final ByteBuffer[] localData;
 
@@ -138,6 +141,7 @@ public class SRingRawEvent {
 
         for (int i=0; i < channelCount; i++) {
             localData[i] = ByteBuffer.allocate(byteSize);
+            localData[i].order(ByteOrder.LITTLE_ENDIAN);
         }
     }
 
@@ -157,6 +161,7 @@ public class SRingRawEvent {
         // Expand BB by 25% over necessary amount to reduce future reallocations
         size = 5 * size / 4;
         localData[index] = ByteBuffer.allocate(size);
+        localData[index].order(ByteOrder.LITTLE_ENDIAN);
         // Copy over existing data, pos = 0 to limit
         System.arraycopy(temp.array(), 0, localData[index].array(), 0, temp.limit());
         return localData[index];

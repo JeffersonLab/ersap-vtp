@@ -712,8 +712,8 @@ public class DasDecoder implements SampaDecoder {
 //    System.out.print(Integer.toHexString(adc_value) + "  " );
 //}
                 // Read this into a SRingRawEvent, not into local memory ...
-                // sampaData[channel + channel_offset].putShort(adc_value);
                 try {
+                    // The buffers in the raw event object are all set to little endian
                     dataBufs[channel + channel_offset].putShort(adc_value);
                 }
                 catch (Exception e) {

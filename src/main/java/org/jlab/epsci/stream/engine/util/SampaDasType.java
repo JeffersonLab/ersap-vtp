@@ -16,6 +16,7 @@ import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.engine.ErsapSerializer;
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 /**
  * <p>
@@ -40,6 +41,8 @@ public final class SampaDasType {
 
     /**
      * Serialize the given array of ByteBuffers into a single ByteBuffer.
+     * <b>The input buffers must be LITTLE endian.</b> This is assumed in this method.
+     * The returned buffer is little endian.
      * Called internally.
      * @param buffers buffers to serialize together.
      * @return one buffer containing all data.
@@ -67,7 +70,11 @@ public final class SampaDasType {
         }
 
         int writePos = 0;
+
+        // Dealing with little endian data
         ByteBuffer outBuf = ByteBuffer.allocate(totalLen);
+        outBuf.order(ByteOrder.LITTLE_ENDIAN);
+
         outBuf.putInt(writePos, arrayLen);
         writePos += 4;
 
@@ -87,6 +94,8 @@ public final class SampaDasType {
 
     /**
      * Deserialize the given buffer into an array of ByteBuffers.
+     * <b>The buffer data must be LITTLE endian.</b>
+     * This is assumed in this method.
      * Called internally.
      * @param buffer buffer to deserialize.
      * @return array of ByteBuffers.
@@ -99,6 +108,7 @@ public final class SampaDasType {
         }
 
         int readPos = 0;
+        buffer.order(ByteOrder.LITTLE_ENDIAN);
         int bufCount = buffer.getInt(readPos);
         readPos += 4;
 
@@ -110,6 +120,7 @@ public final class SampaDasType {
             len = buffer.getInt(readPos);
             readPos += 4;
             buffers[i] = ByteBuffer.allocate(len);
+            buffers[i].order(ByteOrder.LITTLE_ENDIAN);
             System.arraycopy(buffer.array(), readPos, buffers[i].array(), 0, len);
             readPos += len;
         }
