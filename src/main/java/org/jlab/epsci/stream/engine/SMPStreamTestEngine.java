@@ -46,6 +46,7 @@ public class SMPStreamTestEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
 //        System.out.println("DDD: process data...");
+        System.out.println("DDD "+input.getMimeType());
         ByteBuffer data = (ByteBuffer) input.getData();
         return input;
     }
