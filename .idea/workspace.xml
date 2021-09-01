@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00125" summary="- debugging">
-      <created>1624385211212</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1624385211212</updated>
     </task>
     <task id="LOCAL-00126" summary="- debugging">
       <created>1624385350057</created>
@@ -456,11 +449,17 @@
       <option name="project" value="LOCAL" />
       <updated>1629905236077</updated>
     </task>
-    <option name="localTasksCounter" value="174" />
+    <task id="LOCAL-00174" summary="- fixed a bug reporting wrong data type by the SMPWriterEngine">
+      <created>1629914490705</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1629914490705</updated>
+    </task>
+    <option name="localTasksCounter" value="175" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- readEventCount set int.max_value" />
     <MESSAGE value="- working on histogram service engine" />
     <MESSAGE value="- sampa tcp connection to the source update" />
     <MESSAGE value="- deleted fatJar from the libs durectory" />
@@ -485,7 +484,8 @@
     <MESSAGE value="- Introduced a ConcurrentLinkedQueue to separate DAQ from the ERSAP stream source service" />
     <MESSAGE value="- Removed unnecessary object pool" />
     <MESSAGE value="- wait until event pool has some data" />
-    <option name="LAST_COMMIT_MESSAGE" value="- wait until event pool has some data" />
+    <MESSAGE value="- fixed a bug reporting wrong data type by the SMPWriterEngine" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fixed a bug reporting wrong data type by the SMPWriterEngine" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
