@@ -36,6 +36,7 @@ public class SMPWriterEngine extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected EngineDataType getDataType() {
-        return SampaDasType.SAMPA_DAS;
+        return EngineDataType.BYTES;
+//        return SampaDasType.SAMPA_DAS;
     }
 }

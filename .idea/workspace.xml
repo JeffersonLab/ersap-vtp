@@ -7,6 +7,8 @@
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,13 +114,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00129" summary="- debugging">
-      <created>1624394498312</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1624394498312</updated>
     </task>
     <task id="LOCAL-00130" summary="- debugging">
       <created>1624394900726</created>
@@ -456,11 +451,17 @@
       <option name="project" value="LOCAL" />
       <updated>1630529045333</updated>
     </task>
-    <option name="localTasksCounter" value="178" />
+    <task id="LOCAL-00178" summary="- debug printouts">
+      <created>1631023274811</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1631023274811</updated>
+    </task>
+    <option name="localTasksCounter" value="179" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- deleted fatJar from the libs durectory" />
     <MESSAGE value="- SReceiver update in sampaBB" />
     <MESSAGE value="- new script for ersap_sampa" />
     <MESSAGE value="- debug to print frame count seen by the SReceiver" />
@@ -485,7 +486,8 @@
     <MESSAGE value="- fixed a bug reporting wrong data type by the SMPWriterEngine" />
     <MESSAGE value="- removed debug printout from the execute method of the SMPStreamTestEngine" />
     <MESSAGE value="- debug mimeType" />
-    <option name="LAST_COMMIT_MESSAGE" value="- debug mimeType" />
+    <MESSAGE value="- debug printouts" />
+    <option name="LAST_COMMIT_MESSAGE" value="- debug printouts" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
