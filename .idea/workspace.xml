@@ -7,8 +7,6 @@
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00130" summary="- debugging">
-      <created>1624394900726</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1624394900726</updated>
     </task>
     <task id="LOCAL-00131" summary="- debugging">
       <created>1624395228964</created>
@@ -458,11 +449,17 @@
       <option name="project" value="LOCAL" />
       <updated>1631023274811</updated>
     </task>
-    <option name="localTasksCounter" value="179" />
+    <task id="LOCAL-00179" summary="- Change data type from SampaDasType to builtin EngineDataType BYTES">
+      <created>1631024110749</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1631024110749</updated>
+    </task>
+    <option name="localTasksCounter" value="180" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- SReceiver update in sampaBB" />
     <MESSAGE value="- new script for ersap_sampa" />
     <MESSAGE value="- debug to print frame count seen by the SReceiver" />
     <MESSAGE value="- Fixed call to the DasDecoder constructor" />
@@ -487,7 +484,8 @@
     <MESSAGE value="- removed debug printout from the execute method of the SMPStreamTestEngine" />
     <MESSAGE value="- debug mimeType" />
     <MESSAGE value="- debug printouts" />
-    <option name="LAST_COMMIT_MESSAGE" value="- debug printouts" />
+    <MESSAGE value="- Change data type from SampaDasType to builtin EngineDataType BYTES" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Change data type from SampaDasType to builtin EngineDataType BYTES" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
