@@ -135,7 +135,7 @@ public class SampaSourceEngine extends AbstractEventReaderService<SMPTwoStreamEn
 
     @Override
     protected ByteOrder readByteOrder() throws EventReaderException {
-        return ByteOrder.BIG_ENDIAN;
+        return ByteOrder.LITTLE_ENDIAN;
     }
 
     @Override
