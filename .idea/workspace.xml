@@ -115,13 +115,6 @@
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
     </task>
-    <task id="LOCAL-00133" summary="- readEventCount set int.max_value">
-      <created>1624558641013</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1624558641013</updated>
-    </task>
     <task id="LOCAL-00134" summary="- working on histogram service engine">
       <created>1626213514013</created>
       <option name="number" value="00134" />
@@ -458,11 +451,17 @@
       <option name="project" value="LOCAL" />
       <updated>1631111895556</updated>
     </task>
-    <option name="localTasksCounter" value="182" />
+    <task id="LOCAL-00182" summary="- setting custom data format SAMPA_DAS">
+      <created>1631112664936</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1631112664936</updated>
+    </task>
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Fixed call to the DasDecoder constructor" />
     <MESSAGE value="- EvioDataType example class" />
     <MESSAGE value="- SMPStreamWriter and SMPStreamTestEngine" />
     <MESSAGE value="- Just printout from the SMPStreamTestEngine" />
@@ -487,7 +486,8 @@
     <MESSAGE value="- Change data type from SampaDasType to builtin EngineDataType BYTES" />
     <MESSAGE value="- removed debug printout in the SampaStreamTestEngine" />
     <MESSAGE value="- set byteorder to little-endian in the SampaSourceEngine" />
-    <option name="LAST_COMMIT_MESSAGE" value="- set byteorder to little-endian in the SampaSourceEngine" />
+    <MESSAGE value="- setting custom data format SAMPA_DAS" />
+    <option name="LAST_COMMIT_MESSAGE" value="- setting custom data format SAMPA_DAS" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

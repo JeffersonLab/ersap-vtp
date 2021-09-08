@@ -57,16 +57,16 @@ public class SMPStreamTestEngine implements Engine {
 
     @Override
     public Set<EngineDataType> getInputDataTypes() {
-//        return ErsapUtil.buildDataTypes(EngineDataType.BYTES,
-//                EngineDataType.JSON);
-        return ErsapUtil.buildDataTypes(SampaDasType.SAMPA_DAS,
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES,
                 EngineDataType.JSON);
+//        return ErsapUtil.buildDataTypes(SampaDasType.SAMPA_DAS,
+//                EngineDataType.JSON);
     }
 
     @Override
     public Set<EngineDataType> getOutputDataTypes() {
-//        return ErsapUtil.buildDataTypes(EngineDataType.BYTES);
-        return ErsapUtil.buildDataTypes(SampaDasType.SAMPA_DAS);
+        return ErsapUtil.buildDataTypes(EngineDataType.BYTES);
+//        return ErsapUtil.buildDataTypes(SampaDasType.SAMPA_DAS);
     }
 
     @Override

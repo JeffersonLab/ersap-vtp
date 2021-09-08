@@ -146,7 +146,7 @@ public class SampaSourceEngine extends AbstractEventReaderService<SMPTwoStreamEn
 
     @Override
     protected EngineDataType getDataType() {
-//        return EngineDataType.BYTES;
-        return SampaDasType.SAMPA_DAS;
+        return EngineDataType.BYTES;
+//        return SampaDasType.SAMPA_DAS;
     }
 }
