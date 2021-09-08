@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPStreamTestEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SMPWriterEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/SampaSourceEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,13 +112,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1617729345658</updated>
-    </task>
-    <task id="LOCAL-00134" summary="- working on histogram service engine">
-      <created>1626213514013</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1626213514014</updated>
     </task>
     <task id="LOCAL-00135" summary="- working on histogram service engine">
       <created>1626810181316</created>
@@ -458,11 +449,17 @@
       <option name="project" value="LOCAL" />
       <updated>1631112664936</updated>
     </task>
-    <option name="localTasksCounter" value="183" />
+    <task id="LOCAL-00183" summary="- back to ERSAP native BYTES">
+      <created>1631114080262</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1631114080262</updated>
+    </task>
+    <option name="localTasksCounter" value="184" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- EvioDataType example class" />
     <MESSAGE value="- SMPStreamWriter and SMPStreamTestEngine" />
     <MESSAGE value="- Just printout from the SMPStreamTestEngine" />
     <MESSAGE value="- removed precompiled file in the libs dir" />
@@ -487,7 +484,8 @@
     <MESSAGE value="- removed debug printout in the SampaStreamTestEngine" />
     <MESSAGE value="- set byteorder to little-endian in the SampaSourceEngine" />
     <MESSAGE value="- setting custom data format SAMPA_DAS" />
-    <option name="LAST_COMMIT_MESSAGE" value="- setting custom data format SAMPA_DAS" />
+    <MESSAGE value="- back to ERSAP native BYTES" />
+    <option name="LAST_COMMIT_MESSAGE" value="- back to ERSAP native BYTES" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
