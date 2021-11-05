@@ -105,20 +105,21 @@ public class VConsumer extends Thread {
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
+                    int partLength1 = buf.getPartLength1();
                     put();
-//                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, buf.getPartLength1() / 4);
+//                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, partLength1() / 4);
 
                     // using object pool
-//                    Runnable r = () -> {
-//                        try {
-//                            VPayloadDecoder pd = pool.borrowObject();
-//                            pd.decode(frameTime, b, 0, buf.getPartLength1() / 4);
-//                            pool.returnObject(pd);
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                        }
-//                    };
-//                    tPool.execute(r);
+                    Runnable r = () -> {
+                        try {
+                            VPayloadDecoder pd = pool.borrowObject();
+                            pd.decode(frameTime, b, 0, partLength1 / 4);
+                            pool.returnObject(pd);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    };
+                    tPool.execute(r);
 
                 } else {
                     put();
