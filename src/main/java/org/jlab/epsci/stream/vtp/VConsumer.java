@@ -100,7 +100,8 @@ public class VConsumer extends Thread {
 
                 // Get an item from ring and parse the payload
                 VRingRawEvent buf = get();
-
+                put();
+/*
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
@@ -122,7 +123,7 @@ public class VConsumer extends Thread {
                 } else {
                     put();
                 }
-
+*/
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -4,35 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bin/ersap_vtp1" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/ersap_vtp2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.ersap" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTP1SourceEngine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VTPOneStreamReceiverDecoder.java" afterDir="false" />
+    <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.3/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ersap_smp" beforeDir="false" afterPath="$PROJECT_DIR$/bin/ersap_smp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/ersap_vtp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/sampa_decoder" beforeDir="false" afterPath="$PROJECT_DIR$/bin/sampa_decoder" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.7.1.1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPSourceEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTP2SourceEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VReceiverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/test/VReceiverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -44,41 +35,17 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="ersap-vtp" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="ProblemsViewState">
-    <option name="showPreview" value="true" />
-  </component>
-  <component name="ProjectId" id="1qqHN52F1W8aS0TVsLqtIDFXzHf" />
+  <component name="ProjectId" id="20VnJYrBRAloMLeDySDSVLOuOW0" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -86,432 +53,17 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.11764705" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.JavaFX" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/ersap/engine" />
-      <recent name="$PROJECT_DIR$/src/main/resource/org/jlab/epsci/ersap/engine" />
-      <recent name="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/ersap/engine/" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="org.jlab.epsci.stream.vtp.test" />
-      <recent name="org.jlab.epsci.ersap" />
-    </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="modulo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.jlab.epsci.stream.util.modulo" />
-      <module name="ersap-vtp.main" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.jlab.epsci.stream.sampa.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.modulo" />
-      </list>
-    </recent_temporary>
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="40187769-2f9b-40b3-b17a-003e57328361" name="Default Changelist" comment="" />
-      <created>1617729345658</created>
+      <changelist id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="" />
+      <created>1636138552653</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1617729345658</updated>
+      <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00136" summary="- working on histogram service engine">
-      <created>1626892748768</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1626892748769</updated>
-    </task>
-    <task id="LOCAL-00137" summary="- working on histogram service engine">
-      <created>1626896437315</created>
-      <option name="number" value="00137" />
-      <option name="presentableId" value="LOCAL-00137" />
-      <option name="project" value="LOCAL" />
-      <updated>1626896437316</updated>
-    </task>
-    <task id="LOCAL-00138" summary="- working on histogram service engine">
-      <created>1626896572034</created>
-      <option name="number" value="00138" />
-      <option name="presentableId" value="LOCAL-00138" />
-      <option name="project" value="LOCAL" />
-      <updated>1626896572034</updated>
-    </task>
-    <task id="LOCAL-00139" summary="- working on histogram service engine">
-      <created>1626897806090</created>
-      <option name="number" value="00139" />
-      <option name="presentableId" value="LOCAL-00139" />
-      <option name="project" value="LOCAL" />
-      <updated>1626897806090</updated>
-    </task>
-    <task id="LOCAL-00140" summary="- working on histogram service engine">
-      <created>1626898426793</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1626898426793</updated>
-    </task>
-    <task id="LOCAL-00141" summary="- working on histogram service engine">
-      <created>1626898627783</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1626898627783</updated>
-    </task>
-    <task id="LOCAL-00142" summary="- debug">
-      <created>1627315871811</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1627315871811</updated>
-    </task>
-    <task id="LOCAL-00143" summary="- sampa tcp connection to the source update">
-      <created>1627316533283</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1627316533284</updated>
-    </task>
-    <task id="LOCAL-00144" summary="- sampa tcp connection to the source update">
-      <created>1627316882442</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1627316882442</updated>
-    </task>
-    <task id="LOCAL-00145" summary="- deleted fatJar from the libs durectory">
-      <created>1627317812194</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1627317812194</updated>
-    </task>
-    <task id="LOCAL-00146" summary="- SReceiver update in sampaBB">
-      <created>1627330866075</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1627330866075</updated>
-    </task>
-    <task id="LOCAL-00147" summary="- new script for ersap_sampa">
-      <created>1627331143463</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1627331143463</updated>
-    </task>
-    <task id="LOCAL-00148" summary="- debug to print frame count seen by the SReceiver">
-      <created>1627648424605</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1627648424606</updated>
-    </task>
-    <task id="LOCAL-00149" summary="- Fixed call to the DasDecoder constructor">
-      <created>1627649699940</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1627649699940</updated>
-    </task>
-    <task id="LOCAL-00150" summary="- debug">
-      <created>1627651640064</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1627651640064</updated>
-    </task>
-    <task id="LOCAL-00151" summary="- debug">
-      <created>1627668680330</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1627668680330</updated>
-    </task>
-    <task id="LOCAL-00152" summary="- debug">
-      <created>1627671530553</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1627671530553</updated>
-    </task>
-    <task id="LOCAL-00153" summary="- EvioDataType example class">
-      <created>1629477802312</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1629477802312</updated>
-    </task>
-    <task id="LOCAL-00154" summary="- SMPStreamWriter and SMPStreamTestEngine">
-      <created>1629815147538</created>
-      <option name="number" value="00154" />
-      <option name="presentableId" value="LOCAL-00154" />
-      <option name="project" value="LOCAL" />
-      <updated>1629815147538</updated>
-    </task>
-    <task id="LOCAL-00155" summary="- Just printout from the SMPStreamTestEngine">
-      <created>1629829567611</created>
-      <option name="number" value="00155" />
-      <option name="presentableId" value="LOCAL-00155" />
-      <option name="project" value="LOCAL" />
-      <updated>1629829567611</updated>
-    </task>
-    <task id="LOCAL-00156" summary="- removed precompiled file in the libs dir">
-      <created>1629830492691</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1629830492691</updated>
-    </task>
-    <task id="LOCAL-00157" summary="- For each source engine we have to create an engine description yaml file in the resources directory.">
-      <created>1629832126319</created>
-      <option name="number" value="00157" />
-      <option name="presentableId" value="LOCAL-00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1629832126319</updated>
-    </task>
-    <task id="LOCAL-00158" summary="- typo">
-      <created>1629832649290</created>
-      <option name="number" value="00158" />
-      <option name="presentableId" value="LOCAL-00158" />
-      <option name="project" value="LOCAL" />
-      <updated>1629832649290</updated>
-    </task>
-    <task id="LOCAL-00159" summary="- temporarily stopped treadout start from the engine">
-      <created>1629834620326</created>
-      <option name="number" value="00159" />
-      <option name="presentableId" value="LOCAL-00159" />
-      <option name="project" value="LOCAL" />
-      <updated>1629834620326</updated>
-    </task>
-    <task id="LOCAL-00160" summary="- debug">
-      <created>1629835013274</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1629835013274</updated>
-    </task>
-    <task id="LOCAL-00161" summary="- making SMPTwoStreamEngineAggregator executable to run standalone tests.">
-      <created>1629837378041</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1629837378041</updated>
-    </task>
-    <task id="LOCAL-00162" summary="- making SMPTwoStreamEngineAggregator executable to run standalone tests. corrected a typo">
-      <created>1629838286731</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1629838286731</updated>
-    </task>
-    <task id="LOCAL-00163" summary="- making SMPTwoStreamEngineAggregator executable to run standalone tests. corrected a typo">
-      <created>1629838307007</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1629838307007</updated>
-    </task>
-    <task id="LOCAL-00164" summary="- ersap_smp executable">
-      <created>1629838861103</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1629838861103</updated>
-    </task>
-    <task id="LOCAL-00165" summary="- increased ring size">
-      <created>1629893984224</created>
-      <option name="number" value="00165" />
-      <option name="presentableId" value="LOCAL-00165" />
-      <option name="project" value="LOCAL" />
-      <updated>1629893984224</updated>
-    </task>
-    <task id="LOCAL-00166" summary="- using YieldingWaitStrategy strategy for the rings">
-      <created>1629894564952</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1629894564952</updated>
-    </task>
-    <task id="LOCAL-00167" summary="- testing different rings sizes">
-      <created>1629894768445</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1629894768445</updated>
-    </task>
-    <task id="LOCAL-00168" summary="- debug">
-      <created>1629895880591</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1629895880591</updated>
-    </task>
-    <task id="LOCAL-00169" summary="- debug">
-      <created>1629896243772</created>
-      <option name="number" value="00169" />
-      <option name="presentableId" value="LOCAL-00169" />
-      <option name="project" value="LOCAL" />
-      <updated>1629896243772</updated>
-    </task>
-    <task id="LOCAL-00170" summary="- debug">
-      <created>1629897239166</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1629897239166</updated>
-    </task>
-    <task id="LOCAL-00171" summary="- Introduced a ConcurrentLinkedQueue to separate DAQ from the ERSAP stream source service">
-      <created>1629904681347</created>
-      <option name="number" value="00171" />
-      <option name="presentableId" value="LOCAL-00171" />
-      <option name="project" value="LOCAL" />
-      <updated>1629904681348</updated>
-    </task>
-    <task id="LOCAL-00172" summary="- Removed unnecessary object pool">
-      <created>1629904803182</created>
-      <option name="number" value="00172" />
-      <option name="presentableId" value="LOCAL-00172" />
-      <option name="project" value="LOCAL" />
-      <updated>1629904803182</updated>
-    </task>
-    <task id="LOCAL-00173" summary="- wait until event pool has some data">
-      <created>1629905236077</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1629905236077</updated>
-    </task>
-    <task id="LOCAL-00174" summary="- fixed a bug reporting wrong data type by the SMPWriterEngine">
-      <created>1629914490705</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1629914490705</updated>
-    </task>
-    <task id="LOCAL-00175" summary="- removed debug printout from the execute method of the SMPStreamTestEngine">
-      <created>1630528176475</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1630528176475</updated>
-    </task>
-    <task id="LOCAL-00176" summary="- debug mimeType">
-      <created>1630528874514</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1630528874514</updated>
-    </task>
-    <task id="LOCAL-00177" summary="- debug mimeType">
-      <created>1630529045333</created>
-      <option name="number" value="00177" />
-      <option name="presentableId" value="LOCAL-00177" />
-      <option name="project" value="LOCAL" />
-      <updated>1630529045333</updated>
-    </task>
-    <task id="LOCAL-00178" summary="- debug printouts">
-      <created>1631023274811</created>
-      <option name="number" value="00178" />
-      <option name="presentableId" value="LOCAL-00178" />
-      <option name="project" value="LOCAL" />
-      <updated>1631023274811</updated>
-    </task>
-    <task id="LOCAL-00179" summary="- Change data type from SampaDasType to builtin EngineDataType BYTES">
-      <created>1631024110749</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1631024110749</updated>
-    </task>
-    <task id="LOCAL-00180" summary="- removed debug printout in the SampaStreamTestEngine">
-      <created>1631025811520</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1631025811520</updated>
-    </task>
-    <task id="LOCAL-00181" summary="- set byteorder to little-endian in the SampaSourceEngine">
-      <created>1631111895555</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1631111895556</updated>
-    </task>
-    <task id="LOCAL-00182" summary="- setting custom data format SAMPA_DAS">
-      <created>1631112664936</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1631112664936</updated>
-    </task>
-    <task id="LOCAL-00183" summary="- back to ERSAP native BYTES">
-      <created>1631114080262</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1631114080262</updated>
-    </task>
-    <task id="LOCAL-00184" summary="- README update">
-      <created>1631121836443</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1631121836443</updated>
-    </task>
-    <option name="localTasksCounter" value="185" />
     <servers />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Just printout from the SMPStreamTestEngine" />
-    <MESSAGE value="- removed precompiled file in the libs dir" />
-    <MESSAGE value="- For each source engine we have to create an engine description yaml file in the resources directory." />
-    <MESSAGE value="- typo" />
-    <MESSAGE value="- temporarily stopped treadout start from the engine" />
-    <MESSAGE value="- making SMPTwoStreamEngineAggregator executable to run standalone tests." />
-    <MESSAGE value="- making SMPTwoStreamEngineAggregator executable to run standalone tests. corrected a typo" />
-    <MESSAGE value="- ersap_smp executable" />
-    <MESSAGE value="- increased ring size" />
-    <MESSAGE value="- using YieldingWaitStrategy strategy for the rings" />
-    <MESSAGE value="- testing different rings sizes" />
-    <MESSAGE value="- debug" />
-    <MESSAGE value="- Introduced a ConcurrentLinkedQueue to separate DAQ from the ERSAP stream source service" />
-    <MESSAGE value="- Removed unnecessary object pool" />
-    <MESSAGE value="- wait until event pool has some data" />
-    <MESSAGE value="- fixed a bug reporting wrong data type by the SMPWriterEngine" />
-    <MESSAGE value="- removed debug printout from the execute method of the SMPStreamTestEngine" />
-    <MESSAGE value="- debug mimeType" />
-    <MESSAGE value="- debug printouts" />
-    <MESSAGE value="- Change data type from SampaDasType to builtin EngineDataType BYTES" />
-    <MESSAGE value="- removed debug printout in the SampaStreamTestEngine" />
-    <MESSAGE value="- set byteorder to little-endian in the SampaSourceEngine" />
-    <MESSAGE value="- setting custom data format SAMPA_DAS" />
-    <MESSAGE value="- back to ERSAP native BYTES" />
-    <MESSAGE value="- README update" />
-    <option name="LAST_COMMIT_MESSAGE" value="- README update" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
-      <FILTER>org.jlab.epsci.stream.sampa.*</FILTER>
-    </SUITE>
   </component>
 </project>
