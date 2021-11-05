@@ -1,5 +1,0 @@
-#!/bin/bash
-export CLASSPATH=/home/gurjyan/Devel/stream/vtp/ersap-vtp/build/libs/ersap-vtp-all-1.0-SNAPSHOT.jar
-export JAVA_HOME=/group/da/Java/jdk/jdk-15.0.1
-export PATH=$JAVA_HOME/bin:$PATH
-exec java org.jlab.epsci.ersap.vtp.VTPTwoStreamAggregatorDecoder "$@"

@@ -1,5 +1,4 @@
 #!/bin/bash
 export CLASSPATH="$ERSAP_HOME/plugins/epsci/lib/*:$ERSAP_HOME/lib/*"
 export PATH=$JAVA_HOME/bin:$PATH
-
-exec java org.jlab.epsci.stream.sampaBB.SMPTwoStreamEngineAggregator "$@"
+exec java org.jlab.epsci.stream.vtp.VTPOneStreamReceiverDecoder "$@"

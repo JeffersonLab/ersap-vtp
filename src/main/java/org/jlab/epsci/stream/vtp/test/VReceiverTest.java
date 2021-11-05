@@ -1,4 +1,4 @@
-package org.jlab.epsci.stream.vtp;
+package org.jlab.epsci.stream.vtp.test;
 
 import org.jlab.epsci.stream.util.EUtil;
 

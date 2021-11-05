@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 
-public class VTPSourceEngine extends AbstractEventReaderService<VTPTwoStreamAggregatorDecoder> {
+public class VTP2SourceEngine extends AbstractEventReaderService<VTPTwoStreamAggregatorDecoder> {
     private static final String VTP_PORT1 = "port1";
     private static final String VTP_PORT2 = "port2";
 
