@@ -65,12 +65,20 @@
       <option name="project" value="LOCAL" />
       <updated>1636140241465</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="- possible bug while referencing buffer after putting it back to the ring">
+      <created>1636140812158</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1636140812158</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="- set consumer to return event to the ring without processing" />
     <MESSAGE value="- consumer gets frame time and clones byteBuffer" />
-    <option name="LAST_COMMIT_MESSAGE" value="- consumer gets frame time and clones byteBuffer" />
+    <MESSAGE value="- possible bug while referencing buffer after putting it back to the ring" />
+    <option name="LAST_COMMIT_MESSAGE" value="- possible bug while referencing buffer after putting it back to the ring" />
   </component>
 </project>
