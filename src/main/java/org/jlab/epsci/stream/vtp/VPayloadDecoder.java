@@ -25,6 +25,17 @@ public class VPayloadDecoder {
         corePayloadDecoder(frame_time_ns, pData, s1);
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
+    public void decode(Long frame_time_ns, ByteBuffer buf) {
+        pData.clear();
+        evt.reset();
+
+        buf.rewind();
+        while (buf.hasRemaining()) {
+            pData.add(buf.getInt());
+        }
+        buf.clear();
+        corePayloadDecoder(frame_time_ns, pData, 0);
+    }
 
 //    public AdcHitMapEvent getEvt() {
 //        return evt;

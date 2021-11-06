@@ -89,50 +89,7 @@ public class VReceiver extends Thread {
     }
 
 
-    private void decodeVtpHeader() {
-        try {
-            int source_id = Integer.reverseBytes(dataInputStream.readInt());
-            int total_length = Integer.reverseBytes(dataInputStream.readInt());
-            int payload_length = Integer.reverseBytes(dataInputStream.readInt());
-            int compressed_length = Integer.reverseBytes(dataInputStream.readInt());
-            int magic = Integer.reverseBytes(dataInputStream.readInt());
-
-            int format_version = Integer.reverseBytes(dataInputStream.readInt());
-            int flags = Integer.reverseBytes(dataInputStream.readInt());
-
-            long record_number = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-            long ts_sec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-            long ts_nsec = EUtil.llSwap(Long.reverseBytes(dataInputStream.readLong()));
-
-//            BigInteger rcn = EUtil.toUnsignedBigInteger(record_number);
-//                BigInteger tsc = EUtil.toUnsignedBigInteger(ts_sec);
-//                BigInteger tsn = EUtil.toUnsignedBigInteger(ts_nsec);
-
-//            printFrame(streamId, source_id, total_length, payload_length,
-//                    compressed_length, magic, format_version, flags,
-//                    record_number, ts_sec, ts_nsec);
-
-            byte[] dataBuffer = new byte[payload_length];
-            dataInputStream.readFully(dataBuffer);
-//            evt.setPayload(dataBuffer);
-//            evt.setRecordNumber(rcn);
-//            evt.setRecordNumber(record_number);
-//            evt.setStreamId(streamId);
-
-            // Collect statistics
-            long tmp = missed_record + (record_number - (prev_rec_number + 1));
-            missed_record = tmp;
-
-            prev_rec_number = record_number;
-            totalData = totalData + (double) total_length / 1000.0;
-            rate++;
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void decodeVtpHeaderCT(VRingRawEvent evt) {
+    private void decodeVtpHeader(VRingRawEvent evt) {
         try {
             headerBuffer.clear();
             dataInputStream.readFully(header);
@@ -204,8 +161,7 @@ public class VReceiver extends Thread {
                 // Get an empty item from ring
                 VRingRawEvent buf = get();
 
-//                decodeVtpHeader();
-                decodeVtpHeaderCT(buf); //CT suggestion
+                decodeVtpHeader(buf);
 
                 // Make the buffer available for consumers
                 publish();
