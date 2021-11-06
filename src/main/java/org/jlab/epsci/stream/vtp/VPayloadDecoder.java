@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VPayloadDecoder {
-    private final VAdcHitMapBa evt;
+    private final VAdcHitMap evt;
     private final List<Integer> pData;
 
     public VPayloadDecoder(){
-        evt = new VAdcHitMapBa(2000000);
+        evt = new VAdcHitMap(2000000);
         pData = new ArrayList<>();
     }
 
@@ -35,11 +35,9 @@ public class VPayloadDecoder {
         }
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, 0);
+        dump();
     }
 
-//    public AdcHitMapEvent getEvt() {
-//        return evt;
-//    }
 
     public ByteBuffer getEvt() {
         return evt.getEvt();
@@ -77,22 +75,14 @@ public class VPayloadDecoder {
         }
     }
 
-//    public void dump() {
-//        System.out.println("\n========================================= ");
-//        if (evt.evtSize() < 0) {
-//            System.out.println("\nWarning: hit-map is inconsistent");
-//        } else {
-//            for (int i = 0; i < evt.evtSize(); i++) {
-//                System.out.println("AdcHit{" +
-//                        "crate=" + evt.getCrate(i) +
-//                        ", slot=" + evt.getSlot(i) +
-//                        ", channel=" + evt.getChannel(i) +
-//                        ", q=" + evt.getCharge(i) +
-//                        ", time=" + evt.getTime(i) +
-//                        '}');
-//
-//            }
-//        }
-//    }
-
+        public void dump() {
+        System.out.println("\n========================================= ");
+        if (evt.getEvtSize() < 0) {
+            System.out.println("\nWarning: hit-map is inconsistent");
+        } else {
+            for (VAdcHit hit:evt.getEvList()) {
+                System.out.println(hit);
+            }
+        }
+    }
 }

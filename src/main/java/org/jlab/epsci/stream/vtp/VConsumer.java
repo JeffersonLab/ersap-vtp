@@ -113,8 +113,8 @@ public class VConsumer extends Thread {
                     Runnable r = () -> {
                         try {
                             VPayloadDecoder pd = pool.borrowObject();
-//                            pd.decode(frameTime, b, 0, partLength1 / 4);
-                            pd.decode(frameTime, b);
+//                            pd.decode(frameTime, b, 0, partLength1 / 4); // VTP 2 stream aggregated
+                            pd.decode(frameTime, b); // VTP 1 stream
                             pool.returnObject(pd);
                         } catch (Exception e) {
                             e.printStackTrace();
