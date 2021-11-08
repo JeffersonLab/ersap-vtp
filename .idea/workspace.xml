@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +95,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636211882517</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="- remove decoded info printout">
+      <created>1636393598441</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1636393598441</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -105,7 +111,8 @@
     <MESSAGE value="- possible bug while referencing buffer after putting it back to the ring" />
     <MESSAGE value="- PayloadDecoder method to decode a single stream payload&#10;- some code cleanup" />
     <MESSAGE value="- adc hit object&#10;- dup adc values" />
-    <option name="LAST_COMMIT_MESSAGE" value="- adc hit object&#10;- dup adc values" />
+    <MESSAGE value="- remove decoded info printout" />
+    <option name="LAST_COMMIT_MESSAGE" value="- remove decoded info printout" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
