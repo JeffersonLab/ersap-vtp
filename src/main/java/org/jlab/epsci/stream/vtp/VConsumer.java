@@ -39,8 +39,8 @@ public class VConsumer extends Thread {
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
-        tPool = Executors.newFixedThreadPool(128);
-        pool = createPdPool(128);
+        tPool = Executors.newFixedThreadPool(24);
+        pool = createPdPool(24);
 
     }
 

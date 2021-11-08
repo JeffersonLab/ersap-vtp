@@ -34,7 +34,7 @@ public class VPayloadDecoder {
             pData.add(buf.getInt());
         }
         buf.clear();
-//        corePayloadDecoder(frame_time_ns, pData, 0);
+        corePayloadDecoder(frame_time_ns, pData, 0);
 //        dump();
     }
 
