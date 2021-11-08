@@ -100,12 +100,11 @@ public class VConsumer extends Thread {
 
                 // Get an item from ring and parse the payload
                 VRingRawEvent buf = get();
-//                put();
 
                 if (buf.getPayload().length > 0) {
                     long frameTime = buf.getRecordNumber() * 65536L;
                     ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
-                    int partLength1 = buf.getPartLength1();
+//                    int partLength1 = buf.getPartLength1(); // VTP 2 stream aggregated
                     put();
 //                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, partLength1() / 4);
 
@@ -114,7 +113,7 @@ public class VConsumer extends Thread {
                         try {
                             VPayloadDecoder pd = pool.borrowObject();
 //                            pd.decode(frameTime, b, 0, partLength1 / 4); // VTP 2 stream aggregated
-                            pd.decode(frameTime, b); // VTP 1 stream
+//                            pd.decode(frameTime, b); // VTP 1 stream
                             pool.returnObject(pd);
                         } catch (Exception e) {
                             e.printStackTrace();
