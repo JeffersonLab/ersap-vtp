@@ -39,8 +39,8 @@ public class VConsumer extends Thread {
         nextSequence = sequence.get() + 1L;
         availableSequence = -1L;
 
-        tPool = Executors.newFixedThreadPool(96);
-        pool = createPdPool(96);
+        tPool = Executors.newFixedThreadPool(48);
+        pool = createPdPool(48);
 
     }
 
@@ -113,7 +113,7 @@ public class VConsumer extends Thread {
                         try {
                             VPayloadDecoder pd = pool.borrowObject();
 //                            pd.decode(frameTime, b, 0, partLength1 / 4); // VTP 2 stream aggregated
-                            pd.decode(frameTime, b); // VTP 1 stream
+//                            pd.decode(frameTime, b); // VTP 1 stream
                             pool.returnObject(pd);
                         } catch (Exception e) {
                             e.printStackTrace();
