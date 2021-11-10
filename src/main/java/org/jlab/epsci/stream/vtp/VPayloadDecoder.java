@@ -8,7 +8,7 @@ public class VPayloadDecoder {
     private final VAdcHitMap evt;
     private final List<Integer> pData;
 
-    private int prescale = 100;
+    private int prescale = 50;
 
     public VPayloadDecoder(){
         evt = new VAdcHitMap(2000000);
@@ -39,7 +39,7 @@ public class VPayloadDecoder {
         }
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, 0);
-        dump();
+//        dump();
     }
 
 
