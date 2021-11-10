@@ -31,7 +31,7 @@ public class VPayloadDecoder {
 
         buf.rewind();
         while (buf.hasRemaining()) {
-//            pData.add(buf.getInt());
+            pData.add(buf.getInt());
         }
         buf.clear();
 //        corePayloadDecoder(frame_time_ns, pData, 0);
