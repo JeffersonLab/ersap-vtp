@@ -8,6 +8,8 @@ public class VPayloadDecoder {
     private final VAdcHitMap evt;
     private final List<Integer> pData;
 
+    private int prescale = 1000;
+
     public VPayloadDecoder(){
         evt = new VAdcHitMap(2000000);
         pData = new ArrayList<>();
@@ -26,6 +28,8 @@ public class VPayloadDecoder {
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
     public void decode(Long frame_time_ns, ByteBuffer buf) {
+        if ((prescale -= 1) > 0) return;
+
         pData.clear();
         evt.reset();
 
