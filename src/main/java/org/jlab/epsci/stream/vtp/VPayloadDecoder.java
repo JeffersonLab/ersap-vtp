@@ -9,7 +9,7 @@ public class VPayloadDecoder {
     private final List<Integer> pData;
 
     private int prescale;
-    private static int PVALUE = 10;
+    private static int PVALUE = 20;
 
     public VPayloadDecoder(){
         evt = new VAdcHitMap(2000000);
