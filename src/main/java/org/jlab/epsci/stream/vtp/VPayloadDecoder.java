@@ -44,7 +44,7 @@ public class VPayloadDecoder {
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, 0);
 //        dump(evt.getEvList()); // dump entire frame
-        coincidence(100,2); // print coincidences within 100 ns window
+        coincidence(50,2); // print coincidences within 50 ns window
 
     }
 
@@ -97,17 +97,17 @@ public class VPayloadDecoder {
     }
 
     public void coincidence(int width, int level) {
-        long leadingEdge = evt.getEvList().get(0).getTime();
         List<VAdcHit> tmp_res = new ArrayList<>();
         if(evt.getEvtSize() > 0) {
+            long leadingEdge = evt.getEvList().get(0).getTime();
             for (VAdcHit hit:evt.getEvList()) {
-                if(hit.getTime() > leadingEdge +width) {
+                if(hit.getTime() > leadingEdge + width) {
                     leadingEdge = hit.getTime();
                     tmp_res.clear();
                 } else {
                     tmp_res.add(hit);
                 }
-                if(tmp_res.size() >= level ){
+                if(tmp_res.size() == level ){
                    dump(tmp_res);
                 }
             }
