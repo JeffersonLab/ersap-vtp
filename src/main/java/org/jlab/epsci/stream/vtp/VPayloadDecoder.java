@@ -43,7 +43,9 @@ public class VPayloadDecoder {
         }
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, 0);
-        dump();
+//        dump(evt.getEvList()); // dump entire frame
+        coincidence(100,2); // print coincidences within 100 ns window
+
     }
 
 
@@ -83,13 +85,31 @@ public class VPayloadDecoder {
         }
     }
 
-        public void dump() {
+        public void dump( List<VAdcHit> hit_map) {
         System.out.println("\n========================================= ");
-        if (evt.getEvtSize() < 0) {
+        if (hit_map.size() < 0) {
             System.out.println("\nWarning: hit-map is inconsistent");
         } else {
-            for (VAdcHit hit:evt.getEvList()) {
+            for (VAdcHit hit:hit_map) {
                 System.out.println(hit);
+            }
+        }
+    }
+
+    public void coincidence(int width, int level) {
+        long leadingEdge = evt.getEvList().get(0).getTime();
+        List<VAdcHit> tmp_res = new ArrayList<>();
+        if(evt.getEvtSize() > 0) {
+            for (VAdcHit hit:evt.getEvList()) {
+                if(hit.getTime() > leadingEdge +width) {
+                    leadingEdge = hit.getTime();
+                    tmp_res.clear();
+                } else {
+                    tmp_res.add(hit);
+                }
+                if(tmp_res.size() >= level ){
+                   dump(tmp_res);
+                }
             }
         }
     }
