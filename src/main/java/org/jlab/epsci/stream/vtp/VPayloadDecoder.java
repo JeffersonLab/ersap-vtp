@@ -30,8 +30,9 @@ public class VPayloadDecoder {
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
     public void decode(Long frame_time_ns, ByteBuffer buf) {
-        if ((prescale -= 1) > 0) return;
-        prescale = PVALUE;
+        // analyze every prescale event
+//        if ((prescale -= 1) > 0) return;
+//        prescale = PVALUE;
 
         pData.clear();
         evt.reset();
