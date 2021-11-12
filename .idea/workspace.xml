@@ -261,7 +261,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636677571897</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="-print size of the decoded frame">
+      <created>1636681308635</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1636681308635</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -276,7 +283,8 @@
     <MESSAGE value="- debugging" />
     <MESSAGE value="- introduced prescale factor to process events every N event." />
     <MESSAGE value="-set prescale factor to 50" />
-    <option name="LAST_COMMIT_MESSAGE" value="-set prescale factor to 50" />
+    <MESSAGE value="-print size of the decoded frame" />
+    <option name="LAST_COMMIT_MESSAGE" value="-print size of the decoded frame" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
