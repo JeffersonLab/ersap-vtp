@@ -103,7 +103,7 @@ public class VPayloadDecoder {
             for (VAdcHit hit:evt.getEvList()) {
                 if(hit.getTime() > leadingEdge + width) {
                     leadingEdge = hit.getTime();
-                    if(tmp_res.size() >= level) {
+                    if(tmp_res.size() == level) {
                         dump(tmp_res);
                     }
                     tmp_res.clear();
