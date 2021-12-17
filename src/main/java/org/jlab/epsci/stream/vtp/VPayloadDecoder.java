@@ -44,7 +44,7 @@ public class VPayloadDecoder {
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, 0);
 //        dump(evt.getEvList()); // dump entire frame
-        coincidence(1L,3); // print coincidences within 50 ns window
+        eventIdentificationAndWriting(1L,3); // print coincidences within 50 ns window
 
     }
 
@@ -96,13 +96,16 @@ public class VPayloadDecoder {
         }
     }
 
-    public void coincidence(long width, int level) {
+    public void eventIdentificationAndWriting(long width, int level) {
         List<VAdcHit> tmp_res = new ArrayList<>();
         if(evt.getEvtSize() > 0) {
             long leadingEdge = evt.getEvList().get(0).getTime();
             for (VAdcHit hit:evt.getEvList()) {
                 if(hit.getTime() > leadingEdge + width) {
                     leadingEdge = hit.getTime();
+
+                    // write event to hipo file
+                    VTPOneStreamReceiverDecoder.hipoFile.evtWrite(tmp_res);
 //                    if(tmp_res.size() == level) {
 //                        dump(tmp_res);
 //                    }

@@ -38,7 +38,10 @@ public class VTPOneStreamReceiverDecoder {
 
     private boolean started = false;
 
-    public VTPOneStreamReceiverDecoder(int vtpPort1) {
+    public static Fadc2Hipo hipoFile;
+    private String fileName;
+
+    public VTPOneStreamReceiverDecoder(int vtpPort1, String fileName) {
         this.vtpPort1 = vtpPort1;
 
         ringBuffer1 = createSingleProducer(new VRingRawEventFactory(), maxRingItems,
@@ -47,6 +50,8 @@ public class VTPOneStreamReceiverDecoder {
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
+        this.fileName = fileName;
+        hipoFile = new Fadc2Hipo(fileName);
     }
 
     public void go() {
@@ -73,7 +78,7 @@ public class VTPOneStreamReceiverDecoder {
 
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
-        new VTPOneStreamReceiverDecoder(port1).go();
+        new VTPOneStreamReceiverDecoder(port1, args[1]).go();
     }
 
 }
