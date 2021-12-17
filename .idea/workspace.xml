@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/libs/j4np-1.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/Fadc2Hipo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VTPOneStreamReceiverDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VTPOneStreamReceiverDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -385,7 +382,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639773269396</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="- write events to HIPO file">
+      <created>1639778231106</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1639778231106</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -404,7 +408,8 @@
     <MESSAGE value="- print the frame" />
     <MESSAGE value="- coincidence algorithm" />
     <MESSAGE value="- coincidence. width 1ns, level 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="- coincidence. width 1ns, level 3" />
+    <MESSAGE value="- write events to HIPO file" />
+    <option name="LAST_COMMIT_MESSAGE" value="- write events to HIPO file" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
