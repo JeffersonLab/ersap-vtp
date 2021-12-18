@@ -22,7 +22,7 @@ public class Fadc2Hipo {
 
         w = new HipoWriter();
         w.getSchemaFactory().addSchema(rawSchema);
-        w.getSchemaFactory().show();
+//        w.getSchemaFactory().show();
 
         w.open(fileName);
     }
@@ -32,11 +32,11 @@ public class Fadc2Hipo {
         Bank rBank = new Bank(rawSchema, hits.size());
         int row = 0;
         for (VAdcHit hit : hits) {
-            rBank.putInt("crate", row, hit.getCrate());
-            rBank.putInt("slot", row, hit.getSlot());
-            rBank.putInt("channel", row, hit.getChannel());
-            rBank.putInt("charge", row, hit.getCharge());
-            rBank.putLong("time", row, hit.getTime());
+            rBank.putInt(0, row, hit.getCrate());
+            rBank.putInt(1, row, hit.getSlot());
+            rBank.putInt(2, row, hit.getChannel());
+            rBank.putInt(3, row, hit.getCharge());
+            rBank.putLong(4, row, hit.getTime());
             row++;
         }
 //        rBank.show();
