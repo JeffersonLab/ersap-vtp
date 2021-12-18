@@ -18,7 +18,7 @@ public class Fadc2Hipo {
         builder.addEntry("charge", "I", "accumulated charge");
         builder.addEntry("time", "L", "time of the hit");
         rawSchema = builder.build();
-        rawSchema.show();
+//        rawSchema.show();
 
         w = new HipoWriter();
         w.getSchemaFactory().addSchema(rawSchema);
@@ -39,7 +39,7 @@ public class Fadc2Hipo {
             rBank.putLong("time", row, hit.getTime());
             row++;
         }
-        rBank.show();
+//        rBank.show();
         event.reset();
         event.write(rBank);
         event.scanShow();
