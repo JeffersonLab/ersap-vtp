@@ -396,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639781319796</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="- write events to HIPO file&#10;- 4 ns window for event building">
+      <created>1639789270320</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1639789270320</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

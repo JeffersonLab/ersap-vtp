@@ -42,7 +42,7 @@ public class Fadc2Hipo {
 //        rBank.show();
         event.reset();
         event.write(rBank);
-        event.scanShow();
+//        event.scanShow();
         w.addEvent(event);
     }
 
