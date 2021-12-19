@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.jlab.epsci.stream.util.EUtil.*;
 
@@ -22,6 +23,8 @@ public class VConsumer extends Thread {
 
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
+    private AtomicInteger events = new AtomicInteger(0);
+    private final int MAXEVENT = 1000000;
 
     private ExecutorService tPool;
     private PayloadDecoderPool pool;
@@ -70,7 +73,7 @@ public class VConsumer extends Thread {
         return item;
     }
 
-     public void put() throws InterruptedException {
+    public void put() throws InterruptedException {
 
         // Tell input (crate) ring that we're done with the item we're consuming
         sequence.set(nextSequence);
@@ -92,57 +95,59 @@ public class VConsumer extends Thread {
 
     public void run() {
 
-        while (running.get()) {
-
+//        while (running.get()) {
+            while (events.incrementAndGet() < MAXEVENT) {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
-            try {
+                try {
 
-                // Get an item from ring and parse the payload
-                VRingRawEvent buf = get();
+                    // Get an item from ring and parse the payload
+                    VRingRawEvent buf = get();
 
-                if (buf.getPayload().length > 0) {
-                    long frameTime = buf.getRecordNumber() * 65536L;
-                    ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
+                    if (buf.getPayload().length > 0) {
+                        long frameTime = buf.getRecordNumber() * 65536L;
+                        ByteBuffer b = cloneByteBuffer(buf.getPayloadBuffer());
 //                    int partLength1 = buf.getPartLength1(); // VTP 2 stream aggregated
-                    put();
+                        put();
 //                    Runnable r = () -> decodePayloadMap3(frameTime, b, 0, partLength1() / 4);
 
-                    // using object pool
-                    Runnable r = () -> {
-                        try {
-                            VPayloadDecoder pd = pool.borrowObject();
+                        // using object pool
+                        Runnable r = () -> {
+                            try {
+                                VPayloadDecoder pd = pool.borrowObject();
 //                            pd.decode(frameTime, b, 0, partLength1 / 4); // VTP 2 stream aggregated
-                            pd.decode(frameTime, b); // VTP 1 stream
-                            pool.returnObject(pd);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    };
-                    tPool.execute(r);
+                                pd.decode(frameTime, b); // VTP 1 stream
+                                pool.returnObject(pd);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        };
+                        tPool.execute(r);
 
-                } else {
-                    put();
+                    } else {
+                        put();
+                    }
+
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+            VTPOneStreamReceiverDecoder.hipoFile.close();
+            System.exit(0);
         }
-    }
 
-    public ByteBuffer getEvent() throws Exception {
-        ByteBuffer out;
-        VPayloadDecoder pd = pool.borrowObject();
-        out = pd.getEvt();
-        pool.returnObject(pd);
-        return out;
-    }
+        public ByteBuffer getEvent () throws Exception {
+            ByteBuffer out;
+            VPayloadDecoder pd = pool.borrowObject();
+            out = pd.getEvt();
+            pool.returnObject(pd);
+            return out;
+        }
 
-    public void exit() {
-        running.set(false);
-        this.interrupt();
-    }
+        public void exit () {
+            running.set(false);
+            this.interrupt();
+        }
 
-}
+    }
