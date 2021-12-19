@@ -95,8 +95,8 @@ public class VConsumer extends Thread {
 
     public void run() {
 
-//        while (running.get()) {
-            while (events.incrementAndGet() < MAXEVENT) {
+        while (running.get()) {
+//            while (events.incrementAndGet() < MAXEVENT) {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 try {
@@ -133,8 +133,8 @@ public class VConsumer extends Thread {
                     e.printStackTrace();
                 }
             }
-            VTPOneStreamReceiverDecoder.hipoFile.close();
-            System.exit(0);
+//            VTPOneStreamReceiverDecoder.hipoFile.close();
+//            System.exit(0);
         }
 
         public ByteBuffer getEvent () throws Exception {

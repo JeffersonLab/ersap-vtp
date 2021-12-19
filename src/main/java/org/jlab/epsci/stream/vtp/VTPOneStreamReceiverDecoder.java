@@ -1,6 +1,7 @@
 package org.jlab.epsci.stream.vtp;
 
 import com.lmax.disruptor.*;
+import sun.misc.Signal;
 
 import java.nio.ByteBuffer;
 
@@ -79,6 +80,12 @@ public class VTPOneStreamReceiverDecoder {
     public static void main(String[] args) {
         int port1 = Integer.parseInt(args[0]);
         new VTPOneStreamReceiverDecoder(port1, args[1]).go();
+        Signal.handle(new Signal("INT"),  // SIGINT
+                signal -> {
+            System.out.println("Interrupted by Ctrl+C");
+                    VTPOneStreamReceiverDecoder.hipoFile.close();
+                    System.exit(0);
+                });
     }
 
 }
