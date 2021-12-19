@@ -40,7 +40,7 @@ public class VTPOneStreamReceiverDecoder {
     private boolean started = false;
 
     public static Fadc2Hipo hipoFile;
-    private String fileName;
+    public static int ebEvents;
 
     public VTPOneStreamReceiverDecoder(int vtpPort1, String fileName) {
         this.vtpPort1 = vtpPort1;
@@ -51,7 +51,6 @@ public class VTPOneStreamReceiverDecoder {
         sequenceBarrier1 = ringBuffer1.newBarrier();
         ringBuffer1.addGatingSequences(sequence1);
 
-        this.fileName = fileName;
         hipoFile = new Fadc2Hipo(fileName);
     }
 

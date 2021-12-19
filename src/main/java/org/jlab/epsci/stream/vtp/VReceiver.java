@@ -210,7 +210,8 @@ public class VReceiver extends Thread {
                 }
             }
             System.out.println(" stream:" + streamId
-                    + " event rate =" + rate / statPeriod
+                    + " frame rate =" + rate / statPeriod
+                    + " event rate =" + VTPOneStreamReceiverDecoder.ebEvents / statPeriod
                     + " Hz.  data rate =" + totalData / statPeriod + " kB/s."
                     + " missed rate = " + m_rate + " Hz."
                     + " record number = " + prev_rec_number
@@ -218,6 +219,7 @@ public class VReceiver extends Thread {
             rate = 0;
             totalData = 0;
             missed_record = 0;
+            VTPOneStreamReceiverDecoder.ebEvents = 0;
         }
     }
 

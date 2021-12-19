@@ -107,6 +107,7 @@ public class VPayloadDecoder {
                         // write event to hipo file
                     if(tmp_res.size() >= level) {
                         VTPOneStreamReceiverDecoder.hipoFile.evtWrite(tmp_res);
+                        VTPOneStreamReceiverDecoder.ebEvents++;
 //                        dump(tmp_res);
                     }
                     tmp_res.clear();

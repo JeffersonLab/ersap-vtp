@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VTPOneStreamReceiverDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VTPOneStreamReceiverDecoder.java" afterDir="false" />
@@ -83,13 +82,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00002" summary="- consumer gets frame time and clones byteBuffer">
-      <created>1636140241465</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1636140241465</updated>
     </task>
     <task id="LOCAL-00003" summary="- possible bug while referencing buffer after putting it back to the ring">
       <created>1636140812158</created>
@@ -427,7 +419,14 @@
       <option name="project" value="LOCAL" />
       <updated>1639929522860</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="- catch ctr_l sygnal&#10;- new evt selection criteria">
+      <created>1639947166175</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1639947166175</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -449,7 +448,8 @@
     <MESSAGE value="- write events to HIPO file" />
     <MESSAGE value="- write events to HIPO file&#10;- 4 ns window for event building" />
     <MESSAGE value="- auto close hipo files" />
-    <option name="LAST_COMMIT_MESSAGE" value="- auto close hipo files" />
+    <MESSAGE value="- catch ctr_l sygnal&#10;- new evt selection criteria" />
+    <option name="LAST_COMMIT_MESSAGE" value="- catch ctr_l sygnal&#10;- new evt selection criteria" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
