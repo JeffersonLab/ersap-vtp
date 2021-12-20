@@ -207,7 +207,7 @@ public class VPayloadDecoder {
                     list3.clear();
                     list4.clear();
                     list5.clear();
-                    sizeList.clear();
+//                    sizeList.clear();
                 }
             }
         }
