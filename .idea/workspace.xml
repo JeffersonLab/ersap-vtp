@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00012" summary="- debugging">
-      <created>1636409115557</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1636409115557</updated>
-    </task>
     <task id="LOCAL-00013" summary="- debugging">
       <created>1636550186156</created>
       <option name="number" value="00013" />
@@ -424,11 +417,17 @@
       <option name="project" value="LOCAL" />
       <updated>1640014018713</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="- sliding window step size 1ns, window size 4ns, multiplicity 3">
+      <created>1640040900446</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1640040900446</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- consumer gets frame time and clones byteBuffer" />
     <MESSAGE value="- possible bug while referencing buffer after putting it back to the ring" />
     <MESSAGE value="- PayloadDecoder method to decode a single stream payload&#10;- some code cleanup" />
     <MESSAGE value="- adc hit object&#10;- dup adc values" />
@@ -453,7 +452,8 @@
     <MESSAGE value="- sliding window event identification" />
     <MESSAGE value="- sliding algorithm update" />
     <MESSAGE value="- sliding window step size 2ns a,d window size 8ns" />
-    <option name="LAST_COMMIT_MESSAGE" value="- sliding window step size 2ns a,d window size 8ns" />
+    <MESSAGE value="- sliding window step size 1ns, window size 4ns, multiplicity 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="- sliding window step size 1ns, window size 4ns, multiplicity 3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
