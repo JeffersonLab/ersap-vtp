@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00013" summary="- debugging">
-      <created>1636550186156</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1636550186156</updated>
-    </task>
     <task id="LOCAL-00014" summary="- debugging">
       <created>1636567590765</created>
       <option name="number" value="00014" />
@@ -424,11 +417,17 @@
       <option name="project" value="LOCAL" />
       <updated>1640040900446</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="- slicing trigger 4ns &gt;=1">
+      <created>1640042837960</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1640042837960</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- possible bug while referencing buffer after putting it back to the ring" />
     <MESSAGE value="- PayloadDecoder method to decode a single stream payload&#10;- some code cleanup" />
     <MESSAGE value="- adc hit object&#10;- dup adc values" />
     <MESSAGE value="- remove decoded info printout" />
@@ -453,7 +452,8 @@
     <MESSAGE value="- sliding algorithm update" />
     <MESSAGE value="- sliding window step size 2ns a,d window size 8ns" />
     <MESSAGE value="- sliding window step size 1ns, window size 4ns, multiplicity 3" />
-    <option name="LAST_COMMIT_MESSAGE" value="- sliding window step size 1ns, window size 4ns, multiplicity 3" />
+    <MESSAGE value="- slicing trigger 4ns &gt;=1" />
+    <option name="LAST_COMMIT_MESSAGE" value="- slicing trigger 4ns &gt;=1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
