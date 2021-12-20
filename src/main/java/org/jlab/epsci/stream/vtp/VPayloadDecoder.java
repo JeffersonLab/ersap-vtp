@@ -48,7 +48,7 @@ public class VPayloadDecoder {
         corePayloadDecoder(frame_time_ns, pData, 0);
 //        dump(evt.getEvList()); // dump entire frame
 //        eventIdentificationAndWriting(4L, 1); // print coincidences within 4 ns window, multiplicity 1
-        slidingWindowIdentification(2L,8l,1);
+        slidingWindowIdentification(1L,4l,3);
     }
 
 
