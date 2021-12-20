@@ -2,6 +2,8 @@ package org.jlab.epsci.stream.vtp;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class VPayloadDecoder {
@@ -11,7 +13,7 @@ public class VPayloadDecoder {
     private int prescale;
     private static int PVALUE = 50;
 
-    public VPayloadDecoder(){
+    public VPayloadDecoder() {
         evt = new VAdcHitMap(2000000);
         pData = new ArrayList<>();
         prescale = PVALUE;
@@ -29,6 +31,7 @@ public class VPayloadDecoder {
         corePayloadDecoder(frame_time_ns, pData, s1);
         corePayloadDecoder(frame_time_ns, pData, s2);
     }
+
     public void decode(Long frame_time_ns, ByteBuffer buf) {
         // analyze every prescale event
 //        if ((prescale -= 1) > 0) return;
@@ -44,8 +47,8 @@ public class VPayloadDecoder {
         buf.clear();
         corePayloadDecoder(frame_time_ns, pData, 0);
 //        dump(evt.getEvList()); // dump entire frame
-        eventIdentificationAndWriting(4L,1); // print coincidences within 4 ns window
-
+//        eventIdentificationAndWriting(4L, 1); // print coincidences within 4 ns window, multiplicity 1
+        slidingWindowIdentification(1L,4l,1);
     }
 
 
@@ -85,12 +88,12 @@ public class VPayloadDecoder {
         }
     }
 
-        public void dump( List<VAdcHit> hit_map) {
+    public void dump(List<VAdcHit> hit_map) {
         System.out.println("\n========================================= ");
         if (hit_map.size() < 0) {
             System.out.println("\nWarning: hit-map is inconsistent");
         } else {
-            for (VAdcHit hit:hit_map) {
+            for (VAdcHit hit : hit_map) {
                 System.out.println(hit);
             }
         }
@@ -98,14 +101,14 @@ public class VPayloadDecoder {
 
     public void eventIdentificationAndWriting(long width, int level) {
         List<VAdcHit> tmp_res = new ArrayList<>();
-        if(evt.getEvtSize() > 0) {
+        if (evt.getEvtSize() > 0) {
             long leadingEdge = evt.getEvList().get(0).getTime();
-            for (VAdcHit hit:evt.getEvList()) {
-                if(hit.getTime() > leadingEdge + width) {
+            for (VAdcHit hit : evt.getEvList()) {
+                if (hit.getTime() > leadingEdge + width) {
                     leadingEdge = hit.getTime();
 
-                        // write event to hipo file
-                    if(tmp_res.size() >= level) {
+                    // write event to hipo file
+                    if (tmp_res.size() >= level) {
                         VTPOneStreamReceiverDecoder.hipoFile.evtWrite(tmp_res);
                         VTPOneStreamReceiverDecoder.ebEvents++;
 //                        dump(tmp_res);
@@ -113,6 +116,98 @@ public class VPayloadDecoder {
                     tmp_res.clear();
                 } else {
                     tmp_res.add(hit);
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param slidingStep sliding step in ns.
+     * @param windowSize sliding window size in ns
+     * @param hitMultiplicity minimum number of hits within the sliding window.
+     */
+    public void slidingWindowIdentification(long slidingStep, long windowSize, int hitMultiplicity) {
+        long leadingTime;
+        long l1;
+        long l2;
+        long l3;
+        long l4;
+        long l5;
+        List<VAdcHit> list1 = new ArrayList<>();
+        List<VAdcHit> list2 = new ArrayList<>();
+        List<VAdcHit> list3 = new ArrayList<>();
+        List<VAdcHit> list4 = new ArrayList<>();
+        List<VAdcHit> list5 = new ArrayList<>();
+        List<Integer> sizeList;
+
+        if (evt.getEvtSize() > 0) {
+            leadingTime = evt.getEvList().get(0).getTime();
+            l1 = leadingTime;
+            l2 = leadingTime + slidingStep;
+            l3 = leadingTime + (slidingStep * 2L);
+            l4 = leadingTime + (slidingStep * 3L);
+            l5 = leadingTime + (slidingStep * 4L);
+
+            for (VAdcHit hit : evt.getEvList()) {
+                if ((hit.getTime() >= l1) && (hit.getTime() < (l1 + windowSize))) {
+                    list1.add(hit);
+                } else if ((hit.getTime() >= l2) && (hit.getTime() < (l2 + windowSize))) {
+                    list2.add(hit);
+                } else if ((hit.getTime() >= l3) && (hit.getTime() < (l3 + windowSize))) {
+                    list3.add(hit);
+                } else if ((hit.getTime() >= l4) && (hit.getTime() < (l4 + windowSize))) {
+                    list4.add(hit);
+                } else if ((hit.getTime() >= l5) && (hit.getTime() < (l5 + windowSize))) {
+                    list5.add(hit);
+                } else if (hit.getTime() >= (l5 + windowSize)) {
+                    // find the max size list, and define as an event
+                    sizeList = Arrays.asList(list1.size(), list2.size(), list3.size(), list4.size(), list5.size());
+                    Integer max = Collections.max(sizeList);
+
+                    // write event
+                    if(list1.size() == max) {
+                        if (list1.size() >= hitMultiplicity) {
+                            VTPOneStreamReceiverDecoder.hipoFile.evtWrite(list1);
+                            VTPOneStreamReceiverDecoder.ebEvents++;
+                        }
+                    } else if(list2.size() == max) {
+                        if (list2.size() >= hitMultiplicity) {
+                            VTPOneStreamReceiverDecoder.hipoFile.evtWrite(list2);
+                            VTPOneStreamReceiverDecoder.ebEvents++;
+                        }
+                    } else if(list3.size() == max) {
+                        if (list3.size() >= hitMultiplicity) {
+                            VTPOneStreamReceiverDecoder.hipoFile.evtWrite(list3);
+                            VTPOneStreamReceiverDecoder.ebEvents++;
+                        }
+                    } else if(list4.size() == max) {
+                        if (list4.size() >= hitMultiplicity) {
+                            VTPOneStreamReceiverDecoder.hipoFile.evtWrite(list4);
+                            VTPOneStreamReceiverDecoder.ebEvents++;
+                        }
+                    } else if(list5.size() == max) {
+                        if (list5.size() >= hitMultiplicity) {
+                            VTPOneStreamReceiverDecoder.hipoFile.evtWrite(list5);
+                            VTPOneStreamReceiverDecoder.ebEvents++;
+                        }
+                    }
+
+                    // redefine the leading time
+                    leadingTime = hit.getTime();
+                    l1 = leadingTime;
+                    l2 = leadingTime + slidingStep;
+                    l3 = leadingTime + (slidingStep * 2L);
+                    l4 = leadingTime + (slidingStep * 3L);
+                    l5 = leadingTime + (slidingStep * 4L);
+
+                    // reset lists
+                    list1.clear();
+                    list2.clear();
+                    list3.clear();
+                    list4.clear();
+                    list5.clear();
+                    sizeList.clear();
                 }
             }
         }
