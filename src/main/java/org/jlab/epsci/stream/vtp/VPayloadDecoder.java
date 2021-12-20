@@ -194,7 +194,7 @@ public class VPayloadDecoder {
                     }
 
                     // redefine the leading time
-                    leadingTime = hit.getTime();
+                    leadingTime = l5 + slidingStep;
                     l1 = leadingTime;
                     l2 = leadingTime + slidingStep;
                     l3 = leadingTime + (slidingStep * 2L);
