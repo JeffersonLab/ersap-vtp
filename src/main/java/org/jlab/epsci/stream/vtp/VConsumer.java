@@ -24,7 +24,7 @@ public class VConsumer extends Thread {
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
     private AtomicInteger events = new AtomicInteger(0);
-    private final int MAXEVENT = Integer.MAX_VALUE;
+    private final int MAXEVENT = 300000000;
 
     private ExecutorService tPool;
     private PayloadDecoderPool pool;
@@ -95,8 +95,8 @@ public class VConsumer extends Thread {
 
     public void run() {
 
-        while (running.get()) {
-//            while (events.incrementAndGet() < MAXEVENT) {
+//        while (running.get()) {
+            while (events.incrementAndGet() < MAXEVENT) {
 //                BigInteger frameTime =
 //                        buf.getRecordNumber().multiply(EUtil.toUnsignedBigInteger(65536L));
                 try {
@@ -133,7 +133,7 @@ public class VConsumer extends Thread {
                     e.printStackTrace();
                 }
             }
-//            VTPOneStreamReceiverDecoder.hipoFile.close();
+            VTPOneStreamReceiverDecoder.hipoFile.close();
 //            System.exit(0);
         }
 
