@@ -24,7 +24,7 @@ public class VConsumer extends Thread {
     // control for the thread termination
     private AtomicBoolean running = new AtomicBoolean(true);
     private AtomicInteger events = new AtomicInteger(0);
-    private final int MAXEVENT = 300000000;
+    private final int MAXEVENT = 100000000;
 
     private ExecutorService tPool;
     private PayloadDecoderPool pool;

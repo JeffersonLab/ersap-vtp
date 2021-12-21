@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="- exit at around 300,000,000 frames">
+    <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/VPayloadDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,13 +81,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00019" summary="- introduced prescale factor to process events every N event.">
-      <created>1636581479071</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1636581479071</updated>
     </task>
     <task id="LOCAL-00020" summary="- introduced prescale factor to process events every N event.">
       <created>1636581795680</created>
@@ -424,12 +418,17 @@
       <option name="project" value="LOCAL" />
       <updated>1640058701401</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="- close hipo file at around 300,000,000 frames">
+      <created>1640061077151</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1640061077151</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- adc hit object&#10;- dup adc values" />
-    <MESSAGE value="- remove decoded info printout" />
     <MESSAGE value="- test of small pools" />
     <MESSAGE value="- no processing" />
     <MESSAGE value="- debugging" />
@@ -453,7 +452,9 @@
     <MESSAGE value="- sliding window step size 1ns, window size 4ns, multiplicity 3" />
     <MESSAGE value="- slicing trigger 4ns &gt;=1" />
     <MESSAGE value="- new trigger choice" />
-    <option name="LAST_COMMIT_MESSAGE" value="- new trigger choice" />
+    <MESSAGE value="- exit at around 300,000,000 frames" />
+    <MESSAGE value="- close hipo file at around 300,000,000 frames" />
+    <option name="LAST_COMMIT_MESSAGE" value="- close hipo file at around 300,000,000 frames" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
