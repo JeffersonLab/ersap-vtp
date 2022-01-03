@@ -34,6 +34,10 @@ public class HipoDrawBank {
         List<Integer> right = new ArrayList<>();
 
         while (r.hasNext()) {
+            left.clear();
+            center.clear();
+            right.clear();
+
             r.nextEvent(event);
             event.read(raw);
 
