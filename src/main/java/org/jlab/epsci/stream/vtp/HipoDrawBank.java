@@ -97,9 +97,9 @@ public class HipoDrawBank {
                 }
             }
 
-            if (left.size() == 1
+            if (left.size() <= 1
                     && center.size() == 1
-                    && right.size() == 1
+                    && right.size() <= 1
             ) {
                 if ((center.get(0) > left.get(0))
                         && (center.get(0) > right.get(0))) {
