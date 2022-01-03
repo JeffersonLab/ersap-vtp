@@ -101,18 +101,18 @@ public class HipoDrawBank {
                     && center.size() == 1
                     && right.size() <= 1
             ) {
-                if ((center.get(0) > left.get(0))
-                        && (center.get(0) > right.get(0))) {
-                    hl.fill(left.get(0));
+//                if ((center.get(0) > left.get(0))
+//                        && (center.get(0) > right.get(0))) {
+                if (left.size() == 1) hl.fill(left.get(0));
                     hc.fill(center.get(0));
-                    hr.fill(right.get(0));
+                if (right.size() == 1) hr.fill(right.get(0));
                     if (a.size() == 1) ha.fill(a.get(0));
                     if (b.size() == 1) hb.fill(b.get(0));
                     if (cc.size() == 1) hcc.fill(cc.get(0));
                     if (d.size() == 1) hd.fill(d.get(0));
                     if (e.size() == 1) he.fill(e.get(0));
                     if (f.size() == 1) hf.fill(f.get(0));
-                }
+//                }
             }
 
 //                h2.fill(comp, tdc);
