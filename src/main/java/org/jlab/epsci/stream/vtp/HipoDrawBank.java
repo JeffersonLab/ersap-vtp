@@ -99,7 +99,15 @@ public class HipoDrawBank {
 
             if (left.size() == 1
                     && center.size() == 1
-                    && right.size() == 1) {
+                    && right.size() == 1
+
+                    && a.size() <= 1
+                    && b.size() <= 1
+                    && cc.size() <= 1
+                    && d.size() <= 1
+                    && e.size() <= 1
+                    && f.size() <= 1
+            ) {
                 if ((center.get(0) > left.get(0))
                         && (center.get(0) > right.get(0))) {
                     hl.fill(left.get(0));
@@ -123,12 +131,12 @@ public class HipoDrawBank {
         c.view().region(0).draw(ha);
         c.view().region(1).draw(hb);
         c.view().region(2).draw(hcc);
-//        c.view().region(3).draw(hl);
-//        c.view().region(4).draw(hc);
-//        c.view().region(5).draw(hr);
-//        c.view().region(6).draw(hd);
-//        c.view().region(7).draw(he);
-//        c.view().region(8).draw(hf);
+        c.view().region(3).draw(hl);
+        c.view().region(4).draw(hc);
+        c.view().region(5).draw(hr);
+        c.view().region(6).draw(hd);
+        c.view().region(7).draw(he);
+        c.view().region(8).draw(hf);
         c.repaint();
     }
 }
