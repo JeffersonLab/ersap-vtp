@@ -31,15 +31,15 @@ public class HipoDrawBank {
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
 
-        H1F hl = new H1F("h1", 100, 1000.0, 8000.0);
-        H1F hc = new H1F("h2", 100, 1000.0, 8000.0);
-        H1F hr = new H1F("h2", 100, 1000.0, 8000.0);
-        H1F ha = new H1F("h1", 100, 1000.0, 8000.0);
-        H1F hb = new H1F("h2", 100, 1000.0, 8000.0);
-        H1F hcc = new H1F("h2", 100, 1000.0, 8000.0);
-        H1F hd = new H1F("h1", 100, 1000.0, 8000.0);
-        H1F he = new H1F("h2", 100, 1000.0, 8000.0);
-        H1F hf = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F hl = new H1F("h1", 100, 0.0, 8000.0);
+        H1F hc = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hr = new H1F("h2", 100, 0.0, 8000.0);
+        H1F ha = new H1F("h1", 100, 0.0, 8000.0);
+        H1F hb = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hcc = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hd = new H1F("h1", 100, 0.0, 8000.0);
+        H1F he = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hf = new H1F("h2", 100, 0.0, 8000.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
 
         List<Integer> a = new ArrayList<>();
@@ -100,25 +100,18 @@ public class HipoDrawBank {
             if (left.size() == 1
                     && center.size() == 1
                     && right.size() == 1
-
-//                    && a.size() <= 1
-//                    && b.size() <= 1
-//                    && cc.size() <= 1
-//                    && d.size() <= 1
-//                    && e.size() <= 1
-//                    && f.size() <= 1
             ) {
                 if ((center.get(0) > left.get(0))
                         && (center.get(0) > right.get(0))) {
                     hl.fill(left.get(0));
                     hc.fill(center.get(0));
                     hr.fill(right.get(0));
-                    if (!a.isEmpty()) ha.fill(a.get(0));
-                    if (!b.isEmpty()) hb.fill(b.get(0));
-                    if (!cc.isEmpty()) hcc.fill(cc.get(0));
-                    if (!d.isEmpty()) hd.fill(d.get(0));
-                    if (!e.isEmpty()) he.fill(e.get(0));
-                    if (!f.isEmpty()) hf.fill(f.get(0));
+                    if (a.size() == 1) ha.fill(a.get(0));
+                    if (b.size() == 1) hb.fill(b.get(0));
+                    if (cc.size() == 1) hcc.fill(cc.get(0));
+                    if (d.size() == 1) hd.fill(d.get(0));
+                    if (e.size() == 1) he.fill(e.get(0));
+                    if (f.size() == 1) hf.fill(f.get(0));
                 }
             }
 
