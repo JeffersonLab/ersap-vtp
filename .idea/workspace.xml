@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/HipoDrawBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/HipoDrawBank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/hdcal" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,13 +79,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00021" summary="-set prescale factor to 50">
-      <created>1636582629838</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1636582629838</updated>
     </task>
     <task id="LOCAL-00022" summary="-set prescale factor to 50">
       <created>1636594974897</created>
@@ -424,11 +416,17 @@
       <option name="project" value="LOCAL" />
       <updated>1640086758398</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), 2) Central channel energy deposition must be bigger than left or right channels">
+      <created>1641238799064</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1641238799064</updated>
+    </task>
+    <option name="localTasksCounter" value="71" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- test of small pools" />
     <MESSAGE value="- no processing" />
     <MESSAGE value="- debugging" />
     <MESSAGE value="- introduced prescale factor to process events every N event." />
@@ -453,7 +451,8 @@
     <MESSAGE value="- new trigger choice" />
     <MESSAGE value="- exit at around 300,000,000 frames" />
     <MESSAGE value="- close hipo file at around 300,000,000 frames" />
-    <option name="LAST_COMMIT_MESSAGE" value="- close hipo file at around 300,000,000 frames" />
+    <MESSAGE value="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), 2) Central channel energy deposition must be bigger than left or right channels" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), 2) Central channel energy deposition must be bigger than left or right channels" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
