@@ -13,9 +13,9 @@ import java.util.List;
 public class HipoDrawBank {
 
     public static final int SLOT = 3;
-    public static final int leftChannel = 11;
-    public static final int centerChannel = 12;
-    public static final int rightChannel = 13;
+    public static int leftChannel;
+    public static int centerChannel;
+    public static int rightChannel;
 
     public static final int A = 8;
     public static final int B = 9;
@@ -27,6 +27,9 @@ public class HipoDrawBank {
     public static void main(String[] args) {
         HipoReader r = new HipoReader();
         r.open(args[0]);
+        leftChannel = Integer.parseInt(args[1]);
+        centerChannel = Integer.parseInt(args[2]);
+        rightChannel = Integer.parseInt(args[3]);
 
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
