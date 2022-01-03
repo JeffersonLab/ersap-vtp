@@ -31,15 +31,15 @@ public class HipoDrawBank {
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
 
-        H1F hl = new H1F("h1", 100, 0.0, 8000.0);
-        H1F hc = new H1F("h2", 100, 0.0, 8000.0);
-        H1F hr = new H1F("h2", 100, 0.0, 8000.0);
-        H1F ha = new H1F("h1", 100, 0.0, 8000.0);
-        H1F hb = new H1F("h2", 100, 0.0, 8000.0);
-        H1F hcc = new H1F("h2", 100, 0.0, 8000.0);
-        H1F hd = new H1F("h1", 100, 0.0, 8000.0);
-        H1F he = new H1F("h2", 100, 0.0, 8000.0);
-        H1F hf = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hl = new H1F("h1", 100, 1000.0, 8000.0);
+        H1F hc = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F hr = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F ha = new H1F("h1", 100, 1000.0, 8000.0);
+        H1F hb = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F hcc = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F hd = new H1F("h1", 100, 1000.0, 8000.0);
+        H1F he = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F hf = new H1F("h2", 100, 1000.0, 8000.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
 
         List<Integer> a = new ArrayList<>();
@@ -101,12 +101,12 @@ public class HipoDrawBank {
                     && center.size() == 1
                     && right.size() == 1
 
-                    && a.size() <= 1
-                    && b.size() <= 1
-                    && cc.size() <= 1
-                    && d.size() <= 1
-                    && e.size() <= 1
-                    && f.size() <= 1
+//                    && a.size() <= 1
+//                    && b.size() <= 1
+//                    && cc.size() <= 1
+//                    && d.size() <= 1
+//                    && e.size() <= 1
+//                    && f.size() <= 1
             ) {
                 if ((center.get(0) > left.get(0))
                         && (center.get(0) > right.get(0))) {
