@@ -24,9 +24,9 @@ public class HipoDrawBank {
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
 
-        H1F hl = new H1F("h1", 100, 3000.0, 8000.0);
-        H1F hc = new H1F("h2", 100, 3000.0, 8000.0);
-        H1F hr = new H1F("h2", 100, 3000.0, 8000.0);
+        H1F hl = new H1F("h1", 100, 1000.0, 8000.0);
+        H1F hc = new H1F("h2", 100, 1000.0, 8000.0);
+        H1F hr = new H1F("h2", 100, 1000.0, 8000.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
 
         List<Integer> left = new ArrayList<>();
