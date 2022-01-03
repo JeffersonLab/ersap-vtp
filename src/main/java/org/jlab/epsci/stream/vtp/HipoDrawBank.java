@@ -17,12 +17,12 @@ public class HipoDrawBank {
     public static int centerChannel;
     public static int rightChannel;
 
-    public static final int A = 8;
-    public static final int B = 9;
-    public static final int C = 10;
-    public static final int D = 14;
-    public static final int E = 15;
-    public static final int F = 16;
+    public static int A;
+    public static int B;
+    public static int C;
+    public static int D;
+    public static int E;
+    public static int F;
 
     public static void main(String[] args) {
         HipoReader r = new HipoReader();
@@ -30,6 +30,13 @@ public class HipoDrawBank {
         leftChannel = Integer.parseInt(args[1]);
         centerChannel = Integer.parseInt(args[2]);
         rightChannel = Integer.parseInt(args[3]);
+        A = rightChannel - 3;
+        B = rightChannel - 2;
+        C = rightChannel - 1;
+        D = rightChannel + 1;
+        E = rightChannel + 2;
+        F = rightChannel + 3;
+
 
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
