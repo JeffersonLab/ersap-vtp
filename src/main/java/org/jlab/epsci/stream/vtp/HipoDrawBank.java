@@ -17,6 +17,13 @@ public class HipoDrawBank {
     public static final int centerChannel = 12;
     public static final int rightChannel = 13;
 
+    public static final int A = 8;
+    public static final int B = 9;
+    public static final int C = 10;
+    public static final int D = 14;
+    public static final int E = 15;
+    public static final int F = 16;
+
     public static void main(String[] args) {
         HipoReader r = new HipoReader();
         r.open(args[0]);
@@ -27,16 +34,36 @@ public class HipoDrawBank {
         H1F hl = new H1F("h1", 100, 0.0, 8000.0);
         H1F hc = new H1F("h2", 100, 0.0, 8000.0);
         H1F hr = new H1F("h2", 100, 0.0, 8000.0);
+        H1F ha = new H1F("h1", 100, 0.0, 8000.0);
+        H1F hb = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hcc = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hd = new H1F("h1", 100, 0.0, 8000.0);
+        H1F he = new H1F("h2", 100, 0.0, 8000.0);
+        H1F hf = new H1F("h2", 100, 0.0, 8000.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
+
+        List<Integer> a = new ArrayList<>();
+        List<Integer> b = new ArrayList<>();
+        List<Integer> cc = new ArrayList<>();
 
         List<Integer> left = new ArrayList<>();
         List<Integer> center = new ArrayList<>();
         List<Integer> right = new ArrayList<>();
 
+        List<Integer> d = new ArrayList<>();
+        List<Integer> e = new ArrayList<>();
+        List<Integer> f = new ArrayList<>();
+
         while (r.hasNext()) {
             left.clear();
             center.clear();
             right.clear();
+            a.clear();
+            b.clear();
+            cc.clear();
+            d.clear();
+            e.clear();
+            f.clear();
 
             r.nextEvent(event);
             event.read(raw);
@@ -54,6 +81,18 @@ public class HipoDrawBank {
                         center.add(charge);
                     } else if (channel == rightChannel) {
                         right.add(charge);
+                    } else if (channel == A) {
+                        a.add(charge);
+                    } else if (channel == B) {
+                        b.add(charge);
+                    } else if (channel == C) {
+                        cc.add(charge);
+                    } else if (channel == D) {
+                        d.add(charge);
+                    } else if (channel == E) {
+                        e.add(charge);
+                    } else if (channel == F) {
+                        f.add(charge);
                     }
                 }
             }
@@ -66,6 +105,12 @@ public class HipoDrawBank {
                     hl.fill(left.get(0));
                     hc.fill(center.get(0));
                     hr.fill(right.get(0));
+                    ha.fill(a.get(0));
+                    hb.fill(b.get(0));
+                    hcc.fill(cc.get(0));
+                    hd.fill(d.get(0));
+                    he.fill(e.get(0));
+                    hf.fill(f.get(0));
                 }
             }
 
@@ -74,10 +119,16 @@ public class HipoDrawBank {
         }
 
         TGCanvas c = new TGCanvas(800, 500);
-        c.view().divide(3, 1);
+        c.view().divide(3, 3);
+        c.view().region(0).draw(ha);
+        c.view().region(1).draw(hb);
+        c.view().region(2).draw(hcc);
         c.view().region(0).draw(hl);
         c.view().region(1).draw(hc);
         c.view().region(2).draw(hr);
+        c.view().region(0).draw(hd);
+        c.view().region(1).draw(he);
+        c.view().region(2).draw(hf);
         c.repaint();
     }
 }
