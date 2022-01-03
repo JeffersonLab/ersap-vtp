@@ -97,14 +97,28 @@ public class HipoDrawBank {
                 }
             }
 
-            if (left.size() <= 1
-                    && center.size() == 1
+            if (center.size() == 1
+                    && left.size() <= 1
                     && right.size() <= 1
+                    && a.size() <=1
+                    && b.size() <=1
+                    && cc.size() <=1
+                    && d.size() <=1
+                    && e.size() <=1
+                    && f.size() <=1
             ) {
-//                if ((center.get(0) > left.get(0))
-//                        && (center.get(0) > right.get(0))) {
-                    if (left.size() == 1) hl.fill(left.get(0));
+                if ( ((left.size()==1) && (center.get(0) > left.get(0)))
+                        && ((right.size()==1) && (center.get(0) > right.get(0)))
+                        && ((a.size()==1) && (center.get(0) > a.get(0)))
+                        && ((b.size()==1) && (center.get(0) > b.get(0)))
+                        && ((cc.size()==1) && (center.get(0) > cc.get(0)))
+                        && ((d.size()==1) && (center.get(0) > d.get(0)))
+                        && ((e.size()==1) && (center.get(0) > e.get(0)))
+                        && ((f.size()==1) && (center.get(0) > f.get(0)))
+                )
+                {
                     hc.fill(center.get(0));
+                    if (left.size() == 1) hl.fill(left.get(0));
                     if (right.size() == 1) hr.fill(right.get(0));
                     if (a.size() == 1) ha.fill(a.get(0));
                     if (b.size() == 1) hb.fill(b.get(0));
@@ -112,7 +126,7 @@ public class HipoDrawBank {
                     if (d.size() == 1) hd.fill(d.get(0));
                     if (e.size() == 1) he.fill(e.get(0));
                     if (f.size() == 1) hf.fill(f.get(0));
-//                }
+                }
             }
 
 //                h2.fill(comp, tdc);
