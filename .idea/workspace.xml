@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00041" summary="- coincidence. width 1ns, level 3">
-      <created>1636689172919</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1636689172919</updated>
-    </task>
     <task id="LOCAL-00042" summary="- coincidence. width 1ns, level 3">
       <created>1639772519517</created>
       <option name="number" value="00042" />
@@ -424,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641243078255</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), &#10;2) Central channel energy deposition must be bigger than left or right channels">
+      <created>1641243718487</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1641243718487</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
