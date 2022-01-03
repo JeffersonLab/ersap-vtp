@@ -120,13 +120,13 @@ public class HipoDrawBank {
         }
 
         TGCanvas c = new TGCanvas(800, 500);
-        c.view().divide(1, 3);
+        c.view().divide(3, 1);
 //        c.view().region(0).draw(ha);
 //        c.view().region(1).draw(hb);
 //        c.view().region(2).draw(hcc);
-        c.view().region(3).draw(hl);
-        c.view().region(4).draw(hc);
-        c.view().region(5).draw(hr);
+        c.view().region(0).draw(hl);
+        c.view().region(1).draw(hc);
+        c.view().region(2).draw(hr);
 //        c.view().region(6).draw(hd);
 //        c.view().region(7).draw(he);
 //        c.view().region(8).draw(hf);
