@@ -101,8 +101,8 @@ public class HipoDrawBank {
                     && center.size() == 1
                     && right.size() <= 1
             ) {
-                if ((center.get(0) > left.get(0))
-                        && (center.get(0) > right.get(0))) {
+//                if ((center.get(0) > left.get(0))
+//                        && (center.get(0) > right.get(0))) {
                     if (left.size() == 1) hl.fill(left.get(0));
                     hc.fill(center.get(0));
                     if (right.size() == 1) hr.fill(right.get(0));
@@ -112,7 +112,7 @@ public class HipoDrawBank {
                     if (d.size() == 1) hd.fill(d.get(0));
                     if (e.size() == 1) he.fill(e.get(0));
                     if (f.size() == 1) hf.fill(f.get(0));
-                }
+//                }
             }
 
 //                h2.fill(comp, tdc);
