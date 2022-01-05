@@ -138,7 +138,7 @@ public class CosmicSearch {
                             && center.size() == 1
                             && d.size() == 1
                     ) {
-                        if((cc.get(0) == right.get(0))
+                        if((cc.get(0) == center.get(0))
                                 && (center.get(0) == d.get(0))) {
                             hcc.fill(cc.get(0));
                             hc.fill(center.get(0));
