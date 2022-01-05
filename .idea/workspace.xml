@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00051" summary="- catch ctr_l sygnal&#10;- new evt selection criteria">
-      <created>1639947166175</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1639947166175</updated>
-    </task>
     <task id="LOCAL-00052" summary="- added event rate statistics">
       <created>1639951008695</created>
       <option name="number" value="00052" />
@@ -424,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641390018075</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="- Cosmic search trigger engine algorithm">
+      <created>1641390760429</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1641390760429</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
