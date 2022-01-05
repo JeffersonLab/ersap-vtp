@@ -40,15 +40,15 @@ public class CosmicSearch {
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
 
-        H1F hl = new H1F("left", 100, 0.0, 500.0);
-        H1F hc = new H1F("center", 100, 0.0, 500.0);
-        H1F hr = new H1F("right", 100, 0.0, 500.0);
-        H1F ha = new H1F("a", 100, 0.0, 500.0);
-        H1F hb = new H1F("b", 100, 0.0, 500.0);
-        H1F hcc = new H1F("cc", 100, 0.0, 500.0);
-        H1F hd = new H1F("d", 100, 0.0, 500.0);
-        H1F he = new H1F("e", 100, 0.0, 500.0);
-        H1F hf = new H1F("f", 100, 0.0, 500.0);
+        H1F hl = new H1F("left", 100, 0.0, 1000.0);
+        H1F hc = new H1F("center", 100, 0.0, 1000.0);
+        H1F hr = new H1F("right", 100, 0.0, 1000.0);
+        H1F ha = new H1F("a", 100, 0.0, 1000.0);
+        H1F hb = new H1F("b", 100, 0.0, 1000.0);
+        H1F hcc = new H1F("cc", 100, 0.0, 1000.0);
+        H1F hd = new H1F("d", 100, 0.0, 1000.0);
+        H1F he = new H1F("e", 100, 0.0, 1000.0);
+        H1F hf = new H1F("f", 100, 0.0, 1000.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
 
         List<Integer> a = new ArrayList<>();
@@ -152,7 +152,9 @@ public class CosmicSearch {
                             && d.size() == 1
                     ) {
                         if((cc.get(0) >= center.get(0))
-                                && (center.get(0) >= d.get(0))) {
+                                && (center.get(0) >= d.get(0))
+                                && d.get(0) >= (cc.get(0)-center.get(0))
+                        ) {
                             hcc.fill(cc.get(0));
                             hc.fill(center.get(0));
                             hd.fill(d.get(0));
