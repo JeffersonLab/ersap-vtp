@@ -153,7 +153,7 @@ public class CosmicSearch {
                     ) {
                         if((cc.get(0) >= center.get(0))
                                 && (center.get(0) >= d.get(0))
-                                && (d.get(0) >= 100)
+                                && (d.get(0) >= 150)
                         ) {
                             hcc.fill(cc.get(0));
                             hc.fill(center.get(0));
