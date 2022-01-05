@@ -126,7 +126,7 @@ public class CosmicSearch {
                             && d.size() == 1
                     ) {
                         if((a.get(0) == cc.get(0))
-                                && (left.get(0) == d.get(0))) {
+                                && (cc.get(0) == d.get(0))) {
                             ha.fill(a.get(0));
                             hl.fill(cc.get(0));
                             hd.fill(d.get(0));
