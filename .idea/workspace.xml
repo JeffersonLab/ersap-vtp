@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00075" summary="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), &#10;2) Central channel energy deposition must be bigger than left or right channels">
-      <created>1641240289801</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1641240289801</updated>
-    </task>
     <task id="LOCAL-00076" summary="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), &#10;2) Central channel energy deposition must be bigger than left or right channels">
       <created>1641240425608</created>
       <option name="number" value="00076" />
@@ -424,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641398671177</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="- Cosmic search trigger engine algorithm">
+      <created>1641399073903</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1641399073903</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
