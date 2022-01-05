@@ -122,7 +122,7 @@ public class CosmicSearch {
 //                                && (center.get(0) == e.get(0)))
                             if((b.get(0) >= center.get(0))
                                     && (b.get(0) <= (b.get(0) + (b.get(0) - center.get(0))))
-                                    && (center.get(0) >= e.get(0))
+//                                    && (center.get(0) >= e.get(0))
                                     && (center.get(0) <= (center.get(0) + (center.get(0) - e.get(0))))
                             )
                             {
