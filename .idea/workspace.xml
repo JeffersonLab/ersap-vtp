@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00059" summary="- sliding algorithm update">
-      <created>1640013146563</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1640013146563</updated>
-    </task>
     <task id="LOCAL-00060" summary="- sliding window step size 2ns a,d window size 8ns">
       <created>1640014018713</created>
       <option name="number" value="00060" />
@@ -424,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641392389761</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="- Cosmic search trigger engine algorithm">
+      <created>1641392569999</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1641392569999</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
