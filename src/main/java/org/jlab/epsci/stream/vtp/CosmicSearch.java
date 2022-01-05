@@ -112,8 +112,8 @@ public class CosmicSearch {
                             && center.size() == 1
                             && e.size() == 1
                     ) {
-                        if((b.get(0) >= center.get(0))
-                                && (center.get(0) >= e.get(0))) {
+                        if((b.get(0) == center.get(0))
+                                && (center.get(0) == e.get(0))) {
                             hb.fill(b.get(0));
                             hc.fill(center.get(0));
                             he.fill(e.get(0));
@@ -125,8 +125,8 @@ public class CosmicSearch {
                             && left.size() == 1
                             && d.size() == 1
                     ) {
-                        if((a.get(0) >= left.get(0))
-                                && (left.get(0) >= d.get(0))) {
+                        if((a.get(0) == left.get(0))
+                                && (left.get(0) == d.get(0))) {
                             ha.fill(a.get(0));
                             hl.fill(left.get(0));
                             hd.fill(d.get(0));
@@ -138,8 +138,8 @@ public class CosmicSearch {
                             && right.size() == 1
                             && f.size() == 1
                     ) {
-                        if((cc.get(0) >= right.get(0))
-                                && (right.get(0) >= f.get(0))) {
+                        if((cc.get(0) == right.get(0))
+                                && (right.get(0) == f.get(0))) {
                             hcc.fill(cc.get(0));
                             hr.fill(right.get(0));
                             hf.fill(f.get(0));
