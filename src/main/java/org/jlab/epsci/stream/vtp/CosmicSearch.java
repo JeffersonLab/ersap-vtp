@@ -147,7 +147,7 @@ public class CosmicSearch {
 //                                && (left.get(0) == d.get(0)))
                             if((a.get(0) >= left.get(0))
                                     && (a.get(0) <= (a.get(0) + (a.get(0) - left.get(0))))
-                                    && (left.get(0) >= d.get(0))
+//                                    && (left.get(0) >= d.get(0))
                                     && (left.get(0) <= (left.get(0) + (left.get(0) - d.get(0))))
                             )
                         {
@@ -172,7 +172,7 @@ public class CosmicSearch {
 //                                && (right.get(0) == f.get(0)))
                             if((cc.get(0) >= right.get(0))
                                     && (cc.get(0) <= (cc.get(0) + (cc.get(0) - right.get(0))))
-                                    && (right.get(0) >= f.get(0))
+//                                    && (right.get(0) >= f.get(0))
                                     && (right.get(0) <= (right.get(0) + (right.get(0) - f.get(0))))
                             )
                             {
@@ -197,7 +197,7 @@ public class CosmicSearch {
 //                                && (center.get(0) == d.get(0)))
                         if((cc.get(0) >= center.get(0))
                                 && (cc.get(0) <= (cc.get(0) + (cc.get(0) - center.get(0))))
-                                && (center.get(0) >= d.get(0))
+//                                && (center.get(0) >= d.get(0))
                                 && (center.get(0) <= (center.get(0) + (center.get(0) - d.get(0))))
                         )
                         {
