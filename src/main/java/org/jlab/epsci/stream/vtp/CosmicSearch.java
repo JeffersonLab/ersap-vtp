@@ -141,8 +141,8 @@ public class CosmicSearch {
                         if((cc.get(0) == right.get(0))
                                 && (right.get(0) == f.get(0))) {
                             hcc.fill(cc.get(0));
-                            hc.fill(right.get(0));
-                            hd.fill(f.get(0));
+                            hr.fill(right.get(0));
+                            hf.fill(f.get(0));
                         }
                     }
                     break;
