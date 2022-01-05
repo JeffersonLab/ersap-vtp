@@ -122,13 +122,13 @@ public class CosmicSearch {
                     break;
                 case "left":
                     if (a.size() == 1
-                            && left.size() == 1
+                            && cc.size() == 1
                             && d.size() == 1
                     ) {
-                        if((a.get(0) == left.get(0))
+                        if((a.get(0) == cc.get(0))
                                 && (left.get(0) == d.get(0))) {
                             ha.fill(a.get(0));
-                            hl.fill(left.get(0));
+                            hl.fill(cc.get(0));
                             hd.fill(d.get(0));
                         }
                     }
