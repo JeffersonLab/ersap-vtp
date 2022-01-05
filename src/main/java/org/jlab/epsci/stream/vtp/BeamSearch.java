@@ -10,7 +10,7 @@ import twig.graphics.TGCanvas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HipoDrawBank {
+public class BeamSearch {
 
     public static final int SLOT = 3;
     public static int leftChannel;
