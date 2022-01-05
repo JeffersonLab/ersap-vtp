@@ -153,7 +153,7 @@ public class BeamSearch {
         c.view().region(5).draw(hr);
         c.view().region(6).draw(hd);
         c.view().region(7).draw(he);
-        c.view().region(8).draw(hf);
+        c.view().region(8).draw(hcc);
         c.repaint();
     }
 }
