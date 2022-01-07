@@ -133,6 +133,7 @@ public class BeamSearch {
                         && ((d.size() == 1) && (center.get(0) > d.get(0)))
                         && ((e.size() == 1) && (center.get(0) > e.get(0)))
                         && (b.get(0) > a.get(0))
+                        && a.get(0) > 1000
 //                        && ((f.size()==1) && (center.get(0) > f.get(0)))
                 ) {
                     hc.fill(center.get(0));
