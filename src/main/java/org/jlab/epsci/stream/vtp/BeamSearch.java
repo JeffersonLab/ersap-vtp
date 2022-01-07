@@ -167,8 +167,10 @@ public class BeamSearch {
             c = new TGCanvas(1400, 1000);
             c.view().divide(2, 1);
             c.view().region(0).draw(hsum);
+//            F1D func = new F1D("func","[a]+[b]*x+[c]*x*x+[d]*gaus(x,[e],[f])",3500,6600);
+//            func.setParameters(new double[]{1.0,1.0,1.0,10000,6000,500});
             F1D func = new F1D("func","[d]*gaus(x,[e],[f])",3500,6600);
-            func.setParameters(new double[]{1.0,1.0,1.0,10000,6000,500});
+            func.setParameters(new double[]{10000,6000,500});
 
             func.setParLimits(3,0,40000);
             func.setParLimits(4,5500,6500);
