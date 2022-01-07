@@ -177,8 +177,8 @@ public class BeamSearch {
             F1D func = new F1D("func","[d]*gaus(x,[e],[f])",3500,8500);
             func.setParameters(new double[]{50000,6000,500});
             func.setParLimits(0,0,50000);
-            func.setParLimits(1,5500,6500);
-            func.setParLimits(2,0.0,1000);
+            func.setParLimits(1,3500,8500);
+            func.setParLimits(2,0.0,10000);
 
             func.attr().setLineWidth(2);
             DataFitter.fit(func,hsum,"N");
