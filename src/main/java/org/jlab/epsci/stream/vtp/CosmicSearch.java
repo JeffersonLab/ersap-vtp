@@ -152,13 +152,14 @@ public class CosmicSearch {
                             & right.size() == 0
                             & f.size() == 0
                     ) {
-//                        if((a.get(0) == left.get(0))
-//                                && (left.get(0) == d.get(0)))
-                        if ((a.get(0) >= left.get(0))
-                                && (a.get(0) <= (a.get(0) + (a.get(0) - left.get(0))))
-//                                    && (left.get(0) >= d.get(0))
-                                && (left.get(0) <= (left.get(0) + (left.get(0) - d.get(0))))
-                        ) {
+                        if((a.get(0) == left.get(0))
+                                && (left.get(0) == d.get(0)))
+//                        if ((a.get(0) >= left.get(0))
+//                                && (a.get(0) <= (a.get(0) + (a.get(0) - left.get(0))))
+////                                    && (left.get(0) >= d.get(0))
+//                                && (left.get(0) <= (left.get(0) + (left.get(0) - d.get(0))))
+//                        )
+                        {
                             ha.fill(a.get(0));
                             hl.fill(left.get(0));
                             hd.fill(d.get(0));
