@@ -175,8 +175,8 @@ public class BeamSearch {
 //            func.setParLimits(5,0.0,1000);
 
             F1D func = new F1D("func","[d]*gaus(x,[e],[f])",3500,8500);
-            func.setParameters(new double[]{10000,6000,500});
-            func.setParLimits(0,0,40000);
+            func.setParameters(new double[]{50000,6000,500});
+            func.setParLimits(0,0,50000);
             func.setParLimits(1,5500,6500);
             func.setParLimits(2,0.0,1000);
 
