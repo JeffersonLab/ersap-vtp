@@ -161,7 +161,7 @@ public class BeamSearch {
         }
         TGCanvas c;
         if (s) {
-            c = new TGCanvas(800, 500);
+            c = new TGCanvas(800, 1000);
             c.view().divide(1, 1);
             c.view().region(0).draw(hsum);
         } else {
