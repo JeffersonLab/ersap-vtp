@@ -5,6 +5,9 @@ import j4np.hipo5.data.Event;
 import j4np.hipo5.io.HipoReader;
 import twig.data.H1F;
 import twig.graphics.TGCanvas;
+import twig.math.DataFitter;
+import twig.math.F1D;
+import twig.widgets.PaveText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class CosmicSearch {
     public static int F = 16;
 
     public static void main(String[] args) {
+        Boolean s = false;
         HipoReader r = new HipoReader();
         r.open(args[0]);
         leftChannel = Integer.parseInt(args[1]);
@@ -37,6 +41,10 @@ public class CosmicSearch {
 
         String orientation = args[4];
 
+        if (args.length == 6) {
+            s = true;
+        }
+
         Bank raw = r.getBank("raw::data");
         Event event = new Event();
 
@@ -49,6 +57,7 @@ public class CosmicSearch {
         H1F hd = new H1F("d", 100, 0.0, 500.0);
         H1F he = new H1F("e", 100, 0.0, 500.0);
         H1F hf = new H1F("f", 100, 0.0, 500.0);
+        H1F hsum = new H1F("sum", 100, 0.0, 500.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
 
         List<Integer> a = new ArrayList<>();
@@ -120,15 +129,15 @@ public class CosmicSearch {
                     ) {
 //                        if((b.get(0) == center.get(0))
 //                                && (center.get(0) == e.get(0)))
-                            if((b.get(0) >= center.get(0))
-                                    && (b.get(0) <= (b.get(0) + (b.get(0) - center.get(0))))
+                        if ((b.get(0) >= center.get(0))
+                                && (b.get(0) <= (b.get(0) + (b.get(0) - center.get(0))))
 //                                    && (center.get(0) >= e.get(0))
-                                    && (center.get(0) <= (center.get(0) + (center.get(0) - e.get(0))))
-                            )
-                            {
+                                && (center.get(0) <= (center.get(0) + (center.get(0) - e.get(0))))
+                        ) {
                             hb.fill(b.get(0));
                             hc.fill(center.get(0));
                             he.fill(e.get(0));
+                            hsum.fill(b.get(0) + center.get(0) + e.get(0));
                         }
                     }
                     break;
@@ -145,15 +154,16 @@ public class CosmicSearch {
                     ) {
 //                        if((a.get(0) == left.get(0))
 //                                && (left.get(0) == d.get(0)))
-                            if((a.get(0) >= left.get(0))
-                                    && (a.get(0) <= (a.get(0) + (a.get(0) - left.get(0))))
+                        if ((a.get(0) >= left.get(0))
+                                && (a.get(0) <= (a.get(0) + (a.get(0) - left.get(0))))
 //                                    && (left.get(0) >= d.get(0))
-                                    && (left.get(0) <= (left.get(0) + (left.get(0) - d.get(0))))
-                            )
-                        {
+                                && (left.get(0) <= (left.get(0) + (left.get(0) - d.get(0))))
+                        ) {
                             ha.fill(a.get(0));
                             hl.fill(left.get(0));
                             hd.fill(d.get(0));
+                            hsum.fill(a.get(0) + left.get(0) + d.get(0));
+
                         }
                     }
                     break;
@@ -170,15 +180,16 @@ public class CosmicSearch {
                     ) {
 //                        if((cc.get(0) == right.get(0))
 //                                && (right.get(0) == f.get(0)))
-                            if((cc.get(0) >= right.get(0))
-                                    && (cc.get(0) <= (cc.get(0) + (cc.get(0) - right.get(0))))
+                        if ((cc.get(0) >= right.get(0))
+                                && (cc.get(0) <= (cc.get(0) + (cc.get(0) - right.get(0))))
 //                                    && (right.get(0) >= f.get(0))
-                                    && (right.get(0) <= (right.get(0) + (right.get(0) - f.get(0))))
-                            )
-                            {
+                                && (right.get(0) <= (right.get(0) + (right.get(0) - f.get(0))))
+                        ) {
                             hcc.fill(cc.get(0));
                             hr.fill(right.get(0));
                             hf.fill(f.get(0));
+                            hsum.fill(cc.get(0) + right.get(0) + f.get(0));
+
                         }
                     }
                     break;
@@ -195,33 +206,56 @@ public class CosmicSearch {
                     ) {
 //                        if((cc.get(0) == center.get(0))
 //                                && (center.get(0) == d.get(0)))
-                        if((cc.get(0) >= center.get(0))
+                        if ((cc.get(0) >= center.get(0))
                                 && (cc.get(0) <= (cc.get(0) + (cc.get(0) - center.get(0))))
 //                                && (center.get(0) >= d.get(0))
                                 && (center.get(0) <= (center.get(0) + (center.get(0) - d.get(0))))
-                        )
-                        {
+                        ) {
                             hcc.fill(cc.get(0));
                             hc.fill(center.get(0));
                             hd.fill(d.get(0));
+                            hsum.fill(cc.get(0) + center.get(0) + d.get(0));
+
                         }
                     }
                     break;
             }
         }
+        TGCanvas c;
+        if (s) {
+            c = new TGCanvas(800, 1000);
 
-        TGCanvas c = new TGCanvas(1600, 1000);
-        c.view().divide(3, 3);
-        c.view().region(0).draw(ha);
-        c.view().region(1).draw(hb);
-        c.view().region(2).draw(hcc);
-        c.view().region(3).draw(hl);
-        c.view().region(4).draw(hc);
-        c.view().region(5).draw(hr);
-        c.view().region(6).draw(hd);
-        c.view().region(7).draw(he);
-        c.view().region(8).draw(hf);
+            c.view().divide(1, 1);
+            c.view().region(0).draw(hsum);
+
+//            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",3500,8500);
+//            func.setParameters(new double[]{50000,6000,500});
+//            func.setParLimits(0,0,50000);
+//            func.setParLimits(1,3500,8500);
+//            func.setParLimits(2,0.0,10000);
+//
+//            func.attr().setLineWidth(2);
+//            DataFitter.fit(func,hsum,"N");
+//
+//            PaveText paveStats = new PaveText(func.getStats("M").toString(),0.05,0.95, false,18);
+//            paveStats.setNDF(true);
+//
+//            c.view().region(0).draw(hsum).draw(func,"same").draw(paveStats);
+
+        } else {
+            c = new TGCanvas(1600, 1000);
+            c.view().divide(3, 3);
+            c.view().region(0).draw(ha);
+            c.view().region(1).draw(hb);
+            c.view().region(2).draw(hcc);
+            c.view().region(3).draw(hl);
+            c.view().region(4).draw(hc);
+            c.view().region(5).draw(hr);
+            c.view().region(6).draw(hd);
+            c.view().region(7).draw(he);
+            c.view().region(8).draw(hf);
+        }
         c.repaint();
-    }
 
+    }
 }
