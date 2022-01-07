@@ -183,11 +183,11 @@ public class BeamSearch {
             func.attr().setLineWidth(2);
             DataFitter.fit(func,hsum,"N");
 
-//            PaveText paveStats = new PaveText(func.getStats("M"),0.05,0.95, false,18);
-//            paveStats.setNDF(true).setMultiLine(true);
+            PaveText paveStats = new PaveText(func.getStats("M").toString(),0.05,0.95, false,18);
+            paveStats.setNDF(true);
 
-//            c.view().region(1).draw(hsum).draw(func,"same").draw(paveStats);
-            c.view().region(1).draw(hsum).draw(func,"same");
+            c.view().region(1).draw(hsum).draw(func,"same").draw(paveStats);
+//            c.view().region(1).draw(hsum).draw(func,"same");
             c.repaint();
 
         } else {
