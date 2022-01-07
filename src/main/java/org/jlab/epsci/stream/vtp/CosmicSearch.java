@@ -229,7 +229,7 @@ public class CosmicSearch {
 //            c.view().region(0).draw(hsum);
 
             F1D func = new F1D("func","[a]*gaus(x,[b],[c])",100,800);
-            func.setParameters(new double[]{50000,6000,500});
+            func.setParameters(new double[]{5000,600,500});
             func.setParLimits(0,0,5000);
             func.setParLimits(1,100,800);
             func.setParLimits(2,0.0,1000);
