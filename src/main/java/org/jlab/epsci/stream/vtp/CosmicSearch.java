@@ -226,21 +226,21 @@ public class CosmicSearch {
             c = new TGCanvas(800, 1000);
 
             c.view().divide(1, 1);
-            c.view().region(0).draw(hsum);
+//            c.view().region(0).draw(hsum);
 
-//            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",3500,8500);
-//            func.setParameters(new double[]{50000,6000,500});
-//            func.setParLimits(0,0,50000);
-//            func.setParLimits(1,3500,8500);
-//            func.setParLimits(2,0.0,10000);
-//
-//            func.attr().setLineWidth(2);
-//            DataFitter.fit(func,hsum,"N");
-//
-//            PaveText paveStats = new PaveText(func.getStats("M").toString(),0.05,0.95, false,18);
-//            paveStats.setNDF(true);
-//
-//            c.view().region(0).draw(hsum).draw(func,"same").draw(paveStats);
+            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",0,1000);
+            func.setParameters(new double[]{1000,1000,500});
+            func.setParLimits(0,0,1000);
+            func.setParLimits(1,0,1000);
+            func.setParLimits(2,0.0,1000);
+
+            func.attr().setLineWidth(2);
+            DataFitter.fit(func,hsum,"N");
+
+            PaveText paveStats = new PaveText(func.getStats("M").toString(),0.05,0.95, false,18);
+            paveStats.setNDF(true);
+
+            c.view().region(0).draw(hsum).draw(func,"same").draw(paveStats);
 
         } else {
             c = new TGCanvas(1600, 1000);
