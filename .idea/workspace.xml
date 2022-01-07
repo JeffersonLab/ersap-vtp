@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00086" summary="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), &#10;2) Central channel energy deposition must be bigger than left or right channels">
-      <created>1641242240735</created>
-      <option name="number" value="00086" />
-      <option name="presentableId" value="LOCAL-00086" />
-      <option name="project" value="LOCAL" />
-      <updated>1641242240735</updated>
-    </task>
     <task id="LOCAL-00087" summary="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), &#10;2) Central channel energy deposition must be bigger than left or right channels">
       <created>1641242477016</created>
       <option name="number" value="00087" />
@@ -424,11 +417,17 @@
       <option name="project" value="LOCAL" />
       <updated>1641417487331</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="- histo for sum">
+      <created>1641570864796</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1641570864796</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- introduced prescale factor to process events every N event." />
     <MESSAGE value="-set prescale factor to 50" />
     <MESSAGE value="-print size of the decoded frame" />
     <MESSAGE value="- print the frame" />
@@ -453,7 +452,8 @@
     <MESSAGE value="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), 2) Central channel energy deposition must be bigger than left or right channels" />
     <MESSAGE value="- Draw analyzed data from the HIPO file.&#10;- Analysis: 1) It must be one and only one hit per channel withing 16ns (sliding window: event), &#10;2) Central channel energy deposition must be bigger than left or right channels" />
     <MESSAGE value="- Cosmic search trigger engine algorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Cosmic search trigger engine algorithm" />
+    <MESSAGE value="- histo for sum" />
+    <option name="LAST_COMMIT_MESSAGE" value="- histo for sum" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/ersap_vtp$StreamProcessor.ic" NAME="StreamProcessor Coverage Results" MODIFIED="1624380098145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

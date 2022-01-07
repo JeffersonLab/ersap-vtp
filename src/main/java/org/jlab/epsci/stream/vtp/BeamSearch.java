@@ -143,14 +143,14 @@ public class BeamSearch {
 
                     int a1 = 0, l1 = 0, d1 = 0, b1 = 0, e1 = 0, cc1 = 0, r1 = 0, f1 = 0;
 
-                    if (left.get(0) >= 1000) l1 = left.get(0);
-                    if (right.get(0) >= 1000) r1 = right.get(0);
-                    if (a.get(0) >= 1000) a1 = a.get(0);
-                    if (b.get(0) >= 1000) b1 = b.get(0);
-                    if (cc.get(0) >= 1000) cc1 = cc.get(0);
-                    if (d.get(0) >= 1000) d1 = d.get(0);
-                    if (e.get(0) >= 1000) e1 = e.get(0);
-                    if (f.get(0) >= 1000) f1 = f.get(0);
+                    if (left.size() == 1 && left.get(0) >= 1000) l1 = left.get(0);
+                    if (right.size() == 1 && right.get(0) >= 1000) r1 = right.get(0);
+                    if (a.size() == 1 && a.get(0) >= 1000) a1 = a.get(0);
+                    if (b.size() == 1 && b.get(0) >= 1000) b1 = b.get(0);
+                    if (cc.size() == 1 && cc.get(0) >= 1000) cc1 = cc.get(0);
+                    if (d.size() == 1 && d.get(0) >= 1000) d1 = d.get(0);
+                    if (e.size() == 1 && e.get(0) >= 1000) e1 = e.get(0);
+                    if (f.size() == 1 && f.get(0) >= 1000) f1 = f.get(0);
                     int sum = center.get(0) + l1 + r1 + a1 + b1 + cc1 + d1 + e1 + f1;
                     hsum.fill(sum);
                 }
