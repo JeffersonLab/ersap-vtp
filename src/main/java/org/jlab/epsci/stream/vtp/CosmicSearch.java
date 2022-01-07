@@ -228,10 +228,10 @@ public class CosmicSearch {
             c.view().divide(1, 1);
 //            c.view().region(0).draw(hsum);
 
-//            F1D func = new F1D("func","[a]*gaus(x,[b],[c])+[d]+[e]*x+[f]*x*x",100,1000);
-//            func.setParameters(new double[]{5000,600,500,1.0,1.0,1.0});
-            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",100,800);
-            func.setParameters(new double[]{5000,300,200});
+            F1D func = new F1D("func","[a]*gaus(x,[b],[c])+[d]+[e]*x+[f]*x*x",100,800);
+            func.setParameters(new double[]{5000,300,200,1.0,1.0,1.0});
+//            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",100,800);
+//            func.setParameters(new double[]{5000,300,200});
             func.setParLimits(0,0,5000);
             func.setParLimits(1,0,800);
             func.setParLimits(2,0,1000);
