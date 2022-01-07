@@ -127,11 +127,11 @@ public class BeamSearch {
             ) {
                 if (((left.size() == 1) && (center.get(0) > left.get(0)))
                         && ((right.size() == 1) && (center.get(0) > right.get(0)))
-//                        || ((a.size() == 1) && (center.get(0) > a.get(0)))
-//                        || ((b.size() == 1) && (center.get(0) > b.get(0)))
-//                        || ((cc.size() == 1) && (center.get(0) > cc.get(0)))
-//                        || ((d.size() == 1) && (center.get(0) > d.get(0)))
-//                        || ((e.size() == 1) && (center.get(0) > e.get(0)))
+                        && ((a.size() == 1) && (center.get(0) > a.get(0)))
+                        && ((b.size() == 1) && (center.get(0) > b.get(0)))
+                        && ((cc.size() == 1) && (center.get(0) > cc.get(0)))
+                        && ((d.size() == 1) && (center.get(0) > d.get(0)))
+                        && ((e.size() == 1) && (center.get(0) > e.get(0)))
 //                        && ((f.size()==1) && (center.get(0) > f.get(0)))
                 ) {
                     hc.fill(center.get(0));
