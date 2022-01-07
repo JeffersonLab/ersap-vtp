@@ -57,7 +57,7 @@ public class CosmicSearch {
         H1F hd = new H1F("d", 100, 0.0, 500.0);
         H1F he = new H1F("e", 100, 0.0, 500.0);
         H1F hf = new H1F("f", 100, 0.0, 500.0);
-        H1F hsum = new H1F("sum", 100, 0.0, 500.0);
+        H1F hsum = new H1F("sum", 100, 0.0, 2000.0);
 //        H2F h2 = new H2F("h2", 112, 0.0, 112.0, 60, 0.0, 500.0);
 
         List<Integer> a = new ArrayList<>();
