@@ -164,15 +164,10 @@ public class BeamSearch {
         }
         TGCanvas c;
         if (s) {
-            c = new TGCanvas(1400, 1000);
-            c.view().divide(2, 1);
-            c.view().region(0).draw(hsum);
+            c = new TGCanvas(800, 1000);
+            c.view().divide(1, 1);
+//            c.view().region(0).draw(hsum);
 
-//            F1D func = new F1D("func","[a]+[b]*x+[c]*x*x+[d]*gaus(x,[e],[f])",3500,6600);
-//            func.setParameters(new double[]{1.0,1.0,1.0,10000,6000,500});
-//            func.setParLimits(3,0,40000);
-//            func.setParLimits(4,5500,6500);
-//            func.setParLimits(5,0.0,1000);
 
             F1D func = new F1D("func","[d]*gaus(x,[e],[f])",3500,8500);
             func.setParameters(new double[]{50000,6000,500});
@@ -186,8 +181,7 @@ public class BeamSearch {
             PaveText paveStats = new PaveText(func.getStats("M").toString(),0.05,0.95, false,18);
             paveStats.setNDF(true);
 
-            c.view().region(1).draw(hsum).draw(func,"same").draw(paveStats);
-//            c.view().region(1).draw(hsum).draw(func,"same");
+            c.view().region(0).draw(hsum).draw(func,"same").draw(paveStats);
             c.repaint();
 
         } else {
