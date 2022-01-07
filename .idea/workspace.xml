@@ -81,13 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00102" summary="- Cosmic search trigger engine algorithm">
-      <created>1641391742413</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1641391742413</updated>
-    </task>
     <task id="LOCAL-00103" summary="- Cosmic search trigger engine algorithm">
       <created>1641391837242</created>
       <option name="number" value="00103" />
@@ -424,7 +417,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641573882980</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="- histo for sum">
+      <created>1641574448772</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1641574448772</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

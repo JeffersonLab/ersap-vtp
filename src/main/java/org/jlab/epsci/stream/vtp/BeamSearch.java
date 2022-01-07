@@ -169,7 +169,7 @@ public class BeamSearch {
 //            c.view().region(0).draw(hsum);
 
 
-            F1D func = new F1D("func","[d]*gaus(x,[e],[f])",3500,8500);
+            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",3500,8500);
             func.setParameters(new double[]{50000,6000,500});
             func.setParLimits(0,0,50000);
             func.setParLimits(1,3500,8500);
