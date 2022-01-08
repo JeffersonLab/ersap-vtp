@@ -154,7 +154,7 @@ public class CosmicSearch {
                             & right.size() == 0
                             & f.size() == 0
                     ) {
-                        if((a.get(0) == left.get(0))
+                        if((a.get(0) == d.get(0))
 //                                && (left.get(0) >= d.get(0))
                         )
 
