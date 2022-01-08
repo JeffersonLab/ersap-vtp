@@ -81,20 +81,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00148" summary="- histo for sum">
-      <created>1641573548800</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1641573548800</updated>
-    </task>
-    <task id="LOCAL-00149" summary="- histo for sum">
-      <created>1641573776501</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1641573776501</updated>
-    </task>
     <task id="LOCAL-00150" summary="- histo for sum">
       <created>1641573882980</created>
       <option name="number" value="00150" />
@@ -424,7 +410,21 @@
       <option name="project" value="LOCAL" />
       <updated>1641605738481</updated>
     </task>
-    <option name="localTasksCounter" value="197" />
+    <task id="LOCAL-00197" summary="- histo for sum">
+      <created>1641605811589</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1641605811589</updated>
+    </task>
+    <task id="LOCAL-00198" summary="- histo for sum">
+      <created>1641605840532</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1641605840532</updated>
+    </task>
+    <option name="localTasksCounter" value="199" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
