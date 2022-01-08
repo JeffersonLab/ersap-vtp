@@ -167,8 +167,8 @@ public class CosmicSearch {
                         {
                             ha.fill(a.get(0));
                             hl.fill(left.get(0));
-                            hd.fill(d.get(0));
-                            hsum.fill(a.get(0) + left.get(0) + d.get(0));
+                            hd.fill(e.get(0));
+                            hsum.fill(a.get(0) + left.get(0) + e.get(0));
 
                         }
                     }
