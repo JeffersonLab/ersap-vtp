@@ -128,7 +128,7 @@ public class CosmicSearch {
 //                            && right.size() == 0
 //                            && f.size() == 0
                     ) {
-                        if((b.get(0) == e.get(0))
+                        if ((b.get(0) == e.get(0))
 //                                && (center.get(0) >= e.get(0))
                         )
 //                        if ((b.get(0) >= center.get(0))
@@ -149,13 +149,18 @@ public class CosmicSearch {
                             && left.size() == 1
                             && d.size() == 1
 
-//                            & b.size() == 0
-//                            & center.size() == 0
-//                            & e.size() == 0
-//                            & cc.size() == 0
-//                            & right.size() == 0
-//                            & f.size() == 0
+                            & b.size() == 0
+                            & center.size() == 0
+                            & e.size() == 0
+                            & cc.size() == 0
+                            & right.size() == 0
+                            & f.size() == 0
                     ) {
+                        ha.fill(a.get(0));
+                        hl.fill(left.get(0));
+                        hd.fill(d.get(0));
+                        hsum.fill(a.get(0) + left.get(0) + d.get(0));
+/*
                         if((a.get(0) == d.get(0))
 //                                && (left.get(0) == d.get(0))
                         )
@@ -172,12 +177,9 @@ public class CosmicSearch {
                         } else if ((d.get(0) == left.get(0))) {
                             ha.fill(a.get(0));
                         }
-//                        ha.fill(a.get(0));
-//                        hl.fill(left.get(0));
-//                        hd.fill(d.get(0));
-//                        hsum.fill(a.get(0) + left.get(0) + d.get(0));
-
+*/
                     }
+
                     break;
                 case "right":
                     if (cc.size() == 1
@@ -190,7 +192,7 @@ public class CosmicSearch {
                             && center.size() == 0
                             && e.size() == 0
                     ) {
-                        if((cc.get(0) >= right.get(0))
+                        if ((cc.get(0) >= right.get(0))
                                 && (right.get(0) >= f.get(0)))
 //                        if ((cc.get(0) >= right.get(0))
 //                                && (cc.get(0) <= (cc.get(0) + (cc.get(0) - right.get(0))))
@@ -217,7 +219,7 @@ public class CosmicSearch {
                             && right.size() == 0
                             && f.size() == 0
                     ) {
-                        if((cc.get(0) >= center.get(0))
+                        if ((cc.get(0) >= center.get(0))
                                 && (center.get(0) >= d.get(0)))
 //                        if ((cc.get(0) >= center.get(0))
 //                                && (cc.get(0) <= (cc.get(0) + (cc.get(0) - center.get(0))))
@@ -242,11 +244,11 @@ public class CosmicSearch {
             c.view().divide(1, 1);
 //            c.view().region(0).draw(hsum);
 
-            F1D func = new F1D("func","[a]+[b]*x+[c]*x*x+[d]*gaus(x,[e],[f])",00,1500);
-            func.setParameters(new double[]{0.0,0.0,0.0,5000,300,200});
-            func.setParLimits(3,0,5000);
-            func.setParLimits(4,0,800);
-            func.setParLimits(5,0.0,1000);
+            F1D func = new F1D("func", "[a]+[b]*x+[c]*x*x+[d]*gaus(x,[e],[f])", 00, 1500);
+            func.setParameters(new double[]{0.0, 0.0, 0.0, 5000, 300, 200});
+            func.setParLimits(3, 0, 5000);
+            func.setParLimits(4, 0, 800);
+            func.setParLimits(5, 0.0, 1000);
 
 
             //            F1D func = new F1D("func","[a]*gaus(x,[b],[c])",100,800);
@@ -256,12 +258,12 @@ public class CosmicSearch {
 //            func.setParLimits(2,0,1000);
 
             func.attr().setLineWidth(2);
-            DataFitter.fit(func,hsum,"N");
+            DataFitter.fit(func, hsum, "N");
 
-            PaveText paveStats = new PaveText(func.getStats("M").toString(),0.05,0.95, false,18);
+            PaveText paveStats = new PaveText(func.getStats("M").toString(), 0.05, 0.95, false, 18);
             paveStats.setNDF(true);
 
-            c.view().region(0).draw(hsum).draw(func,"same").draw(paveStats);
+            c.view().region(0).draw(hsum).draw(func, "same").draw(paveStats);
 
         } else {
             c = new TGCanvas(1600, 1000);
