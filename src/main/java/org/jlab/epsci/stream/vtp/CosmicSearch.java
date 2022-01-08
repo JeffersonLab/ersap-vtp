@@ -147,7 +147,7 @@ public class CosmicSearch {
                 case "left":
                     if (a.size() == 1
                             && left.size() == 1
-                            && right.size() == 1
+                            && d.size() == 1
 
 //                            & b.size() == 0
 //                            & center.size() == 0
@@ -156,7 +156,7 @@ public class CosmicSearch {
 //                            & right.size() == 0
 //                            & f.size() == 0
                     ) {
-                        if((a.get(0) == right.get(0))
+                        if((a.get(0) == d.get(0))
 //                                && (left.get(0) == d.get(0))
                         )
 
@@ -166,12 +166,17 @@ public class CosmicSearch {
 //                                && (left.get(0) <= (left.get(0) + (left.get(0) - d.get(0))))
 //                        )
                         {
-                            ha.fill(a.get(0));
                             hl.fill(left.get(0));
-                            hr.fill(right.get(0));
-                            hsum.fill(a.get(0) + left.get(0) + right.get(0));
-
+                        } else if ((a.get(0) == left.get(0))) {
+                            hd.fill(d.get(0));
+                        } else if ((d.get(0) == left.get(0))) {
+                            ha.fill(a.get(0));
                         }
+//                        ha.fill(a.get(0));
+//                        hl.fill(left.get(0));
+//                        hd.fill(d.get(0));
+//                        hsum.fill(a.get(0) + left.get(0) + d.get(0));
+
                     }
                     break;
                 case "right":
