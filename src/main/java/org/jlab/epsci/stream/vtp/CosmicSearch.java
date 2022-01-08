@@ -168,7 +168,7 @@ public class CosmicSearch {
                         {
                             ha.fill(a.get(0));
                             hl.fill(left.get(0));
-                            hr.fill(b.get(0));
+                            hr.fill(right.get(0));
                             hsum.fill(a.get(0) + left.get(0) + right.get(0));
 
                         }
