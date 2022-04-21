@@ -120,6 +120,7 @@ public class ReadAggOutput {
         int[] pData = new int[intBuf.remaining()];
         intBuf.get(pData);
 
+        System.out.println("DDD "+pData.length);
         List<VAdcHit> ev_list = new ArrayList<>();
         if (pData.length != 0) {
             if ((pData[0] & 0x8FFF8000) == 0x80000000) {
