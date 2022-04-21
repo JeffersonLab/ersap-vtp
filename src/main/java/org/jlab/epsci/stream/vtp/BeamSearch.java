@@ -1,4 +1,4 @@
-package org.jlab.epsci.stream.vtp;
+   package org.jlab.epsci.stream.vtp;
 
 import j4np.hipo5.data.Bank;
 import j4np.hipo5.data.Event;
