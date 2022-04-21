@@ -34,7 +34,7 @@ public class ReadAggOutput {
             System.out.println("Read in file " + finalFilename + ", got " + evCount + " events");
 
             // Loop through all events
-            for (int i = 1; i <= evCount; i++) {
+            for (int i = 3; i <= evCount; i++) {
 
                 System.out.println("Event " + i + ":");
                 EvioEvent ev = reader.getEvent(i);
