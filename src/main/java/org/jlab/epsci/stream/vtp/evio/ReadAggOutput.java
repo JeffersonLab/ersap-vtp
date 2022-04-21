@@ -120,38 +120,18 @@ public class ReadAggOutput {
         int[] pData = new int[intBuf.remaining()];
         intBuf.get(pData);
 
-        for (int i: pData) System.out.println(String.format("%x",i));
-        System.out.println("DDD ==================================");
+//        for (int i: pData) System.out.println(String.format("%x",i));
         List<VAdcHit> ev_list = new ArrayList<>();
-        if (pData.length != 0) {
-            if ((pData[0] & 0x8FFF8000) == 0x80000000) {
-                for (int j = 1; j < 9; j++) {
-                    int vl = pData[j];
-                    int slot_ind = (vl >> 0) & 0xFFFF;
-                    int slot_len = (vl >> 16) & 0xFFFF;
-                    if (slot_len > 0) {
-                        int type = 0x0;
-                        int crate = -1;
-                        int slot = -1;
-                        for (int jj = 0; jj < slot_len; jj++) {
-                            int val = pData[slot_ind + jj];
-                            if ((val & 0x80000000) == 0x80000000) {
-                                type = (val >> 15) & 0xFFFF;
-                                crate = (val >> 8) & 0x007F;
-                                slot = (val >> 0) & 0x001F;
-                            } else if (type == 0x0001) { // FADC hit type
-                                int q = (val >> 0) & 0x1FFF;
-                                int channel = (val >> 13) & 0x000F;
-                                long v = ((val >> 17) & 0x3FFF) * 4;
-                                long ht = frame_time_ns + v;
-                                ev_list.add(new VAdcHit(crate, slot, channel, q, ht));
-                            }
-                        }
-                    }
-                }
-            }
+
+        int payloadPortLength = pData[0];
+        int payloadPort = pData[1] >>> 16;
+        System.out.println("DDD payloadPot = "+ payloadPort+" length = "+payloadPortLength);
+        for (int i=2; i<=payloadPortLength; i++){
+            System.out.println(pData[i]);
         }
-        return ev_list;
+        System.out.println("DDD ==================================");
+
+         return ev_list;
     }
 
     public static void main(String args[]) {
