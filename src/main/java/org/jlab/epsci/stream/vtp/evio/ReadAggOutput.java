@@ -90,8 +90,10 @@ public class ReadAggOutput {
                         EvioBank dataBank = (EvioBank) rocTSB.getChildAt(k);
                         // Ignore the data type (currently the improper value of 0xf).
                         // Just get the data as bytes
+                        int payloadId = dataBank.getHeader().getTag();
+                        System.out.println("payload ID = " + payloadId);
                         byte[] byteData = dataBank.getRawBytes();
-                        List<VAdcHit> hits = fADCPayloadDecoder(timestamp, byteData);
+                        List<VAdcHit> hits = fADCPayloadDecoder(timestamp, payloadId, byteData);
                         for (VAdcHit h : hits) {
                             System.out.println(h);
                         }
@@ -112,7 +114,7 @@ public class ReadAggOutput {
 
 
 
-    public static List<VAdcHit> fADCPayloadDecoder(Long frame_time_ns, byte[] ba) {
+    public static List<VAdcHit> fADCPayloadDecoder(Long frame_time_ns, int payloadId, byte[] ba) {
         IntBuffer intBuf =
                 ByteBuffer.wrap(ba)
                         .order(ByteOrder.BIG_ENDIAN)
@@ -123,13 +125,7 @@ public class ReadAggOutput {
 //        for (int i: pData) System.out.println(String.format("%x",i));
         List<VAdcHit> ev_list = new ArrayList<>();
 
-        int payloadPortLength = pData[0];
-        int payloadPort = pData[1] >>> 16;
-        System.out.println("DDD payloadPort = "+ payloadPort+" length = "+payloadPortLength/4);
-//        for (int i=2; i<=payloadPortLength/4; i++){
-//            System.out.println(pData[i]);
-//        }
-        System.out.println("DDD ================================== " +payloadPortLength/4 +" "+ pData.length);
+        System.out.println("DDD ================================== " +payloadId +" "+ pData.length);
 
          return ev_list;
     }
