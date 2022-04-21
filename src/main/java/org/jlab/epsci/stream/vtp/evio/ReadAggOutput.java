@@ -39,7 +39,7 @@ public class ReadAggOutput {
                 System.out.println("Event " + i + ":");
                 EvioEvent ev = reader.getEvent(i);
                 ev.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-
+                System.out.println(String.format("%x", ev.getHeader().getTag()));
                 // Go one level down ->
                 int childCount = ev.getChildCount();
                 if (childCount < 2) {
