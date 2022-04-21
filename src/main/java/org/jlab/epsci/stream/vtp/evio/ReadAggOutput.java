@@ -115,19 +115,21 @@ public class ReadAggOutput {
 
 
     public static List<VAdcHit> fADCPayloadDecoder(Long frame_time_ns, int payloadId, byte[] ba) {
+        List<VAdcHit> hits = new ArrayList<>();
         IntBuffer intBuf =
                 ByteBuffer.wrap(ba)
                         .order(ByteOrder.BIG_ENDIAN)
                         .asIntBuffer();
         int[] pData = new int[intBuf.remaining()];
         intBuf.get(pData);
-
-//        for (int i: pData) System.out.println(String.format("%x",i));
-        List<VAdcHit> ev_list = new ArrayList<>();
-
-        System.out.println("DDD ================================== " +payloadId +" "+ pData.length);
-
-         return ev_list;
+        for (int i:pData) {
+            int q = (i >> 0) & 0x1FFF;
+            int channel = (i >> 13) & 0x000F;
+            long v = ((i >> 17) & 0x3FFF) * 4;
+            long ht = frame_time_ns + v;
+            hits.add (new VAdcHit(1, payloadId, channel, q, ht));
+        }
+         return hits;
     }
 
     public static void main(String args[]) {
