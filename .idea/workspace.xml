@@ -116,13 +116,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00173" summary="- histo for sum">
-      <created>1641578526593</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1641578526593</updated>
-    </task>
     <task id="LOCAL-00174" summary="- histo for sum">
       <created>1641579357783</created>
       <option name="number" value="00174" />
@@ -459,11 +452,17 @@
       <option name="project" value="LOCAL" />
       <updated>1650508935143</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="- update reader from Carl">
+      <created>1650562560567</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1650562560567</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-print size of the decoded frame" />
     <MESSAGE value="- print the frame" />
     <MESSAGE value="- coincidence algorithm" />
     <MESSAGE value="- coincidence. width 1ns, level 3" />
@@ -488,7 +487,8 @@
     <MESSAGE value="- Cosmic search trigger engine algorithm" />
     <MESSAGE value="- histo for sum" />
     <MESSAGE value="- evio data format file reader" />
-    <option name="LAST_COMMIT_MESSAGE" value="- evio data format file reader" />
+    <MESSAGE value="- update reader from Carl" />
+    <option name="LAST_COMMIT_MESSAGE" value="- update reader from Carl" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

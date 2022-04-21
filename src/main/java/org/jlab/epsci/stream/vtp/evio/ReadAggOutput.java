@@ -18,7 +18,9 @@ import org.jlab.epsci.stream.vtp.VAdcHit;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class ReadAggOutput {
                 if (childCount < 2) {
                     throw new Exception("Problem: too few child for event (" + childCount + ")");
                 }
-                System.out.println("Event has " + childCount + " child structures");
+//                System.out.println("Event has " + childCount + " child structures");
 
                 // First bank is Time Info Bank (TIB) with frame and timestamp
                 EvioBank b = (EvioBank) ev.getChildAt(0);
@@ -89,10 +91,10 @@ public class ReadAggOutput {
                         // Ignore the data type (currently the improper value of 0xf).
                         // Just get the data as bytes
                         byte[] byteData = dataBank.getRawBytes();
-//                        List<VAdcHit> hits = fADCPayloadDecoder(timestamp, iData);
-//                        for (VAdcHit h : hits) {
-//                            System.out.println(h);
-//                        }
+                        List<VAdcHit> hits = fADCPayloadDecoder(timestamp, byteData);
+                        for (VAdcHit h : hits) {
+                            System.out.println(h);
+                        }
 
                     }
                 }
@@ -110,8 +112,14 @@ public class ReadAggOutput {
 
 
 
-    public static List<VAdcHit> fADCPayloadDecoder(Long frame_time_ns,
-                                                   int[] pData) {
+    public static List<VAdcHit> fADCPayloadDecoder(Long frame_time_ns, byte[] ba) {
+        IntBuffer intBuf =
+                ByteBuffer.wrap(ba)
+                        .order(ByteOrder.LITTLE_ENDIAN)
+                        .asIntBuffer();
+        int[] pData = new int[intBuf.remaining()];
+        intBuf.get(pData);
+
         List<VAdcHit> ev_list = new ArrayList<>();
         if (pData.length != 0) {
             if ((pData[0] & 0x8FFF8000) == 0x80000000) {
