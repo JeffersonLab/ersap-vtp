@@ -125,11 +125,11 @@ public class ReadAggOutput {
 
         int payloadPortLength = pData[0];
         int payloadPort = pData[1] >>> 16;
-        System.out.println("DDD payloadPot = "+ payloadPort+" length = "+payloadPortLength);
-        for (int i=2; i<=payloadPortLength; i++){
-            System.out.println(pData[i]);
-        }
-        System.out.println("DDD ==================================");
+        System.out.println("DDD payloadPort = "+ payloadPort+" length = "+payloadPortLength/4);
+//        for (int i=2; i<=payloadPortLength/4; i++){
+//            System.out.println(pData[i]);
+//        }
+        System.out.println("DDD ================================== " +payloadPortLength/4 +" "+ pData.length);
 
          return ev_list;
     }
