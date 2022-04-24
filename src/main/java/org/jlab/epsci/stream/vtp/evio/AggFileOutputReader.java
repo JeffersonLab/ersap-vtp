@@ -29,7 +29,7 @@ public class AggFileOutputReader {
     private String fName;
     private EvioReader reader;
     private int evCount;
-    private int evtIndex = 1; //for evio starts from 1
+    private int evtIndex = 0; //for evio starts from 1
     private ByteOrder order;
 
     public AggFileOutputReader(String fName) {
@@ -58,6 +58,8 @@ public class AggFileOutputReader {
     }
 
     public EvioEvent nextEvent() {
+        evtIndex++;
+        System.out.println("DDD =========== > Reading event = "+evtIndex);
         if (evtIndex <= evCount) {
             try {
                 return reader.parseEvent(evtIndex);
