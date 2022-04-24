@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/AggFileReaderEngine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,13 +117,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00185" summary="- histo for sum">
-      <created>1641588647204</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1641588647204</updated>
     </task>
     <task id="LOCAL-00186" summary="- histo for sum">
       <created>1641588750657</created>
@@ -460,11 +454,17 @@
       <option name="project" value="LOCAL" />
       <updated>1650818555454</updated>
     </task>
-    <option name="localTasksCounter" value="234" />
+    <task id="LOCAL-00234" summary="service composition yaml file for the VTP EVIO data processing pipeline">
+      <created>1650819117826</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1650819117827</updated>
+    </task>
+    <option name="localTasksCounter" value="235" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- write events to HIPO file" />
     <MESSAGE value="- write events to HIPO file&#10;- 4 ns window for event building" />
     <MESSAGE value="- auto close hipo files" />
     <MESSAGE value="- catch ctr_l sygnal&#10;- new evt selection criteria" />
@@ -489,7 +489,8 @@
     <MESSAGE value="decoding of the fADC data" />
     <MESSAGE value="creating engines for the VTP EVIO fADC decoding" />
     <MESSAGE value="get read of JSON agg_file as a config parameter for AggFileOutputReader" />
-    <option name="LAST_COMMIT_MESSAGE" value="get read of JSON agg_file as a config parameter for AggFileOutputReader" />
+    <MESSAGE value="service composition yaml file for the VTP EVIO data processing pipeline" />
+    <option name="LAST_COMMIT_MESSAGE" value="service composition yaml file for the VTP EVIO data processing pipeline" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
