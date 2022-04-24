@@ -2,4 +2,4 @@
 export CLASSPATH="$ERSAP_HOME/plugins/epsci/lib/*:$ERSAP_HOME/lib/*"
 #export JAVA_HOME=/u/group/da/Java/jdk/jdk-11.0.2
 export PATH=$JAVA_HOME/bin:$PATH
-exec java org.jlab.epsci.stream.vtp.evio.ReadAggOutput "$@"
+exec java org.jlab.epsci.stream.vtp.evio.AggFileOutputReader "$@"

@@ -24,9 +24,54 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadAggOutput {
+public class AggFileOutputReader {
 
-    static int readFile(String finalFilename) throws Exception {
+    private String fName;
+    private EvioReader reader;
+    private int evCount;
+    private int evtIndex = 1; //for evio starts from 1
+    private ByteOrder order;
+
+    public AggFileOutputReader(String fName) {
+        this.fName = fName;
+        try {
+            reader = new EvioReader(new File(fName), false, true, false);
+            order = reader.getByteOrder();
+            evCount = reader.getEventCount();
+        } catch (IOException | EvioException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Read in file " + fName + ", got " + evCount + " events");
+
+    }
+
+    public EvioEvent nextEvent() {
+        if (evtIndex <= evCount) {
+            try {
+                return reader.parseEvent(evtIndex);
+            } catch (IOException | EvioException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else return null;
+    }
+
+    public int getEventCount() {
+        return evCount;
+    }
+
+    public ByteOrder getByteOrder() {
+        return order;
+    }
+
+    public void close(){
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static int readFile(String finalFilename) throws Exception {
 
         try {
             EvioReader reader = new EvioReader(new File(finalFilename), false, true, false);
@@ -36,7 +81,7 @@ public class ReadAggOutput {
             System.out.println("Read in file " + finalFilename + ", got " + evCount + " events");
 
             // Loop through all events (skip first 2 which are prestart and go)
-            for (int i=1; i <= evCount; i++) {
+            for (int i = 1; i <= evCount; i++) {
 
                 System.out.println("Event " + i + ":");
                 EvioEvent ev = reader.parseEvent(i);
@@ -44,12 +89,10 @@ public class ReadAggOutput {
                 if (evTag == 0xffd1) {
                     System.out.println("Skip over PRESTART event");
                     continue;
-                }
-                else if (evTag == 0xffd2) {
+                } else if (evTag == 0xffd2) {
                     System.out.println("Skip over GO event");
                     continue;
-                }
-                else if (evTag == 0xffd4) {
+                } else if (evTag == 0xffd4) {
                     System.out.println("Hit END event, quitting");
                     break;
                 }
@@ -69,14 +112,14 @@ public class ReadAggOutput {
                 EvioBank b = (EvioBank) ev.getChildAt(0);
                 int[] intData = b.getIntData();
                 int frame = intData[0];
-                long timestamp = ((((long)intData[1]) & 0x00000000ffffffffL) +
-                        (((long)intData[2]) << 32));
+                long timestamp = ((((long) intData[1]) & 0x00000000ffffffffL) +
+                        (((long) intData[2]) << 32));
                 System.out.println("  Frame = " + frame + ", TS = " + timestamp);
 
                 // Loop through all ROC Time Slice Banks (TSB) which come after TIB
-                for (int j=1; j < childCount; j++) {
+                for (int j = 1; j < childCount; j++) {
                     // ROC Time SLice Bank
-                    EvioBank rocTSB = (EvioBank)ev.getChildAt(j);
+                    EvioBank rocTSB = (EvioBank) ev.getChildAt(j);
                     int kids = rocTSB.getChildCount();
                     if (kids < 2) {
                         throw new Exception("Problem: too few child for TSB (" + childCount + ")");
@@ -86,7 +129,7 @@ public class ReadAggOutput {
                     // followed by data banks
 
                     // Skip over SIB by starting at 1
-                    for (int k=1; k < kids; k++) {
+                    for (int k = 1; k < kids; k++) {
                         EvioBank dataBank = (EvioBank) rocTSB.getChildAt(k);
                         // Ignore the data type (currently the improper value of 0xf).
                         // Just get the data as bytes
@@ -101,17 +144,11 @@ public class ReadAggOutput {
                     }
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException | EvioException e) {
             e.printStackTrace();
         }
-        catch (EvioException e) {
-            e.printStackTrace();
-        }
-
         return 0;
     }
-
 
 
     public static List<VAdcHit> fADCPayloadDecoder(Long frame_time_ns, int payloadId, byte[] ba) {
@@ -122,14 +159,14 @@ public class ReadAggOutput {
                         .asIntBuffer();
         int[] pData = new int[intBuf.remaining()];
         intBuf.get(pData);
-        for (int i:pData) {
+        for (int i : pData) {
             int q = (i >> 0) & 0x1FFF;
             int channel = (i >> 13) & 0x000F;
             long v = ((i >> 17) & 0x3FFF) * 4;
             long ht = frame_time_ns + v;
-            hits.add (new VAdcHit(1, payloadId, channel, q, ht));
+            hits.add(new VAdcHit(1, payloadId, channel, q, ht));
         }
-         return hits;
+        return hits;
     }
 
     public static void main(String args[]) {
