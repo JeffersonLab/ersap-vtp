@@ -27,7 +27,8 @@ public class AggFileReaderEngine extends AbstractEventReaderService<AggFileOutpu
     protected AggFileOutputReader createReader(Path file, JSONObject opts) throws EventReaderException {
         if(opts.has(FILE)){
             String fName = opts.getString(FILE);
-            return new AggFileOutputReader(fName);
+//            return new AggFileOutputReader(fName);
+            return new AggFileOutputReader(file.toFile());
         } else {
             System.out.println("ERROR: Aggregator file is not defined.");
             return null;

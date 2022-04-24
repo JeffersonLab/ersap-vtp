@@ -45,6 +45,18 @@ public class AggFileOutputReader {
 
     }
 
+    public AggFileOutputReader(File file) {
+        try {
+            reader = new EvioReader(file, false, true, false);
+            order = reader.getByteOrder();
+            evCount = reader.getEventCount();
+        } catch (IOException | EvioException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Read in file " + file.getName() + ", got " + evCount + " events");
+
+    }
+
     public EvioEvent nextEvent() {
         if (evtIndex <= evCount) {
             try {
