@@ -1,5 +1,7 @@
 package org.jlab.epsci.stream.engine.evio;
 
+import org.jlab.coda.jevio.EvioCompactReader;
+import org.jlab.coda.jevio.EvioException;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventReaderService;
 import org.jlab.epsci.ersap.std.services.EventReaderException;
@@ -7,6 +9,7 @@ import org.jlab.epsci.stream.engine.util.EvioDataType;
 import org.jlab.epsci.stream.vtp.evio.AggFileOutputReader;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.ByteOrder;
 import java.nio.file.Path;
 
@@ -25,14 +28,14 @@ public class AggFileReaderEngine extends AbstractEventReaderService<AggFileOutpu
     private static final String FILE = "agg_file";
     @Override
     protected AggFileOutputReader createReader(Path file, JSONObject opts) throws EventReaderException {
-        if(opts.has(FILE)){
-            String fName = opts.getString(FILE);
+//        if(opts.has(FILE)){
+//            String fName = opts.getString(FILE);
 //            return new AggFileOutputReader(fName);
-            return new AggFileOutputReader(file.toFile());
-        } else {
-            System.out.println("ERROR: Aggregator file is not defined.");
-            return null;
-        }
+//        } else {
+//            System.out.println("ERROR: Aggregator file is not defined.");
+//            return null;
+//        }
+        return new AggFileOutputReader(file.toFile());
     }
 
     @Override

@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/AggFileReaderEngine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/evio/AggFileReaderEngine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggFileReaderEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggFileReaderEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +81,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/evio" />
       <recent name="$PROJECT_DIR$/libs" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -116,13 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00187" summary="- histo for sum">
-      <created>1641588820199</created>
-      <option name="number" value="00187" />
-      <option name="presentableId" value="LOCAL-00187" />
-      <option name="project" value="LOCAL" />
-      <updated>1641588820199</updated>
     </task>
     <task id="LOCAL-00188" summary="- histo for sum">
       <created>1641595657909</created>
@@ -460,11 +455,17 @@
       <option name="project" value="LOCAL" />
       <updated>1650819961597</updated>
     </task>
-    <option name="localTasksCounter" value="236" />
+    <task id="LOCAL-00236" summary="wrong directory for the AggFileReaderEngine.yaml">
+      <created>1650820361958</created>
+      <option name="number" value="00236" />
+      <option name="presentableId" value="LOCAL-00236" />
+      <option name="project" value="LOCAL" />
+      <updated>1650820361958</updated>
+    </task>
+    <option name="localTasksCounter" value="237" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- auto close hipo files" />
     <MESSAGE value="- catch ctr_l sygnal&#10;- new evt selection criteria" />
     <MESSAGE value="- added event rate statistics" />
     <MESSAGE value="- reformatting" />
@@ -489,7 +490,8 @@
     <MESSAGE value="get read of JSON agg_file as a config parameter for AggFileOutputReader" />
     <MESSAGE value="service composition yaml file for the VTP EVIO data processing pipeline" />
     <MESSAGE value="AggFileReaderEngine description file" />
-    <option name="LAST_COMMIT_MESSAGE" value="AggFileReaderEngine description file" />
+    <MESSAGE value="wrong directory for the AggFileReaderEngine.yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="wrong directory for the AggFileReaderEngine.yaml" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
