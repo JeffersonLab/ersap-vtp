@@ -102,8 +102,10 @@ public class EvioFadcDecoderEngine implements Engine {
             int evTag = ev.getHeader().getTag();
             if (evTag == 0xffd1) {
                 System.out.println("Skip over PRESTART event");
+                return input;
             } else if (evTag == 0xffd2) {
                 System.out.println("Skip over GO event");
+                return input;
             } else if (evTag == 0xffd4) {
                 System.out.println("Hit END event, quitting");
                 return input;
