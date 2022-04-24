@@ -1,25 +1,19 @@
 ---
 io-services:
   reader:
-    class: org.jlab.epsci.stream.engine.VTPSourceEngine
+    class: org.jlab.epsci.stream.engine.evio.AggFileReaderEngine
     name: VTPSource
   writer:
     class: org.jlab.epsci.stream.engine.VTPWriterEngine
     name: VTPWriter
 services:
-   - class: org.jlab.epsci.stream.engine.VTPStreamTestEngine
-     name: VTPStreamTest
-   - class: jana_service
-     name: JanaService
-     lang: cpp
+   - class: org.jlab.epsci.stream.engine.evio.EvioFadcDecoderEngine
+     name: VTPProcessor
 configuration:
-  io-services:
-    reader:
-      port1: 6000
-      port2: 6001
   services:
-    VTPStreamTest:
-      print-interval: 10
-      slot: 3
+    VTPProcessor:
+      sliding_widow_size: 16
+      sliding_step: 1
+#      beam_center: 1_3_12
 mime-types:
-  - binary/data-vtp-g
+  - binary/data-evio

@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggFileReaderEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggFileReaderEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/evio/AggFileOutputReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/evio/AggFileOutputReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,13 +116,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00184" summary="- histo for sum">
-      <created>1641588420500</created>
-      <option name="number" value="00184" />
-      <option name="presentableId" value="LOCAL-00184" />
-      <option name="project" value="LOCAL" />
-      <updated>1641588420501</updated>
     </task>
     <task id="LOCAL-00185" summary="- histo for sum">
       <created>1641588647204</created>
@@ -462,11 +453,17 @@
       <option name="project" value="LOCAL" />
       <updated>1650816284290</updated>
     </task>
-    <option name="localTasksCounter" value="233" />
+    <task id="LOCAL-00233" summary="get read of JSON agg_file as a config parameter for AggFileOutputReader">
+      <created>1650818555454</created>
+      <option name="number" value="00233" />
+      <option name="presentableId" value="LOCAL-00233" />
+      <option name="project" value="LOCAL" />
+      <updated>1650818555454</updated>
+    </task>
+    <option name="localTasksCounter" value="234" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- coincidence. width 1ns, level 3" />
     <MESSAGE value="- write events to HIPO file" />
     <MESSAGE value="- write events to HIPO file&#10;- 4 ns window for event building" />
     <MESSAGE value="- auto close hipo files" />
@@ -491,7 +488,8 @@
     <MESSAGE value="- update reader from Carl" />
     <MESSAGE value="decoding of the fADC data" />
     <MESSAGE value="creating engines for the VTP EVIO fADC decoding" />
-    <option name="LAST_COMMIT_MESSAGE" value="creating engines for the VTP EVIO fADC decoding" />
+    <MESSAGE value="get read of JSON agg_file as a config parameter for AggFileOutputReader" />
+    <option name="LAST_COMMIT_MESSAGE" value="get read of JSON agg_file as a config parameter for AggFileOutputReader" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
