@@ -119,13 +119,6 @@
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
     </task>
-    <task id="LOCAL-00194" summary="- histo for sum">
-      <created>1641605399557</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1641605399557</updated>
-    </task>
     <task id="LOCAL-00195" summary="- histo for sum">
       <created>1641605461603</created>
       <option name="number" value="00195" />
@@ -462,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650923951772</updated>
     </task>
-    <option name="localTasksCounter" value="243" />
+    <task id="LOCAL-00243" summary="debugging EvioFadcDecoderEngine">
+      <created>1650924177896</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1650924177897</updated>
+    </task>
+    <option name="localTasksCounter" value="244" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
