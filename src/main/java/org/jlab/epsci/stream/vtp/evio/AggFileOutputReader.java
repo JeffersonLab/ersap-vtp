@@ -59,7 +59,7 @@ public class AggFileOutputReader {
 
     public EvioEvent nextEvent() {
         evtIndex++;
-        System.out.println("DDD =========== > Reading event = "+evtIndex);
+//        System.out.println("DDD =========== > Reading event = "+evtIndex);
         if (evtIndex <= evCount) {
             try {
                 return reader.parseEvent(evtIndex);
@@ -152,9 +152,8 @@ public class AggFileOutputReader {
                         byte[] byteData = dataBank.getRawBytes();
                         List<VAdcHit> hits = fADCPayloadDecoder(timestamp, payloadId, byteData);
                         for (VAdcHit h : hits) {
-                            System.out.println(h);
+                            System.out.println( "DDD "+ h);
                         }
-
                     }
                 }
             }

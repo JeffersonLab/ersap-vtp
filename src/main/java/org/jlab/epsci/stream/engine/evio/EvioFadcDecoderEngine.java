@@ -96,6 +96,8 @@ public class EvioFadcDecoderEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
+        EngineData out = new EngineData();
+
         String dataType = input.getMimeType();
         if (dataType.equals(EvioDataType.EVIO.mimeType())) {
             EvioEvent ev = (EvioEvent) input.getData();
@@ -154,11 +156,9 @@ public class EvioFadcDecoderEngine implements Engine {
                     // define the fits for a slot in the VTP frame
                     fADCPayloadDecoder(data, timestamp, slt, byteData);
                 }
-
-                eventIdentification(data);
-
+                out.setData(EvioDataType.EVIO, eventIdentification(data));
+                 return out;
             }
-
         }
         return input;
     }
@@ -278,6 +278,9 @@ public class EvioFadcDecoderEngine implements Engine {
                 }
             }
         } while (eTime >= endFrameTime);
+        for(String s:evIdentified.keySet()){
+            System.out.println("DDD "+s+ " "+evIdentified.get(s));
+        }
         return evIdentified;
     }
 
