@@ -186,7 +186,6 @@ public class EvioFadcDecoderEngine implements Engine {
             long v = ((i >> 17) & 0x3FFF) * 4;
             long ht = frame_time_ns + v;
             VAdcHit ah = new VAdcHit(1, slot, channel, q, ht);
-            System.out.println(ah);
             if (data.containsKey(ht)) {
                 data.get(ht).add(ah);
             } else {
