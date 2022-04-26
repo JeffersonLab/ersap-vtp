@@ -216,7 +216,7 @@ public class EvioFadcDecoderEngine implements Engine {
             step++;
             final long s = sTime;
             final long e = eTime;
-
+            System.out.println("DDD window = "+sTime+" - "+eTime);
             // carve the data for that window from the VTP frame
             Map<Long, List<VAdcHit>> subMap = hits.entrySet().stream()
                     .filter(x -> (x.getKey() >= s) && (x.getKey() <= e))
