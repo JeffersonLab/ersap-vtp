@@ -42,15 +42,15 @@ public class LiveHistogram {
             panel.add(c);
             c.initTimer(600);
             H1F hist = new H1F(s, histBins, histMin, histMax);
+            hist.setTitle(s);
+            hist.setTitleX(s);
             histograms.put(s, hist);
-            System.out.println("DDD hist added: ddd" + s+"ddd");
             c.region().draw(hist);
         }
         frame.setVisible(true);
     }
 
     public void update (String name, int value) {
-//        System.out.println("DDD upgrading hist = "+name+" "+histograms.containsKey(name));
         if(histograms.containsKey(name)){
             histograms.get(name).fill(value);
         }
