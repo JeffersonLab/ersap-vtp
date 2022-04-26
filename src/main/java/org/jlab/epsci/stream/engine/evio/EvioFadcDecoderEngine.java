@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
  */
 public class EvioFadcDecoderEngine implements Engine {
 
-    private boolean STOP = false;
+    private int STOP;
 
     private static String S_WINDOW = "sliding_widow_size";
     private int slidingWindowSize;
@@ -96,7 +96,7 @@ public class EvioFadcDecoderEngine implements Engine {
 
     @Override
     public EngineData execute(EngineData input) {
-        if(STOP) return input;
+        if(STOP > 2) return input;
 
         EngineData out = new EngineData();
         Map<String, List<Integer>> x = new HashMap<>();
@@ -161,7 +161,7 @@ public class EvioFadcDecoderEngine implements Engine {
                     fADCPayloadDecoder(data, timestamp, slt, byteData);
                 }
                 out.setData(JavaObjectType.JOBJ, eventIdentification(data));
-                STOP = true;
+                STOP++;
                  return out;
             }
         }
