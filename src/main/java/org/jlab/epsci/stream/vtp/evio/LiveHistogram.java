@@ -42,8 +42,7 @@ public class LiveHistogram {
             panel.add(c);
             c.initTimer(600);
             H1F hist = new H1F(s, histBins, histMin, histMax);
-            hist.setTitle(s);
-            hist.setTitleX("1-2-3");
+            hist.setTitleX(s);
             histograms.put(s, hist);
             c.region().draw(hist);
         }

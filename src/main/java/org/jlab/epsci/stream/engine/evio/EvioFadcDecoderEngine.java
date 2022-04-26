@@ -227,10 +227,10 @@ public class EvioFadcDecoderEngine implements Engine {
             Map<String, List<Integer>> slidingWindowHits = new HashMap<>();
             for (List<VAdcHit> l : subMap.values()) {
                 for (VAdcHit h : l) {
-                    // the name of the channel: crate_slot_channel
+                    // the name of the channel: crate-slot-channel
                     String n = h.getCrate()
-                            + "_" + h.getSlot()
-                            + "_" + h.getChannel();
+                            + "-" + h.getSlot()
+                            + "-" + h.getChannel();
 
                     if (slidingWindowHits.containsKey(n)) {
                         slidingWindowHits.get(n).add(h.getCharge());
@@ -311,7 +311,7 @@ public class EvioFadcDecoderEngine implements Engine {
 
     @Override
     public String getVersion() {
-        return "v1.1";
+        return "v1.0";
     }
 
     @Override
