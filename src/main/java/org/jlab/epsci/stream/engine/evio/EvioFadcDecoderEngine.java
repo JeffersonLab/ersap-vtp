@@ -95,20 +95,21 @@ public class EvioFadcDecoderEngine implements Engine {
     @Override
     public EngineData execute(EngineData input) {
         EngineData out = new EngineData();
-
+        Map<String, List<Integer>> x = new HashMap<>();
+        out.setData(JavaObjectType.JOBJ, x);
         String dataType = input.getMimeType();
         if (dataType.equals(EvioDataType.EVIO.mimeType())) {
             EvioEvent ev = (EvioEvent) input.getData();
             int evTag = ev.getHeader().getTag();
             if (evTag == 0xffd1) {
                 System.out.println("Skip over PRESTART event");
-                return input;
+                return out;
             } else if (evTag == 0xffd2) {
                 System.out.println("Skip over GO event");
-                return input;
+                return out;
             } else if (evTag == 0xffd4) {
                 System.out.println("Hit END event, quitting");
-                return input;
+                return out;
             }
 
 //            if (evTag == 0xff60) {
