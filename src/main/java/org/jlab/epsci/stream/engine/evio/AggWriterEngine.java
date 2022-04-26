@@ -3,9 +3,11 @@ package org.jlab.epsci.stream.engine.evio;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.ersap.std.services.AbstractEventWriterService;
 import org.jlab.epsci.ersap.std.services.EventWriterException;
+import org.jlab.epsci.stream.engine.util.EvioDataType;
 import org.jlab.epsci.stream.engine.util.JavaObjectType;
 import org.json.JSONObject;
 
+import javax.lang.model.element.ElementVisitor;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -53,6 +55,6 @@ public class AggWriterEngine extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected EngineDataType getDataType() {
-        return JavaObjectType.JOBJ;
+        return EvioDataType.EVIO;
     }
 }

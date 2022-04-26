@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggWriterEngine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/util/JavaObjectType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/util/O2BB2O.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/jlab/epsci/stream/engine/evio/AggWriterEngine.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/VTPWriterEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/EvioFadcDecoderEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/EvioFadcDecoderEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggWriterEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,13 +118,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00197" summary="- histo for sum">
-      <created>1641605811589</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1641605811589</updated>
     </task>
     <task id="LOCAL-00198" summary="- histo for sum">
       <created>1641605840532</created>
@@ -468,7 +455,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650931978666</updated>
     </task>
-    <option name="localTasksCounter" value="246" />
+    <task id="LOCAL-00246" summary="debugging EvioFadcDecoderEngine">
+      <created>1650935251101</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1650935251101</updated>
+    </task>
+    <option name="localTasksCounter" value="247" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
