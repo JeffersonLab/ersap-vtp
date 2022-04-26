@@ -29,7 +29,7 @@ configuration:
       sliding_step: 1
 #  beam_center is a string: crate_slot_channel.
 #  If not defined (commented out) algorithm will not consider a cell with a max charge
-#      beam_center: "1_3_12"
+#      beam_center: "1-3-12"
 mime-types:
   - binary/data-evio
   - binary/data-jobj
