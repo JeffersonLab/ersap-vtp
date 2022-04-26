@@ -125,8 +125,9 @@ public class EvioFadcDecoderEngine implements Engine {
             EvioBank b = (EvioBank) ev.getChildAt(0);
             int[] intData = b.getIntData();
             int frame = intData[0];
-            long timestamp = ((((long) intData[1]) & 0x00000000ffffffffL) +
-                    (((long) intData[2]) << 32));
+//            long timestamp = ((((long) intData[1]) & 0x00000000ffffffffL) +
+//                    (((long) intData[2]) << 32));
+            long timestamp = frame * 65536L;
 //            System.out.println("  Frame = " + frame + ", TS = " + timestamp);
 
             // Loop through all ROC Time Slice Banks (TSB) which come after TIB
