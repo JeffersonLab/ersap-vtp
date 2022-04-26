@@ -10,10 +10,25 @@ services:
    - class: org.jlab.epsci.stream.engine.evio.EvioFadcDecoderEngine
      name: AggProcessor
 configuration:
+  io-services:
+    writer:
+      frame_title: "ERSAP"
+      frame_width: 1200
+      frame_height: 600
+# hist_titles is a string containing the list of crate_slot_channel separated by ,
+      hist_titles: "1_3_1, 1_7_5, 17_12"
+      hist_bins: 100
+      hist_min: 1000
+      hist_max: 9000
+# grid_size defines a layout for histogram visualization
+# (e.g. 5 will plot 25 histograms in 5x5 matrix)
+      grid_size: 5
   services:
-    VTPProcessor:
+    AggProcessor:
       sliding_widow_size: 16
       sliding_step: 1
+#  beam_center is a string: crate_slot_channel.
+#  If not defined (commented out) algorithm will not consider a cell with a max charge
 #      beam_center: "1_3_12"
 mime-types:
   - binary/data-evio

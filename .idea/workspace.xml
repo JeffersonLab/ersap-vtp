@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1549c252-3915-4d6a-94a1-9b5e2d646b2d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/services.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggWriterEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/AggWriterEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/EvioFadcDecoderEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/engine/evio/EvioFadcDecoderEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/evio/LiveHistogram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/jlab/epsci/stream/vtp/evio/LiveHistogram.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,13 +121,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1636138552653</updated>
-    </task>
-    <task id="LOCAL-00200" summary="- histo for sum">
-      <created>1641606042595</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1641606042595</updated>
     </task>
     <task id="LOCAL-00201" summary="- histo for sum">
       <created>1641606218457</created>
@@ -463,7 +458,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650935677727</updated>
     </task>
-    <option name="localTasksCounter" value="249" />
+    <task id="LOCAL-00249" summary="debugging EvioFadcDecoderEngine">
+      <created>1650936186622</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1650936186622</updated>
+    </task>
+    <option name="localTasksCounter" value="250" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
