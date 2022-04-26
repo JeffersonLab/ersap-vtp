@@ -32,7 +32,10 @@ public class LiveHistogram {
         JFrame frame = new JFrame(frameTitle);
         frame.setSize(frameWidth, frameHeight);
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(gridSize,gridSize));
+        GridLayout gl = new GridLayout(gridSize,gridSize);
+        gl.setHgap(10);
+        gl.setVgap(10);
+        panel.setLayout(gl);
         frame.getContentPane().add(panel);
 
         // create canvases with associated histograms,
