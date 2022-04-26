@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
 
 public class VTPWriterEngine extends AbstractEventWriterService<FileWriter> {
     @Override
@@ -32,6 +34,10 @@ public class VTPWriterEngine extends AbstractEventWriterService<FileWriter> {
 
     @Override
     protected void writeEvent(Object event) throws EventWriterException {
+        Map<String, List<Integer>> evIdentified = (Map<String, List<Integer>>)event;
+        for(String s:evIdentified.keySet()){
+            System.out.println("DDD "+s+ " "+evIdentified.get(s));
+        }
     }
 
     @Override

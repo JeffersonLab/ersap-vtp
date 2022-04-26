@@ -257,7 +257,6 @@ public class EvioFadcDecoderEngine implements Engine {
             // require beamCenter to have the max deposited charge
             if(!beamCenter.equals(UNDEFINED)) {
                 int maxValueInMap = (Collections.max(evtCandidate.values()));
-                System.out.println("DDDD maxValue = "+maxValueInMap);
                 for (var entry : evtCandidate.entrySet()) {
                     if ((entry.getValue() == maxValueInMap) && !(entry.getKey().equals(beamCenter))) {
                         foundEvent = false;
@@ -278,9 +277,6 @@ public class EvioFadcDecoderEngine implements Engine {
                 }
             }
         } while (eTime >= endFrameTime);
-        for(String s:evIdentified.keySet()){
-            System.out.println("DDD "+s+ " "+evIdentified.get(s));
-        }
         return evIdentified;
     }
 
