@@ -33,8 +33,8 @@ public class LiveHistogram {
         frame.setSize(frameWidth, frameHeight);
         JPanel panel = new JPanel();
         GridLayout gl = new GridLayout(gridSize,gridSize);
-        gl.setHgap(10);
-        gl.setVgap(10);
+        gl.setHgap(100);
+        gl.setVgap(100);
         panel.setLayout(gl);
         frame.getContentPane().add(panel);
 
