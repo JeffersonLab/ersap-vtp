@@ -43,7 +43,7 @@ public class LiveHistogram {
             c.initTimer(600);
             H1F hist = new H1F(s, histBins, histMin, histMax);
             hist.setTitle(s);
-            hist.setTitleX(s);
+            hist.setTitleX("1-2-3");
             histograms.put(s, hist);
             c.region().draw(hist);
         }
