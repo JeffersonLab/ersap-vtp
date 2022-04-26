@@ -1,0 +1,11 @@
+---
+name: AggFileReaderEngine
+engine: org.jlab.epsci.stream.engine.evio.AggWriterEngine
+type: java
+
+author: Vardan Gyurjyan
+email: gurjyan@jlab.org
+
+version: 0.1
+description:
+  ERSAP engine that writes  Map<String, List<Integer>> data from the AggFadcDecoderEngine

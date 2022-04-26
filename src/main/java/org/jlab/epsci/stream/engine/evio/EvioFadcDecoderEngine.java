@@ -17,12 +17,10 @@ import org.jlab.epsci.ersap.engine.Engine;
 import org.jlab.epsci.ersap.engine.EngineData;
 import org.jlab.epsci.ersap.engine.EngineDataType;
 import org.jlab.epsci.stream.engine.util.EvioDataType;
+import org.jlab.epsci.stream.engine.util.JavaObjectType;
 import org.jlab.epsci.stream.vtp.VAdcHit;
 import org.json.JSONObject;
-import twig.data.H1F;
-import twig.graphics.TGDataCanvas;
 
-import javax.swing.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -156,7 +154,7 @@ public class EvioFadcDecoderEngine implements Engine {
                     // define the fits for a slot in the VTP frame
                     fADCPayloadDecoder(data, timestamp, slt, byteData);
                 }
-                out.setData(EvioDataType.EVIO, eventIdentification(data));
+                out.setData(JavaObjectType.JOBJ, eventIdentification(data));
                  return out;
             }
         }

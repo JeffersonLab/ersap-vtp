@@ -2,18 +2,19 @@
 io-services:
   reader:
     class: org.jlab.epsci.stream.engine.evio.AggFileReaderEngine
-    name: VTPSource
+    name: AggSource
   writer:
-    class: org.jlab.epsci.stream.engine.VTPWriterEngine
-    name: VTPWriter
+    class: org.jlab.epsci.stream.engine.evio.AggWriterEngine
+    name: AggWriter
 services:
    - class: org.jlab.epsci.stream.engine.evio.EvioFadcDecoderEngine
-     name: VTPProcessor
+     name: AggProcessor
 configuration:
   services:
     VTPProcessor:
       sliding_widow_size: 16
       sliding_step: 1
-#      beam_center: 1_3_12
+#      beam_center: "1_3_12"
 mime-types:
   - binary/data-evio
+  - binary/data-jobj
