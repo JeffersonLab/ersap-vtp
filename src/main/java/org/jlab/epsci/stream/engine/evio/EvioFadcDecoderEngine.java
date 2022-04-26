@@ -282,7 +282,7 @@ public class EvioFadcDecoderEngine implements Engine {
                     }
                 }
             }
-        } while (eTime >= endFrameTime);
+        } while (eTime <= endFrameTime);
         return evIdentified;
     }
 
