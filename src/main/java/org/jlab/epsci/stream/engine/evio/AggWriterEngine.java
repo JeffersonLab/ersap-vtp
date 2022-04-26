@@ -102,7 +102,7 @@ public class AggWriterEngine extends AbstractEventWriterService<FileWriter> {
     protected void writeEvent(Object event) throws EventWriterException {
         Map<String, List<Integer>> evIdentified = (Map<String, List<Integer>>)event;
         for(String s:evIdentified.keySet()){
-            System.out.println("DDD "+s+ " "+evIdentified.get(s).size());
+//            System.out.println("DDD "+s+ " "+evIdentified.get(s).size());
             for(Integer charge: evIdentified.get(s)) {
                 liveHist.update(s, charge);
             }

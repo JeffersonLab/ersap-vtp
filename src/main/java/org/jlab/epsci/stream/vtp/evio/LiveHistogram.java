@@ -43,6 +43,7 @@ public class LiveHistogram {
             c.initTimer(600);
             H1F hist = new H1F(s, histBins, histMin, histMax);
             histograms.put(s, hist);
+            System.out.println("DDD hist added: " + s);
             c.region().draw(hist);
         }
         frame.setVisible(true);
