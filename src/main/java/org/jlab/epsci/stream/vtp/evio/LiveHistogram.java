@@ -50,6 +50,7 @@ public class LiveHistogram {
     }
 
     public void update (String name, int value) {
+        System.out.println("DDD upgrading hist = "+name+" "+histograms.containsKey(name));
         if(histograms.containsKey(name)){
             histograms.get(name).fill(value);
         }
