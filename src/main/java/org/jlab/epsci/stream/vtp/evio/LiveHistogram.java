@@ -39,12 +39,13 @@ public class LiveHistogram {
         // and add them to the panel
         for(String s: histTitles){
             TGDataCanvas c = new TGDataCanvas();
+            panel.add(c);
             c.initTimer(600);
             H1F hist = new H1F(s, histBins, histMin, histMax);
             histograms.put(s, hist);
             c.region().draw(hist);
-            panel.add(c);
         }
+        frame.setVisible(true);
     }
 
     public void update (String name, int value) {
